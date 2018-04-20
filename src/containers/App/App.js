@@ -56,7 +56,7 @@ export class App extends Component {
                 >
                   <AppRouter url={url} />
                 </Content>
-                <Footer
+                {/* <Footer
                   style={{
                     background: "#ffffff",
                     textAlign: "center",
@@ -64,7 +64,7 @@ export class App extends Component {
                   }}
                 >
                   {siteConfig.footerText}
-                </Footer>
+                </Footer> */}
               </Layout>
             </Layout>
           </Layout>
