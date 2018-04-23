@@ -17,6 +17,7 @@
     "react-placeholder": "^2.0.0",
     "react-redux": "^5.0.4",
     "react-router": "^4.1.1",
+    "react-google-charts": "^1.5.4-alpha.1",
     "react-router-dom": "^4.1.0",
     "react-router-redux": "^5.0.0-alpha.5",
     "react-scripts": "1.0.17",

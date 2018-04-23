@@ -1,10 +1,11 @@
-import React from 'react';
-import { Route, Redirect } from 'react-router-dom';
-import { ConnectedRouter } from 'react-router-redux';
-import { connect } from 'react-redux';
+import React from 'react'
+import { Route, Redirect } from 'react-router-dom'
+import { ConnectedRouter } from 'react-router-redux'
+import { connect } from 'react-redux'
 
-import App from './containers/App/App';
-import asyncComponent from './helpers/AsyncFunc';
+import App from './containers/App/App'
+import CreatePosition from './containers/Position/CreatePosition'
+import asyncComponent from './helpers/AsyncFunc'
 
 const RestrictedRoute = ({ component: Component, isLoggedIn, ...rest }) => (
   <Route
@@ -18,7 +19,7 @@ const RestrictedRoute = ({ component: Component, isLoggedIn, ...rest }) => (
           }}
         />}
   />
-);
+)
 const PublicRoutes = ({ history, isLoggedIn }) => {
   return (
     <ConnectedRouter history={history}>
@@ -40,9 +41,9 @@ const PublicRoutes = ({ history, isLoggedIn }) => {
         />
       </div>
     </ConnectedRouter>
-  );
-};
+  )
+}
 
 export default connect(state => ({
   isLoggedIn: state.Auth.get('idToken') !== null,
-}))(PublicRoutes);
+}))(PublicRoutes)

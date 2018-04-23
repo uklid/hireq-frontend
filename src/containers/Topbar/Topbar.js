@@ -1,26 +1,27 @@
-import React, { Component } from "react";
-import { connect } from "react-redux";
-import { Layout } from "antd";
-import appActions from "../../redux/app/actions";
-import TopbarUser from "./topbarUser";
-import TopbarWrapper from "./topbar.style";
-import themes from "../../settings/themes";
-import { themeConfig } from "../../settings";
+import React, { Component } from "react"
+import { connect } from "react-redux"
+import { Layout } from "antd"
+import appActions from "../../redux/app/actions"
+import TopbarUser from "./topbarUser"
+import TopbarWrapper from "./topbar.style"
+import themes from "../../settings/themes"
+import { themeConfig } from "../../settings"
+import { Link } from 'react-router-dom'
 
-const { Header } = Layout;
-const { toggleCollapsed } = appActions;
-const customizedTheme = themes[themeConfig.theme];
+const { Header } = Layout
+const { toggleCollapsed } = appActions
+const customizedTheme = themes[themeConfig.theme]
 
 class Topbar extends Component {
   render() {
-    const { toggleCollapsed } = this.props;
-    const collapsed = this.props.collapsed && !this.props.openDrawer;
+    const { toggleCollapsed } = this.props
+    const collapsed = this.props.collapsed && !this.props.openDrawer
     const styling = {
       background: customizedTheme.backgroundColor,
       position: "fixed",
       width: "100%",
       height: 70
-    };
+    }
     return (
       <TopbarWrapper>
         <Header
@@ -30,13 +31,19 @@ class Topbar extends Component {
           }
         >
           <div className="isoLeft">
-            <button
+            {/* <button
               className={
                 collapsed ? "triggerBtn menuCollapsed" : "triggerBtn menuOpen"
               }
               style={{ color: customizedTheme.textColor }}
               onClick={toggleCollapsed}
-            />
+            /> */}
+            {/* <Link to="/dashboard">
+              dashboard
+            </Link> */}
+            <Link className="" to="/dashboard/create-position">
+              position
+            </Link>
           </div>
 
           <ul className="isoRight">
@@ -49,7 +56,7 @@ class Topbar extends Component {
           </ul>
         </Header>
       </TopbarWrapper>
-    );
+    )
   }
 }
 
@@ -58,4 +65,4 @@ export default connect(
     ...state.App.toJS()
   }),
   { toggleCollapsed }
-)(Topbar);
+)(Topbar)

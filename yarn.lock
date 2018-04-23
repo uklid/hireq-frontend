@@ -4718,6 +4718,10 @@ loader-utils@^1.0.2, loader-utils@^1.1.0:
     emojis-list "^2.0.0"
     json5 "^0.5.0"
 
+loadjs@^3.3.1:
+  version "3.5.4"
+  resolved "https://registry.yarnpkg.com/loadjs/-/loadjs-3.5.4.tgz#ef0f4eb5a6ac2b86c7597a3d4de97b83816e36b8"
+
 locate-path@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/locate-path/-/locate-path-2.0.0.tgz#2b568b265eec944c6d9c0de9c3dbbbca0354cd8e"
@@ -6598,6 +6602,15 @@ react-dom@^15.0.2:
     object-assign "^4.1.0"
     prop-types "^15.5.10"
 
+"react-dom@^15.3.2 || ^16":
+  version "16.3.2"
+  resolved "https://registry.yarnpkg.com/react-dom/-/react-dom-16.3.2.tgz#cb90f107e09536d683d84ed5d4888e9640e0e4df"
+  dependencies:
+    fbjs "^0.8.16"
+    loose-envify "^1.1.0"
+    object-assign "^4.1.1"
+    prop-types "^15.6.0"
+
 react-dom@^16.2.0:
   version "16.2.0"
   resolved "https://registry.yarnpkg.com/react-dom/-/react-dom-16.2.0.tgz#69003178601c0ca19b709b33a83369fe6124c044"
@@ -6619,6 +6632,16 @@ react-event-listener@^0.5.1:
     fbjs "^0.8.16"
     prop-types "^15.6.0"
     warning "^3.0.0"
+
+react-google-charts@^1.5.4-alpha.1:
+  version "1.5.7"
+  resolved "https://registry.yarnpkg.com/react-google-charts/-/react-google-charts-1.5.7.tgz#70d5daf1e362a9ef199576f15e37769185888067"
+  dependencies:
+    debug "^2.2.0"
+    loadjs "^3.3.1"
+    prop-types "^15.5.8"
+    react "^15.3.2 || ^16"
+    react-dom "^15.3.2 || ^16"
 
 react-intl@^2.3.0:
   version "2.4.0"
@@ -6824,6 +6847,15 @@ react@^15.0.2:
     loose-envify "^1.1.0"
     object-assign "^4.1.0"
     prop-types "^15.5.10"
+
+"react@^15.3.2 || ^16":
+  version "16.3.2"
+  resolved "https://registry.yarnpkg.com/react/-/react-16.3.2.tgz#fdc8420398533a1e58872f59091b272ce2f91ea9"
+  dependencies:
+    fbjs "^0.8.16"
+    loose-envify "^1.1.0"
+    object-assign "^4.1.1"
+    prop-types "^15.6.0"
 
 react@^16.2.0:
   version "16.2.0"

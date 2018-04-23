@@ -1,6 +1,6 @@
-import React, { Component } from "react";
-import { Route } from "react-router-dom";
-import asyncComponent from "../../helpers/AsyncFunc";
+import React, { Component } from "react"
+import { Route } from "react-router-dom"
+import asyncComponent from "../../helpers/AsyncFunc"
 
 const routes = [
   {
@@ -10,16 +10,20 @@ const routes = [
   {
     path: "blankPage",
     component: asyncComponent(() => import("../blankPage"))
+  },
+  {
+    path: "create-position",
+    component: asyncComponent(() => import("../Position/CreatePosition"))
   }
-];
+]
 
 class AppRouter extends Component {
   render() {
-    const { url, style } = this.props;
+    const { url, style } = this.props
     return (
       <div style={style}>
         {routes.map(singleRoute => {
-          const { path, exact, ...otherProps } = singleRoute;
+          const { path, exact, ...otherProps } = singleRoute
           return (
             <Route
               exact={exact === false ? false : true}
@@ -27,11 +31,11 @@ class AppRouter extends Component {
               path={`${url}/${singleRoute.path}`}
               {...otherProps}
             />
-          );
+          )
         })}
       </div>
-    );
+    )
   }
 }
 
-export default AppRouter;
+export default AppRouter
