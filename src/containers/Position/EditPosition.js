@@ -6,6 +6,7 @@ import styled from 'styled-components'
 import { Table, DatePicker, Slider } from 'antd'
 import CriticalSoftSkills from './CriticalSoftSkills'
 import moment from 'moment'
+import WorkPreference from './WorkPreference'
 
 const Span = styled.span`
 	font-weight: 800;
@@ -99,7 +100,7 @@ class EditPosition extends React.Component {
 									<CriticalSoftSkills />
 								</Grid>
 								<Grid item sm={6}>
-								
+									<WorkPreference />
 								</Grid>
 							</Grid>
 						</Card>

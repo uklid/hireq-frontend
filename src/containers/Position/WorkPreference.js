@@ -9,7 +9,7 @@ const DataSlider = ({ onChange, value, title }) => (
 	</div>
 )
 
-class CriticalSoftSkills extends React.Component {
+class WorkPreference extends React.Component {
 	constructor(props) {
 		super(props)
 		this.state = {
@@ -19,7 +19,7 @@ class CriticalSoftSkills extends React.Component {
 				title: 'Specified Domain Radar Chart',
 				width: 600,
 				height: 500,
-				colors: ['#BAA6CA', '#B7DCFA', '#FFE69A', '#788195'],
+				colors: ['#788195'],
 				angle: 30,
 				domain: [0, 100],
 				cx: 300,
@@ -62,4 +62,4 @@ class CriticalSoftSkills extends React.Component {
 	}
 }
 
-export default CriticalSoftSkills
+export default WorkPreference
