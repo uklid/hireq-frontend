@@ -10,17 +10,15 @@ import { FormGroup, FormControlLabel } from 'material-ui/Form'
 import Checkbox from 'material-ui/Checkbox'
 import { Button } from 'antd'
 
-const dataSource = [{
-	key: '1',
-	name: 'Mike',
-	age: 32,
-	address: '10 Downing Street'
-}, {
-	key: '2',
-	name: 'John',
-	age: 42,
-	address: '10 Downing Street'
-}]
+const dataSource = []
+for (let i = 0; i < 46; i++) {
+  dataSource.push({
+		key: i,
+		name: `Mike-${i}`,
+		age: `age-${i}`,
+		address: '10 Downing Street'
+	})
+}
 
 const columns = [{
 	title: 'Name',
