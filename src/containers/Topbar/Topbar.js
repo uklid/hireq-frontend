@@ -41,8 +41,14 @@ class Topbar extends Component {
             {/* <Link to="/dashboard">
               dashboard
             </Link> */}
-            <Link className="" to="/dashboard/create-position">
+            <Link style={{ marginLeft: 10, marginRight: 10 }} to="/dashboard">
+              Dashboard
+            </Link>
+            <Link style={{ marginLeft: 10, marginRight: 10 }} to="/dashboard/create-position">
               position
+            </Link>
+            <Link style={{ marginLeft: 10, marginRight: 10 }} to="/dashboard/edit-position">
+              edit - position
             </Link>
           </div>
 

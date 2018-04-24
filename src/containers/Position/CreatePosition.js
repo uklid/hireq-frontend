@@ -12,26 +12,26 @@ import { Button } from 'antd'
 
 const dataSource = []
 for (let i = 0; i < 46; i++) {
-  dataSource.push({
-		key: i,
-		name: `Mike-${i}`,
-		age: `age-${i}`,
-		address: '10 Downing Street'
+	dataSource.push({
+		positionName: i,
+		category: `Mike-${i}`,
+		description: `My name is mister Mike ${i} eieieieieiei`
 	})
 }
 
 const columns = [{
-	title: 'Name',
-	dataIndex: 'name',
-	key: 'name',
+	title: 'Position name',
+	dataIndex: 'positionName',
+	key: 'positionName',
 }, {
-	title: 'Age',
-	dataIndex: 'age',
-	key: 'age',
+	title: 'Category',
+	dataIndex: 'category',
+	key: 'category',
 }, {
-	title: 'Address',
-	dataIndex: 'address',
-	key: 'address',
+	title: '',
+	dataIndex: 'showmore',
+	key: 'showmore',
+	render: () => <div style={{ cursor: 'pointer' }} onClick={(event) => console.log(event.target)}>Showmore</div>
 }]
 
 const InputWrapper = styled.div`
@@ -61,6 +61,12 @@ const ButtonWrapper = styled.div`
 		@media only screen and (max-width: 768px) {
 			display: none;
 		}
+`
+
+const NewButton = styled.button`
+	color: #fff;
+	background-color: #954590;
+	border-color: #954590;
 `
 
 const FilterField = ({ checked, onChange, value, label }) => (
@@ -138,8 +144,22 @@ class CreatePosition extends React.Component {
 						<Card
 							title="Result"
 						>
-							<Table dataSource={dataSource} columns={columns} />
+							<Table 
+								bordered
+								dataSource={dataSource}
+								columns={columns}
+								expandedRowRender={record => <p style={{ margin: 0 }}>{record.description}</p>}
+							/>
 						</Card>
+					</Grid>
+				</Grid>
+				<Grid style={{ marginTop: 20 }} container spacing={0}>
+					<Grid item>
+						<Button style={{
+							color: '#fff',
+							backgroundColor: '#954590',
+							borderColor: '#954590',
+						}}>Create position</Button>
 					</Grid>
 				</Grid>
 			</LayoutContentWrapper>
