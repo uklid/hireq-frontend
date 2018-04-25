@@ -50,6 +50,9 @@ class Topbar extends Component {
             <Link style={{ marginLeft: 10, marginRight: 10 }} to="/dashboard/edit-position">
               edit - position
             </Link>
+            <Link style={{ marginLeft: 10, marginRight: 10 }} to="/dashboard/position-detail">
+              position detail
+            </Link>
           </div>
 
           <ul className="isoRight">

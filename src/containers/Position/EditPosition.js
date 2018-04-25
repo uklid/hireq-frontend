@@ -3,10 +3,17 @@ import { LayoutContentWrapper } from '../../components/utility/layoutWrapper.sty
 import Grid from 'material-ui/Grid'
 import Card from '../../components/uielements/card'
 import styled from 'styled-components'
-import { Table, DatePicker, Slider } from 'antd'
+import { Table, DatePicker, Slider, Button } from 'antd'
 import CriticalSoftSkills from './CriticalSoftSkills'
 import moment from 'moment'
 import WorkPreference from './WorkPreference'
+import Dialog, {
+	DialogActions,
+	DialogContent,
+	DialogContentText,
+	DialogTitle,
+} from 'material-ui/Dialog'
+import ToggleDisplay from 'react-toggle-display'
 
 const Span = styled.span`
 	font-weight: 800;
@@ -42,8 +49,24 @@ const columns = [
 ]
 
 const dataSouce = []
+const dataSouce2 = []
+const dataSouce3 = []
 for (let i = 0; i <= 30; i++) {
 	dataSouce.push({
+		firstName: `Mike Number ${i}`,
+		lastName: `Mike Last Name ${i}`,
+		email: `xxx${i}@email.com`,
+		complete: `${i}/xx/2000`,
+		qScore: `q  - score : ${i + Math.random()}`
+	})
+	dataSouce2.push({
+		firstName: `Mike Number ${i}`,
+		lastName: `Mike Last Name ${i}`,
+		email: `xxx${i}@email.com`,
+		complete: `${i}/xx/2000`,
+		qScore: `q  - score : ${i + Math.random()}`
+	})
+	dataSouce3.push({
 		firstName: `Mike Number ${i}`,
 		lastName: `Mike Last Name ${i}`,
 		email: `xxx${i}@email.com`,
@@ -58,6 +81,23 @@ const onChange = (date, dateString) => {
 }
 
 class EditPosition extends React.Component {
+	state = {
+		open: false,
+		showEdit: false,
+	}
+
+	handleClose = () => {
+		this.setState({ open: false })
+	}
+
+	handleOpen = () => {
+		this.setState({ open: true })
+	}
+
+	openEdit = () => {
+		this.setState({ showEdit: !this.state.showEdit })
+	}
+
 	render() {
 		return (
 			<LayoutContentWrapper>
@@ -78,34 +118,100 @@ class EditPosition extends React.Component {
 						</Card>
 					</Grid>
 				</Grid>
-				<Grid container spacing={24}>
+				<Grid style={{ marginTop: 40 }} container spacing={24}>
 					<Grid item sm={12}>
-						<Card title="Edit Position Detail">
-							<Grid container spacing={0}>
-								<Grid item sm={12}>
-									<p>
-										<span> Start Date: {`${moment(new Date()).format("DD/MM/YY")}`}</span>
-										<span>
-											End Date: <DatePicker onChange={onChange} />
-										</span>
-									</p>
-									<Grid container>
-										<Grid item sm={2}> Cognative Skill: </Grid>
-										<Grid item sm={4}><Slider defaultValue={30} /></Grid>
+						<Card onClick={this.openEdit} title="Edit Position Detail">
+							<ToggleDisplay show={this.state.showEdit}>
+								<Grid container spacing={0}>
+									<Grid item sm={12}>
+										<p>
+											<span> Start Date: {`${moment(new Date()).format("DD/MM/YY")}`}</span>
+											<span>
+												End Date: <DatePicker onChange={onChange} />
+											</span>
+										</p>
+										<Grid container style={{ marginTop: 30 }}>
+											<Grid item sm={2}> Cognative Skill: </Grid>
+											<Grid item sm={4}><Slider defaultValue={30} /></Grid>
+										</Grid>
+									</Grid>
+									<Grid style={{ paddingTop: 60 }} container spaceing={24}>
+										<Grid item sm={6}>
+											<CriticalSoftSkills />
+										</Grid>
+										<Grid item sm={6}>
+											<WorkPreference />
+										</Grid>
 									</Grid>
 								</Grid>
-							</Grid>
-							<Grid container spaceing={0}>
-								<Grid item sm={6}>
-									<CriticalSoftSkills />
+								<Grid container spacing={0}>
+									<Grid item>
+										<Button
+											type="primary"
+											// onClick={modalShow}
+											onClick={this.handleOpen}
+											style={{ backgroundColor: '#954590', marginTop: 30, borderColor: '#954590' }}
+										>
+											Save change.
+									</Button>
+									</Grid>
 								</Grid>
-								<Grid item sm={6}>
-									<WorkPreference />
-								</Grid>
-							</Grid>
+							</ToggleDisplay>
 						</Card>
 					</Grid>
 				</Grid>
+				{/* <ToggleDisplay style={this.state.showEdit ? { width: '100%' } : {}} show={this.state.showEdit}> */}
+				{
+					this.state.showEdit &&
+					<div style={{ width: '100%' }}>
+						<Grid style={{ marginTop: 40 }} container spacing={0}>
+							<Grid item sm={12}>
+								<Card title="Complete Candidates">
+									<Table dataSource={dataSouce2} columns={columns} />
+								</Card>
+							</Grid>
+						</Grid>
+						<Grid style={{ marginTop: 40 }} container spacing={0}>
+							<Grid item sm={12}>
+								<Card title="Uncomplete Candidates">
+									<Table dataSource={dataSouce3} columns={columns} />
+								</Card>
+							</Grid>
+						</Grid>
+						<Grid style={{ marginTop: 30 }} container spacing={0}>
+							<Grid item>
+								<Button style={{ color: '#fff', backgroundColor: '#954590' }}>
+									Add Candidates.
+									</Button>
+							</Grid>
+						</Grid>
+					</div>
+				}
+				{/* </ToggleDisplay> */}
+				{/* Dialog modal from material ui */}
+				<Dialog
+					open={this.state.open}
+					onClose={this.handleClose}
+					aria-labelledby="alert-dialog-title"
+					aria-describedby="alert-dialog-description"
+				>
+					<DialogTitle id="alert-dialog-title">{"Use Google's location service?"}</DialogTitle>
+					<DialogContent>
+						<DialogContentText id="alert-dialog-description">
+							Let Google help apps determine location. This means sending anonymous location data to
+              Google, even when no apps are running.
+            </DialogContentText>
+					</DialogContent>
+					<DialogActions>
+						<Button style={{ float: 'left' }} onClick={this.handleClose}>
+							Disagree
+            </Button>
+						<Button style={{ float: 'right' }} onClick={this.handleClose}>
+							Agree
+            </Button>
+					</DialogActions>
+				</Dialog>
+				{/* end dialog modal */}
 			</LayoutContentWrapper>
 		)
 	}
