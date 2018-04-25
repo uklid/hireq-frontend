@@ -20,6 +20,15 @@ const Span = styled.span`
 	margin-right: 5px;
 `
 
+const WhiteWrapper = styled.div`
+		background-color: #fff;
+		padding: 20px;
+
+		h4 {
+			display: inline;
+		}
+`
+
 const columns = [
 	{
 		title: 'First Name',
@@ -120,7 +129,8 @@ class EditPosition extends React.Component {
 				</Grid>
 				<Grid style={{ marginTop: 40 }} container spacing={24}>
 					<Grid item sm={12}>
-						<Card onClick={this.openEdit} title="Edit Position Detail">
+						<Card>
+							<h3 style={{ marginBottom: 30, cursor: 'pointer' }} onClick={this.openEdit}>Edit Position Detail.</h3>
 							<ToggleDisplay show={this.state.showEdit}>
 								<Grid container spacing={0}>
 									<Grid item sm={12}>

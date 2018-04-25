@@ -5,6 +5,9 @@ import Grid from 'material-ui/Grid'
 import { Progress } from 'antd'
 import SpecifiedDomainRadarChart from '../../containers/Charts/recharts/charts/specifiedDomainRadarChart'
 
+// const screenHeight = window.innerHeight
+const screenWidth = (window.innerWidth / 2) - 100 <= 250 ? 350 : 600
+
 const WhiteWrapper = styled.div`
 		background-color: #fff;
 		padding: 20px;
@@ -22,7 +25,7 @@ class PositionDetail extends React.Component {
 				componentName: 'SpecifiedDomainRadarChart',
 				key: 'SpecifiedDomainRadarChart',
 				title: 'Specified Domain Radar Chart',
-				width: 600,
+				width: screenWidth,
 				height: 500,
 				colors: ['#BAA6CA', '#B7DCFA', '#FFE69A', '#788195'],
 				angle: 30,
@@ -45,7 +48,7 @@ class PositionDetail extends React.Component {
 		return (
 			<LayoutContentWrapper>
 				<Grid container spacing={0}>
-					<Grid item sm={12}>
+					<Grid item sm={12} xs={12}>
 						<WhiteWrapper>
 							<p><h4>Position Name: </h4><span> Accountant</span></p>
 							<p><h4>Category: </h4><span> Account</span></p>
@@ -54,7 +57,7 @@ class PositionDetail extends React.Component {
 					</Grid>
 				</Grid>
 				<Grid style={{ marginTop: 30 }} container spacing={0}>
-					<Grid item sm={12}>
+					<Grid item sm={12} xs={12}>
 						<WhiteWrapper>
 							<h3> Cognative Ability </h3>
 							<Progress percent={40} />
@@ -62,13 +65,13 @@ class PositionDetail extends React.Component {
 					</Grid>
 				</Grid>
 				<Grid style={{ marginTop: 30 }} container spacing={24}>
-					<Grid item sm={6}>
+					<Grid item sm={6} xs={12}>
 						<WhiteWrapper>
 							<h3>Critical SoftSkill</h3>
 							<SpecifiedDomainRadarChart {...this.state.config} datas={this.state.datas} />
 						</WhiteWrapper>
 					</Grid>
-					<Grid item sm={6}>
+					<Grid item sm={6} xs={12}>
 						<WhiteWrapper>
 							<h3>Work Preference</h3>
 							<SpecifiedDomainRadarChart {...this.state.config} datas={this.state.datas} />
