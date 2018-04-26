@@ -53,6 +53,9 @@ class Topbar extends Component {
             <Link style={{ marginLeft: 10, marginRight: 10 }} to="/dashboard/position-detail">
               position detail
             </Link>
+            <Link style={{ marginLeft: 10, marginRight: 10 }} to="/dashboard/report">
+              Report
+            </Link>
           </div>
 
           <ul className="isoRight">

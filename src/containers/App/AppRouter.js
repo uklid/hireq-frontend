@@ -22,6 +22,10 @@ const routes = [
   {
     path: "position-detail",
     component: asyncComponent(() => import("../Position/PositionDetail"))
+  },
+  {
+    path: "report",
+    component: asyncComponent(() => import("../Report/Report"))
   }
 ]
 

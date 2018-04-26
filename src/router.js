@@ -6,6 +6,7 @@ import { connect } from 'react-redux'
 import App from './containers/App/App'
 import CreatePosition from './containers/Position/CreatePosition'
 import asyncComponent from './helpers/AsyncFunc'
+import QuizLayout from './containers/Quiz/QuizLayout'
 
 const RestrictedRoute = ({ component: Component, isLoggedIn, ...rest }) => (
   <Route
@@ -37,6 +38,11 @@ const PublicRoutes = ({ history, isLoggedIn }) => {
         <RestrictedRoute
           path="/dashboard"
           component={App}
+          isLoggedIn={isLoggedIn}
+        />
+        <RestrictedRoute
+          path="/quiz"
+          component={QuizLayout}
           isLoggedIn={isLoggedIn}
         />
       </div>
