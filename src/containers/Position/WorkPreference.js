@@ -27,12 +27,12 @@ class WorkPreference extends React.Component {
 				outerRadius: 150,
 			},
 			datas: [
-				{ subject: 'Math', value: 50, fullMark: 100 },
-				{ subject: 'Chinese', value: 50, fullMark: 100 },
-				{ subject: 'English', value: 50, fullMark: 100 },
-				{ subject: 'Geography', value: 50, fullMark: 100 },
-				{ subject: 'Physics', value: 50, fullMark: 100 },
-				{ subject: 'History', value: 50, fullMark: 100 },
+				{ subject: 'Performance', value: 50, fullMark: 100 },
+				{ subject: 'Leadership', value: 50, fullMark: 100 },
+				{ subject: 'Communication', value: 50, fullMark: 100 },
+				{ subject: 'People', value: 50, fullMark: 100 },
+				{ subject: 'Political', value: 50, fullMark: 100 },
+				{ subject: 'Productivity', value: 50, fullMark: 100 },
 			],
 		}
 	}
@@ -57,6 +57,7 @@ class WorkPreference extends React.Component {
 				<DataSlider title="Communication, Persuation and Negotiation" onChange={this.onChange(2)} value={this.state.datas[2].value}/>
 				<DataSlider title="People and Interpersonal Skills" onChange={this.onChange(3)} value={this.state.datas[3].value}/>
 				<DataSlider title="Political and Cultural Skills" onChange={this.onChange(4)} value={this.state.datas[4].value}/>
+				<DataSlider title="Productivity and Effectiveness at Work" onChange={this.onChange(5)} value={this.state.datas[5].value}/>
 			</div>
 		)
 	}

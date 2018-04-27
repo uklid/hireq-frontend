@@ -144,7 +144,7 @@ class CreatePosition extends React.Component {
 						<Card
 							title="Result"
 						>
-							<Table 
+							<Table
 								bordered
 								dataSource={dataSource}
 								columns={columns}
