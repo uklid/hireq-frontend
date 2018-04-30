@@ -32,7 +32,7 @@ const FlexCenter = styled.div`
 class QuizLayout extends React.Component {
 	render() {
 		return (
-			<Layout style={{ minHeight: '100%'}}>
+			<Layout style={{ minHeight: '100%' }}>
 				<QuizWrapper>
 					<WhiteCard style={{
 						display: 'flex',
@@ -72,14 +72,19 @@ class QuizLayout extends React.Component {
 								<Timeline>
 									<Timeline.Item color="green">ส่วนที่ 1 </Timeline.Item>
 									<Timeline.Item color="green">ส่วนที่ 2</Timeline.Item>
-									<Timeline.Item>ส่วนที่ 3 </Timeline.Item>
-									<Timeline.Item color="red">ส่วนที่ 6</Timeline.Item>
+									<Timeline.Item color="green">ส่วนที่ 3 </Timeline.Item>
+									<Timeline.Item color="#eee">ส่วนที่ 6</Timeline.Item>
 								</Timeline>
 							</Grid>
 							<Grid item sm={9}>
-								<Card title="xxx">
-									<QuizChoice />
-								</Card>
+								<QuizChoice radioName="1" />
+								<QuizChoice radioName="2" />
+								<QuizChoice radioName="3" />
+								<QuizChoice radioName="4" />
+								<QuizChoice radioName="5" />
+								<QuizChoice radioName="6" />
+
+								{/* <QuizChoice /> */}
 							</Grid>
 						</Grid>
 					</WhiteCard>
