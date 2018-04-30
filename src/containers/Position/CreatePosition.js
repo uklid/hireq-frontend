@@ -15,6 +15,7 @@ for (let i = 0; i < 46; i++) {
 	dataSource.push({
 		positionName: i,
 		category: `Mike-${i}`,
+		testField: '',
 		description: `My name is mister Mike ${i} eieieieieiei`
 	})
 }
@@ -27,6 +28,10 @@ const columns = [{
 	title: 'Category',
 	dataIndex: 'category',
 	key: 'category',
+}, {
+	title: 'testField',
+	dataIndex: 'testField',
+	key: 'testField',
 }, {
 	title: '',
 	dataIndex: 'showmore',

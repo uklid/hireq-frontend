@@ -2,10 +2,16 @@ import React from 'react'
 import styled from 'styled-components'
 import { LayoutContentWrapper } from '../../components/utility/layoutWrapper.style'
 import Grid from 'material-ui/Grid'
-import { Progress, Timeline } from 'antd'
+import {
+	Progress,
+	Timeline,
+	Card,
+	Layout
+} from 'antd'
+import QuizChoice from './QuizChoice'
 
 const QuizWrapper = styled.div`
-	height: 100vh;
+	height: 100%;
 	padding: 30px;
 	background-color: #f1f3f6;
 `
@@ -26,55 +32,59 @@ const FlexCenter = styled.div`
 class QuizLayout extends React.Component {
 	render() {
 		return (
-			<QuizWrapper>
-				<WhiteCard style={{
-					display: 'flex',
-					justifyContent: 'center',
-					alignItems: 'center',
-					height: 200,
-				}}
-				>
-					<div style={{ display: 'block', textAlign: 'center' }}>
-						<h4>
-							ส่วนที่ 2 - บุคลิกภาพ
+			<Layout style={{ minHeight: '100%'}}>
+				<QuizWrapper>
+					<WhiteCard style={{
+						display: 'flex',
+						justifyContent: 'center',
+						alignItems: 'center',
+						height: 200,
+					}}
+					>
+						<div style={{ display: 'block', textAlign: 'center' }}>
+							<h4>
+								ส่วนที่ 2 - บุคลิกภาพ
 						</h4>
-						<h4>
-							ข้อความต่อไปนี้ตรงกับบุคลิกของท่านเพียงใด
+							<h4>
+								ข้อความต่อไปนี้ตรงกับบุคลิกของท่านเพียงใด
 						</h4>
-					</div>
-				</WhiteCard>
-				<WhiteCard>
-					<Grid container spacing={0}>
-						<Grid item xs={12}>
-							<FlexCenter>
-								<div style={{ width: 500 }}>
-									<Progress percent={50} status="active" />
-								</div>
-							</FlexCenter>
+						</div>
+					</WhiteCard>
+					<WhiteCard>
+						<Grid container spacing={0}>
+							<Grid item xs={12}>
+								<FlexCenter>
+									<div style={{ width: 500 }}>
+										<Progress percent={50} status="active" />
+									</div>
+								</FlexCenter>
+							</Grid>
 						</Grid>
-					</Grid>
-					<Grid container spacing={0}>
-						<Grid
-							style={{
-								display: 'flex',
-								justifyContent:'center'
-							}}
-							item
-							sm={3}
-						>
-							<Timeline>
-								<Timeline.Item color="green">ส่วนที่ 1 </Timeline.Item>
-								<Timeline.Item color="green">ส่วนที่ 2</Timeline.Item>
-								<Timeline.Item>ส่วนที่ 3 </Timeline.Item>
-								<Timeline.Item color="red">ส่วนที่ 6</Timeline.Item>
-							</Timeline>
+						<Grid container spacing={0}>
+							<Grid
+								style={{
+									display: 'flex',
+									justifyContent: 'center'
+								}}
+								item
+								sm={3}
+							>
+								<Timeline>
+									<Timeline.Item color="green">ส่วนที่ 1 </Timeline.Item>
+									<Timeline.Item color="green">ส่วนที่ 2</Timeline.Item>
+									<Timeline.Item>ส่วนที่ 3 </Timeline.Item>
+									<Timeline.Item color="red">ส่วนที่ 6</Timeline.Item>
+								</Timeline>
+							</Grid>
+							<Grid item sm={9}>
+								<Card title="xxx">
+									<QuizChoice />
+								</Card>
+							</Grid>
 						</Grid>
-						<Grid item sm={9}>
-
-						</Grid>
-					</Grid>
-				</WhiteCard>
-			</QuizWrapper>
+					</WhiteCard>
+				</QuizWrapper>
+			</Layout>
 		)
 	}
 }
