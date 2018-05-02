@@ -9,14 +9,16 @@ import styled from 'styled-components'
 import { FormGroup, FormControlLabel } from 'material-ui/Form'
 import Checkbox from 'material-ui/Checkbox'
 import { Button } from 'antd'
-
+import Tables from './components/Table'
+import moment from 'moment'
 const dataSource = []
 for (let i = 0; i < 46; i++) {
 	dataSource.push({
-		positionName: i,
-		category: `Mike-${i}`,
-		testField: '',
-		description: `My name is mister Mike ${i} eieieieieiei`
+		positionName: `Accountants - ${i}`,
+		category: `Business and Financial - ${i}`,
+		startDate: moment().format('DD MMMM YYYY'),
+		endDate: moment().format('DD MMMM YYYY'),
+		description: `There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable. ${i}`
 	})
 }
 
@@ -29,14 +31,9 @@ const columns = [{
 	dataIndex: 'category',
 	key: 'category',
 }, {
-	title: 'testField',
-	dataIndex: 'testField',
-	key: 'testField',
-}, {
-	title: '',
-	dataIndex: 'showmore',
-	key: 'showmore',
-	render: () => <div style={{ cursor: 'pointer' }} onClick={(event) => console.log(event.target)}>Showmore</div>
+	title: 'More info',
+	dataIndex: 'moreInfo',
+	key: 'moreInfo',
 }]
 
 const InputWrapper = styled.div`
@@ -154,6 +151,12 @@ class CreatePosition extends React.Component {
 								dataSource={dataSource}
 								columns={columns}
 								expandedRowRender={record => <p style={{ margin: 0 }}>{record.description}</p>}
+							/>
+							<Tables
+								dataSource={dataSource}
+								columns={columns}
+								rowPerPage={4}
+								ellipsis={15}
 							/>
 						</Card>
 					</Grid>
