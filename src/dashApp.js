@@ -14,6 +14,17 @@ import { themeConfig } from "./settings"
 import DashAppHolder from "./dashAppStyle"
 import Boot from "./redux/boot"
 import '../src/style/styles.less'
+import firebase from 'firebase'
+
+const firebaseConfig = {
+  apiKey: "AIzaSyBm9uQ4ESMQZzRoF9xUoz-BiArdXNg0MkY",
+  authDomain: "hireq-api.firebaseapp.com",
+  databaseURL: "https://hireq-api.firebaseio.com",
+  projectId: "hireq-api",
+  storageBucket: "hireq-api.appspot.com",
+  messagingSenderId: "893222093024"
+}
+firebase.initializeApp(firebaseConfig)
 
 const currentAppLocale =
   AppLocale[getCurrentLanguage(config.defaultLanguage || "english").locale]

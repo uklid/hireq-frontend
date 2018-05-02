@@ -18,7 +18,12 @@ import "./global.css"
 const { Content, Footer } = Layout
 const { logout } = authAction
 const { toggleAll } = appActions
+
 export class App extends Component {
+  constructor(props) {
+    super(props)
+    this.state = {}
+  }
   render() {
     const { url } = this.props.match
     const { height } = this.props
