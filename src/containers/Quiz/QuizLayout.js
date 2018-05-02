@@ -29,10 +29,19 @@ const FlexCenter = styled.div`
 	align-items: center;
 `
 
+const _quizMock = []
+for (let i = 1; i <= 20; i++) {
+	_quizMock.push({
+		quizTitle: `quiz choice - ${i}`,
+		radioName: i,
+		chooseChoice: Math.floor(Math.random() * 6)
+	})
+}
+
 class QuizLayout extends React.Component {
 	render() {
 		return (
-			<Layout style={{ minHeight: '100%'}}>
+			<Layout style={{ minHeight: '100%' }}>
 				<QuizWrapper>
 					<WhiteCard style={{
 						display: 'flex',
@@ -72,14 +81,22 @@ class QuizLayout extends React.Component {
 								<Timeline>
 									<Timeline.Item color="green">ส่วนที่ 1 </Timeline.Item>
 									<Timeline.Item color="green">ส่วนที่ 2</Timeline.Item>
-									<Timeline.Item>ส่วนที่ 3 </Timeline.Item>
-									<Timeline.Item color="red">ส่วนที่ 6</Timeline.Item>
+									<Timeline.Item color="green">ส่วนที่ 3 </Timeline.Item>
+									<Timeline.Item color="#eee">ส่วนที่ 6</Timeline.Item>
 								</Timeline>
 							</Grid>
 							<Grid item sm={9}>
-								<Card title="xxx">
-									<QuizChoice />
-								</Card>
+								{
+									_quizMock.map(data => {
+										return (
+											<QuizChoice
+												radioName={data.radioName}
+												quizTitle={data.quizTitle}
+												chooseChoice={data.chooseChoice}
+											/>
+										)
+									})
+								}
 							</Grid>
 						</Grid>
 					</WhiteCard>
