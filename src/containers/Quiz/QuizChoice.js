@@ -4,7 +4,7 @@ import styled from 'styled-components'
 const QuizWrapper = styled.div`
 	position: relative;
 	text-align: center;
-	width: 300px;
+	width: 400px;
 	height: 75px;
 `
 const Container = styled.label`
@@ -30,10 +30,10 @@ input {
 	width: ${({ width }) => width ? width : '25px'};
 	background-color: #fff;
 	border-radius: 50%;
-	border: 4px solid ${({ borderColor }) => borderColor ? borderColor : '#eee'};
+	border: 4px solid ${({ borderColor }) => borderColor || '#eee'};
 }
 input:checked ~ .checkmark {
-	background-color: ${({ activeColor }) => activeColor ? activeColor : '#fff'};
+	background-color: ${({ activeColor }) => activeColor || '#fff'};
 }
 .checkmark:after {
 	content: "";
@@ -47,13 +47,13 @@ input:checked ~ .checkmark:after {
 
 class QuizChoice extends React.Component {
 	onClick = (event) => {
-		console.log(event.target)
+		console.log(event.target.value)
 	}
 	render() {
-		const { radioName } = this.props
+		const { radioName, choiceSelect, quizTitle } = this.props
 		return (
 			<QuizWrapper>
-				<h4>Quiz</h4>
+				<h4>{quizTitle}</h4>
 				<div style={{ display: 'flex', justifyContent: 'space-around' }}>
 					<Container
 						height="50px"

@@ -29,6 +29,15 @@ const FlexCenter = styled.div`
 	align-items: center;
 `
 
+const _quizMock = []
+for (let i = 1; i <= 20; i++) {
+	_quizMock.push({
+		quizTitle: `quiz choice - ${i}`,
+		radioName: i,
+		chooseChoice: Math.floor(Math.random() * 6)
+	})
+}
+
 class QuizLayout extends React.Component {
 	render() {
 		return (
@@ -77,14 +86,17 @@ class QuizLayout extends React.Component {
 								</Timeline>
 							</Grid>
 							<Grid item sm={9}>
-								<QuizChoice radioName="1" />
-								<QuizChoice radioName="2" />
-								<QuizChoice radioName="3" />
-								<QuizChoice radioName="4" />
-								<QuizChoice radioName="5" />
-								<QuizChoice radioName="6" />
-
-								{/* <QuizChoice /> */}
+								{
+									_quizMock.map(data => {
+										return (
+											<QuizChoice
+												radioName={data.radioName}
+												quizTitle={data.quizTitle}
+												chooseChoice={data.chooseChoice}
+											/>
+										)
+									})
+								}
 							</Grid>
 						</Grid>
 					</WhiteCard>

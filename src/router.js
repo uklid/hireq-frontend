@@ -1,5 +1,5 @@
 import React from 'react'
-import { Route, Redirect } from 'react-router-dom'
+import { Route, Redirect, Switch } from 'react-router-dom'
 import { ConnectedRouter } from 'react-router-redux'
 import { connect } from 'react-redux'
 
@@ -14,37 +14,50 @@ const RestrictedRoute = ({ component: Component, isLoggedIn, ...rest }) => (
     render={props => isLoggedIn
       ? <Component {...props} />
       : <Redirect
-          to={{
-            pathname: '/signin',
-            state: { from: props.location },
-          }}
-        />}
+        to={{
+          pathname: '/signin',
+          state: { from: props.location },
+        }}
+      />}
   />
 )
 const PublicRoutes = ({ history, isLoggedIn }) => {
   return (
     <ConnectedRouter history={history}>
       <div>
-        <Route
-          exact
-          path={'/'}
-          component={asyncComponent(() => import('./containers/Page/signin'))}
-        />
-        <Route
-          exact
-          path={'/signin'}
-          component={asyncComponent(() => import('./containers/Page/signin'))}
-        />
-        <RestrictedRoute
-          path="/dashboard"
-          component={App}
-          isLoggedIn={isLoggedIn}
-        />
-        <RestrictedRoute
-          path="/quiz"
-          component={QuizLayout}
-          isLoggedIn={isLoggedIn}
-        />
+        <Switch>
+          <Route
+            exact
+            path={'/'}
+            component={asyncComponent(() => import('./containers/Page/signin'))}
+          />
+          <Route
+            exact
+            path={'/signin'}
+            component={asyncComponent(() => import('./containers/Page/signin'))}
+          />
+          <Route
+            exact
+            path={'/term-of-privacy'}
+            component={asyncComponent(() => import('./containers/Page/TermOfService'))}
+          />
+          <Route
+            exact
+            path={'/privacy'}
+            component={asyncComponent(() => import('./containers/Page/Privacy'))}
+          />
+          <RestrictedRoute
+            path="/dashboard"
+            component={App}
+            isLoggedIn={isLoggedIn}
+          />
+          <RestrictedRoute
+            path="/quiz"
+            component={QuizLayout}
+            isLoggedIn={isLoggedIn}
+          />
+          <Route render={() => <div>404 Not Found. Sorry</div>}/>
+        </Switch>
       </div>
     </ConnectedRouter>
   )
