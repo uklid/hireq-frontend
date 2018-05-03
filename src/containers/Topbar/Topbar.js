@@ -7,11 +7,16 @@ import TopbarWrapper from "./topbar.style"
 import themes from "../../settings/themes"
 import { themeConfig } from "../../settings"
 import { Link } from 'react-router-dom'
-
+import styled from 'styled-components'
 const { Header } = Layout
 const { toggleCollapsed } = appActions
 const customizedTheme = themes[themeConfig.theme]
 
+const TextStyled = styled.span`
+  font-size: 20px;
+  font-weight: bold;
+  color: rgba(0, 0, 0, 0.87);
+`
 class Topbar extends Component {
   render() {
     const { toggleCollapsed } = this.props
@@ -42,19 +47,19 @@ class Topbar extends Component {
               dashboard
             </Link> */}
             <Link style={{ marginLeft: 10, marginRight: 10 }} to="/dashboard">
-              Dashboard
+              <TextStyled>Dashboard</TextStyled>
             </Link>
             <Link style={{ marginLeft: 10, marginRight: 10 }} to="/dashboard/create-position">
-              position
+              <TextStyled>position</TextStyled>
             </Link>
             <Link style={{ marginLeft: 10, marginRight: 10 }} to="/dashboard/edit-position">
-              edit - position
+              <TextStyled>edit - position</TextStyled>
             </Link>
             <Link style={{ marginLeft: 10, marginRight: 10 }} to="/dashboard/position-detail">
-              position detail
+              <TextStyled>position detail</TextStyled>
             </Link>
             <Link style={{ marginLeft: 10, marginRight: 10 }} to="/dashboard/report">
-              Report
+              <TextStyled>Report</TextStyled>
             </Link>
           </div>
 

@@ -15,7 +15,14 @@ import Dialog, {
 	DialogTitle,
 } from 'material-ui/Dialog'
 import ToggleDisplay from 'react-toggle-display'
-
+const SliderStyled = styled(Slider)`
+  .ant-slider-handle {
+	border: solid 2px #954590;
+  }
+  .ant-slider-track {
+	background-color: #954590;
+  }
+`
 const Span = styled.span`
 	font-weight: 800;
 	margin-right: 5px;
@@ -148,7 +155,7 @@ class EditPosition extends React.Component {
 										</p>
 										<Grid container style={{ marginTop: 30 }}>
 											<Grid item sm={2}> Cognative Skill: </Grid>
-											<Grid item sm={4}><Slider defaultValue={30} /></Grid>
+											<Grid item sm={4}><SliderStyled defaultValue={30} /></Grid>
 										</Grid>
 									</Grid>
 									<Grid style={{ paddingTop: 60 }} container spaceing={24}>
