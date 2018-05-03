@@ -6,6 +6,7 @@ import Card from '../components/uielements/card'
 import { Table, Progress } from 'antd'
 import Tables from './Position/components/Table'
 import { GoogleChart } from '../containers/Charts/googleChart'
+import styled from 'styled-components'
 // import IsoWidgetsWrapper from '../components/uielements/progress'
 
 const dataSource = [{
@@ -37,9 +38,15 @@ const columns = [{
 const ProgressBarWithTitle = ({ title, percent, status }) => (
   <div style={{ marginBottom: 20 }}>
     <p style={{ marginBottom: 0 }}>{title}</p>
-    <Progress percent={percent} status={status} />
+    <ProgressStyled percent={percent} status={status} />
   </div>
 )
+
+const ProgressStyled = styled(Progress)`
+  .ant-progress-bg {
+    background-color: #954590;
+  }
+`
 
 const ConfigartionBarChart = {
   title: 'BarChart',
