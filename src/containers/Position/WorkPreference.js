@@ -1,13 +1,25 @@
 import React from 'react'
 import SpecifiedDomainRadarChart from '../../containers/Charts/recharts/charts/specifiedDomainRadarChart'
 import { Slider } from 'antd'
-
+import styled from 'styled-components'
 const DataSlider = ({ onChange, value, title }) => (
 	<div>
 		<h4>{title}</h4>
-		<Slider onChange={onChange} value={value} />
+		<SliderStyled onChange={onChange} value={value} />
 	</div>
 )
+
+const SliderStyled = styled(Slider)`
+  .ant-slider-handle {
+	border: solid 2px #954590;
+  }
+  .ant-slider-handle.ant-tooltip-open {
+	border-color: #651562 !important;
+}
+  .ant-slider-track {
+	background-color: #954590;
+  }
+`
 
 class WorkPreference extends React.Component {
 	constructor(props) {

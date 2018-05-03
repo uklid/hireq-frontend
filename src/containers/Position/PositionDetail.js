@@ -4,7 +4,6 @@ import styled from 'styled-components'
 import Grid from 'material-ui/Grid'
 import { Progress } from 'antd'
 import SpecifiedDomainRadarChart from '../../containers/Charts/recharts/charts/specifiedDomainRadarChart'
-
 // const screenHeight = window.innerHeight
 const screenWidth = (window.innerWidth / 2) - 100 <= 250 ? 350 : 600
 
@@ -15,6 +14,11 @@ const WhiteWrapper = styled.div`
 		h4 {
 			display: inline;
 		}
+`
+const ProgressStyled = styled(Progress)`
+  .ant-progress-bg {
+    background-color: #954590;
+  }
 `
 
 class PositionDetail extends React.Component {
@@ -60,7 +64,7 @@ class PositionDetail extends React.Component {
 					<Grid item sm={12} xs={12}>
 						<WhiteWrapper>
 							<h3> Cognative Ability </h3>
-							<Progress percent={40} />
+							<ProgressStyled percent={40} />
 						</WhiteWrapper>
 					</Grid>
 				</Grid>
