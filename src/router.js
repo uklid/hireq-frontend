@@ -21,9 +21,10 @@ const RestrictedRoute = ({ component: Component, isLoggedIn, ...rest }) => (
       />}
   />
 )
-const PublicRoutes = ({ history, isLoggedIn }) => {
+const PublicRoutes = (props) => {
+  console.log("isLoggin = ", props)
   return (
-    <ConnectedRouter history={history}>
+    <ConnectedRouter history={props.history}>
       <div>
         <Switch>
           <Route
@@ -49,20 +50,28 @@ const PublicRoutes = ({ history, isLoggedIn }) => {
           <RestrictedRoute
             path="/dashboard"
             component={App}
-            isLoggedIn={isLoggedIn}
+            isLoggedIn={props.isLoggedIn}
           />
           <RestrictedRoute
             path="/quiz"
             component={QuizLayout}
-            isLoggedIn={isLoggedIn}
+            isLoggedIn={props.isLoggedIn}
           />
-          <Route render={() => <div>404 Not Found. Sorry</div>}/>
+          <Route render={() => <div>404 Not Found. Sorry</div>} />
         </Switch>
       </div>
     </ConnectedRouter>
   )
 }
 
-export default connect(state => ({
-  isLoggedIn: state.Auth.get('idToken') !== null,
-}))(PublicRoutes)
+const mapStateToProps = state => {
+  return {
+    isLoggedIn: state.Auth.isLoggedIn
+  }
+}
+
+export default connect(mapStateToProps, null)(PublicRoutes)
+
+// export default connect(state => ({
+//   isLoggedIn: state.Auth.get('idToken') !== null,
+// }))(PublicRoutes)

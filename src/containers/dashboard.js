@@ -4,6 +4,7 @@ import LayoutContent from '../components/utility/layoutContent'
 import Grid from 'material-ui/Grid'
 import Card from '../components/uielements/card'
 import { Table, Progress } from 'antd'
+import Tables from './Position/components/Table'
 import { GoogleChart } from '../containers/Charts/googleChart'
 // import IsoWidgetsWrapper from '../components/uielements/progress'
 
@@ -195,7 +196,12 @@ export default class extends Component {
               title="Opened Positions"
               style={{ width: '100%', textAlign: 'center' }}
             >
-              <Table dataSource={dataSource} columns={columns} />
+              <Tables
+                dataSource={dataSource}
+                columns={columns}
+                rowPerPage={10}
+                ellipsis={10}
+              />
             </Card>
           </Grid>
         </Grid>
@@ -214,7 +220,12 @@ export default class extends Component {
               title="Opened Positions"
               style={{ width: '100%', textAlign: 'center' }}
             >
-              <Table dataSource={dataSource} columns={columns} />
+              <Tables
+                dataSource={dataSource}
+                columns={columns}
+                rowPerPage={10}
+                ellipsis={10}
+              />
             </Card>
           </Grid>
         </Grid>

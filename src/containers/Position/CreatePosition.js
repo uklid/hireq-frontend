@@ -146,17 +146,23 @@ class CreatePosition extends React.Component {
 						<Card
 							title="Result"
 						>
-							<Table
+							{/* <Table
 								bordered
 								dataSource={dataSource}
 								columns={columns}
 								expandedRowRender={record => <p style={{ margin: 0 }}>{record.description}</p>}
+							/> */}
+							<Tables
+								dataSource={dataSource}
+								columns={columns}
+								rowPerPage={4}
+								ellipsis={4}
 							/>
 							<Tables
 								dataSource={dataSource}
 								columns={columns}
 								rowPerPage={4}
-								ellipsis={15}
+								ellipsis={4}
 							/>
 						</Card>
 					</Grid>

@@ -12,7 +12,7 @@ import config, {
 } from "./containers/LanguageSwitcher/config"
 import { themeConfig } from "./settings"
 import DashAppHolder from "./dashAppStyle"
-import Boot from "./redux/boot"
+// import Boot from "./redux/boot"
 import '../src/style/styles.less'
 import firebase from 'firebase'
 
@@ -45,9 +45,9 @@ const DashApp = () => (
     </IntlProvider>
   </LocaleProvider>
 )
-Boot()
-  .then(() => DashApp())
-  .catch(error => console.error(error))
+// Boot()
+//   .then(() => DashApp())
+//   .catch(error => console.error(error))
 
 export default DashApp
 export { AppLocale }

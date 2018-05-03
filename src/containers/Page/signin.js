@@ -5,6 +5,7 @@ import Input from '../../components/uielements/input'
 import Checkbox from '../../components/uielements/checkbox'
 import Button from '../../components/uielements/button'
 import styled from 'styled-components'
+import { LoginCheck } from '../../redux/auth/actions'
 // import authAction from '../../redux/auth/actions'
 // import IntlMessages from '../../components/utility/intlMessages'
 // import SignInStyleWrapper from './signin.style'
@@ -35,16 +36,20 @@ const SignInBlock = styled.div`
 `
 
 class SignIn extends Component {
-  handleLogin = () => {
-    const { login } = this.props
-    this.props.history.push('/dashboard')
+  handleLogin = async () => {
+    const { LoginCheck } = this.props
+    await LoginCheck()
+    // this.props.history.push('/dashboard')
   }
   render() {
+    console.log("Props =",this.props)
+    const { errorMessage } = this.props
     return (
       <SignInWrapper>
         <WhiteWrapper>
           <SignInBlock>
             <h1 style={{ textAlign: 'center', marginBottom: 30 }}>LOGIN</h1>
+            <p style={{ color:'red' }}> { errorMessage && errorMessage } </p>
             <Input style={{ marginBottom: 15 }} size="large" placeholder="Username" />
             <Input style={{ marginBottom: 23 }} size="large" placeholder="Password" />
             <Button
@@ -62,7 +67,13 @@ class SignIn extends Component {
   }
 }
 
-export default SignIn
+const mapStateToProps = (state) => {
+  return {
+    errorMessage: state.Auth.errorMessage
+  }
+}
+
+export default connect(mapStateToProps, { LoginCheck })(SignIn)
 
 // const { login } = authAction
 

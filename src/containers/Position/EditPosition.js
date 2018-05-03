@@ -4,6 +4,7 @@ import Grid from 'material-ui/Grid'
 import Card from '../../components/uielements/card'
 import styled from 'styled-components'
 import { Table, DatePicker, Slider, Button } from 'antd'
+import Tables from './components/Table'
 import CriticalSoftSkills from './CriticalSoftSkills'
 import moment from 'moment'
 import WorkPreference from './WorkPreference'
@@ -123,7 +124,12 @@ class EditPosition extends React.Component {
 					</Grid>
 					<Grid item sm={8}>
 						<Card title="Outstanding Candidates">
-							<Table dataSource={dataSouce} columns={columns} />
+							<Tables
+								dataSource={dataSouce}
+								columns={columns}
+								rowPerPage={10}
+								ellipsis={10}
+							/>
 						</Card>
 					</Grid>
 				</Grid>
@@ -177,14 +183,24 @@ class EditPosition extends React.Component {
 						<Grid style={{ marginTop: 40 }} container spacing={0}>
 							<Grid item sm={12}>
 								<Card title="Complete Candidates">
-									<Table dataSource={dataSouce2} columns={columns} />
+									<Tables
+										dataSource={dataSouce2}
+										columns={columns}
+										rowPerPage={10}
+										ellipsis={10}
+									/>
 								</Card>
 							</Grid>
 						</Grid>
 						<Grid style={{ marginTop: 40 }} container spacing={0}>
 							<Grid item sm={12}>
 								<Card title="Uncomplete Candidates">
-									<Table dataSource={dataSouce3} columns={columns} />
+									<Tables
+										dataSource={dataSouce3}
+										columns={columns}
+										rowPerPage={10}
+										ellipsis={10}
+									/>
 								</Card>
 							</Grid>
 						</Grid>
@@ -192,7 +208,7 @@ class EditPosition extends React.Component {
 							<Grid item>
 								<Button style={{ color: '#fff', backgroundColor: '#954590' }}>
 									Add Candidates.
-									</Button>
+								</Button>
 							</Grid>
 						</Grid>
 					</div>
