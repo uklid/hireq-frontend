@@ -9,6 +9,8 @@ import {
 	Layout
 } from 'antd'
 import QuizChoice from './QuizChoice'
+import { connect } from 'react-redux'
+import { increaseTime } from '../../redux/timer/actions'
 
 const QuizWrapper = styled.div`
 	height: 100%;
@@ -29,6 +31,18 @@ const FlexCenter = styled.div`
 	align-items: center;
 `
 
+const ProgressWithStyled = styled(Progress) `
+	.ant-progress-bg {
+		background-color: #954590;
+	}
+`
+
+const TimelineStyled = styled(Timeline) `
+  #activeTimeline .ant-timeline-item-head {
+		background-color: #954590;
+	}
+`
+
 const _quizMock = []
 for (let i = 1; i <= 20; i++) {
 	_quizMock.push({
@@ -39,7 +53,14 @@ for (let i = 1; i <= 20; i++) {
 }
 
 class QuizLayout extends React.Component {
+	componentDidMount = () => {
+		const { increaseTime } = this.props
+		setInterval(() => {
+			increaseTime()
+		} , 1000)
+	}
 	render() {
+		const { timeNow } = this.props
 		return (
 			<Layout style={{ minHeight: '100%' }}>
 				<QuizWrapper>
@@ -57,6 +78,9 @@ class QuizLayout extends React.Component {
 							<h4>
 								ข้อความต่อไปนี้ตรงกับบุคลิกของท่านเพียงใด
 						</h4>
+							<h1 style={{ color: 'red' }}>
+								{timeNow}
+							</h1>
 						</div>
 					</WhiteCard>
 					<WhiteCard>
@@ -64,7 +88,7 @@ class QuizLayout extends React.Component {
 							<Grid item xs={12}>
 								<FlexCenter>
 									<div style={{ width: 500 }}>
-										<Progress percent={50} status="active" />
+										<ProgressWithStyled percent={50} status="active" />
 									</div>
 								</FlexCenter>
 							</Grid>
@@ -78,12 +102,12 @@ class QuizLayout extends React.Component {
 								item
 								sm={3}
 							>
-								<Timeline>
-									<Timeline.Item color="green">ส่วนที่ 1 </Timeline.Item>
-									<Timeline.Item color="green">ส่วนที่ 2</Timeline.Item>
-									<Timeline.Item color="green">ส่วนที่ 3 </Timeline.Item>
+								<TimelineStyled >
+									<Timeline.Item color="#954590">ส่วนที่ 1 </Timeline.Item>
+									<Timeline.Item id="activeTimeline" color="#954590">ส่วนที่ 2</Timeline.Item>
+									<Timeline.Item color="#eee">ส่วนที่ 3 </Timeline.Item>
 									<Timeline.Item color="#eee">ส่วนที่ 6</Timeline.Item>
-								</Timeline>
+								</TimelineStyled>
 							</Grid>
 							<Grid item sm={9}>
 								{
@@ -106,4 +130,10 @@ class QuizLayout extends React.Component {
 	}
 }
 
-export default QuizLayout
+const mapStateToProps = (state) => {
+	return {
+		timeNow: state.Time.time
+	}
+}
+
+export default connect(mapStateToProps, { increaseTime })(QuizLayout)

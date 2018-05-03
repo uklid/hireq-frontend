@@ -16,8 +16,6 @@ for (let i = 0; i < 46; i++) {
 	dataSource.push({
 		positionName: `Accountants - ${i}`,
 		category: `Business and Financial - ${i}`,
-		startDate: moment().format('DD MMMM YYYY'),
-		endDate: moment().format('DD MMMM YYYY'),
 		description: `There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable. ${i}`
 	})
 }
@@ -87,10 +85,36 @@ const FilterField = ({ checked, onChange, value, label }) => (
 )
 
 class CreatePosition extends React.Component {
+
+	componentWillMount = () => {
+		this.setState({
+			dataSource: dataSource
+		})
+	}
+
 	state = {
 		showAll: false,
 		showOpen: false,
 		showFinished: false,
+	}
+
+	onSearch = (event) => {
+
+		const filter = event.target.value.toUpperCase()
+
+		const result = dataSource.filter(word => {
+			const resultSearch = Object.keys(word).map(e => {
+				if (word[e].toUpperCase().includes(filter)) {
+					return word[e].toUpperCase().includes(filter)
+				}
+			})
+			if (resultSearch.includes(true)) {
+				return word
+			}
+		})
+		this.setState({
+			dataSource: result
+		})
 	}
 
 	filterOnChange = (name) => (event) => {
@@ -112,6 +136,7 @@ class CreatePosition extends React.Component {
 									placeholder="Search here"
 									margin="normal"
 									className="floating-textfield"
+									onChange={this.onSearch}
 								/>
 							</InputWrapper>
 							<ButtonWrapper>
@@ -153,17 +178,19 @@ class CreatePosition extends React.Component {
 								expandedRowRender={record => <p style={{ margin: 0 }}>{record.description}</p>}
 							/> */}
 							<Tables
+								tableId="myTable"
+								// dataSource={dataSource}
+								dataSource={this.state.dataSource}
+								columns={columns}
+								rowPerPage={7}
+								ellipsis={4}
+							/>
+							{/* <Tables
 								dataSource={dataSource}
 								columns={columns}
 								rowPerPage={4}
 								ellipsis={4}
-							/>
-							<Tables
-								dataSource={dataSource}
-								columns={columns}
-								rowPerPage={4}
-								ellipsis={4}
-							/>
+							/> */}
 						</Card>
 					</Grid>
 				</Grid>

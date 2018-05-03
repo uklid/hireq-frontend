@@ -58,35 +58,37 @@ export default class Tables extends Component {
 		}
 	}
 
-    render() {
-        const { columns, dataSource, dataShow, rowPerPage, ellipsis } = this.props
-        const numOfPage = Math.ceil(dataSource.length / rowPerPage)
-        const pages = [...Array(numOfPage).keys()];
-        const startData = (this.state.currentPage - 1) * rowPerPage
-        const endData = (this.state.currentPage) * rowPerPage
-        return (
-            <div>
-                <TableStyled>
-                    <thead>
-                        <TRheadStyled>{columns.map((column, index) => (
-                            <THstyled key={index}><span>{column.title}</span></THstyled>
-                        ))}
-                        </TRheadStyled>
-                    </thead>
-                    <tbody>
-                        {dataSource.slice(startData, endData).map(data => (
-                            <RowData
-                                data={data}
-                                columns={columns}
-                            />
-                        ))}
-                    </tbody>
-                </TableStyled>
-                <Pagination>
-                    <PaginationItem
-                        onClick={() => this.backward(numOfPage)}
-                    >
-                        &lt;
+	render() {
+		const { columns, dataSource, dataShow, rowPerPage, ellipsis, tableId } = this.props
+		const numOfPage = Math.ceil(dataSource.length / rowPerPage)
+		const pages = [...Array(numOfPage).keys()];
+		const startData = (this.state.currentPage - 1) * rowPerPage
+		const endData = (this.state.currentPage) * rowPerPage
+		return (
+			<div>
+				<TableStyled
+					id={tableId}
+				>
+					<thead>
+						<TRheadStyled>{columns.map((column, index) => (
+							<THstyled key={index}><span>{column.title}</span></THstyled>
+						))}
+						</TRheadStyled>
+					</thead>
+					<tbody>
+						{dataSource.slice(startData, endData).map(data => (
+							<RowData
+								data={data}
+								columns={columns}
+							/>
+						))}
+					</tbody>
+				</TableStyled>
+				<Pagination>
+					<PaginationItem
+						onClick={() => this.backward(numOfPage)}
+					>
+						&lt;
                     </PaginationItem>
 					{pages.length < ellipsis && pages.map(page => (
 						<PaginationItem

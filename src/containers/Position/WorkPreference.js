@@ -9,16 +9,16 @@ const DataSlider = ({ onChange, value, title }) => (
 	</div>
 )
 
-const SliderStyled = styled(Slider)`
+const SliderStyled = styled(Slider) `
   .ant-slider-handle {
-	border: solid 2px #954590;
+		border: solid 2px #954590;
   }
-  .ant-slider-handle.ant-tooltip-open {
-	border-color: #651562 !important;
-}
+  .ant-slider-handle .ant-tooltip-open {
+		border-color: #651562 !important;
+	}
   .ant-slider-track {
-	background-color: #954590;
-  }
+		background-color: #954590;
+	}
 `
 
 class WorkPreference extends React.Component {
@@ -64,12 +64,12 @@ class WorkPreference extends React.Component {
 		return (
 			<div>
 				<SpecifiedDomainRadarChart {...this.state.config} datas={this.state.datas} />
-				<DataSlider title="Performance and Project" onChange={this.onChange(0)} value={this.state.datas[0].value}/>
-				<DataSlider title="Leadership and Organizational Management" onChange={this.onChange(1)} value={this.state.datas[1].value}/>
-				<DataSlider title="Communication, Persuation and Negotiation" onChange={this.onChange(2)} value={this.state.datas[2].value}/>
-				<DataSlider title="People and Interpersonal Skills" onChange={this.onChange(3)} value={this.state.datas[3].value}/>
-				<DataSlider title="Political and Cultural Skills" onChange={this.onChange(4)} value={this.state.datas[4].value}/>
-				<DataSlider title="Productivity and Effectiveness at Work" onChange={this.onChange(5)} value={this.state.datas[5].value}/>
+				<DataSlider title="Performance and Project" onChange={this.onChange(0)} value={this.state.datas[0].value} />
+				<DataSlider title="Leadership and Organizational Management" onChange={this.onChange(1)} value={this.state.datas[1].value} />
+				<DataSlider title="Communication, Persuation and Negotiation" onChange={this.onChange(2)} value={this.state.datas[2].value} />
+				<DataSlider title="People and Interpersonal Skills" onChange={this.onChange(3)} value={this.state.datas[3].value} />
+				<DataSlider title="Political and Cultural Skills" onChange={this.onChange(4)} value={this.state.datas[4].value} />
+				<DataSlider title="Productivity and Effectiveness at Work" onChange={this.onChange(5)} value={this.state.datas[5].value} />
 			</div>
 		)
 	}

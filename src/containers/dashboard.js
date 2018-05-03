@@ -42,7 +42,7 @@ const ProgressBarWithTitle = ({ title, percent, status }) => (
   </div>
 )
 
-const ProgressStyled = styled(Progress)`
+const ProgressStyled = styled(Progress) `
   .ant-progress-bg {
     background-color: #954590;
   }
@@ -183,19 +183,19 @@ export default class extends Component {
               style={{ marginBottom: 20, width: '100%', textAlign: 'center' }}
             >
               <h4>Total Positions</h4>
-              <h1 style={{ fontSize: 50 }}>50</h1>
+              <h1 style={{ fontSize: 50, color: '#954590' }}>50</h1>
             </Card>
             <Card
               style={{ marginBottom: 20, width: '100%', textAlign: 'center' }}
             >
               <h4>Total Candidates</h4>
-              <h1 style={{ fontSize: 50 }}>50</h1>
+              <h1 style={{ fontSize: 50, color: '#954590' }}>50</h1>
             </Card>
             <Card
               style={{ marginBottom: 20, width: '100%', textAlign: 'center' }}
             >
               <h4>Remaining Positions</h4>
-              <h1 style={{ fontSize: 50 }}>50</h1>
+              <h1 style={{ fontSize: 50, color: '#954590' }}>50</h1>
             </Card>
           </Grid>
           <Grid item md={8}>
