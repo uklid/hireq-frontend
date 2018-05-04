@@ -57,7 +57,7 @@ class QuizLayout extends React.Component {
 		const { increaseTime } = this.props
 		setInterval(() => {
 			increaseTime()
-		} , 1000)
+		}, 1000)
 	}
 	render() {
 		const { timeNow } = this.props
@@ -102,7 +102,7 @@ class QuizLayout extends React.Component {
 								item
 								sm={3}
 							>
-								<TimelineStyled >
+								<TimelineStyled>
 									<Timeline.Item color="#954590">ส่วนที่ 1 </Timeline.Item>
 									<Timeline.Item id="activeTimeline" color="#954590">ส่วนที่ 2</Timeline.Item>
 									<Timeline.Item color="#eee">ส่วนที่ 3 </Timeline.Item>

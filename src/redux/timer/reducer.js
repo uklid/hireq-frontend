@@ -1,4 +1,6 @@
-const Time = (state = { time: 0 }, action) => {
+import moment from 'moment'
+
+const Time = (state = { time: moment("2", "hms").format("HH:mm:ss") }, action) => {
   switch (action.type) {
     case 'INCREASE':
       return {
