@@ -127,7 +127,7 @@ class CreatePosition extends React.Component {
 		return (
 			<LayoutContentWrapper>
 				<Grid container spacing={0}>
-					<Grid item sm={12}>
+					<Grid item sm={12} xs={12}>
 						<Card>
 							<InputWrapper>
 								<Ionicon className="floating-icon" icon="ios-search-outline" fontSize="35px" />
@@ -167,9 +167,10 @@ class CreatePosition extends React.Component {
 					</Grid>
 				</Grid>
 				<Grid style={{ marginTop: 30 }} container spacing={0}>
-					<Grid item sm={12}>
+					<Grid item sm={12} xs={12}>
 						<Card
 							title="Result"
+							style={{ overflowX: 'scroll' }}
 						>
 							{/* <Table
 								bordered

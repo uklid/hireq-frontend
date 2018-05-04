@@ -10,7 +10,8 @@ import {
 } from 'antd'
 import QuizChoice from './QuizChoice'
 import { connect } from 'react-redux'
-import { increaseTime } from '../../redux/timer/actions'
+import { decreaseTime } from '../../redux/timer/actions'
+import moment from 'moment'
 
 const QuizWrapper = styled.div`
 	height: 100%;
@@ -54,13 +55,16 @@ for (let i = 1; i <= 20; i++) {
 
 class QuizLayout extends React.Component {
 	componentDidMount = () => {
-		const { increaseTime } = this.props
+		const { decreaseTime, timeNow } = this.props
 		setInterval(() => {
-			increaseTime()
+			decreaseTime()
 		}, 1000)
 	}
 	render() {
 		const { timeNow } = this.props
+		if (timeNow <= 0) {
+			this.props.history.push('/dashboard')
+		}
 		return (
 			<Layout style={{ minHeight: '100%' }}>
 				<QuizWrapper>
@@ -79,7 +83,7 @@ class QuizLayout extends React.Component {
 								ข้อความต่อไปนี้ตรงกับบุคลิกของท่านเพียงใด
 						</h4>
 							<h1 style={{ color: 'red' }}>
-								{timeNow}
+								{moment.utc(timeNow).format("HH:mm:ss")}
 							</h1>
 						</div>
 					</WhiteCard>
@@ -101,6 +105,7 @@ class QuizLayout extends React.Component {
 								}}
 								item
 								sm={3}
+								xs={12}
 							>
 								<TimelineStyled>
 									<Timeline.Item color="#954590">ส่วนที่ 1 </Timeline.Item>
@@ -109,7 +114,7 @@ class QuizLayout extends React.Component {
 									<Timeline.Item color="#eee">ส่วนที่ 6</Timeline.Item>
 								</TimelineStyled>
 							</Grid>
-							<Grid item sm={9}>
+							<Grid item sm={9} xs={12}>
 								{
 									_quizMock.map(data => {
 										return (
@@ -130,10 +135,6 @@ class QuizLayout extends React.Component {
 	}
 }
 
-const mapStateToProps = (state) => {
-	return {
-		timeNow: state.Time.time
-	}
-}
+const mapStateToProps = (state) => ({ timeNow: state.Time.time })
 
-export default connect(mapStateToProps, { increaseTime })(QuizLayout)
+export default connect(mapStateToProps, { decreaseTime })(QuizLayout)

@@ -100,7 +100,8 @@ const onChange = (date, dateString) => {
 class EditPosition extends React.Component {
 	state = {
 		open: false,
-		showEdit: false,
+		showEdit: true,
+		// showEdit: false,
 	}
 
 	handleClose = () => {
@@ -119,7 +120,7 @@ class EditPosition extends React.Component {
 		return (
 			<LayoutContentWrapper>
 				<Grid container spacing={24}>
-					<Grid item sm={4}>
+					<Grid item sm={4} xs={12}>
 						<Card>
 							<p> <Span>Position Name: </Span> Accountant </p>
 							<p> <Span>Category: </Span> Finance </p>
@@ -129,8 +130,11 @@ class EditPosition extends React.Component {
 
 						</Card>
 					</Grid>
-					<Grid item sm={8}>
-						<Card title="Outstanding Candidates">
+					<Grid item sm={8} xs={12}>
+						<Card 
+							title="Outstanding Candidates"
+							style={{ overflowX: 'scroll' }}
+						>
 							<Tables
 								dataSource={dataSouce}
 								columns={columns}
@@ -141,12 +145,12 @@ class EditPosition extends React.Component {
 					</Grid>
 				</Grid>
 				<Grid style={{ marginTop: 40 }} container spacing={24}>
-					<Grid item sm={12}>
+					<Grid item sm={12} xs={12}>
 						<Card>
 							<h3 style={{ marginBottom: 30, cursor: 'pointer' }} onClick={this.openEdit}>Edit Position Detail.</h3>
 							<ToggleDisplay show={this.state.showEdit}>
 								<Grid container spacing={0}>
-									<Grid item sm={12}>
+									<Grid item sm={12} xs={12}>
 										<p>
 											<span> Start Date: {`${moment(new Date()).format("DD/MM/YY")}`}</span>
 											<span>
@@ -154,15 +158,15 @@ class EditPosition extends React.Component {
 											</span>
 										</p>
 										<Grid container style={{ marginTop: 30 }}>
-											<Grid item sm={2}> Cognative Skill: </Grid>
-											<Grid item sm={4}><SliderStyled defaultValue={30} /></Grid>
+											<Grid item sm={2} xs={12}> Cognative Skill: </Grid>
+											<Grid item sm={4} xs={12}><SliderStyled defaultValue={30} /></Grid>
 										</Grid>
 									</Grid>
 									<Grid style={{ paddingTop: 60 }} container spaceing={24}>
-										<Grid item sm={6}>
+										<Grid item sm={6} xs={12}>
 											<CriticalSoftSkills />
 										</Grid>
-										<Grid item sm={6}>
+										<Grid item sm={6} xs={12}>
 											<WorkPreference />
 										</Grid>
 									</Grid>
@@ -188,8 +192,13 @@ class EditPosition extends React.Component {
 					this.state.showEdit &&
 					<div style={{ width: '100%' }}>
 						<Grid style={{ marginTop: 40 }} container spacing={0}>
-							<Grid item sm={12}>
-								<Card title="Complete Candidates">
+							<Grid item sm={12} xs={12}>
+								<Card 
+									title="Complete Candidates"
+									style={{
+										overflowX: 'scroll'
+									}}
+								>
 									<Tables
 										dataSource={dataSouce2}
 										columns={columns}
@@ -200,8 +209,13 @@ class EditPosition extends React.Component {
 							</Grid>
 						</Grid>
 						<Grid style={{ marginTop: 40 }} container spacing={0}>
-							<Grid item sm={12}>
-								<Card title="Uncomplete Candidates">
+							<Grid item sm={12} xs={12}>
+								<Card 
+									title="Uncomplete Candidates"
+									style={{
+										overflowX: 'scroll'
+									}}
+								>
 									<Tables
 										dataSource={dataSouce3}
 										columns={columns}

@@ -9,6 +9,14 @@ const DataSlider = ({ onChange, value, title }) => (
 	</div>
 )
 
+const ChartWrapper = styled.div `
+	@media only screen and (max-width: 700px) {
+		.isoChartWrapper {
+			overflow-x: scroll;
+		}
+	}
+`
+
 const SliderStyled = styled(Slider) `
   .ant-slider-handle {
 		border: solid 2px #954590;
@@ -62,7 +70,7 @@ class WorkPreference extends React.Component {
 
 	render() {
 		return (
-			<div>
+			<ChartWrapper>
 				<SpecifiedDomainRadarChart {...this.state.config} datas={this.state.datas} />
 				<DataSlider title="Performance and Project" onChange={this.onChange(0)} value={this.state.datas[0].value} />
 				<DataSlider title="Leadership and Organizational Management" onChange={this.onChange(1)} value={this.state.datas[1].value} />
@@ -70,7 +78,7 @@ class WorkPreference extends React.Component {
 				<DataSlider title="People and Interpersonal Skills" onChange={this.onChange(3)} value={this.state.datas[3].value} />
 				<DataSlider title="Political and Cultural Skills" onChange={this.onChange(4)} value={this.state.datas[4].value} />
 				<DataSlider title="Productivity and Effectiveness at Work" onChange={this.onChange(5)} value={this.state.datas[5].value} />
-			</div>
+			</ChartWrapper>
 		)
 	}
 }

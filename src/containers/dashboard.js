@@ -178,7 +178,7 @@ export default class extends Component {
         {/* <LayoutContent>
         </LayoutContent> */}
         <Grid container spacing={8}>
-          <Grid item md={4}>
+          <Grid item md={4} xs={12}>
             <Card
               style={{ marginBottom: 20, width: '100%', textAlign: 'center' }}
             >
@@ -198,7 +198,7 @@ export default class extends Component {
               <h1 style={{ fontSize: 50, color: '#954590' }}>50</h1>
             </Card>
           </Grid>
-          <Grid item md={8}>
+          <Grid item md={8} xs={12}>
             <Card
               title="Opened Positions"
               style={{ width: '100%', textAlign: 'center' }}
@@ -213,7 +213,7 @@ export default class extends Component {
           </Grid>
         </Grid>
         <Grid container spacing={8}>
-          <Grid item md={4}>
+          <Grid item md={4} xs={12}>
             <Card
               title="Income"
             >
@@ -222,7 +222,7 @@ export default class extends Component {
               <ProgressBarWithTitle title="Progress 1" percent={50} status="active" />
             </Card>
           </Grid>
-          <Grid item md={8}>
+          <Grid item md={8} xs={12}>
             <Card
               title="Opened Positions"
               style={{ width: '100%', textAlign: 'center' }}
@@ -237,7 +237,7 @@ export default class extends Component {
           </Grid>
         </Grid>
         <Grid style={{ padding: 15 }} container spacing={8} justify="space-between">
-          <Grid item sm={6}>
+          <Grid item sm={6} xs={12}>
             <Card
               title="Candidate's Q-Score"
               style={{ width: '100%' }}
@@ -245,7 +245,7 @@ export default class extends Component {
               <GoogleChart {...ConfigartionBarChart} />
             </Card>
           </Grid>
-          <Grid item sm={6}>
+          <Grid item sm={6} xs={12}>
             <Card
               title="Q-Score comparison"
               style={{ width: '100%' }}

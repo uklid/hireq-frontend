@@ -33,12 +33,14 @@ const TopbarWrapper = styled.div`
     }
 
     .isoLeft {
+
       display: flex;
       align-items: center;
 
       @media only screen and (max-width: 767px) {
         margin: ${props =>
           props["data-rtl"] === "rtl" ? "0 0 0 20px" : "0 20px 0 0"};
+        overflow-x: scroll;
       }
 
       .triggerBtn {

@@ -6,6 +6,18 @@ const QuizWrapper = styled.div`
 	text-align: center;
 	width: 400px;
 	height: 75px;
+
+	@media only screen and (max-width: 767px) {
+		width: 264px;
+	}
+
+	h4 {
+		margin-top: 15px;
+		margin-left: 15px;
+	}
+	input[type="radio"] {
+		display: none;
+	}
 `
 const Container = styled.label`
 	display: block;
@@ -55,6 +67,7 @@ class QuizChoice extends React.Component {
 			<QuizWrapper>
 				<h4>{quizTitle}</h4>
 				<div style={{ display: 'flex', justifyContent: 'space-around' }}>
+					<h4 style={{ color: '#09b29c' }}> ตรงมาก </h4>
 					<Container
 						height="50px"
 						width="50px"
@@ -104,10 +117,14 @@ class QuizChoice extends React.Component {
 						width="50px"
 						borderColor="#954590"
 						activeColor="#954590"
+						style={{
+							marginLeft: 8
+						}}
 					>
 						<input type="radio" name={radioName} value="1" onClick={this.onClick} />
 						<span class="checkmark"></span>
 					</Container>
+					<h4 style={{ color: '#954590' }}> ไม่ตรง </h4>
 				</div>
 			</QuizWrapper>
 		)

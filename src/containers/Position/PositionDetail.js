@@ -15,10 +15,19 @@ const WhiteWrapper = styled.div`
 			display: inline;
 		}
 `
-const ProgressStyled = styled(Progress)`
+
+const ProgressStyled = styled(Progress) `
   .ant-progress-bg {
     background-color: #954590;
   }
+`
+
+const ChartWrapper = styled.div`
+	@media only screen and (max-width: 700px) {
+		.isoChartWrapper {
+			overflow-x: scroll;
+		}
+	}
 `
 
 class PositionDetail extends React.Component {
@@ -71,14 +80,18 @@ class PositionDetail extends React.Component {
 				<Grid style={{ marginTop: 30 }} container spacing={24}>
 					<Grid item sm={6} xs={12}>
 						<WhiteWrapper>
-							<h3>Critical SoftSkill</h3>
-							<SpecifiedDomainRadarChart {...this.state.config} datas={this.state.datas} />
+							<ChartWrapper>
+								<h3>Critical SoftSkill</h3>
+								<SpecifiedDomainRadarChart {...this.state.config} datas={this.state.datas} />
+							</ChartWrapper>
 						</WhiteWrapper>
 					</Grid>
 					<Grid item sm={6} xs={12}>
 						<WhiteWrapper>
-							<h3>Work Preference</h3>
-							<SpecifiedDomainRadarChart {...this.state.config} datas={this.state.datas} />
+							<ChartWrapper>
+								<h3>Work Preference</h3>
+								<SpecifiedDomainRadarChart {...this.state.config} datas={this.state.datas} />
+							</ChartWrapper>
 						</WhiteWrapper>
 					</Grid>
 				</Grid>
