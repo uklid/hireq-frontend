@@ -29,10 +29,17 @@ const WhiteWrapper = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
+
+  @media only screen and (max-width: 767px) {
+    width: 90%;
+    height: 375px;
+  }
 `
 
 const SignInBlock = styled.div`
-
+  @media only screen and (max-width: 767px) {
+    width: 85%;
+  }
 `
 
 class SignIn extends Component {

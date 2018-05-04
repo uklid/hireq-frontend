@@ -236,7 +236,7 @@ export default class extends Component {
             </Card>
           </Grid>
         </Grid>
-        <Grid style={{ padding: 15 }} container spacing={8} justify="space-between">
+        <Grid style={{ marginTop: 20 }} container spacing={8} justify="space-between">
           <Grid item sm={6} xs={12}>
             <Card
               title="Candidate's Q-Score"

@@ -13,12 +13,18 @@ const TopbarWrapper = styled.div`
       props["data-rtl"] === "rtl" ? "0 30px 0 31px" : "0 31px 0 30px"};
     z-index: 1000;
     ${transition()};
-
+    
+    button {
+      display: none !important;
+    }
     @media only screen and (max-width: 767px) {
       padding: ${props =>
         props["data-rtl"] === "rtl"
           ? "0px 260px 0px 15px !important"
-          : "0px 15px 0px 260px !important"};
+          : "0px 15px 0px 230px !important"};
+      button {
+        display: block !important;
+      }
     }
 
     &.collapsed {
@@ -40,7 +46,10 @@ const TopbarWrapper = styled.div`
       @media only screen and (max-width: 767px) {
         margin: ${props =>
           props["data-rtl"] === "rtl" ? "0 0 0 20px" : "0 20px 0 0"};
-        overflow-x: scroll;
+        a {
+          display: none;
+        }
+        // overflow-x: scroll;
       }
 
       .triggerBtn {

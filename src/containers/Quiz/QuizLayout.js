@@ -62,8 +62,8 @@ class QuizLayout extends React.Component {
 	}
 	render() {
 		const { timeNow } = this.props
-		if (timeNow <= 0) {
-			this.props.history.push('/dashboard')
+		if (timeNow < 0) {
+			this.props.history.replace('/quiz-complete')
 		}
 		return (
 			<Layout style={{ minHeight: '100%' }}>

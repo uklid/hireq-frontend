@@ -1,5 +1,3 @@
-import moment from 'moment'
-
 const Time = (state = { time: 7200000 }, action) => {
   switch (action.type) {
     case 'INCREASE':

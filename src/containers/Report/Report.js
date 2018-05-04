@@ -28,7 +28,7 @@ class Report extends React.Component {
 				</Grid>
 				<Grid style={{ backgroundColor: '#fff' }} container spacing={8}>
 					{/* <WhiteCard> */}
-						<Grid item sm={3}>
+						<Grid item sm={3} xs={12}>
 							<IsoWidgetsWrapper>
 								{/* Report Widget */}
 								<StickerWidget
@@ -40,7 +40,7 @@ class Report extends React.Component {
 								/>
 							</IsoWidgetsWrapper>
 						</Grid>
-						<Grid item sm={3}>
+						<Grid item sm={3} xs={12}>
 							<IsoWidgetsWrapper>
 								{/* Sticker Widget */}
 								<StickerWidget
@@ -52,7 +52,7 @@ class Report extends React.Component {
 								/>
 							</IsoWidgetsWrapper>
 						</Grid>
-						<Grid item sm={3}>
+						<Grid item sm={3} xs={12}>
 							<IsoWidgetsWrapper>
 								{/* Sticker Widget */}
 								<StickerWidget
@@ -64,7 +64,7 @@ class Report extends React.Component {
 								/>
 							</IsoWidgetsWrapper>
 						</Grid>
-						<Grid item sm={3}>
+						<Grid item sm={3} xs={12}>
 							<IsoWidgetsWrapper>
 								{/* Sticker Widget */}
 								<StickerWidget

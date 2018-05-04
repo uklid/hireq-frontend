@@ -7,6 +7,7 @@ import App from './containers/App/App'
 import CreatePosition from './containers/Position/CreatePosition'
 import asyncComponent from './helpers/AsyncFunc'
 import QuizLayout from './containers/Quiz/QuizLayout'
+import QuizComplete from './containers/Quiz/QuizComplete'
 
 const RestrictedRoute = ({ component: Component, isLoggedIn, ...rest }) => (
   <Route
@@ -55,6 +56,11 @@ const PublicRoutes = (props) => {
           <RestrictedRoute
             path="/quiz"
             component={QuizLayout}
+            isLoggedIn={props.isLoggedIn}
+          />
+          <RestrictedRoute
+            path="/quiz-complete"
+            component={QuizComplete}
             isLoggedIn={props.isLoggedIn}
           />
           <Route render={() => <div>404 Not Found. Sorry</div>} />

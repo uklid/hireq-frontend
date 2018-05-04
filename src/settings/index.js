@@ -3,9 +3,10 @@ export default {
 };
 
 const siteConfig = {
-  siteName: 'ISOMORPHIC',
-  siteIcon: 'ion-flash',
-  footerText: 'Isomorphic ©2017 Created by RedQ, Inc',
+  siteName: 'Hire-Q',
+  // siteIcon: 'ion-flash',
+  siteIcon: '',
+  footerText: '',
 };
 const themeConfig = {
   topbar: 'themedefault',
