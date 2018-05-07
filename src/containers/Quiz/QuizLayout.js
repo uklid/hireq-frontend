@@ -6,9 +6,11 @@ import {
 	Progress,
 	Timeline,
 	Card,
-	Layout
+	Layout,
+	Button
 } from 'antd'
 import QuizChoice from './QuizChoice'
+import QuizLogic from './QuizLogic'
 import { connect } from 'react-redux'
 import { decreaseTime } from '../../redux/timer/actions'
 import moment from 'moment'
@@ -41,6 +43,7 @@ const ProgressWithStyled = styled(Progress) `
 const TimelineStyled = styled(Timeline) `
   #activeTimeline .ant-timeline-item-head {
 		background-color: #954590;
+		border-color: #954590 !important;
 	}
 `
 
@@ -54,6 +57,15 @@ for (let i = 1; i <= 20; i++) {
 }
 
 class QuizLayout extends React.Component {
+	state = {
+		quizPercent: 25,
+		quizPath: 1,
+	}
+	nextQuizPath = () => {
+		const quizPercent = this.state.quizPercent + 25
+		const quizPath = this.state.quizPath + 1
+		this.setState({ quizPath , quizPercent })
+	}
 	componentDidMount = () => {
 		const { decreaseTime, timeNow } = this.props
 		setInterval(() => {
@@ -61,6 +73,7 @@ class QuizLayout extends React.Component {
 		}, 1000)
 	}
 	render() {
+		const { quizPath } = this.state
 		const { timeNow } = this.props
 		if (timeNow < 0) {
 			this.props.history.replace('/quiz-complete')
@@ -92,7 +105,7 @@ class QuizLayout extends React.Component {
 							<Grid item xs={12}>
 								<FlexCenter>
 									<div style={{ width: 500 }}>
-										<ProgressWithStyled percent={50} status="active" />
+										<ProgressWithStyled percent={this.state.quizPercent} status="active" />
 									</div>
 								</FlexCenter>
 							</Grid>
@@ -108,24 +121,47 @@ class QuizLayout extends React.Component {
 								xs={12}
 							>
 								<TimelineStyled>
-									<Timeline.Item color="#954590">ส่วนที่ 1 </Timeline.Item>
-									<Timeline.Item id="activeTimeline" color="#954590">ส่วนที่ 2</Timeline.Item>
-									<Timeline.Item color="#eee">ส่วนที่ 3 </Timeline.Item>
-									<Timeline.Item color="#eee">ส่วนที่ 6</Timeline.Item>
+									<Timeline.Item id={`${quizPath === 1 && 'activeTimeline'}`} color={`${quizPath > 1 ? '#954590':'#eee'}`}>ส่วนที่ 1 </Timeline.Item>
+									<Timeline.Item id={`${quizPath === 2 && 'activeTimeline'}`} color={`${quizPath > 2 ? '#954590':'#eee'}`}>ส่วนที่ 2</Timeline.Item>
+									<Timeline.Item id={`${quizPath === 3 && 'activeTimeline'}`} color={`${quizPath > 3 ? '#954590':'#eee'}`}>ส่วนที่ 3 </Timeline.Item>
+									<Timeline.Item id={`${quizPath === 4 && 'activeTimeline'}`} color={`${quizPath > 4 ? '#954590':'#eee'}`}>ส่วนที่ 4</Timeline.Item>
 								</TimelineStyled>
 							</Grid>
 							<Grid item sm={9} xs={12}>
-								{
-									_quizMock.map(data => {
-										return (
-											<QuizChoice
-												radioName={data.radioName}
-												quizTitle={data.quizTitle}
-												chooseChoice={data.chooseChoice}
-											/>
-										)
-									})
-								}
+								<div style={{ width: 450 }}>
+									{
+										this.state.quizPath === 1 && <QuizLogic />
+									}
+									{
+										this.state.quizPath === 2 && _quizMock.map(data => {
+											return (
+												<QuizChoice
+													radioName={data.radioName}
+													quizTitle={data.quizTitle}
+													chooseChoice={data.chooseChoice}
+												/>
+											)
+										})
+									}
+								</div>
+								<div
+									style={{
+										width: 450,
+										display: 'flex',
+										justifyContent: 'space-around',
+
+									}}
+								>
+									<Button
+										style={{
+											color: '#fff',
+											backgroundColor: '#954590',
+											borderColor: '#954590',
+											marginTop: 30,
+										}}
+										onClick={this.nextQuizPath}
+									>Next Quiz Path</Button>
+								</div>
 							</Grid>
 						</Grid>
 					</WhiteCard>

@@ -4,7 +4,7 @@ import styled from 'styled-components'
 const QuizWrapper = styled.div`
 	position: relative;
 	text-align: center;
-	width: 400px;
+	//width: 400px;
 	height: 75px;
 
 	@media only screen and (max-width: 767px) {
