@@ -47,6 +47,15 @@ const TimelineStyled = styled(Timeline) `
 	}
 `
 
+const mockData = [
+	{ choice: 1 , choiceImage: require("../../image/image5.jpg") },
+	{ choice: 2 , choiceImage: require("../../image/image5.jpg") },
+	{ choice: 3 , choiceImage: require("../../image/image5.jpg") },
+	{ choice: 4 , choiceImage: require("../../image/image5.jpg") },
+	{ choice: 5 , choiceImage: require("../../image/image5.jpg") },
+	{ choice: 6 , choiceImage: require("../../image/image5.jpg") }
+]
+
 const _quizMock = []
 for (let i = 1; i <= 20; i++) {
 	_quizMock.push({
@@ -60,11 +69,19 @@ class QuizLayout extends React.Component {
 	state = {
 		quizPercent: 25,
 		quizPath: 1,
+		mockData_1: [
+			{ choice: 1, choiceImage: require("../../image/quiz_1.jpg") },
+			{ choice: 2, choiceImage: require("../../image/quiz_1.jpg") },
+			{ choice: 3, choiceImage: require("../../image/quiz_1.jpg") },
+			{ choice: 4, choiceImage: require("../../image/quiz_1.jpg") },
+			{ choice: 5, choiceImage: require("../../image/quiz_1.jpg") },
+			{ choice: 6, choiceImage: require("../../image/quiz_1.jpg") }
+		],
 	}
 	nextQuizPath = () => {
 		const quizPercent = this.state.quizPercent + 25
 		const quizPath = this.state.quizPath + 1
-		this.setState({ quizPath , quizPercent })
+		this.setState({ quizPath, quizPercent })
 	}
 	componentDidMount = () => {
 		const { decreaseTime, timeNow } = this.props
@@ -72,9 +89,14 @@ class QuizLayout extends React.Component {
 			decreaseTime()
 		}, 1000)
 	}
+	changeImage = () => {
+		console.log("Teehid")
+		this.setState({ mockData_1: mockData })
+	}
 	render() {
 		const { quizPath } = this.state
 		const { timeNow } = this.props
+		console.log(this.state)
 		if (timeNow < 0) {
 			this.props.history.replace('/quiz-complete')
 		}
@@ -91,10 +113,10 @@ class QuizLayout extends React.Component {
 						<div style={{ display: 'block', textAlign: 'center' }}>
 							<h4>
 								ส่วนที่ 2 - บุคลิกภาพ
-						</h4>
+							</h4>
 							<h4>
 								ข้อความต่อไปนี้ตรงกับบุคลิกของท่านเพียงใด
-						</h4>
+							</h4>
 							<h1 style={{ color: 'red' }}>
 								{moment.utc(timeNow).format("HH:mm:ss")}
 							</h1>
@@ -121,19 +143,19 @@ class QuizLayout extends React.Component {
 								xs={12}
 							>
 								<TimelineStyled>
-									<Timeline.Item id={`${quizPath === 1 && 'activeTimeline'}`} color={`${quizPath > 1 ? '#954590':'#eee'}`}>ส่วนที่ 1 </Timeline.Item>
-									<Timeline.Item id={`${quizPath === 2 && 'activeTimeline'}`} color={`${quizPath > 2 ? '#954590':'#eee'}`}>ส่วนที่ 2</Timeline.Item>
-									<Timeline.Item id={`${quizPath === 3 && 'activeTimeline'}`} color={`${quizPath > 3 ? '#954590':'#eee'}`}>ส่วนที่ 3 </Timeline.Item>
-									<Timeline.Item id={`${quizPath === 4 && 'activeTimeline'}`} color={`${quizPath > 4 ? '#954590':'#eee'}`}>ส่วนที่ 4</Timeline.Item>
+									<Timeline.Item id={`${quizPath === 1 && 'activeTimeline'}`} color={`${quizPath > 1 ? '#954590' : '#eee'}`}>ส่วนที่ 1 </Timeline.Item>
+									<Timeline.Item id={`${quizPath === 2 && 'activeTimeline'}`} color={`${quizPath > 2 ? '#954590' : '#eee'}`}>ส่วนที่ 2</Timeline.Item>
+									<Timeline.Item id={`${quizPath === 3 && 'activeTimeline'}`} color={`${quizPath > 3 ? '#954590' : '#eee'}`}>ส่วนที่ 3 </Timeline.Item>
+									<Timeline.Item id={`${quizPath === 4 && 'activeTimeline'}`} color={`${quizPath > 4 ? '#954590' : '#eee'}`}>ส่วนที่ 4</Timeline.Item>
 								</TimelineStyled>
 							</Grid>
 							<Grid item sm={9} xs={12}>
 								<div style={{ width: 450 }}>
 									{
-										this.state.quizPath === 1 && <QuizLogic />
+										quizPath === 1 && <QuizLogic onClick={this.changeImage} imageData={this.state.mockData_1} quizImage={require("../../image/quiz_1.jpg")} />
 									}
 									{
-										this.state.quizPath === 2 && _quizMock.map(data => {
+										quizPath === 2 && _quizMock.map(data => {
 											return (
 												<QuizChoice
 													radioName={data.radioName}
@@ -142,6 +164,12 @@ class QuizLayout extends React.Component {
 												/>
 											)
 										})
+									}
+									{
+										quizPath === 3 && <div>3</div>
+									}
+									{
+										quizPath === 4 && <div>4</div>
 									}
 								</div>
 								<div
