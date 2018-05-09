@@ -13,6 +13,10 @@ const QuizChoice = styled.div`
   justify-content: space-around;
   flex-wrap: wrap;
 
+  img {
+    border: 1px solid #eee;
+    margin-top: 10px;
+  }
   img:hover {
     cursor: pointer;
     border: 1px solid red;
@@ -27,25 +31,47 @@ const Wrapper = styled.div`
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
+
+  .quiz-image {
+    width: 400px;
+    height: 400px;
+  }
+  .quiz-answer-image {
+    width: 120px;
+    height: 120px;
+  }
+  @media only screen and (max-width: 767px) {
+		.quiz-image {
+      width: 100%;
+      height: 100%;
+    }
+    .quiz-answer-image {
+      width: 50%;
+      height: 100px;
+    }
+	}
 `
 
-const _Mock = [
-  
-]
-
 class QuizLogic extends React.Component {
-  sendAnswer = (data) => {
-    console.log("Key = ", data)
-  }
+  // sendAnswer = (data) => {
+  //   console.log("Key = ", data)
+  // }
   render() {
-    const { imageData , quizImage ,onClick } = this.props
+    const { imageData, quizImage, onClick } = this.props
     return (
       <Wrapper>
-        <img src={quizImage} />
+        <img className="quiz-image" src={quizImage} />
+        <h3>เลือกรูปภาพที่คิดว่าถูกต้องที่สุด</h3>
         <QuizChoice id="logicQuizChoice">
           {
             imageData.map((data, index) => {
-              return <img width="100" height="75" onClick={onClick} key={index} src={data.choiceImage} />
+              return <img
+                className="quiz-answer-image"
+                onClick={onClick}
+                key={index}
+                data-answer={data.c}
+                src={require(`../../image/QuizImage/Answer/${data.img}`)}
+              />
             })
           }
         </QuizChoice>

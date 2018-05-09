@@ -14,11 +14,37 @@ import QuizLogic from './QuizLogic'
 import { connect } from 'react-redux'
 import { decreaseTime } from '../../redux/timer/actions'
 import moment from 'moment'
+import Axios from 'axios'
+import { arrayOfDeffered } from 'redux-saga/utils';
 
 const QuizWrapper = styled.div`
 	height: 100%;
 	padding: 30px;
-	background-color: #f1f3f6;
+	background-color: #f1f3f6; 
+
+	.quiz-choice {
+		width: 450px;
+		margin-left: 50px;
+	}
+
+	.button-control {
+		margin-left: 52px;
+		width: 450px;
+		display: flex;
+		justify-content: space-around;
+	}
+	
+	@media only screen and (max-width: 767px) {
+		.quiz-choice {
+			width: 100%;
+			margin-left: 0px;
+		}
+		.button-control {
+			width: 100%;
+			display: flex;
+			justify-content: space-around;
+		}
+	}
 `
 
 const WhiteCard = styled.div`
@@ -47,15 +73,6 @@ const TimelineStyled = styled(Timeline) `
 	}
 `
 
-const mockData = [
-	{ choice: 1 , choiceImage: require("../../image/image5.jpg") },
-	{ choice: 2 , choiceImage: require("../../image/image5.jpg") },
-	{ choice: 3 , choiceImage: require("../../image/image5.jpg") },
-	{ choice: 4 , choiceImage: require("../../image/image5.jpg") },
-	{ choice: 5 , choiceImage: require("../../image/image5.jpg") },
-	{ choice: 6 , choiceImage: require("../../image/image5.jpg") }
-]
-
 const _quizMock = []
 for (let i = 1; i <= 20; i++) {
 	_quizMock.push({
@@ -67,36 +84,55 @@ for (let i = 1; i <= 20; i++) {
 
 class QuizLayout extends React.Component {
 	state = {
-		quizPercent: 25,
+		quizPercent: 1,
 		quizPath: 1,
-		mockData_1: [
-			{ choice: 1, choiceImage: require("../../image/quiz_1.jpg") },
-			{ choice: 2, choiceImage: require("../../image/quiz_1.jpg") },
-			{ choice: 3, choiceImage: require("../../image/quiz_1.jpg") },
-			{ choice: 4, choiceImage: require("../../image/quiz_1.jpg") },
-			{ choice: 5, choiceImage: require("../../image/quiz_1.jpg") },
-			{ choice: 6, choiceImage: require("../../image/quiz_1.jpg") }
-		],
+		quizData: [],
+		quizArrayPosition: 0,
 	}
 	nextQuizPath = () => {
 		const quizPercent = this.state.quizPercent + 25
 		const quizPath = this.state.quizPath + 1
-		this.setState({ quizPath, quizPercent })
+		const beforePath = this.state.beforePath + 1
+		this.setState({ 
+			quizPath,
+			quizPercent,
+			beforePath
+		})
 	}
-	componentDidMount = () => {
+	componentWillMount = async () => {
+		const url = 'http://www.us-central1-hireq-api.cloudfunctions.net/v1/candidates/aabbccdd/test'
+		const quizData = await Axios.get(url)
+		this.setState({ quizData: quizData.data.cog })
+	}
+	componentDidMount = async () => {
 		const { decreaseTime, timeNow } = this.props
 		setInterval(() => {
 			decreaseTime()
 		}, 1000)
 	}
-	changeImage = () => {
-		console.log("Teehid")
-		this.setState({ mockData_1: mockData })
+	sendAnswer = async (event) => {
+		const { answer } = event.target.dataset
+		// const url = 'https://us-central1-hireq-api.cloudfunctions.net/v1/candidate/answer'
+		// await Axios.post(url, {
+		// 	"id": 'aabbccdd',
+		// 	"testName": 'cog',
+		// 	"testNumber": this.state.quizArrayPosition + 1,
+		// 	"answer": answer
+		// })
+		const quizPercent = this.state.quizPercent += 1
+		const quizArrayPosition = this.state.quizArrayPosition += 1
+
+		if (quizArrayPosition <= 24) {
+			this.setState({ quizArrayPosition })
+		}
+		if (quizArrayPosition === 25) {
+			// this.setState({ quizPath: 2 })
+			this.setState({ beforePath: 1.5 })
+		}
 	}
 	render() {
-		const { quizPath } = this.state
+		const { quizPath, quizData, quizArrayPosition, beforePath } = this.state
 		const { timeNow } = this.props
-		console.log(this.state)
 		if (timeNow < 0) {
 			this.props.history.replace('/quiz-complete')
 		}
@@ -150,9 +186,17 @@ class QuizLayout extends React.Component {
 								</TimelineStyled>
 							</Grid>
 							<Grid item sm={9} xs={12}>
-								<div style={{ width: 450 }}>
+								<div className="quiz-choice">
 									{
-										quizPath === 1 && <QuizLogic onClick={this.changeImage} imageData={this.state.mockData_1} quizImage={require("../../image/quiz_1.jpg")} />
+										quizPath === 1 && quizData.length >= 1 && quizArrayPosition <= 24 &&
+										<QuizLogic
+											onClick={this.sendAnswer}
+											quizImage={require(`../../image/QuizImage/Question/${Object.values(quizData)[quizArrayPosition].img}`)}
+											imageData={Object.values(quizData)[quizArrayPosition].cs}
+										/>
+									}
+									{
+										beforePath === 1.5 && <h2>ส่วนที่ 2 </h2>
 									}
 									{
 										quizPath === 2 && _quizMock.map(data => {
@@ -172,14 +216,7 @@ class QuizLayout extends React.Component {
 										quizPath === 4 && <div>4</div>
 									}
 								</div>
-								<div
-									style={{
-										width: 450,
-										display: 'flex',
-										justifyContent: 'space-around',
-
-									}}
-								>
+								<div className="button-control">
 									<Button
 										style={{
 											color: '#fff',

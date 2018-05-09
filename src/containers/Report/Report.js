@@ -6,6 +6,15 @@ import SingleProgressWidget from '../../containers/Widgets/progress/progress-sin
 import { LayoutContentWrapper } from '../../components/utility/layoutWrapper.style'
 import styled from 'styled-components'
 import Grid from 'material-ui/Grid'
+import { Card } from 'antd'
+// import rasterizeHTML from 'rasterizehtml'
+// import html2canvas from 'html2canvas'
+import jspdf from 'jspdf'
+
+// window.rasterizeHTML = rasterizeHTML
+// window.html2canvas = html2canvas
+// import { Page, Text, View, Document, StyleSheet } from '@react-pdf/core'
+// import 'regenerator-runtime/runtime'
 
 const WhiteCard = styled.div`
 	display: flex;
@@ -15,7 +24,41 @@ const WhiteCard = styled.div`
 	margin-bottom: 30px;
 `
 
+const CardWithStyled = styled(Card) `
+	.ant-card-head {
+		background-color: lightblue;
+	}
+`
+
 class Report extends React.Component {
+	renderPDFViaHtml = () => {
+		const report = document.getElementById("reportCard")
+		const pdf = new jspdf()
+		console.log(report)
+		// const raster = await rasterizeHTML.drawHTML(report)
+		// console.log(raster)
+		pdf.addHTML(report, () => {
+			pdf.save("download.pdf")
+		})
+		// report.style.width = "210mm"
+		// const canvas = await html2canvas(report)
+		// canvas.style.width = "210px"
+		// canvas.style.marginLeft = "auto"
+		// canvas.style.marginRight = "auto"
+		// console.log(canvas)
+		// const imageData = canvas.toDataURL('image/png')
+		// document.getElementById("testImage").setAttribute("src", imageData)
+
+		// const pdf = new jspdf()
+		// pdf.addHTML(canvas)
+		// pdf.addImage(imageData, 'JPEG', 0, 0, 210, report.offsetHeight)
+		// pdf.addImage(imageData, 'JPEG', 0, 0, 210, 300)
+		// pdf.addHTML(canvas, function(){
+		// 	pdf.save("download.pdf")
+		// })
+		// pdf.output('dataurlnewwindow')
+		// pdf.save("download.pdf")
+	}
 	render() {
 		return (
 			<LayoutContentWrapper>
@@ -28,54 +71,1561 @@ class Report extends React.Component {
 				</Grid>
 				<Grid style={{ backgroundColor: '#fff' }} container spacing={8}>
 					{/* <WhiteCard> */}
-						<Grid item sm={3} xs={12}>
-							<IsoWidgetsWrapper>
-								{/* Report Widget */}
-								<StickerWidget
-									number="210"
-									text="Unread Email"
-									icon="ion-email-unread"
-									fontColor="#ffffff"
-									bgColor="#7266BA"
-								/>
-							</IsoWidgetsWrapper>
+					<Grid item xs={12}>
+						<h2 style={{ padding: 10 }}>Summary of Q-score Results</h2>
+					</Grid>
+					<Grid item sm={3} xs={12}>
+						<IsoWidgetsWrapper>
+							{/* Report Widget */}
+							<StickerWidget
+								number="210"
+								text="Unread Email"
+								icon="ion-email-unread"
+								fontColor="#ffffff"
+								bgColor="#7266BA"
+							/>
+						</IsoWidgetsWrapper>
+					</Grid>
+					<Grid item sm={3} xs={12}>
+						<IsoWidgetsWrapper>
+							{/* Sticker Widget */}
+							<StickerWidget
+								number="3024"
+								text="Total Message"
+								icon="ion-chatbubbles"
+								fontColor="#ffffff"
+								bgColor="#7ED320"
+							/>
+						</IsoWidgetsWrapper>
+					</Grid>
+					<Grid item sm={3} xs={12}>
+						<IsoWidgetsWrapper>
+							{/* Sticker Widget */}
+							<StickerWidget
+								number="3024"
+								text="Total Message"
+								icon="ion-chatbubbles"
+								fontColor="#ffffff"
+								bgColor="#7ED320"
+							/>
+						</IsoWidgetsWrapper>
+					</Grid>
+					<Grid item sm={3} xs={12}>
+						<IsoWidgetsWrapper>
+							{/* Sticker Widget */}
+							<StickerWidget
+								number="3024"
+								text="Total Message"
+								icon="ion-chatbubbles"
+								fontColor="#ffffff"
+								bgColor="#7ED320"
+							/>
+						</IsoWidgetsWrapper>
+					</Grid>
+					<Grid item xs={12}>
+						<h3 style={{ padding: 10 }}>Report</h3>
+						<Grid container style={{ padding: 20 }}>
+							<Grid item xs={12}>
+								<CardWithStyled id="reportCard" title="Sumary of Q-Score Result">
+									<Grid container spacing={8}>
+										<Grid item xs={3}>
+											<IsoWidgetsWrapper>
+												{/* Sticker Widget */}
+												<StickerWidget
+													number="3024"
+													text="Total Message"
+													icon="ion-chatbubbles"
+													fontColor="#ffffff"
+													bgColor="#7ED320"
+												/>
+											</IsoWidgetsWrapper>
+										</Grid>
+										<Grid item xs={3}>
+											<IsoWidgetsWrapper>
+												{/* Sticker Widget */}
+												<StickerWidget
+													number="3024"
+													text="Total Message"
+													icon="ion-chatbubbles"
+													fontColor="#ffffff"
+													bgColor="#7ED320"
+												/>
+											</IsoWidgetsWrapper>
+										</Grid>
+										<Grid item xs={3}>
+											<IsoWidgetsWrapper>
+												{/* Sticker Widget */}
+												<StickerWidget
+													number="3024"
+													text="Total Message"
+													icon="ion-chatbubbles"
+													fontColor="#ffffff"
+													bgColor="#7ED320"
+												/>
+											</IsoWidgetsWrapper>
+										</Grid>
+										<Grid item xs={3}>
+											<IsoWidgetsWrapper>
+												{/* Sticker Widget */}
+												<StickerWidget
+													number="3024"
+													text="Total Message"
+													icon="ion-chatbubbles"
+													fontColor="#ffffff"
+													bgColor="#7ED320"
+												/>
+											</IsoWidgetsWrapper>
+										</Grid>
+									</Grid>
+									<Grid container spacing={8}>
+										<Grid item xs={3}>
+											<IsoWidgetsWrapper>
+												{/* Sticker Widget */}
+												<StickerWidget
+													number="3024"
+													text="Total Message"
+													icon="ion-chatbubbles"
+													fontColor="#ffffff"
+													bgColor="#7ED320"
+												/>
+											</IsoWidgetsWrapper>
+										</Grid>
+										<Grid item xs={3}>
+											<IsoWidgetsWrapper>
+												{/* Sticker Widget */}
+												<StickerWidget
+													number="3024"
+													text="Total Message"
+													icon="ion-chatbubbles"
+													fontColor="#ffffff"
+													bgColor="#7ED320"
+												/>
+											</IsoWidgetsWrapper>
+										</Grid>
+										<Grid item xs={3}>
+											<IsoWidgetsWrapper>
+												{/* Sticker Widget */}
+												<StickerWidget
+													number="3024"
+													text="Total Message"
+													icon="ion-chatbubbles"
+													fontColor="#ffffff"
+													bgColor="#7ED320"
+												/>
+											</IsoWidgetsWrapper>
+										</Grid>
+										<Grid item xs={3}>
+											<IsoWidgetsWrapper>
+												{/* Sticker Widget */}
+												<StickerWidget
+													number="3024"
+													text="Total Message"
+													icon="ion-chatbubbles"
+													fontColor="#ffffff"
+													bgColor="#7ED320"
+												/>
+											</IsoWidgetsWrapper>
+										</Grid>
+									</Grid><Grid container spacing={8}>
+										<Grid item xs={3}>
+											<IsoWidgetsWrapper>
+												{/* Sticker Widget */}
+												<StickerWidget
+													number="3024"
+													text="Total Message"
+													icon="ion-chatbubbles"
+													fontColor="#ffffff"
+													bgColor="#7ED320"
+												/>
+											</IsoWidgetsWrapper>
+										</Grid>
+										<Grid item xs={3}>
+											<IsoWidgetsWrapper>
+												{/* Sticker Widget */}
+												<StickerWidget
+													number="3024"
+													text="Total Message"
+													icon="ion-chatbubbles"
+													fontColor="#ffffff"
+													bgColor="#7ED320"
+												/>
+											</IsoWidgetsWrapper>
+										</Grid>
+										<Grid item xs={3}>
+											<IsoWidgetsWrapper>
+												{/* Sticker Widget */}
+												<StickerWidget
+													number="3024"
+													text="Total Message"
+													icon="ion-chatbubbles"
+													fontColor="#ffffff"
+													bgColor="#7ED320"
+												/>
+											</IsoWidgetsWrapper>
+										</Grid>
+										<Grid item xs={3}>
+											<IsoWidgetsWrapper>
+												{/* Sticker Widget */}
+												<StickerWidget
+													number="3024"
+													text="Total Message"
+													icon="ion-chatbubbles"
+													fontColor="#ffffff"
+													bgColor="#7ED320"
+												/>
+											</IsoWidgetsWrapper>
+										</Grid>
+									</Grid><Grid container spacing={8}>
+										<Grid item xs={3}>
+											<IsoWidgetsWrapper>
+												{/* Sticker Widget */}
+												<StickerWidget
+													number="3024"
+													text="Total Message"
+													icon="ion-chatbubbles"
+													fontColor="#ffffff"
+													bgColor="#7ED320"
+												/>
+											</IsoWidgetsWrapper>
+										</Grid>
+										<Grid item xs={3}>
+											<IsoWidgetsWrapper>
+												{/* Sticker Widget */}
+												<StickerWidget
+													number="3024"
+													text="Total Message"
+													icon="ion-chatbubbles"
+													fontColor="#ffffff"
+													bgColor="#7ED320"
+												/>
+											</IsoWidgetsWrapper>
+										</Grid>
+										<Grid item xs={3}>
+											<IsoWidgetsWrapper>
+												{/* Sticker Widget */}
+												<StickerWidget
+													number="3024"
+													text="Total Message"
+													icon="ion-chatbubbles"
+													fontColor="#ffffff"
+													bgColor="#7ED320"
+												/>
+											</IsoWidgetsWrapper>
+										</Grid>
+										<Grid item xs={3}>
+											<IsoWidgetsWrapper>
+												{/* Sticker Widget */}
+												<StickerWidget
+													number="3024"
+													text="Total Message"
+													icon="ion-chatbubbles"
+													fontColor="#ffffff"
+													bgColor="#7ED320"
+												/>
+											</IsoWidgetsWrapper>
+										</Grid>
+									</Grid><Grid container spacing={8}>
+										<Grid item xs={3}>
+											<IsoWidgetsWrapper>
+												{/* Sticker Widget */}
+												<StickerWidget
+													number="3024"
+													text="Total Message"
+													icon="ion-chatbubbles"
+													fontColor="#ffffff"
+													bgColor="#7ED320"
+												/>
+											</IsoWidgetsWrapper>
+										</Grid>
+										<Grid item xs={3}>
+											<IsoWidgetsWrapper>
+												{/* Sticker Widget */}
+												<StickerWidget
+													number="3024"
+													text="Total Message"
+													icon="ion-chatbubbles"
+													fontColor="#ffffff"
+													bgColor="#7ED320"
+												/>
+											</IsoWidgetsWrapper>
+										</Grid>
+										<Grid item xs={3}>
+											<IsoWidgetsWrapper>
+												{/* Sticker Widget */}
+												<StickerWidget
+													number="3024"
+													text="Total Message"
+													icon="ion-chatbubbles"
+													fontColor="#ffffff"
+													bgColor="#7ED320"
+												/>
+											</IsoWidgetsWrapper>
+										</Grid>
+										<Grid item xs={3}>
+											<IsoWidgetsWrapper>
+												{/* Sticker Widget */}
+												<StickerWidget
+													number="3024"
+													text="Total Message"
+													icon="ion-chatbubbles"
+													fontColor="#ffffff"
+													bgColor="#7ED320"
+												/>
+											</IsoWidgetsWrapper>
+										</Grid>
+									</Grid><Grid container spacing={8}>
+										<Grid item xs={3}>
+											<IsoWidgetsWrapper>
+												{/* Sticker Widget */}
+												<StickerWidget
+													number="3024"
+													text="Total Message"
+													icon="ion-chatbubbles"
+													fontColor="#ffffff"
+													bgColor="#7ED320"
+												/>
+											</IsoWidgetsWrapper>
+										</Grid>
+										<Grid item xs={3}>
+											<IsoWidgetsWrapper>
+												{/* Sticker Widget */}
+												<StickerWidget
+													number="3024"
+													text="Total Message"
+													icon="ion-chatbubbles"
+													fontColor="#ffffff"
+													bgColor="#7ED320"
+												/>
+											</IsoWidgetsWrapper>
+										</Grid>
+										<Grid item xs={3}>
+											<IsoWidgetsWrapper>
+												{/* Sticker Widget */}
+												<StickerWidget
+													number="3024"
+													text="Total Message"
+													icon="ion-chatbubbles"
+													fontColor="#ffffff"
+													bgColor="#7ED320"
+												/>
+											</IsoWidgetsWrapper>
+										</Grid>
+										<Grid item xs={3}>
+											<IsoWidgetsWrapper>
+												{/* Sticker Widget */}
+												<StickerWidget
+													number="3024"
+													text="Total Message"
+													icon="ion-chatbubbles"
+													fontColor="#ffffff"
+													bgColor="#7ED320"
+												/>
+											</IsoWidgetsWrapper>
+										</Grid>
+									</Grid><Grid container spacing={8}>
+										<Grid item xs={3}>
+											<IsoWidgetsWrapper>
+												{/* Sticker Widget */}
+												<StickerWidget
+													number="3024"
+													text="Total Message"
+													icon="ion-chatbubbles"
+													fontColor="#ffffff"
+													bgColor="#7ED320"
+												/>
+											</IsoWidgetsWrapper>
+										</Grid>
+										<Grid item xs={3}>
+											<IsoWidgetsWrapper>
+												{/* Sticker Widget */}
+												<StickerWidget
+													number="3024"
+													text="Total Message"
+													icon="ion-chatbubbles"
+													fontColor="#ffffff"
+													bgColor="#7ED320"
+												/>
+											</IsoWidgetsWrapper>
+										</Grid>
+										<Grid item xs={3}>
+											<IsoWidgetsWrapper>
+												{/* Sticker Widget */}
+												<StickerWidget
+													number="3024"
+													text="Total Message"
+													icon="ion-chatbubbles"
+													fontColor="#ffffff"
+													bgColor="#7ED320"
+												/>
+											</IsoWidgetsWrapper>
+										</Grid>
+										<Grid item xs={3}>
+											<IsoWidgetsWrapper>
+												{/* Sticker Widget */}
+												<StickerWidget
+													number="3024"
+													text="Total Message"
+													icon="ion-chatbubbles"
+													fontColor="#ffffff"
+													bgColor="#7ED320"
+												/>
+											</IsoWidgetsWrapper>
+										</Grid>
+									</Grid><Grid container spacing={8}>
+										<Grid item xs={3}>
+											<IsoWidgetsWrapper>
+												{/* Sticker Widget */}
+												<StickerWidget
+													number="3024"
+													text="Total Message"
+													icon="ion-chatbubbles"
+													fontColor="#ffffff"
+													bgColor="#7ED320"
+												/>
+											</IsoWidgetsWrapper>
+										</Grid>
+										<Grid item xs={3}>
+											<IsoWidgetsWrapper>
+												{/* Sticker Widget */}
+												<StickerWidget
+													number="3024"
+													text="Total Message"
+													icon="ion-chatbubbles"
+													fontColor="#ffffff"
+													bgColor="#7ED320"
+												/>
+											</IsoWidgetsWrapper>
+										</Grid>
+										<Grid item xs={3}>
+											<IsoWidgetsWrapper>
+												{/* Sticker Widget */}
+												<StickerWidget
+													number="3024"
+													text="Total Message"
+													icon="ion-chatbubbles"
+													fontColor="#ffffff"
+													bgColor="#7ED320"
+												/>
+											</IsoWidgetsWrapper>
+										</Grid>
+										<Grid item xs={3}>
+											<IsoWidgetsWrapper>
+												{/* Sticker Widget */}
+												<StickerWidget
+													number="3024"
+													text="Total Message"
+													icon="ion-chatbubbles"
+													fontColor="#ffffff"
+													bgColor="#7ED320"
+												/>
+											</IsoWidgetsWrapper>
+										</Grid>
+									</Grid><Grid container spacing={8}>
+										<Grid item xs={3}>
+											<IsoWidgetsWrapper>
+												{/* Sticker Widget */}
+												<StickerWidget
+													number="3024"
+													text="Total Message"
+													icon="ion-chatbubbles"
+													fontColor="#ffffff"
+													bgColor="#7ED320"
+												/>
+											</IsoWidgetsWrapper>
+										</Grid>
+										<Grid item xs={3}>
+											<IsoWidgetsWrapper>
+												{/* Sticker Widget */}
+												<StickerWidget
+													number="3024"
+													text="Total Message"
+													icon="ion-chatbubbles"
+													fontColor="#ffffff"
+													bgColor="#7ED320"
+												/>
+											</IsoWidgetsWrapper>
+										</Grid>
+										<Grid item xs={3}>
+											<IsoWidgetsWrapper>
+												{/* Sticker Widget */}
+												<StickerWidget
+													number="3024"
+													text="Total Message"
+													icon="ion-chatbubbles"
+													fontColor="#ffffff"
+													bgColor="#7ED320"
+												/>
+											</IsoWidgetsWrapper>
+										</Grid>
+										<Grid item xs={3}>
+											<IsoWidgetsWrapper>
+												{/* Sticker Widget */}
+												<StickerWidget
+													number="3024"
+													text="Total Message"
+													icon="ion-chatbubbles"
+													fontColor="#ffffff"
+													bgColor="#7ED320"
+												/>
+											</IsoWidgetsWrapper>
+										</Grid>
+									</Grid><Grid container spacing={8}>
+										<Grid item xs={3}>
+											<IsoWidgetsWrapper>
+												{/* Sticker Widget */}
+												<StickerWidget
+													number="3024"
+													text="Total Message"
+													icon="ion-chatbubbles"
+													fontColor="#ffffff"
+													bgColor="#7ED320"
+												/>
+											</IsoWidgetsWrapper>
+										</Grid>
+										<Grid item xs={3}>
+											<IsoWidgetsWrapper>
+												{/* Sticker Widget */}
+												<StickerWidget
+													number="3024"
+													text="Total Message"
+													icon="ion-chatbubbles"
+													fontColor="#ffffff"
+													bgColor="#7ED320"
+												/>
+											</IsoWidgetsWrapper>
+										</Grid>
+										<Grid item xs={3}>
+											<IsoWidgetsWrapper>
+												{/* Sticker Widget */}
+												<StickerWidget
+													number="3024"
+													text="Total Message"
+													icon="ion-chatbubbles"
+													fontColor="#ffffff"
+													bgColor="#7ED320"
+												/>
+											</IsoWidgetsWrapper>
+										</Grid>
+										<Grid item xs={3}>
+											<IsoWidgetsWrapper>
+												{/* Sticker Widget */}
+												<StickerWidget
+													number="3024"
+													text="Total Message"
+													icon="ion-chatbubbles"
+													fontColor="#ffffff"
+													bgColor="#7ED320"
+												/>
+											</IsoWidgetsWrapper>
+										</Grid>
+									</Grid><Grid container spacing={8}>
+										<Grid item xs={3}>
+											<IsoWidgetsWrapper>
+												{/* Sticker Widget */}
+												<StickerWidget
+													number="3024"
+													text="Total Message"
+													icon="ion-chatbubbles"
+													fontColor="#ffffff"
+													bgColor="#7ED320"
+												/>
+											</IsoWidgetsWrapper>
+										</Grid>
+										<Grid item xs={3}>
+											<IsoWidgetsWrapper>
+												{/* Sticker Widget */}
+												<StickerWidget
+													number="3024"
+													text="Total Message"
+													icon="ion-chatbubbles"
+													fontColor="#ffffff"
+													bgColor="#7ED320"
+												/>
+											</IsoWidgetsWrapper>
+										</Grid>
+										<Grid item xs={3}>
+											<IsoWidgetsWrapper>
+												{/* Sticker Widget */}
+												<StickerWidget
+													number="3024"
+													text="Total Message"
+													icon="ion-chatbubbles"
+													fontColor="#ffffff"
+													bgColor="#7ED320"
+												/>
+											</IsoWidgetsWrapper>
+										</Grid>
+										<Grid item xs={3}>
+											<IsoWidgetsWrapper>
+												{/* Sticker Widget */}
+												<StickerWidget
+													number="3024"
+													text="Total Message"
+													icon="ion-chatbubbles"
+													fontColor="#ffffff"
+													bgColor="#7ED320"
+												/>
+											</IsoWidgetsWrapper>
+										</Grid>
+									</Grid><Grid container spacing={8}>
+										<Grid item xs={3}>
+											<IsoWidgetsWrapper>
+												{/* Sticker Widget */}
+												<StickerWidget
+													number="3024"
+													text="Total Message"
+													icon="ion-chatbubbles"
+													fontColor="#ffffff"
+													bgColor="#7ED320"
+												/>
+											</IsoWidgetsWrapper>
+										</Grid>
+										<Grid item xs={3}>
+											<IsoWidgetsWrapper>
+												{/* Sticker Widget */}
+												<StickerWidget
+													number="3024"
+													text="Total Message"
+													icon="ion-chatbubbles"
+													fontColor="#ffffff"
+													bgColor="#7ED320"
+												/>
+											</IsoWidgetsWrapper>
+										</Grid>
+										<Grid item xs={3}>
+											<IsoWidgetsWrapper>
+												{/* Sticker Widget */}
+												<StickerWidget
+													number="3024"
+													text="Total Message"
+													icon="ion-chatbubbles"
+													fontColor="#ffffff"
+													bgColor="#7ED320"
+												/>
+											</IsoWidgetsWrapper>
+										</Grid>
+										<Grid item xs={3}>
+											<IsoWidgetsWrapper>
+												{/* Sticker Widget */}
+												<StickerWidget
+													number="3024"
+													text="Total Message"
+													icon="ion-chatbubbles"
+													fontColor="#ffffff"
+													bgColor="#7ED320"
+												/>
+											</IsoWidgetsWrapper>
+										</Grid>
+									</Grid>
+									<Grid container spacing={8}>
+										<Grid item xs={3}>
+											<IsoWidgetsWrapper>
+												{/* Sticker Widget */}
+												<StickerWidget
+													number="3024"
+													text="Total Message"
+													icon="ion-chatbubbles"
+													fontColor="#ffffff"
+													bgColor="#7ED320"
+												/>
+											</IsoWidgetsWrapper>
+										</Grid>
+										<Grid item xs={3}>
+											<IsoWidgetsWrapper>
+												{/* Sticker Widget */}
+												<StickerWidget
+													number="3024"
+													text="Total Message"
+													icon="ion-chatbubbles"
+													fontColor="#ffffff"
+													bgColor="#7ED320"
+												/>
+											</IsoWidgetsWrapper>
+										</Grid>
+										<Grid item xs={3}>
+											<IsoWidgetsWrapper>
+												{/* Sticker Widget */}
+												<StickerWidget
+													number="3024"
+													text="Total Message"
+													icon="ion-chatbubbles"
+													fontColor="#ffffff"
+													bgColor="#7ED320"
+												/>
+											</IsoWidgetsWrapper>
+										</Grid>
+										<Grid item xs={3}>
+											<IsoWidgetsWrapper>
+												{/* Sticker Widget */}
+												<StickerWidget
+													number="3024"
+													text="Total Message"
+													icon="ion-chatbubbles"
+													fontColor="#ffffff"
+													bgColor="#7ED320"
+												/>
+											</IsoWidgetsWrapper>
+										</Grid>
+									</Grid>
+									<Grid container spacing={8}>
+										<Grid item xs={3}>
+											<IsoWidgetsWrapper>
+												{/* Sticker Widget */}
+												<StickerWidget
+													number="3024"
+													text="Total Message"
+													icon="ion-chatbubbles"
+													fontColor="#ffffff"
+													bgColor="#7ED320"
+												/>
+											</IsoWidgetsWrapper>
+										</Grid>
+										<Grid item xs={3}>
+											<IsoWidgetsWrapper>
+												{/* Sticker Widget */}
+												<StickerWidget
+													number="3024"
+													text="Total Message"
+													icon="ion-chatbubbles"
+													fontColor="#ffffff"
+													bgColor="#7ED320"
+												/>
+											</IsoWidgetsWrapper>
+										</Grid>
+										<Grid item xs={3}>
+											<IsoWidgetsWrapper>
+												{/* Sticker Widget */}
+												<StickerWidget
+													number="3024"
+													text="Total Message"
+													icon="ion-chatbubbles"
+													fontColor="#ffffff"
+													bgColor="#7ED320"
+												/>
+											</IsoWidgetsWrapper>
+										</Grid>
+										<Grid item xs={3}>
+											<IsoWidgetsWrapper>
+												{/* Sticker Widget */}
+												<StickerWidget
+													number="3024"
+													text="Total Message"
+													icon="ion-chatbubbles"
+													fontColor="#ffffff"
+													bgColor="#7ED320"
+												/>
+											</IsoWidgetsWrapper>
+										</Grid>
+									</Grid>
+									<Grid container spacing={8}>
+										<Grid item xs={3}>
+											<IsoWidgetsWrapper>
+												{/* Sticker Widget */}
+												<StickerWidget
+													number="3024"
+													text="Total Message"
+													icon="ion-chatbubbles"
+													fontColor="#ffffff"
+													bgColor="#7ED320"
+												/>
+											</IsoWidgetsWrapper>
+										</Grid>
+										<Grid item xs={3}>
+											<IsoWidgetsWrapper>
+												{/* Sticker Widget */}
+												<StickerWidget
+													number="3024"
+													text="Total Message"
+													icon="ion-chatbubbles"
+													fontColor="#ffffff"
+													bgColor="#7ED320"
+												/>
+											</IsoWidgetsWrapper>
+										</Grid>
+										<Grid item xs={3}>
+											<IsoWidgetsWrapper>
+												{/* Sticker Widget */}
+												<StickerWidget
+													number="3024"
+													text="Total Message"
+													icon="ion-chatbubbles"
+													fontColor="#ffffff"
+													bgColor="#7ED320"
+												/>
+											</IsoWidgetsWrapper>
+										</Grid>
+										<Grid item xs={3}>
+											<IsoWidgetsWrapper>
+												{/* Sticker Widget */}
+												<StickerWidget
+													number="3024"
+													text="Total Message"
+													icon="ion-chatbubbles"
+													fontColor="#ffffff"
+													bgColor="#7ED320"
+												/>
+											</IsoWidgetsWrapper>
+										</Grid>
+									</Grid>
+									<Grid container spacing={8}>
+										<Grid item xs={3}>
+											<IsoWidgetsWrapper>
+												{/* Sticker Widget */}
+												<StickerWidget
+													number="3024"
+													text="Total Message"
+													icon="ion-chatbubbles"
+													fontColor="#ffffff"
+													bgColor="#7ED320"
+												/>
+											</IsoWidgetsWrapper>
+										</Grid>
+										<Grid item xs={3}>
+											<IsoWidgetsWrapper>
+												{/* Sticker Widget */}
+												<StickerWidget
+													number="3024"
+													text="Total Message"
+													icon="ion-chatbubbles"
+													fontColor="#ffffff"
+													bgColor="#7ED320"
+												/>
+											</IsoWidgetsWrapper>
+										</Grid>
+										<Grid item xs={3}>
+											<IsoWidgetsWrapper>
+												{/* Sticker Widget */}
+												<StickerWidget
+													number="3024"
+													text="Total Message"
+													icon="ion-chatbubbles"
+													fontColor="#ffffff"
+													bgColor="#7ED320"
+												/>
+											</IsoWidgetsWrapper>
+										</Grid>
+										<Grid item xs={3}>
+											<IsoWidgetsWrapper>
+												{/* Sticker Widget */}
+												<StickerWidget
+													number="3024"
+													text="Total Message"
+													icon="ion-chatbubbles"
+													fontColor="#ffffff"
+													bgColor="#7ED320"
+												/>
+											</IsoWidgetsWrapper>
+										</Grid>
+									</Grid>
+									<Grid container spacing={8}>
+										<Grid item xs={3}>
+											<IsoWidgetsWrapper>
+												{/* Sticker Widget */}
+												<StickerWidget
+													number="3024"
+													text="Total Message"
+													icon="ion-chatbubbles"
+													fontColor="#ffffff"
+													bgColor="#7ED320"
+												/>
+											</IsoWidgetsWrapper>
+										</Grid>
+										<Grid item xs={3}>
+											<IsoWidgetsWrapper>
+												{/* Sticker Widget */}
+												<StickerWidget
+													number="3024"
+													text="Total Message"
+													icon="ion-chatbubbles"
+													fontColor="#ffffff"
+													bgColor="#7ED320"
+												/>
+											</IsoWidgetsWrapper>
+										</Grid>
+										<Grid item xs={3}>
+											<IsoWidgetsWrapper>
+												{/* Sticker Widget */}
+												<StickerWidget
+													number="3024"
+													text="Total Message"
+													icon="ion-chatbubbles"
+													fontColor="#ffffff"
+													bgColor="#7ED320"
+												/>
+											</IsoWidgetsWrapper>
+										</Grid>
+										<Grid item xs={3}>
+											<IsoWidgetsWrapper>
+												{/* Sticker Widget */}
+												<StickerWidget
+													number="3024"
+													text="Total Message"
+													icon="ion-chatbubbles"
+													fontColor="#ffffff"
+													bgColor="#7ED320"
+												/>
+											</IsoWidgetsWrapper>
+										</Grid>
+									</Grid>
+									<Grid container spacing={8}>
+										<Grid item xs={3}>
+											<IsoWidgetsWrapper>
+												{/* Sticker Widget */}
+												<StickerWidget
+													number="3024"
+													text="Total Message"
+													icon="ion-chatbubbles"
+													fontColor="#ffffff"
+													bgColor="#7ED320"
+												/>
+											</IsoWidgetsWrapper>
+										</Grid>
+										<Grid item xs={3}>
+											<IsoWidgetsWrapper>
+												{/* Sticker Widget */}
+												<StickerWidget
+													number="3024"
+													text="Total Message"
+													icon="ion-chatbubbles"
+													fontColor="#ffffff"
+													bgColor="#7ED320"
+												/>
+											</IsoWidgetsWrapper>
+										</Grid>
+										<Grid item xs={3}>
+											<IsoWidgetsWrapper>
+												{/* Sticker Widget */}
+												<StickerWidget
+													number="3024"
+													text="Total Message"
+													icon="ion-chatbubbles"
+													fontColor="#ffffff"
+													bgColor="#7ED320"
+												/>
+											</IsoWidgetsWrapper>
+										</Grid>
+										<Grid item xs={3}>
+											<IsoWidgetsWrapper>
+												{/* Sticker Widget */}
+												<StickerWidget
+													number="3024"
+													text="Total Message"
+													icon="ion-chatbubbles"
+													fontColor="#ffffff"
+													bgColor="#7ED320"
+												/>
+											</IsoWidgetsWrapper>
+										</Grid>
+									</Grid>
+									<Grid container spacing={8}>
+										<Grid item xs={3}>
+											<IsoWidgetsWrapper>
+												{/* Sticker Widget */}
+												<StickerWidget
+													number="3024"
+													text="Total Message"
+													icon="ion-chatbubbles"
+													fontColor="#ffffff"
+													bgColor="#7ED320"
+												/>
+											</IsoWidgetsWrapper>
+										</Grid>
+										<Grid item xs={3}>
+											<IsoWidgetsWrapper>
+												{/* Sticker Widget */}
+												<StickerWidget
+													number="3024"
+													text="Total Message"
+													icon="ion-chatbubbles"
+													fontColor="#ffffff"
+													bgColor="#7ED320"
+												/>
+											</IsoWidgetsWrapper>
+										</Grid>
+										<Grid item xs={3}>
+											<IsoWidgetsWrapper>
+												{/* Sticker Widget */}
+												<StickerWidget
+													number="3024"
+													text="Total Message"
+													icon="ion-chatbubbles"
+													fontColor="#ffffff"
+													bgColor="#7ED320"
+												/>
+											</IsoWidgetsWrapper>
+										</Grid>
+										<Grid item xs={3}>
+											<IsoWidgetsWrapper>
+												{/* Sticker Widget */}
+												<StickerWidget
+													number="3024"
+													text="Total Message"
+													icon="ion-chatbubbles"
+													fontColor="#ffffff"
+													bgColor="#7ED320"
+												/>
+											</IsoWidgetsWrapper>
+										</Grid>
+									</Grid>
+									<Grid container spacing={8}>
+										<Grid item xs={3}>
+											<IsoWidgetsWrapper>
+												{/* Sticker Widget */}
+												<StickerWidget
+													number="3024"
+													text="Total Message"
+													icon="ion-chatbubbles"
+													fontColor="#ffffff"
+													bgColor="#7ED320"
+												/>
+											</IsoWidgetsWrapper>
+										</Grid>
+										<Grid item xs={3}>
+											<IsoWidgetsWrapper>
+												{/* Sticker Widget */}
+												<StickerWidget
+													number="3024"
+													text="Total Message"
+													icon="ion-chatbubbles"
+													fontColor="#ffffff"
+													bgColor="#7ED320"
+												/>
+											</IsoWidgetsWrapper>
+										</Grid>
+										<Grid item xs={3}>
+											<IsoWidgetsWrapper>
+												{/* Sticker Widget */}
+												<StickerWidget
+													number="3024"
+													text="Total Message"
+													icon="ion-chatbubbles"
+													fontColor="#ffffff"
+													bgColor="#7ED320"
+												/>
+											</IsoWidgetsWrapper>
+										</Grid>
+										<Grid item xs={3}>
+											<IsoWidgetsWrapper>
+												{/* Sticker Widget */}
+												<StickerWidget
+													number="3024"
+													text="Total Message"
+													icon="ion-chatbubbles"
+													fontColor="#ffffff"
+													bgColor="#7ED320"
+												/>
+											</IsoWidgetsWrapper>
+										</Grid>
+									</Grid>
+									<Grid container spacing={8}>
+										<Grid item xs={3}>
+											<IsoWidgetsWrapper>
+												{/* Sticker Widget */}
+												<StickerWidget
+													number="3024"
+													text="Total Message"
+													icon="ion-chatbubbles"
+													fontColor="#ffffff"
+													bgColor="#7ED320"
+												/>
+											</IsoWidgetsWrapper>
+										</Grid>
+										<Grid item xs={3}>
+											<IsoWidgetsWrapper>
+												{/* Sticker Widget */}
+												<StickerWidget
+													number="3024"
+													text="Total Message"
+													icon="ion-chatbubbles"
+													fontColor="#ffffff"
+													bgColor="#7ED320"
+												/>
+											</IsoWidgetsWrapper>
+										</Grid>
+										<Grid item xs={3}>
+											<IsoWidgetsWrapper>
+												{/* Sticker Widget */}
+												<StickerWidget
+													number="3024"
+													text="Total Message"
+													icon="ion-chatbubbles"
+													fontColor="#ffffff"
+													bgColor="#7ED320"
+												/>
+											</IsoWidgetsWrapper>
+										</Grid>
+										<Grid item xs={3}>
+											<IsoWidgetsWrapper>
+												{/* Sticker Widget */}
+												<StickerWidget
+													number="3024"
+													text="Total Message"
+													icon="ion-chatbubbles"
+													fontColor="#ffffff"
+													bgColor="#7ED320"
+												/>
+											</IsoWidgetsWrapper>
+										</Grid>
+									</Grid>
+									<Grid container spacing={8}>
+										<Grid item xs={3}>
+											<IsoWidgetsWrapper>
+												{/* Sticker Widget */}
+												<StickerWidget
+													number="3024"
+													text="Total Message"
+													icon="ion-chatbubbles"
+													fontColor="#ffffff"
+													bgColor="#7ED320"
+												/>
+											</IsoWidgetsWrapper>
+										</Grid>
+										<Grid item xs={3}>
+											<IsoWidgetsWrapper>
+												{/* Sticker Widget */}
+												<StickerWidget
+													number="3024"
+													text="Total Message"
+													icon="ion-chatbubbles"
+													fontColor="#ffffff"
+													bgColor="#7ED320"
+												/>
+											</IsoWidgetsWrapper>
+										</Grid>
+										<Grid item xs={3}>
+											<IsoWidgetsWrapper>
+												{/* Sticker Widget */}
+												<StickerWidget
+													number="3024"
+													text="Total Message"
+													icon="ion-chatbubbles"
+													fontColor="#ffffff"
+													bgColor="#7ED320"
+												/>
+											</IsoWidgetsWrapper>
+										</Grid>
+										<Grid item xs={3}>
+											<IsoWidgetsWrapper>
+												{/* Sticker Widget */}
+												<StickerWidget
+													number="3024"
+													text="Total Message"
+													icon="ion-chatbubbles"
+													fontColor="#ffffff"
+													bgColor="#7ED320"
+												/>
+											</IsoWidgetsWrapper>
+										</Grid>
+									</Grid>
+									<Grid container spacing={8}>
+										<Grid item xs={3}>
+											<IsoWidgetsWrapper>
+												{/* Sticker Widget */}
+												<StickerWidget
+													number="3024"
+													text="Total Message"
+													icon="ion-chatbubbles"
+													fontColor="#ffffff"
+													bgColor="#7ED320"
+												/>
+											</IsoWidgetsWrapper>
+										</Grid>
+										<Grid item xs={3}>
+											<IsoWidgetsWrapper>
+												{/* Sticker Widget */}
+												<StickerWidget
+													number="3024"
+													text="Total Message"
+													icon="ion-chatbubbles"
+													fontColor="#ffffff"
+													bgColor="#7ED320"
+												/>
+											</IsoWidgetsWrapper>
+										</Grid>
+										<Grid item xs={3}>
+											<IsoWidgetsWrapper>
+												{/* Sticker Widget */}
+												<StickerWidget
+													number="3024"
+													text="Total Message"
+													icon="ion-chatbubbles"
+													fontColor="#ffffff"
+													bgColor="#7ED320"
+												/>
+											</IsoWidgetsWrapper>
+										</Grid>
+										<Grid item xs={3}>
+											<IsoWidgetsWrapper>
+												{/* Sticker Widget */}
+												<StickerWidget
+													number="3024"
+													text="Total Message"
+													icon="ion-chatbubbles"
+													fontColor="#ffffff"
+													bgColor="#7ED320"
+												/>
+											</IsoWidgetsWrapper>
+										</Grid>
+									</Grid>
+									<Grid container spacing={8}>
+										<Grid item xs={3}>
+											<IsoWidgetsWrapper>
+												{/* Sticker Widget */}
+												<StickerWidget
+													number="3024"
+													text="Total Message"
+													icon="ion-chatbubbles"
+													fontColor="#ffffff"
+													bgColor="#7ED320"
+												/>
+											</IsoWidgetsWrapper>
+										</Grid>
+										<Grid item xs={3}>
+											<IsoWidgetsWrapper>
+												{/* Sticker Widget */}
+												<StickerWidget
+													number="3024"
+													text="Total Message"
+													icon="ion-chatbubbles"
+													fontColor="#ffffff"
+													bgColor="#7ED320"
+												/>
+											</IsoWidgetsWrapper>
+										</Grid>
+										<Grid item xs={3}>
+											<IsoWidgetsWrapper>
+												{/* Sticker Widget */}
+												<StickerWidget
+													number="3024"
+													text="Total Message"
+													icon="ion-chatbubbles"
+													fontColor="#ffffff"
+													bgColor="#7ED320"
+												/>
+											</IsoWidgetsWrapper>
+										</Grid>
+										<Grid item xs={3}>
+											<IsoWidgetsWrapper>
+												{/* Sticker Widget */}
+												<StickerWidget
+													number="3024"
+													text="Total Message"
+													icon="ion-chatbubbles"
+													fontColor="#ffffff"
+													bgColor="#7ED320"
+												/>
+											</IsoWidgetsWrapper>
+										</Grid>
+									</Grid>
+									<Grid container spacing={8}>
+										<Grid item xs={3}>
+											<IsoWidgetsWrapper>
+												{/* Sticker Widget */}
+												<StickerWidget
+													number="3024"
+													text="Total Message"
+													icon="ion-chatbubbles"
+													fontColor="#ffffff"
+													bgColor="#7ED320"
+												/>
+											</IsoWidgetsWrapper>
+										</Grid>
+										<Grid item xs={3}>
+											<IsoWidgetsWrapper>
+												{/* Sticker Widget */}
+												<StickerWidget
+													number="3024"
+													text="Total Message"
+													icon="ion-chatbubbles"
+													fontColor="#ffffff"
+													bgColor="#7ED320"
+												/>
+											</IsoWidgetsWrapper>
+										</Grid>
+										<Grid item xs={3}>
+											<IsoWidgetsWrapper>
+												{/* Sticker Widget */}
+												<StickerWidget
+													number="3024"
+													text="Total Message"
+													icon="ion-chatbubbles"
+													fontColor="#ffffff"
+													bgColor="#7ED320"
+												/>
+											</IsoWidgetsWrapper>
+										</Grid>
+										<Grid item xs={3}>
+											<IsoWidgetsWrapper>
+												{/* Sticker Widget */}
+												<StickerWidget
+													number="3024"
+													text="Total Message"
+													icon="ion-chatbubbles"
+													fontColor="#ffffff"
+													bgColor="#7ED320"
+												/>
+											</IsoWidgetsWrapper>
+										</Grid>
+									</Grid>
+									<Grid container spacing={8}>
+										<Grid item xs={3}>
+											<IsoWidgetsWrapper>
+												{/* Sticker Widget */}
+												<StickerWidget
+													number="3024"
+													text="Total Message"
+													icon="ion-chatbubbles"
+													fontColor="#ffffff"
+													bgColor="#7ED320"
+												/>
+											</IsoWidgetsWrapper>
+										</Grid>
+										<Grid item xs={3}>
+											<IsoWidgetsWrapper>
+												{/* Sticker Widget */}
+												<StickerWidget
+													number="3024"
+													text="Total Message"
+													icon="ion-chatbubbles"
+													fontColor="#ffffff"
+													bgColor="#7ED320"
+												/>
+											</IsoWidgetsWrapper>
+										</Grid>
+										<Grid item xs={3}>
+											<IsoWidgetsWrapper>
+												{/* Sticker Widget */}
+												<StickerWidget
+													number="3024"
+													text="Total Message"
+													icon="ion-chatbubbles"
+													fontColor="#ffffff"
+													bgColor="#7ED320"
+												/>
+											</IsoWidgetsWrapper>
+										</Grid>
+										<Grid item xs={3}>
+											<IsoWidgetsWrapper>
+												{/* Sticker Widget */}
+												<StickerWidget
+													number="3024"
+													text="Total Message"
+													icon="ion-chatbubbles"
+													fontColor="#ffffff"
+													bgColor="#7ED320"
+												/>
+											</IsoWidgetsWrapper>
+										</Grid>
+									</Grid>
+									<Grid container spacing={8}>
+										<Grid item xs={3}>
+											<IsoWidgetsWrapper>
+												{/* Sticker Widget */}
+												<StickerWidget
+													number="3024"
+													text="Total Message"
+													icon="ion-chatbubbles"
+													fontColor="#ffffff"
+													bgColor="#7ED320"
+												/>
+											</IsoWidgetsWrapper>
+										</Grid>
+										<Grid item xs={3}>
+											<IsoWidgetsWrapper>
+												{/* Sticker Widget */}
+												<StickerWidget
+													number="3024"
+													text="Total Message"
+													icon="ion-chatbubbles"
+													fontColor="#ffffff"
+													bgColor="#7ED320"
+												/>
+											</IsoWidgetsWrapper>
+										</Grid>
+										<Grid item xs={3}>
+											<IsoWidgetsWrapper>
+												{/* Sticker Widget */}
+												<StickerWidget
+													number="3024"
+													text="Total Message"
+													icon="ion-chatbubbles"
+													fontColor="#ffffff"
+													bgColor="#7ED320"
+												/>
+											</IsoWidgetsWrapper>
+										</Grid>
+										<Grid item xs={3}>
+											<IsoWidgetsWrapper>
+												{/* Sticker Widget */}
+												<StickerWidget
+													number="3024"
+													text="Total Message"
+													icon="ion-chatbubbles"
+													fontColor="#ffffff"
+													bgColor="#7ED320"
+												/>
+											</IsoWidgetsWrapper>
+										</Grid>
+									</Grid>
+									<Grid container spacing={8}>
+										<Grid item xs={3}>
+											<IsoWidgetsWrapper>
+												{/* Sticker Widget */}
+												<StickerWidget
+													number="3024"
+													text="Total Message"
+													icon="ion-chatbubbles"
+													fontColor="#ffffff"
+													bgColor="#7ED320"
+												/>
+											</IsoWidgetsWrapper>
+										</Grid>
+										<Grid item xs={3}>
+											<IsoWidgetsWrapper>
+												{/* Sticker Widget */}
+												<StickerWidget
+													number="3024"
+													text="Total Message"
+													icon="ion-chatbubbles"
+													fontColor="#ffffff"
+													bgColor="#7ED320"
+												/>
+											</IsoWidgetsWrapper>
+										</Grid>
+										<Grid item xs={3}>
+											<IsoWidgetsWrapper>
+												{/* Sticker Widget */}
+												<StickerWidget
+													number="3024"
+													text="Total Message"
+													icon="ion-chatbubbles"
+													fontColor="#ffffff"
+													bgColor="#7ED320"
+												/>
+											</IsoWidgetsWrapper>
+										</Grid>
+										<Grid item xs={3}>
+											<IsoWidgetsWrapper>
+												{/* Sticker Widget */}
+												<StickerWidget
+													number="3024"
+													text="Total Message"
+													icon="ion-chatbubbles"
+													fontColor="#ffffff"
+													bgColor="#7ED320"
+												/>
+											</IsoWidgetsWrapper>
+										</Grid>
+									</Grid>
+									<Grid container spacing={8}>
+										<Grid item xs={3}>
+											<IsoWidgetsWrapper>
+												{/* Sticker Widget */}
+												<StickerWidget
+													number="3024"
+													text="Total Message"
+													icon="ion-chatbubbles"
+													fontColor="#ffffff"
+													bgColor="#7ED320"
+												/>
+											</IsoWidgetsWrapper>
+										</Grid>
+										<Grid item xs={3}>
+											<IsoWidgetsWrapper>
+												{/* Sticker Widget */}
+												<StickerWidget
+													number="3024"
+													text="Total Message"
+													icon="ion-chatbubbles"
+													fontColor="#ffffff"
+													bgColor="#7ED320"
+												/>
+											</IsoWidgetsWrapper>
+										</Grid>
+										<Grid item xs={3}>
+											<IsoWidgetsWrapper>
+												{/* Sticker Widget */}
+												<StickerWidget
+													number="3024"
+													text="Total Message"
+													icon="ion-chatbubbles"
+													fontColor="#ffffff"
+													bgColor="#7ED320"
+												/>
+											</IsoWidgetsWrapper>
+										</Grid>
+										<Grid item xs={3}>
+											<IsoWidgetsWrapper>
+												{/* Sticker Widget */}
+												<StickerWidget
+													number="3024"
+													text="Total Message"
+													icon="ion-chatbubbles"
+													fontColor="#ffffff"
+													bgColor="#7ED320"
+												/>
+											</IsoWidgetsWrapper>
+										</Grid>
+									</Grid>
+									<Grid container spacing={8}>
+										<Grid item xs={3}>
+											<IsoWidgetsWrapper>
+												{/* Sticker Widget */}
+												<StickerWidget
+													number="3024"
+													text="Total Message"
+													icon="ion-chatbubbles"
+													fontColor="#ffffff"
+													bgColor="#7ED320"
+												/>
+											</IsoWidgetsWrapper>
+										</Grid>
+										<Grid item xs={3}>
+											<IsoWidgetsWrapper>
+												{/* Sticker Widget */}
+												<StickerWidget
+													number="3024"
+													text="Total Message"
+													icon="ion-chatbubbles"
+													fontColor="#ffffff"
+													bgColor="#7ED320"
+												/>
+											</IsoWidgetsWrapper>
+										</Grid>
+										<Grid item xs={3}>
+											<IsoWidgetsWrapper>
+												{/* Sticker Widget */}
+												<StickerWidget
+													number="3024"
+													text="Total Message"
+													icon="ion-chatbubbles"
+													fontColor="#ffffff"
+													bgColor="#7ED320"
+												/>
+											</IsoWidgetsWrapper>
+										</Grid>
+										<Grid item xs={3}>
+											<IsoWidgetsWrapper>
+												{/* Sticker Widget */}
+												<StickerWidget
+													number="3024"
+													text="Total Message"
+													icon="ion-chatbubbles"
+													fontColor="#ffffff"
+													bgColor="#7ED320"
+												/>
+											</IsoWidgetsWrapper>
+										</Grid>
+									</Grid>
+
+								</CardWithStyled>
+								<div id="testBody">
+									<img id="testImage" src="" />
+								</div>
+								<button onClick={this.renderPDFViaHtml}>TestPDF</button>
+							</Grid>
 						</Grid>
-						<Grid item sm={3} xs={12}>
-							<IsoWidgetsWrapper>
-								{/* Sticker Widget */}
-								<StickerWidget
-									number="3024"
-									text="Total Message"
-									icon="ion-chatbubbles"
-									fontColor="#ffffff"
-									bgColor="#7ED320"
-								/>
-							</IsoWidgetsWrapper>
-						</Grid>
-						<Grid item sm={3} xs={12}>
-							<IsoWidgetsWrapper>
-								{/* Sticker Widget */}
-								<StickerWidget
-									number="3024"
-									text="Total Message"
-									icon="ion-chatbubbles"
-									fontColor="#ffffff"
-									bgColor="#7ED320"
-								/>
-							</IsoWidgetsWrapper>
-						</Grid>
-						<Grid item sm={3} xs={12}>
-							<IsoWidgetsWrapper>
-								{/* Sticker Widget */}
-								<StickerWidget
-									number="3024"
-									text="Total Message"
-									icon="ion-chatbubbles"
-									fontColor="#ffffff"
-									bgColor="#7ED320"
-								/>
-							</IsoWidgetsWrapper>
-						</Grid>
+					</Grid>
 					{/* </WhiteCard> */}
 				</Grid>
 			</LayoutContentWrapper >
