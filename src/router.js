@@ -8,6 +8,7 @@ import CreatePosition from './containers/Position/CreatePosition'
 import asyncComponent from './helpers/AsyncFunc'
 import QuizLayout from './containers/Quiz/QuizLayout'
 import QuizComplete from './containers/Quiz/QuizComplete'
+import Loader from './LoadingComponent'
 
 const RestrictedRoute = ({ component: Component, isLoggedIn, ...rest }) => (
   <Route
@@ -23,10 +24,11 @@ const RestrictedRoute = ({ component: Component, isLoggedIn, ...rest }) => (
   />
 )
 const PublicRoutes = (props) => {
-  console.log("isLoggin = ", props)
+  console.log("this props = ", props)
   return (
     <ConnectedRouter history={props.history}>
       <div>
+        { props.isLoading && <Loader />}
         <Switch>
           <Route
             exact
@@ -63,18 +65,17 @@ const PublicRoutes = (props) => {
             component={QuizComplete}
             isLoggedIn={props.isLoggedIn}
           />
-          <Route render={() => <div>404 Not Found. Sorry</div>} />
+          <Route render={() => <h1>404 Not Found. Sorry</h1>} />
         </Switch>
       </div>
     </ConnectedRouter>
   )
 }
 
-const mapStateToProps = state => {
-  return {
-    isLoggedIn: state.Auth.isLoggedIn
-  }
-}
+const mapStateToProps = state => ({
+  isLoggedIn: state.Auth.isLoggedIn,
+  isLoading: state.Loading.loading,
+})
 
 export default connect(mapStateToProps, null)(PublicRoutes)
 

@@ -15,7 +15,7 @@ import { connect } from 'react-redux'
 import { decreaseTime } from '../../redux/timer/actions'
 import moment from 'moment'
 import Axios from 'axios'
-import { arrayOfDeffered } from 'redux-saga/utils';
+import { Loading, LoadingSuccess } from '../../redux/loading/actions'
 
 const QuizWrapper = styled.div`
 	height: 100%;
@@ -40,6 +40,7 @@ const QuizWrapper = styled.div`
 			margin-left: 0px;
 		}
 		.button-control {
+			margin-left: 0px;
 			width: 100%;
 			display: flex;
 			justify-content: space-around;
@@ -88,12 +89,13 @@ class QuizLayout extends React.Component {
 		quizPath: 1,
 		quizData: [],
 		quizArrayPosition: 0,
+		beforePath: 0.5,
 	}
 	nextQuizPath = () => {
 		const quizPercent = this.state.quizPercent + 25
 		const quizPath = this.state.quizPath + 1
 		const beforePath = this.state.beforePath + 1
-		this.setState({ 
+		this.setState({
 			quizPath,
 			quizPercent,
 			beforePath
@@ -111,14 +113,21 @@ class QuizLayout extends React.Component {
 		}, 1000)
 	}
 	sendAnswer = async (event) => {
+		//ADd Loading Spinning after send answer
+		this.props.Loading()
+		//////////////////////////
 		const { answer } = event.target.dataset
-		// const url = 'https://us-central1-hireq-api.cloudfunctions.net/v1/candidate/answer'
-		// await Axios.post(url, {
-		// 	"id": 'aabbccdd',
-		// 	"testName": 'cog',
-		// 	"testNumber": this.state.quizArrayPosition + 1,
-		// 	"answer": answer
-		// })
+		const url = 'https://us-central1-hireq-api.cloudfunctions.net/v1/candidate/answer'
+		await Axios.post(url, {
+			id: 'aabbccdd',
+			testName: 'cog',
+			testNumber: this.state.quizArrayPosition + 1,
+			answer: parseInt(answer)
+		})
+
+		//Remove Loading After Send Answer
+		this.props.LoadingSuccess()
+		////////////////////////
 		const quizPercent = this.state.quizPercent += 1
 		const quizArrayPosition = this.state.quizArrayPosition += 1
 
@@ -148,10 +157,12 @@ class QuizLayout extends React.Component {
 					>
 						<div style={{ display: 'block', textAlign: 'center' }}>
 							<h4>
-								ส่วนที่ 2 - บุคลิกภาพ
+								{quizPath === 1 && 'ส่วนที่ 1 - เชาวน์ปัญญา'}
+								{quizPath === 2 && 'ส่วนที่ 2 - บุคลิกภาพ'}
 							</h4>
 							<h4>
-								ข้อความต่อไปนี้ตรงกับบุคลิกของท่านเพียงใด
+								{quizPath === 1 && 'จงพิจารณาความสัมพันธ์ของอนุกรมภาพต่อไปนี้ แล้วหาภาพที่มีความสัมพันธ์ต่อเนื่องจากภาพดังกล่าว'}
+								{quizPath === 2 && 'ข้อความต่อไปนี้ตรงกับบุคลิกของท่านเพียงใด'}
 							</h4>
 							<h1 style={{ color: 'red' }}>
 								{moment.utc(timeNow).format("HH:mm:ss")}
@@ -196,7 +207,7 @@ class QuizLayout extends React.Component {
 										/>
 									}
 									{
-										beforePath === 1.5 && <h2>ส่วนที่ 2 </h2>
+										// beforePath === 1.5 && <h2>ส่วนที่ 2 </h2>
 									}
 									{
 										quizPath === 2 && _quizMock.map(data => {
@@ -238,4 +249,4 @@ class QuizLayout extends React.Component {
 
 const mapStateToProps = (state) => ({ timeNow: state.Time.time })
 
-export default connect(mapStateToProps, { decreaseTime })(QuizLayout)
+export default connect(mapStateToProps, { decreaseTime, Loading, LoadingSuccess })(QuizLayout)
