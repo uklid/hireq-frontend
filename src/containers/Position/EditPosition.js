@@ -15,7 +15,7 @@ import Dialog, {
 	DialogTitle,
 } from 'material-ui/Dialog'
 import ToggleDisplay from 'react-toggle-display'
-const SliderStyled = styled(Slider)`
+const SliderStyled = styled(Slider) `
   .ant-slider-handle {
 	border: solid 2px #954590;
   }
@@ -131,7 +131,7 @@ class EditPosition extends React.Component {
 						</Card>
 					</Grid>
 					<Grid item sm={8} xs={12}>
-						<Card 
+						<Card
 							title="Outstanding Candidates"
 							style={{ overflowX: 'scroll' }}
 						>
@@ -153,13 +153,13 @@ class EditPosition extends React.Component {
 									<Grid item sm={12} xs={12}>
 										<p>
 											<span> Start Date: {`${moment(new Date()).format("DD/MM/YY")}`}</span>
-											<span>
+											<span style={{ marginLeft:70}}>
 												End Date: <DatePicker onChange={onChange} />
 											</span>
 										</p>
 										<Grid container style={{ marginTop: 30 }}>
 											<Grid item sm={2} xs={12}> Cognative Skill: </Grid>
-											<Grid item sm={4} xs={12}><SliderStyled defaultValue={30} /></Grid>
+											<Grid item sm={4} xs={12}><SliderStyled range defaultValue={[30, 50]} /></Grid>
 										</Grid>
 									</Grid>
 									<Grid style={{ paddingTop: 60 }} container spaceing={24}>
@@ -193,7 +193,7 @@ class EditPosition extends React.Component {
 					<div style={{ width: '100%' }}>
 						<Grid style={{ marginTop: 40 }} container spacing={0}>
 							<Grid item sm={12} xs={12}>
-								<Card 
+								<Card
 									title="Complete Candidates"
 									style={{
 										overflowX: 'scroll'
@@ -210,7 +210,7 @@ class EditPosition extends React.Component {
 						</Grid>
 						<Grid style={{ marginTop: 40 }} container spacing={0}>
 							<Grid item sm={12} xs={12}>
-								<Card 
+								<Card
 									title="Uncomplete Candidates"
 									style={{
 										overflowX: 'scroll'

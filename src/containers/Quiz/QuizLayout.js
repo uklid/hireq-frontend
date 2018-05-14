@@ -12,7 +12,7 @@ import {
 import QuizChoice from './QuizChoice'
 import QuizLogic from './QuizLogic'
 import { connect } from 'react-redux'
-import { decreaseTime } from '../../redux/timer/actions'
+import { decreaseTime, updateTimeFromApi } from '../../redux/timer/actions'
 import moment from 'moment'
 import Axios from 'axios'
 import { Loading, LoadingSuccess } from '../../redux/loading/actions'
@@ -23,12 +23,12 @@ const QuizWrapper = styled.div`
 	background-color: #f1f3f6; 
 
 	.quiz-choice {
-		width: 450px;
+		width: 600px;
 		margin-left: 50px;
 	}
 
 	.button-control {
-		margin-left: 52px;
+		margin-left: 120px;
 		width: 450px;
 		display: flex;
 		justify-content: space-around;
@@ -82,14 +82,21 @@ for (let i = 1; i <= 20; i++) {
 		chooseChoice: Math.floor(Math.random() * 6)
 	})
 }
+//candidate ID
+const candidateId = '-L3y6bEU1lxPOpxeoQw-'
+const apiURL = 'https://us-central1-hireq-api.cloudfunctions.net'
 
 class QuizLayout extends React.Component {
 	state = {
 		quizPercent: 1,
 		quizPath: 1,
 		quizData: [],
+		quizDataPer: [],
+		quizDataSS: [],
+		quizDataWP: [],
 		quizArrayPosition: 0,
 		beforePath: 0.5,
+		currentQuiz: ''
 	}
 	nextQuizPath = () => {
 		const quizPercent = this.state.quizPercent + 25
@@ -102,9 +109,26 @@ class QuizLayout extends React.Component {
 		})
 	}
 	componentWillMount = async () => {
-		const url = 'http://www.us-central1-hireq-api.cloudfunctions.net/v1/candidates/aabbccdd/test'
+		// Dispatch loading when call api
+		this.props.Loading()
+		// /////////////////////
+		const url = `${apiURL}/candidates/${candidateId}/test`
 		const quizData = await Axios.get(url)
-		this.setState({ quizData: quizData.data.cog })
+		const currentItem = quizData.data.currentItem - 1
+		const currentTest = quizData.data.currentTest
+		this.props.updateTimeFromApi(quizData.data.startedTime)
+		// console.log("Started Time = ", moment(quizData.data.startedTime).format("DD/MM/YY HH:mm:ss"))
+		console.log("quizData = ", quizData.data)
+		this.setState({
+			currentQuiz: currentTest,
+			quizData: quizData.data.cog,
+			quizDataPer: quizData.data.per,
+			quizDataSS: quizData.data.ss,
+			quizDataWP: quizData.data.wp,
+			quizArrayPosition: currentItem
+		})
+		// after set api data to State SuccessLoading
+		this.props.LoadingSuccess()
 	}
 	componentDidMount = async () => {
 		const { decreaseTime, timeNow } = this.props
@@ -116,15 +140,14 @@ class QuizLayout extends React.Component {
 		//ADd Loading Spinning after send answer
 		this.props.Loading()
 		//////////////////////////
+		const { imageFileName } = event.target.dataset
 		const { answer } = event.target.dataset
-		const url = 'https://us-central1-hireq-api.cloudfunctions.net/v1/candidate/answer'
+		const url = `${apiURL}/candidates/${candidateId}/answer`
 		await Axios.post(url, {
-			id: 'aabbccdd',
 			testName: 'cog',
 			testNumber: this.state.quizArrayPosition + 1,
-			answer: parseInt(answer)
+			answer: parseInt(answer),
 		})
-
 		//Remove Loading After Send Answer
 		this.props.LoadingSuccess()
 		////////////////////////
@@ -140,10 +163,21 @@ class QuizLayout extends React.Component {
 		}
 	}
 	render() {
-		const { quizPath, quizData, quizArrayPosition, beforePath } = this.state
+		const {
+			quizPath,
+			quizData,
+			quizDataPer,
+			quizArrayPosition,
+			beforePath,
+			currentQuiz,
+		} = this.state
 		const { timeNow } = this.props
 		if (timeNow < 0) {
 			this.props.history.replace('/quiz-complete')
+		}
+		//Console.log for API
+		if (quizData.length >= 1) {
+			// console.log(" answerTime = ", moment(Object.values(quizData)[quizArrayPosition].answerTime).format('DD/MM/YY HH:mm:ss'))
 		}
 		return (
 			<Layout style={{ minHeight: '100%' }}>
@@ -199,9 +233,10 @@ class QuizLayout extends React.Component {
 							<Grid item sm={9} xs={12}>
 								<div className="quiz-choice">
 									{
-										quizPath === 1 && quizData.length >= 1 && quizArrayPosition <= 24 &&
+										currentQuiz === 'cog' && quizData.length >= 1 && quizArrayPosition <= 24 &&
 										<QuizLogic
 											onClick={this.sendAnswer}
+											imageDetail={`${Object.values(quizData)[quizArrayPosition].img}`}
 											quizImage={require(`../../image/QuizImage/Question/${Object.values(quizData)[quizArrayPosition].img}`)}
 											imageData={Object.values(quizData)[quizArrayPosition].cs}
 										/>
@@ -210,12 +245,11 @@ class QuizLayout extends React.Component {
 										// beforePath === 1.5 && <h2>ส่วนที่ 2 </h2>
 									}
 									{
-										quizPath === 2 && _quizMock.map(data => {
+										currentQuiz === 'per' && quizDataPer.length >= 1 && quizDataPer.map((data, index) => {
 											return (
 												<QuizChoice
-													radioName={data.radioName}
-													quizTitle={data.quizTitle}
-													chooseChoice={data.chooseChoice}
+													radioName={`personal-quiz-${index}`}
+													quizTitle={data.th}
 												/>
 											)
 										})
@@ -249,4 +283,5 @@ class QuizLayout extends React.Component {
 
 const mapStateToProps = (state) => ({ timeNow: state.Time.time })
 
-export default connect(mapStateToProps, { decreaseTime, Loading, LoadingSuccess })(QuizLayout)
+export default connect(mapStateToProps,
+	{ decreaseTime, Loading, LoadingSuccess, updateTimeFromApi })(QuizLayout)

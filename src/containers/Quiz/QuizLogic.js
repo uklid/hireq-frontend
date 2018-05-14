@@ -8,7 +8,7 @@ const QuizWrapper = styled.div`
 `
 
 const QuizChoice = styled.div`
-  width: 395px;
+  width: 600px;
   display: flex;
   justify-content: space-around;
   flex-wrap: wrap;
@@ -33,7 +33,7 @@ const Wrapper = styled.div`
   flex-wrap: wrap;
 
   .quiz-image {
-    width: 400px;
+    width: px;
     height: 400px;
   }
   .quiz-answer-image {
@@ -57,7 +57,7 @@ class QuizLogic extends React.Component {
   //   console.log("Key = ", data)
   // }
   render() {
-    const { imageData, quizImage, onClick } = this.props
+    const { imageData, quizImage, onClick, imageDetail } = this.props
     return (
       <Wrapper>
         <img className="quiz-image" src={quizImage} />
@@ -70,6 +70,7 @@ class QuizLogic extends React.Component {
                 onClick={onClick}
                 key={index}
                 data-answer={data.c}
+                data-imageFileName={imageDetail}
                 src={require(`../../image/QuizImage/Answer/${data.img}`)}
               />
             })

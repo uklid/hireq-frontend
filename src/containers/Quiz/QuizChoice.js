@@ -57,8 +57,9 @@ input:checked ~ .checkmark:after {
 `
 
 class QuizChoice extends React.Component {
-	onClick = (event) => {
+	sendPersonalAnswer = (event) => {
 		console.log(event.target.value)
+		const answer = parseInt(event.target.value)
 	}
 	render() {
 		const { radioName, choiceSelect, quizTitle } = this.props
@@ -73,7 +74,7 @@ class QuizChoice extends React.Component {
 						borderColor="#09b29c"
 						activeColor="#09b29c"
 					>
-						<input type="radio" name={radioName} value="5" onClick={this.onClick} />
+						<input type="radio" name={radioName} value="5" onClick={this.sendPersonalAnswer} />
 						<span class="checkmark"></span>
 					</Container>
 					<Container
@@ -86,7 +87,7 @@ class QuizChoice extends React.Component {
 						borderColor="#09b29c"
 						activeColor="#09b29c"
 					>
-						<input type="radio" name={radioName} value="4" onClick={this.onClick} />
+						<input type="radio" name={radioName} value="4" onClick={this.sendPersonalAnswer} />
 						<span class="checkmark"></span>
 					</Container>
 					<Container
@@ -96,7 +97,7 @@ class QuizChoice extends React.Component {
 						}}
 						activeColor="#eee"
 					>
-						<input type="radio" name={radioName} value="3" onClick={this.onClick} />
+						<input type="radio" name={radioName} value="3" onClick={this.sendPersonalAnswer} />
 						<span class="checkmark"></span>
 					</Container>
 					<Container
@@ -108,7 +109,7 @@ class QuizChoice extends React.Component {
 						borderColor="#954590"
 						activeColor="#954590"
 					>
-						<input type="radio" name={radioName} value="2" onClick={this.onClick} />
+						<input type="radio" name={radioName} value="2" onClick={this.sendPersonalAnswer} />
 						<span class="checkmark"></span>
 					</Container>
 					<Container
@@ -120,7 +121,7 @@ class QuizChoice extends React.Component {
 							marginLeft: 8
 						}}
 					>
-						<input type="radio" name={radioName} value="1" onClick={this.onClick} />
+						<input type="radio" name={radioName} value="1" onClick={this.sendPersonalAnswer} />
 						<span class="checkmark"></span>
 					</Container>
 					<h4 style={{ color: '#954590' }}> ไม่ตรง </h4>
