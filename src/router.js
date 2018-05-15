@@ -9,6 +9,7 @@ import asyncComponent from './helpers/AsyncFunc'
 import QuizLayout from './containers/Quiz/QuizLayout'
 import QuizComplete from './containers/Quiz/QuizComplete'
 import Loader from './LoadingComponent'
+import BeforeQuiz from './containers/Quiz/BeforeQuiz'
 
 const RestrictedRoute = ({ component: Component, isLoggedIn, ...rest }) => (
   <Route
@@ -24,22 +25,27 @@ const RestrictedRoute = ({ component: Component, isLoggedIn, ...rest }) => (
   />
 )
 const PublicRoutes = (props) => {
-  console.log("this props = ", props)
+  // console.log("this props = ", props)
   return (
     <ConnectedRouter history={props.history}>
       <div>
-        { props.isLoading && <Loader />}
+        {props.isLoading && <Loader />}
         <Switch>
           <Route
             exact
             path={'/'}
             component={asyncComponent(() => import('./containers/Page/signin'))}
           />
-           <Route 
+          <Route 
+            exact
+            path={'/preperation'}
+            component={BeforeQuiz}
+          />
+          <Route
             exact
             path={'/quiz'}
             component={QuizLayout}
-            // component={asyncComponent(() => import('./containers/Quiz/QuizLayout'))}
+          // component={asyncComponent(() => import('./containers/Quiz/QuizLayout'))}
           />
           <Route
             path="/quiz-complete"
