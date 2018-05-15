@@ -35,6 +35,16 @@ const PublicRoutes = (props) => {
             path={'/'}
             component={asyncComponent(() => import('./containers/Page/signin'))}
           />
+           <Route 
+            exact
+            path={'/quiz'}
+            component={QuizLayout}
+            // component={asyncComponent(() => import('./containers/Quiz/QuizLayout'))}
+          />
+          <Route
+            path="/quiz-complete"
+            component={asyncComponent(() => import('./containers/Quiz/QuizComplete'))}
+          />
           <Route
             exact
             path={'/signin'}
@@ -55,16 +65,16 @@ const PublicRoutes = (props) => {
             component={App}
             isLoggedIn={props.isLoggedIn}
           />
-          <RestrictedRoute
+          {/* <RestrictedRoute
             path="/quiz"
             component={QuizLayout}
             isLoggedIn={props.isLoggedIn}
-          />
-          <RestrictedRoute
+          /> */}
+          {/* <RestrictedRoute
             path="/quiz-complete"
             component={QuizComplete}
             isLoggedIn={props.isLoggedIn}
-          />
+          /> */}
           <Route render={() => <h1>404 Not Found. Sorry</h1>} />
         </Switch>
       </div>

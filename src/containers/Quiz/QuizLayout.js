@@ -23,7 +23,7 @@ const QuizWrapper = styled.div`
 	background-color: #f1f3f6; 
 
 	.quiz-choice {
-		width: 600px;
+		width: 660px;
 		margin-left: 50px;
 	}
 
@@ -74,14 +74,33 @@ const TimelineStyled = styled(Timeline) `
 	}
 `
 
-const _quizMock = []
-for (let i = 1; i <= 20; i++) {
-	_quizMock.push({
-		quizTitle: `quiz choice - ${i}`,
-		radioName: i,
-		chooseChoice: Math.floor(Math.random() * 6)
-	})
+const findPercent = (currentQuiz) => {
+	switch (currentQuiz) {
+		case 'cog':
+			return {
+				percent: 1,
+				quizPath: 1
+			}
+		case 'per':
+			return {
+				percent: 25,
+				quizPath: 2
+			}
+		case 'ss':
+			return {
+				percent: 50,
+				quizPath: 3
+			}
+		case 'wp':
+			return {
+				percent: 75,
+				quizPath: 4
+			}
+		default:
+			return 0
+	}
 }
+
 //candidate ID
 const candidateId = '-L3y6bEU1lxPOpxeoQw-'
 const apiURL = 'https://us-central1-hireq-api.cloudfunctions.net'
@@ -90,7 +109,7 @@ class QuizLayout extends React.Component {
 	state = {
 		quizPercent: 1,
 		quizPath: 1,
-		quizData: [],
+		quizDataCog: [],
 		quizDataPer: [],
 		quizDataSS: [],
 		quizDataWP: [],
@@ -109,26 +128,32 @@ class QuizLayout extends React.Component {
 		})
 	}
 	componentWillMount = async () => {
-		// Dispatch loading when call api
-		this.props.Loading()
-		// /////////////////////
-		const url = `${apiURL}/candidates/${candidateId}/test`
-		const quizData = await Axios.get(url)
-		const currentItem = quizData.data.currentItem - 1
-		const currentTest = quizData.data.currentTest
-		this.props.updateTimeFromApi(quizData.data.startedTime)
-		// console.log("Started Time = ", moment(quizData.data.startedTime).format("DD/MM/YY HH:mm:ss"))
-		console.log("quizData = ", quizData.data)
-		this.setState({
-			currentQuiz: currentTest,
-			quizData: quizData.data.cog,
-			quizDataPer: quizData.data.per,
-			quizDataSS: quizData.data.ss,
-			quizDataWP: quizData.data.wp,
-			quizArrayPosition: currentItem
-		})
-		// after set api data to State SuccessLoading
-		this.props.LoadingSuccess()
+		try {
+			// Dispatch loading when call api
+			this.props.Loading()
+			// /////////////////////
+			const url = `${apiURL}/candidates/${candidateId}/test`
+			const quizData = await Axios.get(url)
+			const currentItem = quizData.data.currentItem - 1
+			const currentTest = quizData.data.currentTest
+			this.props.updateTimeFromApi(quizData.data.startedTime)
+
+			this.setState({
+				quizPercent: findPercent(currentTest).percent,
+				quizPath: findPercent(currentTest).quizPath,
+				currentQuiz: currentTest,
+				quizDataCog: quizData.data.cog,
+				quizDataPer: quizData.data.per,
+				quizDataSS: quizData.data.ss,
+				quizDataWP: quizData.data.wp,
+				quizArrayPosition: currentItem
+			})
+			// after set api data to State SuccessLoading
+			this.props.LoadingSuccess()
+			// //////////////////////////////////////////
+		} catch (err) {
+			console.log(err)
+		}
 	}
 	componentDidMount = async () => {
 		const { decreaseTime, timeNow } = this.props
@@ -165,19 +190,18 @@ class QuizLayout extends React.Component {
 	render() {
 		const {
 			quizPath,
-			quizData,
+			quizDataCog,
 			quizDataPer,
+			quizDataSS,
+			quizDataWP,
 			quizArrayPosition,
 			beforePath,
 			currentQuiz,
 		} = this.state
 		const { timeNow } = this.props
 		if (timeNow < 0) {
-			this.props.history.replace('/quiz-complete')
-		}
-		//Console.log for API
-		if (quizData.length >= 1) {
-			// console.log(" answerTime = ", moment(Object.values(quizData)[quizArrayPosition].answerTime).format('DD/MM/YY HH:mm:ss'))
+			// if timeout redirect to DONE page or other page
+			// this.props.history.replace('/quiz-complete')
 		}
 		return (
 			<Layout style={{ minHeight: '100%' }}>
@@ -193,13 +217,19 @@ class QuizLayout extends React.Component {
 							<h4>
 								{quizPath === 1 && 'ส่วนที่ 1 - เชาวน์ปัญญา'}
 								{quizPath === 2 && 'ส่วนที่ 2 - บุคลิกภาพ'}
+								{quizPath === 3 && 'ส่วนที่ 3 - '}
+								{quizPath === 4 && 'ส่วนที่ 4 - '}
 							</h4>
 							<h4>
 								{quizPath === 1 && 'จงพิจารณาความสัมพันธ์ของอนุกรมภาพต่อไปนี้ แล้วหาภาพที่มีความสัมพันธ์ต่อเนื่องจากภาพดังกล่าว'}
 								{quizPath === 2 && 'ข้อความต่อไปนี้ตรงกับบุคลิกของท่านเพียงใด'}
+								{quizPath === 3 && ''}
+								{quizPath === 4 && ''}
 							</h4>
 							<h1 style={{ color: 'red' }}>
-								{moment.utc(timeNow).format("HH:mm:ss")}
+								{
+									timeNow >= 1 && moment.utc(timeNow).format("HH:mm:ss")
+								}
 							</h1>
 						</div>
 					</WhiteCard>
@@ -233,12 +263,12 @@ class QuizLayout extends React.Component {
 							<Grid item sm={9} xs={12}>
 								<div className="quiz-choice">
 									{
-										currentQuiz === 'cog' && quizData.length >= 1 && quizArrayPosition <= 24 &&
+										currentQuiz === 'cog' && quizDataCog.length >= 1 && quizArrayPosition <= 24 &&
 										<QuizLogic
 											onClick={this.sendAnswer}
-											imageDetail={`${Object.values(quizData)[quizArrayPosition].img}`}
-											quizImage={require(`../../image/QuizImage/Question/${Object.values(quizData)[quizArrayPosition].img}`)}
-											imageData={Object.values(quizData)[quizArrayPosition].cs}
+											imageDetail={`${Object.values(quizDataCog)[quizArrayPosition].img}`}
+											quizImage={require(`../../image/QuizImage/Question/${Object.values(quizDataCog)[quizArrayPosition].img}`)}
+											imageData={Object.values(quizDataCog)[quizArrayPosition].cs}
 										/>
 									}
 									{
@@ -248,17 +278,40 @@ class QuizLayout extends React.Component {
 										currentQuiz === 'per' && quizDataPer.length >= 1 && quizDataPer.map((data, index) => {
 											return (
 												<QuizChoice
+													key={index}
 													radioName={`personal-quiz-${index}`}
 													quizTitle={data.th}
+													testNumber={index + 1}
+													testName='per'
 												/>
 											)
 										})
 									}
 									{
-										quizPath === 3 && <div>3</div>
+										currentQuiz === 'ss' && quizDataSS.length >= 1 && quizDataSS.map((data, index) => {
+											return (
+												<QuizChoice
+													key={index}
+													radioName={`softskill-quiz-${index}`}
+													quizTitle={data.th}
+													testNumber={index + 1}
+													testName='ss'
+												/>
+											)
+										})
 									}
 									{
-										quizPath === 4 && <div>4</div>
+										currentQuiz === 'wp' && quizDataWP.length >= 1 && quizDataWP.map((data, index) => {
+											return (
+												<QuizChoice
+													key={index}
+													radioName={`wp-quiz-${index}`}
+													quizTitle={data.th}
+													testNumber={index + 1}
+													testName='wp'
+												/>
+											)
+										})
 									}
 								</div>
 								<div className="button-control">

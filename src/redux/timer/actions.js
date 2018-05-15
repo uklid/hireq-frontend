@@ -20,14 +20,13 @@ export const updateTimeFromApi = (startTime) => (dispatch, getState) => {
       .diff(moment(then, "HH:mm:ss")))
     .format("HH:mm:ss")
 
-    const hour = moment(differentTime).format("HH")
-    const minute = moment(differentTime).format("mm")
-  // const hour = ((parseInt(moment(differentTime).format("H")) * 60) * 60) * 1000
-  // const minute = (parseInt(moment(differentTime).format("m")) * 60) * 1000
-  // const currentMinute = moment(new Date()).format("m")
-  // const currentHour = moment(new Date()).format("H")
-  // const minute = currentMinute - moment(startTime).format("m")
-  // const hour = currentHour - moment(startTime).format("H") 
-  console.log('hour = ', hour)
-  console.log('minute = ', minute)
+  const hour = ((moment(differentTime, "HH:mm:ss").format("HH") * 60) * 60) * 1000 //change hour to millisecond
+  const minute = ((moment(differentTime, "HH:mm:ss").format("mm") * 60)) * 1000 // change minute to millisecond
+  const changeToMilliSecond = hour + minute
+  const realTime = 7200000 - changeToMilliSecond
+  console.log("realTime = ", realTime)
+  dispatch({
+    type: UPDATE_TIME,
+    data: realTime
+  })
 }

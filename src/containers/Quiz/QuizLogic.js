@@ -8,7 +8,7 @@ const QuizWrapper = styled.div`
 `
 
 const QuizChoice = styled.div`
-  width: 600px;
+  width: 100%;
   display: flex;
   justify-content: space-around;
   flex-wrap: wrap;
@@ -30,6 +30,8 @@ const QuizImageControl = styled.div`
 const Wrapper = styled.div`
   display: flex;
   justify-content: center;
+  flex-direction: column;
+  align-items: center;
   flex-wrap: wrap;
 
   .quiz-image {
