@@ -1,11 +1,18 @@
-export default (state = [], action) => {
+const initialState = {
+  currentQuiz: '',
+  quizPath: 1
+}
+
+const Quiz =  (state = initialState, action) => {
   switch (action.type) {
-    case "ADD_QUESTION":
+    case 'UPDATE_CURRENT_QUIZ':
       return {
         ...state,
-        data: [...state, action.data]
+        currentQuiz: action.data
       }
     default:
       return state
   }
 }
+
+export default Quiz

@@ -6,6 +6,7 @@ import Checkbox from '../../components/uielements/checkbox'
 import Button from '../../components/uielements/button'
 import styled from 'styled-components'
 import { LoginCheck } from '../../redux/auth/actions'
+import { Loading, LoadingSuccess } from '../../redux/loading/actions'
 // import authAction from '../../redux/auth/actions'
 // import IntlMessages from '../../components/utility/intlMessages'
 // import SignInStyleWrapper from './signin.style'
@@ -44,8 +45,10 @@ const SignInBlock = styled.div`
 
 class SignIn extends Component {
   handleLogin = async () => {
-    const { LoginCheck } = this.props
+    const { LoginCheck , Loading, LoadingSuccess } = this.props
+    Loading()
     await LoginCheck()
+    LoadingSuccess()
     // this.props.history.push('/dashboard')
   }
   render() {
@@ -80,7 +83,7 @@ const mapStateToProps = (state) => {
   }
 }
 
-export default connect(mapStateToProps, { LoginCheck })(SignIn)
+export default connect(mapStateToProps, { LoginCheck, Loading, LoadingSuccess })(SignIn)
 
 // const { login } = authAction
 

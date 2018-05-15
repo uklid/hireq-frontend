@@ -80,6 +80,7 @@ export default class Tables extends Component {
 							<RowData
 								data={data}
 								columns={columns}
+								
 							/>
 						))}
 					</tbody>

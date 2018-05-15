@@ -16,6 +16,8 @@ import { decreaseTime, updateTimeFromApi } from '../../redux/timer/actions'
 import moment from 'moment'
 import Axios from 'axios'
 import { Loading, LoadingSuccess } from '../../redux/loading/actions'
+import { updateCurrentPage } from '../../redux/currentPage/actions'
+import { updateCurrentTest } from '../../redux/quiz/actions'
 
 const QuizWrapper = styled.div`
 	height: 100%;
@@ -28,8 +30,8 @@ const QuizWrapper = styled.div`
 	}
 
 	.button-control {
-		margin-left: 120px;
-		width: 450px;
+		margin-left: 50px;
+		width: 462px;
 		display: flex;
 		justify-content: space-around;
 	}
@@ -114,18 +116,17 @@ class QuizLayout extends React.Component {
 		quizDataSS: [],
 		quizDataWP: [],
 		quizArrayPosition: 0,
-		beforePath: 0.5,
-		currentQuiz: ''
+		// currentQuiz: '',
 	}
 	nextQuizPath = () => {
-		const quizPercent = this.state.quizPercent + 25
-		const quizPath = this.state.quizPath + 1
-		const beforePath = this.state.beforePath + 1
-		this.setState({
-			quizPath,
-			quizPercent,
-			beforePath
-		})
+		// const quizPercent = this.state.quizPercent + 25
+		// const quizPath = this.state.quizPath + 1
+		// const beforePath = this.state.beforePath + 1
+		// this.setState({
+		// 	quizPath,
+		// 	quizPercent,
+		// 	beforePath
+		// })
 	}
 	componentWillMount = async () => {
 		try {
@@ -136,17 +137,22 @@ class QuizLayout extends React.Component {
 			const quizData = await Axios.get(url)
 			const currentItem = quizData.data.currentItem - 1
 			const currentTest = quizData.data.currentTest
+			// ตำแหน่ง array เริ่มแรกในการตัดหน้า (currentPage - 1) * 10
+			// const currentPage = (quizData.data.currentPage - 1) * 10
+			this.props.updateCurrentPage(quizData.data.currentPage)
 			this.props.updateTimeFromApi(quizData.data.startedTime)
+			// set currentTest
+			this.props.updateCurrentTest(currentTest)
 
 			this.setState({
 				quizPercent: findPercent(currentTest).percent,
 				quizPath: findPercent(currentTest).quizPath,
-				currentQuiz: currentTest,
+				// currentQuiz: currentTest,
 				quizDataCog: quizData.data.cog,
 				quizDataPer: quizData.data.per,
 				quizDataSS: quizData.data.ss,
 				quizDataWP: quizData.data.wp,
-				quizArrayPosition: currentItem
+				quizArrayPosition: currentItem,
 			})
 			// after set api data to State SuccessLoading
 			this.props.LoadingSuccess()
@@ -157,21 +163,31 @@ class QuizLayout extends React.Component {
 	}
 	componentDidMount = async () => {
 		const { decreaseTime, timeNow } = this.props
-		setInterval(() => {
-			decreaseTime()
-		}, 1000)
+		if (timeNow >= 0 && this.state.currentQuiz === 'cog') {
+			setInterval(() => {
+				decreaseTime()
+			}, 1000)
+		}
 	}
 	sendAnswer = async (event) => {
-		//ADd Loading Spinning after send answer
+		//ADd Loading Spinner after send answer
 		this.props.Loading()
 		//////////////////////////
 		const { imageFileName } = event.target.dataset
 		const { answer } = event.target.dataset
 		const url = `${apiURL}/candidates/${candidateId}/answer`
-		await Axios.post(url, {
+		const sendResult = await Axios.post(url, {
 			testName: 'cog',
 			testNumber: this.state.quizArrayPosition + 1,
 			answer: parseInt(answer),
+		})
+		// set State
+		console.log("sendResult = ", sendResult)
+		// Update currentTest or Quiz after send answer
+		this.props.updateCurrentTest(sendResult.data.nextTestName)
+		this.setState({
+			quizPath: 2,
+			// currentQuiz: sendResult.data.nextTestName
 		})
 		//Remove Loading After Send Answer
 		this.props.LoadingSuccess()
@@ -184,7 +200,10 @@ class QuizLayout extends React.Component {
 		}
 		if (quizArrayPosition === 25) {
 			// this.setState({ quizPath: 2 })
-			this.setState({ beforePath: 1.5 })
+			this.setState({
+				currentQuiz: 'per',
+				quizPath: 2
+			})
 		}
 	}
 	render() {
@@ -196,13 +215,28 @@ class QuizLayout extends React.Component {
 			quizDataWP,
 			quizArrayPosition,
 			beforePath,
-			currentQuiz,
+			// currentQuiz,
 		} = this.state
-		const { timeNow } = this.props
-		if (timeNow < 0) {
-			// if timeout redirect to DONE page or other page
+		const {
+			timeNow,
+			currentPage,
+			lastPage,
+			currentQuiz
+		} = this.props
+		if (timeNow < 0 && currentQuiz === 'cog') {
+			// if timeout setState to another quizPath or redirect to another page
+			this.setState({
+				currentQuiz: 'per'
+			})
 			// this.props.history.replace('/quiz-complete')
 		}
+		// Slice before map
+		const per = quizDataPer.slice(currentPage, lastPage)
+		const ss = quizDataSS.slice(currentPage, lastPage)
+		const wp = quizDataWP.slice(currentPage, lastPage)
+		// console.log("per Slice = ", per)
+		// console.log("ss Slice = ", ss)
+		console.log("Wp Slice = ", wp)
 		return (
 			<Layout style={{ minHeight: '100%' }}>
 				<QuizWrapper>
@@ -215,20 +249,20 @@ class QuizLayout extends React.Component {
 					>
 						<div style={{ display: 'block', textAlign: 'center' }}>
 							<h4>
-								{quizPath === 1 && 'ส่วนที่ 1 - เชาวน์ปัญญา'}
-								{quizPath === 2 && 'ส่วนที่ 2 - บุคลิกภาพ'}
-								{quizPath === 3 && 'ส่วนที่ 3 - '}
-								{quizPath === 4 && 'ส่วนที่ 4 - '}
+								{currentQuiz === 'cog' && 'ส่วนที่ 1 - เชาวน์ปัญญา'}
+								{currentQuiz === 'per' && 'ส่วนที่ 2 - บุคลิกภาพ'}
+								{currentQuiz === 'ss' && 'ส่วนที่ 3 - '}
+								{currentQuiz === 'wp' && 'ส่วนที่ 4 - '}
 							</h4>
 							<h4>
-								{quizPath === 1 && 'จงพิจารณาความสัมพันธ์ของอนุกรมภาพต่อไปนี้ แล้วหาภาพที่มีความสัมพันธ์ต่อเนื่องจากภาพดังกล่าว'}
-								{quizPath === 2 && 'ข้อความต่อไปนี้ตรงกับบุคลิกของท่านเพียงใด'}
-								{quizPath === 3 && ''}
-								{quizPath === 4 && ''}
+								{currentQuiz === 'cog' && 'จงพิจารณาความสัมพันธ์ของอนุกรมภาพต่อไปนี้ แล้วหาภาพที่มีความสัมพันธ์ต่อเนื่องจากภาพดังกล่าว'}
+								{currentQuiz === 'per' && 'ข้อความต่อไปนี้ตรงกับบุคลิกของท่านเพียงใด'}
+								{currentQuiz === 'ss' && ''}
+								{currentQuiz === 'wp' && ''}
 							</h4>
 							<h1 style={{ color: 'red' }}>
 								{
-									timeNow >= 1 && moment.utc(timeNow).format("HH:mm:ss")
+									timeNow >= 1 && currentQuiz === 'cog' && moment.utc(timeNow).format("HH:mm:ss")
 								}
 							</h1>
 						</div>
@@ -254,15 +288,16 @@ class QuizLayout extends React.Component {
 								xs={12}
 							>
 								<TimelineStyled>
-									<Timeline.Item id={`${quizPath === 1 && 'activeTimeline'}`} color={`${quizPath > 1 ? '#954590' : '#eee'}`}>ส่วนที่ 1 </Timeline.Item>
-									<Timeline.Item id={`${quizPath === 2 && 'activeTimeline'}`} color={`${quizPath > 2 ? '#954590' : '#eee'}`}>ส่วนที่ 2</Timeline.Item>
-									<Timeline.Item id={`${quizPath === 3 && 'activeTimeline'}`} color={`${quizPath > 3 ? '#954590' : '#eee'}`}>ส่วนที่ 3 </Timeline.Item>
-									<Timeline.Item id={`${quizPath === 4 && 'activeTimeline'}`} color={`${quizPath > 4 ? '#954590' : '#eee'}`}>ส่วนที่ 4</Timeline.Item>
+									<Timeline.Item id={`${currentQuiz === 'cog' && 'activeTimeline'}`} color={`${quizPath > 1 ? '#954590' : '#eee'}`}>ส่วนที่ 1 </Timeline.Item>
+									<Timeline.Item id={`${currentQuiz === 'per' && 'activeTimeline'}`} color={`${quizPath > 2 ? '#954590' : '#eee'}`}>ส่วนที่ 2</Timeline.Item>
+									<Timeline.Item id={`${currentQuiz === 'ss' && 'activeTimeline'}`} color={`${quizPath > 3 ? '#954590' : '#eee'}`}>ส่วนที่ 3 </Timeline.Item>
+									<Timeline.Item id={`${currentQuiz === 'wp' && 'activeTimeline'}`} color={`${quizPath > 4 ? '#954590' : '#eee'}`}>ส่วนที่ 4</Timeline.Item>
 								</TimelineStyled>
 							</Grid>
 							<Grid item sm={9} xs={12}>
 								<div className="quiz-choice">
 									{
+										// Quiz Path COG
 										currentQuiz === 'cog' && quizDataCog.length >= 1 && quizArrayPosition <= 24 &&
 										<QuizLogic
 											onClick={this.sendAnswer}
@@ -272,49 +307,58 @@ class QuizLayout extends React.Component {
 										/>
 									}
 									{
-										// beforePath === 1.5 && <h2>ส่วนที่ 2 </h2>
-									}
-									{
-										currentQuiz === 'per' && quizDataPer.length >= 1 && quizDataPer.map((data, index) => {
+										//  Quiz Path Per
+										currentQuiz === 'per' && quizDataPer.length >= 1 &&
+										per.map((data, index) => {
+											const oldAnswer = data.a ? data.a : null
 											return (
 												<QuizChoice
 													key={index}
 													radioName={`personal-quiz-${index}`}
 													quizTitle={data.th}
-													testNumber={index + 1}
+													testNumber={(currentPage + index) + 1}
 													testName='per'
+													oldAnswer={oldAnswer}
 												/>
 											)
 										})
 									}
 									{
-										currentQuiz === 'ss' && quizDataSS.length >= 1 && quizDataSS.map((data, index) => {
+										//  Quiz Path SS
+										currentQuiz === 'ss' && quizDataSS.length >= 1 &&
+										ss.map((data, index) => {
+											const oldAnswer = data.a ? data.a : null
 											return (
 												<QuizChoice
 													key={index}
 													radioName={`softskill-quiz-${index}`}
 													quizTitle={data.th}
-													testNumber={index + 1}
+													testNumber={(currentPage + index) + 1}
 													testName='ss'
+													oldAnswer={oldAnswer}
 												/>
 											)
 										})
 									}
 									{
-										currentQuiz === 'wp' && quizDataWP.length >= 1 && quizDataWP.map((data, index) => {
+										// Quiz Path WP
+										currentQuiz === 'wp' && quizDataWP.length >= 1 &&
+										wp.map((data, index) => {
+											const oldAnswer = data.a ? data.a : null
 											return (
 												<QuizChoice
 													key={index}
 													radioName={`wp-quiz-${index}`}
 													quizTitle={data.th}
-													testNumber={index + 1}
+													testNumber={(currentPage + index) + 1}
 													testName='wp'
+													oldAnswer={oldAnswer}
 												/>
 											)
 										})
 									}
 								</div>
-								<div className="button-control">
+								{/* <div className="button-control">
 									<Button
 										style={{
 											color: '#fff',
@@ -324,7 +368,7 @@ class QuizLayout extends React.Component {
 										}}
 										onClick={this.nextQuizPath}
 									>Next Quiz Path</Button>
-								</div>
+								</div> */}
 							</Grid>
 						</Grid>
 					</WhiteCard>
@@ -334,7 +378,19 @@ class QuizLayout extends React.Component {
 	}
 }
 
-const mapStateToProps = (state) => ({ timeNow: state.Time.time })
+const mapStateToProps = (state) => ({
+	timeNow: state.Time.time,
+	currentPage: state.CurrentPage.currentPage,
+	lastPage: state.CurrentPage.lastPage,
+	currentQuiz: state.Quiz.currentQuiz
+})
 
 export default connect(mapStateToProps,
-	{ decreaseTime, Loading, LoadingSuccess, updateTimeFromApi })(QuizLayout)
+	{ 
+		decreaseTime,
+		Loading,
+		LoadingSuccess,
+		updateTimeFromApi,
+		updateCurrentPage,
+		updateCurrentTest
+	})(QuizLayout)

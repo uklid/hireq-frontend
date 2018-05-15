@@ -1,20 +1,28 @@
 import React from 'react'
 import styled from 'styled-components'
+import { connect } from 'react-redux'
 import Axios from 'axios'
+import { updateCurrentPage } from '../../redux/currentPage/actions'
+import { Loading, LoadingSuccess } from '../../redux/loading/actions'
+import { updateCurrentTest } from '../../redux/quiz/actions'
 
 const QuizWrapper = styled.div`
 	position: relative;
 	text-align: center;
 	height: 75px;
-	margin-top: 10px;
+	margin-top: 40px;
 	width: 70%;
+
+	&:first-child {
+		margin-top: 0px;
+	}
 
 	@media only screen and (max-width: 767px) {
 		width: 264px;
 	}
 
 	h4 {
-		margin-top: 25px;
+		margin-top: 14px;
 		margin-left: 15px;
 		margin-bottom: 15px;
 		font-size: 16px;
@@ -38,32 +46,33 @@ const Container = styled.label`
 	-moz-user-select: none;
 	-ms-user-select: none;
 	user-select: none;
-input {
-	position: absolute;
-	opacity: 0;
-	cursor: pointer;
-}
-.checkmark {
-	position: absolute;
-	top: 0;
-	left: 0;
-	height: ${({ height }) => height ? height : '25px'};
-	width: ${({ width }) => width ? width : '25px'};
-	background-color: #fff;
-	border-radius: 50%;
-	border: 4px solid ${({ borderColor }) => borderColor || '#eee'};
-}
-input:checked ~ .checkmark {
-	background-color: ${({ activeColor }) => activeColor || '#fff'};
-}
-.checkmark:after {
-	content: "";
-	position: absolute;
-	display: none;
-}
-input:checked ~ .checkmark:after {
-	display: block;
-}
+
+	input {
+		position: absolute;
+		opacity: 0;
+		cursor: pointer;
+	}
+	.checkmark {
+		position: absolute;
+		top: 0;
+		left: 0;
+		height: ${({ height }) => height ? height : '25px'};
+		width: ${({ width }) => width ? width : '25px'};
+		background-color: #fff;
+		border-radius: 50%;
+		border: 4px solid ${({ borderColor }) => borderColor || '#eee'};
+	}
+	input:checked ~ .checkmark {
+		background-color: ${({ activeColor }) => activeColor || '#fff'};
+	}
+	.checkmark:after {
+		content: "";
+		position: absolute;
+		display: none;
+	}
+	input:checked ~ .checkmark:after {
+		display: block;
+	}
 `
 
 const candidateId = '-L3y6bEU1lxPOpxeoQw-'
@@ -72,8 +81,6 @@ const apiURL = 'https://us-central1-hireq-api.cloudfunctions.net'
 class QuizChoice extends React.Component {
 	sendPersonalAnswer = async (event) => {
 		try {
-			// console.log('value Number = ', parseInt(event.target.value))
-			// console.log('testNumber = ', parseInt(event.target.dataset.testnumber))
 			const answer = parseInt(event.target.value)
 			const testNumber = parseInt(event.target.dataset.testnumber)
 			const testName = event.target.dataset.testname
@@ -83,13 +90,23 @@ class QuizChoice extends React.Component {
 				testNumber: testNumber,
 				answer: answer
 			})
-			console.log('personalResut = ', personalResult)
+			await this.props.updateCurrentTest(personalResult.data.nextTestName)
+			console.log("Personal result = ", personalResult.data)
+			if (this.props.currentPage !== personalResult.data.page) {
+				console.log("เข้าเงื่อนไข if แล้วเย้")
+				this.props.Loading()
+				this.props.updateCurrentPage(personalResult.data.page)
+				this.props.LoadingSuccess()
+			} else {
+				this.props.updateCurrentPage(personalResult.data.page)
+			}
+
 		} catch (err) {
 			console.log(err)
 		}
 	}
 	render() {
-		const { radioName, quizTitle, testNumber, testName } = this.props
+		const { radioName, quizTitle, testNumber, testName, oldAnswer } = this.props
 		return (
 			<QuizWrapper >
 				<h4>{quizTitle}</h4>
@@ -101,7 +118,7 @@ class QuizChoice extends React.Component {
 						borderColor="#09b29c"
 						activeColor="#09b29c"
 					>
-						<input type="radio" name={radioName} data-testname={testName} value="5" data-testnumber={testNumber} onClick={this.sendPersonalAnswer} />
+						<input defaultChecked={`${oldAnswer === 5 ? 'checked' : ''}`} type="radio" name={radioName} data-testname={testName} value="5" data-testnumber={testNumber} onClick={this.sendPersonalAnswer} />
 						<span className="checkmark"></span>
 					</Container>
 					<Container
@@ -114,7 +131,7 @@ class QuizChoice extends React.Component {
 						borderColor="#09b29c"
 						activeColor="#09b29c"
 					>
-						<input type="radio" name={radioName} data-testname={testName} value="4" data-testnumber={testNumber} onClick={this.sendPersonalAnswer} />
+						<input defaultChecked={`${oldAnswer === 4 ? 'checked' : ''}`} type="radio" name={radioName} data-testname={testName} value="4" data-testnumber={testNumber} onClick={this.sendPersonalAnswer} />
 						<span className="checkmark"></span>
 					</Container>
 					<Container
@@ -124,7 +141,7 @@ class QuizChoice extends React.Component {
 						}}
 						activeColor="#eee"
 					>
-						<input type="radio" name={radioName} data-testname={testName} value="3" data-testnumber={testNumber} onClick={this.sendPersonalAnswer} />
+						<input defaultChecked={`${oldAnswer === 3 ? 'checked' : ''}`} type="radio" name={radioName} data-testname={testName} value="3" data-testnumber={testNumber} onClick={this.sendPersonalAnswer} />
 						<span className="checkmark"></span>
 					</Container>
 					<Container
@@ -136,7 +153,7 @@ class QuizChoice extends React.Component {
 						borderColor="#954590"
 						activeColor="#954590"
 					>
-						<input type="radio" name={radioName} data-testname={testName} value="2" data-testnumber={testNumber} onClick={this.sendPersonalAnswer} />
+						<input defaultChecked={`${oldAnswer === 2 ? 'checked' : ''}`} type="radio" name={radioName} data-testname={testName} value="2" data-testnumber={testNumber} onClick={this.sendPersonalAnswer} />
 						<span className="checkmark"></span>
 					</Container>
 					<Container
@@ -148,7 +165,7 @@ class QuizChoice extends React.Component {
 							marginLeft: 8
 						}}
 					>
-						<input type="radio" name={radioName} data-testname={testName} value="1" data-testnumber={testNumber} onClick={this.sendPersonalAnswer} />
+						<input defaultChecked={`${oldAnswer === 1 ? 'checked' : ''}`} type="radio" name={radioName} data-testname={testName} value="1" data-testnumber={testNumber} onClick={this.sendPersonalAnswer} />
 						<span className="checkmark"></span>
 					</Container>
 					<h4 style={{ color: '#954590' }}> ไม่ตรง </h4>
@@ -158,4 +175,9 @@ class QuizChoice extends React.Component {
 	}
 }
 
-export default QuizChoice
+const mapStateToProps = (state) => ({
+	currentPage: state.CurrentPage.currentPage
+})
+
+export default connect(mapStateToProps,
+	{ updateCurrentPage, Loading, LoadingSuccess, updateCurrentTest })(QuizChoice)

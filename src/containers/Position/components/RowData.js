@@ -20,62 +20,60 @@ const MoreInfoLink = styled.span`
     cursor: pointer;
 `
 
-
-
 export default class RowData extends Component {
-    state = {
-       isExpand: false
-    }
+	state = {
+		isExpand: false
+	}
 
-    componentWillReceiveProps = (props) => {
-        this.setState({ isExpand: false})
-    }
-    render() {
-        const { data, columns } = this.props
-        const dataWithInfo = {
-            ...data,
-            moreInfo : <MoreInfoLink onClick={() => this.setState({isExpand: !this.state.isExpand})}>More Info</MoreInfoLink> 
-        }
-        const totalCol = Object.keys(dataWithInfo)
-        const MoreInfoBox = ({ className, children }) => (
-            <td colSpan={totalCol.length} className={className}>
-              {children}
-            </td>
-        )
-        const MoreInfoBoxStyled = styled(MoreInfoBox)`
-        box-sizing: border-box;
-        border-left: 1px solid #954590;
-        border-right: 1px solid #954590;
-        border-bottom: 1px solid #954590;
-        display: ${props => props.isExpand ? '' : 'none'};
-        padding: 32px 16px;
-        `
-        return (
-            <React.Fragment>
-                <TRBodyStyled isExpand={this.state.isExpand}>{columns.map((key, index) => (
-                    <TDStyled isExpand={this.state.isExpand} key={index}><span>{dataWithInfo[key.key]}</span></TDStyled>
-                ))}
-                </TRBodyStyled>
-                <tr>
-                    <MoreInfoBoxStyled isExpand={this.state.isExpand}>
-                        <table style={{width: '100%'}}>
-                            <tr>
-                                <td>
-                                    asdasdsadasdasdasdasdasdasdsadsadsadsadas
-                                </td>
-                                <td>
-                                    asdasdsadasdasdasdasdasdasdsadsadsadsadas
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    asdasdsadasdasdasdasdasdasdsadsadsadsadas
-                                </td>
-                            </tr>
-                        </table>    
-                    </MoreInfoBoxStyled>
-                </tr>
-            </React.Fragment>
-        )
-    }
+	componentWillReceiveProps = (props) => {
+		this.setState({ isExpand: false })
+	}
+	render() {
+		const { data, columns } = this.props
+		const dataWithInfo = {
+			...data,
+			moreInfo: <MoreInfoLink onClick={() => this.setState({ isExpand: !this.state.isExpand })}>More Info</MoreInfoLink>
+		}
+		const totalCol = Object.keys(dataWithInfo)
+		const MoreInfoBox = ({ className, children }) => (
+			<td colSpan={totalCol.length} className={className}>
+				{children}
+			</td>
+		)
+		const MoreInfoBoxStyled = styled(MoreInfoBox) `
+				box-sizing: border-box;
+				border-left: 1px solid #954590;
+				border-right: 1px solid #954590;
+				border-bottom: 1px solid #954590;
+				display: ${props => props.isExpand ? '' : 'none'};
+				padding: 32px 16px;
+		`
+		return (
+			<React.Fragment>
+				<TRBodyStyled isExpand={this.state.isExpand}>{columns.map((key, index) => (
+					<TDStyled isExpand={this.state.isExpand} key={index}><span>{dataWithInfo[key.key]}</span></TDStyled>
+				))}
+				</TRBodyStyled>
+				<tr>
+					<MoreInfoBoxStyled isExpand={this.state.isExpand}>
+						<table style={{ width: '100%' }}>
+							<tr>
+								<td>
+									{data.expandData}
+								</td>
+								<td>
+									asdasdsadasdasdasdasdasdasdsadsadsadsadas
+								</td>
+							</tr>
+							<tr>
+								<td>
+									asdasdsadasdasdasdasdasdasdsadsadsadsadas
+								</td>
+							</tr>
+						</table>
+					</MoreInfoBoxStyled>
+				</tr>
+			</React.Fragment>
+		)
+	}
 }

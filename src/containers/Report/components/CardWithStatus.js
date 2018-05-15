@@ -3,9 +3,14 @@ import styled from 'styled-components'
 
 const CardWrapper = styled.div`
   width: 100%;
-  border-radius: 5px;
+  border-radius: 1px;
   background-color: #fff;
   padding: 14px;
+
+  h2 {
+    margin: 0;
+    color: rgba(0, 0, 0, 0.5);
+  }
 `
 
 const ScoreWithBage = styled.div`
@@ -31,11 +36,19 @@ const BadgeItem = styled.div`
   background-color: ${({ color }) => color ? color : 'red'};
 `
 
-export default ({ title, score, firstColor, secondColor, firstTitle, secondTitle, description }) => (
+export default ({ 
+  title,
+  score,
+  firstColor,
+  secondColor,
+  firstTitle,
+  secondTitle,
+  description 
+}) => (
   <CardWrapper>
     <h4>{title}</h4>
     <ScoreWithBage>
-      <h2 style={{ marginBottom: 10 }}>{score}</h2>
+      <h2>{score}</h2>
       <div className="badgePadding">
         <BadgeItem style={{ fontSize: 10 }} color={firstColor}>{firstTitle}</BadgeItem>
         <BadgeItem style={{ fontSize: 10 }} color={secondColor}>{secondTitle}</BadgeItem>
