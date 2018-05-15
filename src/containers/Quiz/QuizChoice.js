@@ -4,7 +4,13 @@ import { connect } from 'react-redux'
 import Axios from 'axios'
 import { updateCurrentPage } from '../../redux/currentPage/actions'
 import { Loading, LoadingSuccess } from '../../redux/loading/actions'
-import { updateCurrentTest } from '../../redux/quiz/actions'
+import {
+	updateCurrentTest,
+	updateCog,
+	updatePer,
+	updateSS,
+	updateWP
+} from '../../redux/quiz/actions'
 
 const QuizWrapper = styled.div`
 	position: relative;
@@ -91,12 +97,17 @@ class QuizChoice extends React.Component {
 				answer: answer
 			})
 			await this.props.updateCurrentTest(personalResult.data.nextTestName)
+			console.log(`${this.props.currentPage} === ${personalResult.data.page}`)
 			console.log("Personal result = ", personalResult.data)
-			if (this.props.currentPage !== personalResult.data.page) {
+			if (this.props.currentPage !== ((personalResult.data.page - 1) * 10)) {
 				console.log("เข้าเงื่อนไข if แล้วเย้")
 				this.props.Loading()
 				this.props.updateCurrentPage(personalResult.data.page)
 				this.props.LoadingSuccess()
+				//if finish return redirect to done page
+				if(personalResult.data.nextTestName === 'finish') {
+					this.props.history.push('/quiz-complete')
+				}
 			} else {
 				this.props.updateCurrentPage(personalResult.data.page)
 			}
@@ -180,4 +191,13 @@ const mapStateToProps = (state) => ({
 })
 
 export default connect(mapStateToProps,
-	{ updateCurrentPage, Loading, LoadingSuccess, updateCurrentTest })(QuizChoice)
+	{
+		updateCurrentPage,
+		Loading,
+		LoadingSuccess,
+		updateCurrentTest,
+		updateCog,
+		updatePer,
+		updateSS,
+		updateWP
+	})(QuizChoice)

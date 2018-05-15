@@ -17,7 +17,13 @@ import moment from 'moment'
 import Axios from 'axios'
 import { Loading, LoadingSuccess } from '../../redux/loading/actions'
 import { updateCurrentPage } from '../../redux/currentPage/actions'
-import { updateCurrentTest } from '../../redux/quiz/actions'
+import { 
+	updateCurrentTest,
+	updateCog,
+	updatePer,
+	updateSS,
+	updateWP
+} from '../../redux/quiz/actions'
 
 const QuizWrapper = styled.div`
 	height: 100%;
@@ -111,10 +117,10 @@ class QuizLayout extends React.Component {
 	state = {
 		quizPercent: 1,
 		quizPath: 1,
-		quizDataCog: [],
-		quizDataPer: [],
-		quizDataSS: [],
-		quizDataWP: [],
+		// quizDataCog: [],
+		// quizDataPer: [],
+		// quizDataSS: [],
+		// quizDataWP: [],
 		quizArrayPosition: 0,
 		// currentQuiz: '',
 	}
@@ -143,15 +149,20 @@ class QuizLayout extends React.Component {
 			this.props.updateTimeFromApi(quizData.data.startedTime)
 			// set currentTest
 			this.props.updateCurrentTest(currentTest)
-
+			// set all test Data
+			this.props.updateCog(quizData.data.cog)
+			this.props.updatePer(quizData.data.per)
+			this.props.updateSS(quizData.data.ss)
+			this.props.updateWP(quizData.data.wp)
+			// ////////////////////////////
 			this.setState({
 				quizPercent: findPercent(currentTest).percent,
 				quizPath: findPercent(currentTest).quizPath,
 				// currentQuiz: currentTest,
-				quizDataCog: quizData.data.cog,
-				quizDataPer: quizData.data.per,
-				quizDataSS: quizData.data.ss,
-				quizDataWP: quizData.data.wp,
+				// quizDataCog: quizData.data.cog,
+				// quizDataPer: quizData.data.per,
+				// quizDataSS: quizData.data.ss,
+				// quizDataWP: quizData.data.wp,
 				quizArrayPosition: currentItem,
 			})
 			// after set api data to State SuccessLoading
@@ -209,10 +220,10 @@ class QuizLayout extends React.Component {
 	render() {
 		const {
 			quizPath,
-			quizDataCog,
-			quizDataPer,
-			quizDataSS,
-			quizDataWP,
+			// quizDataCog,
+			// quizDataPer,
+			// quizDataSS,
+			// quizDataWP,
 			quizArrayPosition,
 			beforePath,
 			// currentQuiz,
@@ -221,22 +232,32 @@ class QuizLayout extends React.Component {
 			timeNow,
 			currentPage,
 			lastPage,
-			currentQuiz
+			currentQuiz,
+			quizDataCog,
+			quizDataPer,
+			quizDataSS,
+			quizDataWP,
 		} = this.props
-		if (timeNow < 0 && currentQuiz === 'cog') {
-			// if timeout setState to another quizPath or redirect to another page
-			this.setState({
-				currentQuiz: 'per'
-			})
-			// this.props.history.replace('/quiz-complete')
+		// if (timeNow < 0 && currentQuiz === 'cog') {
+		// 	// if timeout setState to another quizPath or redirect to another page
+		// 	this.props.updateCurrentTest('per')
+		// 	// this.setState({
+		// 	// 	currentQuiz: 'per'
+		// 	// })
+		// 	// this.props.history.replace('/quiz-complete')
+		// }
+		// if CurrentQuiz = Finish redirect to done page
+		if (currentQuiz === 'finish') {
+			this.props.history.replace('/quiz-complete')
 		}
 		// Slice before map
-		const per = quizDataPer.slice(currentPage, lastPage)
-		const ss = quizDataSS.slice(currentPage, lastPage)
-		const wp = quizDataWP.slice(currentPage, lastPage)
+		// const per = quizDataPer.slice(currentPage, lastPage)
+		// const ss = quizDataSS.slice(currentPage, lastPage)
+		// const wp = quizDataWP.slice(currentPage, lastPage)
 		// console.log("per Slice = ", per)
 		// console.log("ss Slice = ", ss)
-		console.log("Wp Slice = ", wp)
+		// console.log("Wp Slice = ", wp)
+		// console.log('QuizData', quizDataSS)
 		return (
 			<Layout style={{ minHeight: '100%' }}>
 				<QuizWrapper>
@@ -309,7 +330,7 @@ class QuizLayout extends React.Component {
 									{
 										//  Quiz Path Per
 										currentQuiz === 'per' && quizDataPer.length >= 1 &&
-										per.map((data, index) => {
+										Object.values(quizDataPer).slice(currentPage, lastPage).map((data, index) => {
 											const oldAnswer = data.a ? data.a : null
 											return (
 												<QuizChoice
@@ -326,7 +347,7 @@ class QuizLayout extends React.Component {
 									{
 										//  Quiz Path SS
 										currentQuiz === 'ss' && quizDataSS.length >= 1 &&
-										ss.map((data, index) => {
+										Object.values(quizDataSS).slice(currentPage, lastPage).map((data, index) => {
 											const oldAnswer = data.a ? data.a : null
 											return (
 												<QuizChoice
@@ -343,7 +364,7 @@ class QuizLayout extends React.Component {
 									{
 										// Quiz Path WP
 										currentQuiz === 'wp' && quizDataWP.length >= 1 &&
-										wp.map((data, index) => {
+										Object.values(quizDataWP).slice(currentPage, lastPage).map((data, index) => {
 											const oldAnswer = data.a ? data.a : null
 											return (
 												<QuizChoice
@@ -382,7 +403,11 @@ const mapStateToProps = (state) => ({
 	timeNow: state.Time.time,
 	currentPage: state.CurrentPage.currentPage,
 	lastPage: state.CurrentPage.lastPage,
-	currentQuiz: state.Quiz.currentQuiz
+	currentQuiz: state.Quiz.currentQuiz,
+	quizDataCog: state.Quiz.quizDataCog,
+	quizDataPer: state.Quiz.quizDataPer,
+	quizDataSS: state.Quiz.quizDataSS,
+	quizDataWP: state.Quiz.quizDataWP
 })
 
 export default connect(mapStateToProps,
@@ -392,5 +417,9 @@ export default connect(mapStateToProps,
 		LoadingSuccess,
 		updateTimeFromApi,
 		updateCurrentPage,
-		updateCurrentTest
+		updateCurrentTest,
+		updateCog,
+		updatePer,
+		updateSS,
+		updateWP
 	})(QuizLayout)
