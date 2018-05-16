@@ -99,13 +99,15 @@ class QuizChoice extends React.Component {
 			await this.props.updateCurrentTest(personalResult.data.nextTestName)
 			console.log(`${this.props.currentPage} === ${personalResult.data.page}`)
 			console.log("Personal result = ", personalResult.data)
-			if (this.props.currentPage !== ((personalResult.data.page - 1) * 10)) {
+			// if (this.props.currentPage !== ((personalResult.data.page - 1) * 10)) {
+			if (this.props.currentTest !== personalResult.data.nextTestName) {
 				console.log("เข้าเงื่อนไข if แล้วเย้")
 				this.props.Loading()
 				this.props.updateCurrentPage(personalResult.data.page)
+				this.props.updateCurrentTest(personalResult.data.nextTestName)
 				this.props.LoadingSuccess()
 				//if finish return redirect to done page
-				if(personalResult.data.nextTestName === 'finish') {
+				if (personalResult.data.nextTestName === 'finish') {
 					this.props.history.push('/quiz-complete')
 				}
 			} else {
@@ -187,7 +189,8 @@ class QuizChoice extends React.Component {
 }
 
 const mapStateToProps = (state) => ({
-	currentPage: state.CurrentPage.currentPage
+	currentPage: state.CurrentPage.currentPage,
+	currentTest: state.Quiz.currentQuiz
 })
 
 export default connect(mapStateToProps,

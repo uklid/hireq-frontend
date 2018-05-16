@@ -17,7 +17,7 @@ import moment from 'moment'
 import Axios from 'axios'
 import { Loading, LoadingSuccess } from '../../redux/loading/actions'
 import { updateCurrentPage } from '../../redux/currentPage/actions'
-import { 
+import {
 	updateCurrentTest,
 	updateCog,
 	updatePer,
@@ -211,8 +211,9 @@ class QuizLayout extends React.Component {
 		}
 		if (quizArrayPosition === 25) {
 			// this.setState({ quizPath: 2 })
+			this.props.updateCurrentTest('per')
 			this.setState({
-				currentQuiz: 'per',
+				// currentQuiz: 'per',
 				quizPath: 2
 			})
 		}
@@ -238,14 +239,14 @@ class QuizLayout extends React.Component {
 			quizDataSS,
 			quizDataWP,
 		} = this.props
-		// if (timeNow < 0 && currentQuiz === 'cog') {
-		// 	// if timeout setState to another quizPath or redirect to another page
-		// 	this.props.updateCurrentTest('per')
-		// 	// this.setState({
-		// 	// 	currentQuiz: 'per'
-		// 	// })
-		// 	// this.props.history.replace('/quiz-complete')
-		// }
+		if (timeNow < 0 && currentQuiz === 'cog') {
+			// if timeout setState to another quizPath or redirect to another page
+			this.props.updateCurrentTest('per')
+			// this.setState({
+			// 	currentQuiz: 'per'
+			// })
+			// this.props.history.replace('/quiz-complete')
+		}
 		// if CurrentQuiz = Finish redirect to done page
 		if (currentQuiz === 'finish') {
 			this.props.history.replace('/quiz-complete')
@@ -257,7 +258,7 @@ class QuizLayout extends React.Component {
 		// console.log("per Slice = ", per)
 		// console.log("ss Slice = ", ss)
 		// console.log("Wp Slice = ", wp)
-		// console.log('QuizData', quizDataSS)
+		console.log('QuizData', quizDataSS)
 		return (
 			<Layout style={{ minHeight: '100%' }}>
 				<QuizWrapper>
@@ -331,13 +332,14 @@ class QuizLayout extends React.Component {
 										//  Quiz Path Per
 										currentQuiz === 'per' && quizDataPer.length >= 1 &&
 										Object.values(quizDataPer).slice(currentPage, lastPage).map((data, index) => {
-											const oldAnswer = data.a ? data.a : null
+											const oldAnswer = data.a !== undefined ? data.a : null
+											const indexKey = (currentPage + index) + 1
 											return (
 												<QuizChoice
-													key={index}
-													radioName={`personal-quiz-${index}`}
+													key={`personal-quiz-${indexKey}`}
+													radioName={`personal-quiz-${indexKey}`}
 													quizTitle={data.th}
-													testNumber={(currentPage + index) + 1}
+													testNumber={indexKey}
 													testName='per'
 													oldAnswer={oldAnswer}
 												/>
@@ -349,12 +351,13 @@ class QuizLayout extends React.Component {
 										currentQuiz === 'ss' && quizDataSS.length >= 1 &&
 										Object.values(quizDataSS).slice(currentPage, lastPage).map((data, index) => {
 											const oldAnswer = data.a ? data.a : null
+											const indexKey = (currentPage + index) + 1
 											return (
 												<QuizChoice
-													key={index}
-													radioName={`softskill-quiz-${index}`}
+													key={`softskill-quiz-${indexKey}`}
+													radioName={`softskill-quiz-${indexKey}`}
 													quizTitle={data.th}
-													testNumber={(currentPage + index) + 1}
+													testNumber={indexKey}
 													testName='ss'
 													oldAnswer={oldAnswer}
 												/>
@@ -366,12 +369,13 @@ class QuizLayout extends React.Component {
 										currentQuiz === 'wp' && quizDataWP.length >= 1 &&
 										Object.values(quizDataWP).slice(currentPage, lastPage).map((data, index) => {
 											const oldAnswer = data.a ? data.a : null
+											const indexKey = (currentPage + index) + 1
 											return (
 												<QuizChoice
-													key={index}
-													radioName={`wp-quiz-${index}`}
+													key={`wp-quiz-${indexKey}`}
+													radioName={`wp-quiz-${indexKey}`}
 													quizTitle={data.th}
-													testNumber={(currentPage + index) + 1}
+													testNumber={indexKey}
 													testName='wp'
 													oldAnswer={oldAnswer}
 												/>
@@ -411,7 +415,7 @@ const mapStateToProps = (state) => ({
 })
 
 export default connect(mapStateToProps,
-	{ 
+	{
 		decreaseTime,
 		Loading,
 		LoadingSuccess,
