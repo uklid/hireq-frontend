@@ -4,6 +4,7 @@ import Time from './timer/reducer'
 import Loading from './loading/reducer'
 import CurrentPage from './currentPage/reducer'
 import Quiz from './quiz/reducer'
+import CandidateAuth from './candidatesAuth/reducer'
 
 export default {
   Auth,
@@ -12,4 +13,5 @@ export default {
   Loading,
   CurrentPage,
   Quiz,
+  CandidateAuth,
 }

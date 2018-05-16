@@ -4,11 +4,22 @@ const initialState = {
   quizDataSS: [],
   quizDataWP: [],
   currentQuiz: '',
-  quizPath: 1
+  quizPath: 1,
+  quizPercent: 1
 }
 
 const Quiz = (state = initialState, action) => {
   switch (action.type) {
+    case 'UPDATE_QUIZ_PERCENT':
+      return {
+        ...state,
+        quizPercent: action.data
+      }
+    case 'UPDATE_QUIZ_PATH':
+      return {
+        ...state,
+        quizPath: action.data
+      }
     case 'UPDATE_CURRENT_QUIZ':
       return {
         ...state,

@@ -5,6 +5,7 @@ import Axios from 'axios'
 import { updateCurrentPage } from '../../redux/currentPage/actions'
 import { Loading, LoadingSuccess } from '../../redux/loading/actions'
 import {
+	updateQuizPath,
 	updateCurrentTest,
 	updateCog,
 	updatePer,
@@ -103,6 +104,7 @@ class QuizChoice extends React.Component {
 			if (this.props.currentTest !== personalResult.data.nextTestName) {
 				console.log("เข้าเงื่อนไข if แล้วเย้")
 				this.props.Loading()
+				this.props.updateQuizPath()
 				this.props.updateCurrentPage(personalResult.data.page)
 				this.props.updateCurrentTest(personalResult.data.nextTestName)
 				this.props.LoadingSuccess()
@@ -195,6 +197,7 @@ const mapStateToProps = (state) => ({
 
 export default connect(mapStateToProps,
 	{
+		updateQuizPath,
 		updateCurrentPage,
 		Loading,
 		LoadingSuccess,

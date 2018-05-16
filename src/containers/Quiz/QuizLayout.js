@@ -18,6 +18,8 @@ import Axios from 'axios'
 import { Loading, LoadingSuccess } from '../../redux/loading/actions'
 import { updateCurrentPage } from '../../redux/currentPage/actions'
 import {
+	updateQuizPercent,
+	updateQuizPath,
 	updateCurrentTest,
 	updateCog,
 	updatePer,
@@ -82,7 +84,7 @@ const TimelineStyled = styled(Timeline) `
 	}
 `
 
-const findPercent = (currentQuiz) => {
+const findQuizPath = (currentQuiz) => {
 	switch (currentQuiz) {
 		case 'cog':
 			return {
@@ -110,13 +112,13 @@ const findPercent = (currentQuiz) => {
 }
 
 //candidate ID
-const candidateId = '-L3y6bEU1lxPOpxeoQw-'
-const apiURL = 'https://us-central1-hireq-api.cloudfunctions.net'
+// const candidateId = '-L3y6bEU1lxPOpxeoQw-'
+// const apiURL = 'https://us-central1-hireq-api.cloudfunctions.net'
 
 class QuizLayout extends React.Component {
 	state = {
-		quizPercent: 1,
-		quizPath: 1,
+		// quizPercent: 1,
+		// quizPath: 1,
 		// quizDataCog: [],
 		// quizDataPer: [],
 		// quizDataSS: [],
@@ -124,18 +126,21 @@ class QuizLayout extends React.Component {
 		quizArrayPosition: 0,
 		// currentQuiz: '',
 	}
-	nextQuizPath = () => {
-		// const quizPercent = this.state.quizPercent + 25
-		// const quizPath = this.state.quizPath + 1
-		// const beforePath = this.state.beforePath + 1
-		// this.setState({
-		// 	quizPath,
-		// 	quizPercent,
-		// 	beforePath
-		// })
-	}
+	// nextQuizPath = () => {
+	// 	// const quizPercent = this.state.quizPercent + 25
+	// 	// const quizPath = this.state.quizPath + 1
+	// 	// const beforePath = this.state.beforePath + 1
+	// 	// this.setState({
+	// 	// 	quizPath,
+	// 	// 	quizPercent,
+	// 	// 	beforePath
+	// 	// })
+	// }
 	componentWillMount = async () => {
 		try {
+			// console.log('id = ', this.props.candidateId)
+			// console.log('api url = ', this.props.apiURL)
+			const { apiURL, candidateId } = this.props
 			// Dispatch loading when call api
 			this.props.Loading()
 			// /////////////////////
@@ -145,6 +150,7 @@ class QuizLayout extends React.Component {
 			const currentTest = quizData.data.currentTest
 			// ตำแหน่ง array เริ่มแรกในการตัดหน้า (currentPage - 1) * 10
 			// const currentPage = (quizData.data.currentPage - 1) * 10
+			this.props.updateQuizPath(findQuizPath(currentTest).quizPath)
 			this.props.updateCurrentPage(quizData.data.currentPage)
 			this.props.updateTimeFromApi(quizData.data.startedTime)
 			// set currentTest
@@ -154,10 +160,12 @@ class QuizLayout extends React.Component {
 			this.props.updatePer(quizData.data.per)
 			this.props.updateSS(quizData.data.ss)
 			this.props.updateWP(quizData.data.wp)
+
+			this.props.updateQuizPercent()
 			// ////////////////////////////
 			this.setState({
-				quizPercent: findPercent(currentTest).percent,
-				quizPath: findPercent(currentTest).quizPath,
+				// quizPercent: findQuizPath(currentTest).percent,
+				// quizPath: findPercent(currentTest).quizPath,
 				// currentQuiz: currentTest,
 				// quizDataCog: quizData.data.cog,
 				// quizDataPer: quizData.data.per,
@@ -180,9 +188,10 @@ class QuizLayout extends React.Component {
 			}, 1000)
 		}
 	}
-	sendAnswer = async (event) => {
+	sendCogAnswer = async (event) => {
 		//ADd Loading Spinner after send answer
 		this.props.Loading()
+		const { apiURL, candidateId } = this.props
 		//////////////////////////
 		const { imageFileName } = event.target.dataset
 		const { answer } = event.target.dataset
@@ -196,14 +205,14 @@ class QuizLayout extends React.Component {
 		console.log("sendResult = ", sendResult)
 		// Update currentTest or Quiz after send answer
 		this.props.updateCurrentTest(sendResult.data.nextTestName)
-		this.setState({
-			quizPath: 2,
-			// currentQuiz: sendResult.data.nextTestName
-		})
+		// this.setState({
+		// 	quizPath: 2,
+		// 	// currentQuiz: sendResult.data.nextTestName
+		// })
 		//Remove Loading After Send Answer
 		this.props.LoadingSuccess()
 		////////////////////////
-		const quizPercent = this.state.quizPercent += 1
+		// const quizPercent = this.state.quizPercent += 1
 		const quizArrayPosition = this.state.quizArrayPosition += 1
 
 		if (quizArrayPosition <= 24) {
@@ -212,21 +221,22 @@ class QuizLayout extends React.Component {
 		if (quizArrayPosition === 25) {
 			// this.setState({ quizPath: 2 })
 			this.props.updateCurrentTest('per')
-			this.setState({
-				// currentQuiz: 'per',
-				quizPath: 2
-			})
+			this.props.updateQuizPath()
+			// this.setState({
+			// 	// currentQuiz: 'per',
+			// 	quizPath: 2
+			// })
 		}
 	}
 	render() {
 		const {
-			quizPath,
+			// quizPath,
 			// quizDataCog,
 			// quizDataPer,
 			// quizDataSS,
 			// quizDataWP,
 			quizArrayPosition,
-			beforePath,
+			// beforePath,
 			// currentQuiz,
 		} = this.state
 		const {
@@ -238,14 +248,13 @@ class QuizLayout extends React.Component {
 			quizDataPer,
 			quizDataSS,
 			quizDataWP,
+			quizPath,
+			quizPercent
 		} = this.props
+		//if timeout and currentQuiz = cog change to personal quiz
 		if (timeNow < 0 && currentQuiz === 'cog') {
 			// if timeout setState to another quizPath or redirect to another page
-			this.props.updateCurrentTest('per')
-			// this.setState({
-			// 	currentQuiz: 'per'
-			// })
-			// this.props.history.replace('/quiz-complete')
+			// this.props.updateCurrentTest('per')
 		}
 		// if CurrentQuiz = Finish redirect to done page
 		if (currentQuiz === 'finish') {
@@ -258,7 +267,9 @@ class QuizLayout extends React.Component {
 		// console.log("per Slice = ", per)
 		// console.log("ss Slice = ", ss)
 		// console.log("Wp Slice = ", wp)
-		console.log('QuizData', quizDataSS)
+		// console.log('QuizData', quizDataSS)
+		// console.log('id = ', this.props.candidateId)
+		// console.log('api url = ', this.props.apiURL)
 		return (
 			<Layout style={{ minHeight: '100%' }}>
 				<QuizWrapper>
@@ -294,7 +305,7 @@ class QuizLayout extends React.Component {
 							<Grid item xs={12}>
 								<FlexCenter>
 									<div style={{ width: 500 }}>
-										<ProgressWithStyled percent={this.state.quizPercent} status="active" />
+										<ProgressWithStyled percent={quizPercent} status="active" />
 									</div>
 								</FlexCenter>
 							</Grid>
@@ -322,7 +333,7 @@ class QuizLayout extends React.Component {
 										// Quiz Path COG
 										currentQuiz === 'cog' && quizDataCog.length >= 1 && quizArrayPosition <= 24 &&
 										<QuizLogic
-											onClick={this.sendAnswer}
+											onClick={this.sendCogAnswer}
 											imageDetail={`${Object.values(quizDataCog)[quizArrayPosition].img}`}
 											quizImage={require(`../../image/QuizImage/Question/${Object.values(quizDataCog)[quizArrayPosition].img}`)}
 											imageData={Object.values(quizDataCog)[quizArrayPosition].cs}
@@ -404,9 +415,13 @@ class QuizLayout extends React.Component {
 }
 
 const mapStateToProps = (state) => ({
+	apiURL: state.CandidateAuth.apiURL,
+	candidateId: state.CandidateAuth.candidateId,
 	timeNow: state.Time.time,
 	currentPage: state.CurrentPage.currentPage,
 	lastPage: state.CurrentPage.lastPage,
+	quizPath: state.Quiz.quizPath,
+	quizPercent: state.Quiz.quizPercent,
 	currentQuiz: state.Quiz.currentQuiz,
 	quizDataCog: state.Quiz.quizDataCog,
 	quizDataPer: state.Quiz.quizDataPer,
@@ -416,12 +431,14 @@ const mapStateToProps = (state) => ({
 
 export default connect(mapStateToProps,
 	{
+		updateQuizPercent,
 		decreaseTime,
 		Loading,
 		LoadingSuccess,
 		updateTimeFromApi,
 		updateCurrentPage,
 		updateCurrentTest,
+		updateQuizPath,
 		updateCog,
 		updatePer,
 		updateSS,
