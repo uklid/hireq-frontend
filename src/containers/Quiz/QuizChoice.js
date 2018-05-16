@@ -5,6 +5,7 @@ import Axios from 'axios'
 import { updateCurrentPage } from '../../redux/currentPage/actions'
 import { Loading, LoadingSuccess } from '../../redux/loading/actions'
 import {
+	updateQuizPercent,
 	updateQuizPath,
 	updateCurrentTest,
 	updateCog,
@@ -102,18 +103,20 @@ class QuizChoice extends React.Component {
 			console.log("Personal result = ", personalResult.data)
 			// if (this.props.currentPage !== ((personalResult.data.page - 1) * 10)) {
 			if (this.props.currentTest !== personalResult.data.nextTestName) {
+				if (personalResult.data.nextTestName === 'finish') {
+					this.props.history.push('/quiz-complete')
+				}
 				console.log("เข้าเงื่อนไข if แล้วเย้")
 				this.props.Loading()
 				this.props.updateQuizPath()
 				this.props.updateCurrentPage(personalResult.data.page)
 				this.props.updateCurrentTest(personalResult.data.nextTestName)
+				this.props.updateQuizPercent()
 				this.props.LoadingSuccess()
 				//if finish return redirect to done page
-				if (personalResult.data.nextTestName === 'finish') {
-					this.props.history.push('/quiz-complete')
-				}
 			} else {
 				this.props.updateCurrentPage(personalResult.data.page)
+				this.props.updateQuizPercent()
 			}
 
 		} catch (err) {
@@ -205,5 +208,6 @@ export default connect(mapStateToProps,
 		updateCog,
 		updatePer,
 		updateSS,
-		updateWP
+		updateWP,
+		updateQuizPercent
 	})(QuizChoice)

@@ -1,10 +1,12 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
 import RowData from './RowData'
+import { connect } from 'react-redux'
+import { preCreatePosition } from '../../../redux/position/actions'
 
 const TableStyled = styled.table`
     width: 100%;
-	border-collapse: collapse;
+		border-collapse: collapse;
 `
 const TRheadStyled = styled.tr`
     background-color: #F4ECF4;
@@ -42,10 +44,10 @@ const Ellipsis = styled.span`
     font-weight: bold;
 `
 
-
-export default class Tables extends Component {
+class Tables extends Component {
 	state = {
-		currentPage: 1
+		currentPage: 1,
+		createData: {}
 	}
 	forward = (numOfPage) => {
 		if (this.state.currentPage < numOfPage) {
@@ -57,7 +59,9 @@ export default class Tables extends Component {
 			this.setState({ currentPage: this.state.currentPage - 1 })
 		}
 	}
-
+	onRowClick = (event) => {
+		console.log(event.target)
+	}
 	render() {
 		const { columns, dataSource, dataShow, rowPerPage, ellipsis, tableId } = this.props
 		const numOfPage = Math.ceil(dataSource.length / rowPerPage)
@@ -76,11 +80,12 @@ export default class Tables extends Component {
 						</TRheadStyled>
 					</thead>
 					<tbody>
-						{dataSource.slice(startData, endData).map(data => (
+						{dataSource.slice(startData, endData).map((data) => (
 							<RowData
+								// onClick={() => console.log(data)}
+								onClick={() => this.props.preCreatePosition(data)}
 								data={data}
 								columns={columns}
-								
 							/>
 						))}
 					</tbody>
@@ -90,7 +95,7 @@ export default class Tables extends Component {
 						onClick={() => this.backward(numOfPage)}
 					>
 						&lt;
-                    </PaginationItem>
+          </PaginationItem>
 					{pages.length < ellipsis && pages.map(page => (
 						<PaginationItem
 							currentPage={this.state.currentPage}
@@ -186,3 +191,5 @@ export default class Tables extends Component {
 		)
 	}
 }
+
+export default connect(null,{ preCreatePosition })(Tables)

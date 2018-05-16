@@ -205,12 +205,11 @@ class QuizLayout extends React.Component {
 		console.log("sendResult = ", sendResult)
 		// Update currentTest or Quiz after send answer
 		this.props.updateCurrentTest(sendResult.data.nextTestName)
+		this.props.updateQuizPercent()
 		// this.setState({
 		// 	quizPath: 2,
 		// 	// currentQuiz: sendResult.data.nextTestName
-		// })
-		//Remove Loading After Send Answer
-		this.props.LoadingSuccess()
+		// })		
 		////////////////////////
 		// const quizPercent = this.state.quizPercent += 1
 		const quizArrayPosition = this.state.quizArrayPosition += 1
@@ -227,6 +226,8 @@ class QuizLayout extends React.Component {
 			// 	quizPath: 2
 			// })
 		}
+		//Remove Loading After Send Answer
+		this.props.LoadingSuccess()
 	}
 	render() {
 		const {

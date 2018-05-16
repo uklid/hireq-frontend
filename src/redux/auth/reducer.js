@@ -10,32 +10,14 @@ const checkIsLoggedIn = () => {
   return false
 }
 
-// const initState = new Map({
-//   idToken: null,
-//   loading: false,
-//   isLoggedIn: true,
-//   authToken: '',
-//   error_message: ''
-// })
-
 const initState = {
   idToken: null,
   loading: false,
   isLoggedIn: checkIsLoggedIn(),
   authToken: '',
+  headerToken: '',
   error_message: ''
 }
-// export default function authReducer(state = initState, action) {
-//   switch (action.type) {
-//     case actions.LOGIN_SUCCESS:
-//       return state.set('idToken', action.token)
-//     case actions.LOGOUT:
-//       return initState
-//     default:
-//       return state
-//   }
-// }
-
 const Auth = (state = initState, action) => {
   switch (action.type) {
     case 'LOGIN_REQUEST':
@@ -48,7 +30,8 @@ const Auth = (state = initState, action) => {
         ...state,
         loading: false,
         isLoggedIn: true,
-        authToken: action.data
+        authToken: action.authToken,
+        headerToken: action.headerToken
       }
     case 'LOGOUT':
       return {

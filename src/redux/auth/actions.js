@@ -27,12 +27,16 @@ const fakeApiCall = true
 export const LoginCheck = () => async dispatch => {
   try {
     const req = await firebase.auth().signInWithEmailAndPassword('test@hireq.io', 'hireq01')
-    // console.log("firebase req = ", req)
-    await localStorage.setItem('loginToken',req.uid)
+    const getIdToken = await firebase.auth().currentUser.getIdToken()
+    console.log("getIdToken = " , getIdToken)
+    console.log("firebase req = ", req)
+    await localStorage.setItem('loginToken', req.uid)
+    await localStorage.setItem('headerToken', getIdToken)
 
     await dispatch({
       type: LOGIN_SUCCESS,
-      data: 's8JDsdvlKWIxiFksMVisohgX819sX'
+      authToken: req.uid,
+      headerToken: getIdToken
     })
     await dispatch(push('/dashboard'))
   } catch (err) {

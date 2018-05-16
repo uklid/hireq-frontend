@@ -1,4 +1,5 @@
 import React from 'react'
+import { connect } from 'react-redux'
 import TextField from 'material-ui/TextField'
 import Grid from 'material-ui/Grid'
 import { LayoutContentWrapper } from '../../components/utility/layoutWrapper.style'
@@ -11,21 +12,28 @@ import Checkbox from 'material-ui/Checkbox'
 import { Button } from 'antd'
 import Tables from './components/Table'
 import moment from 'moment'
-import axios from 'axios'
-const dataSource = []
-for (let i = 0; i < 46; i++) {
-	dataSource.push({
-		positionName: `Accountants - ${i}`,
-		category: `Business and Financial - ${i}`,
-		description: `There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable. ${i}`,
-		expandData: 'matong xxx'
-	})
-}
+import firebase from 'firebase'
+import Axios from 'axios'
+import { Loading, LoadingSuccess } from '../../redux/loading/actions'
+import {
+	searchPosition,
+	updatePositionData
+} from '../../redux/position/actions'
+
+// const dataSource = []
+// for (let i = 0; i < 46; i++) {
+// 	dataSource.push({
+// 		positionName: `Accountants - ${i}`,
+// 		category: `Business and Financial - ${i}`,
+// 		description: `There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable. ${i}`,
+// 		expandData: 'matong xxx'
+// 	})
+// }
 
 const columns = [{
 	title: 'Position name',
-	dataIndex: 'positionName',
-	key: 'positionName',
+	dataIndex: 'name',
+	key: 'name',
 }, {
 	title: 'Category',
 	dataIndex: 'category',
@@ -88,11 +96,11 @@ const FilterField = ({ checked, onChange, value, label }) => (
 
 class CreatePosition extends React.Component {
 
-	componentWillMount = () => {
-		this.setState({
-			dataSource: dataSource
-		})
-	}
+	// componentWillMount = () => {
+	// 	this.setState({
+	// 		dataSource: dataSource
+	// 	})
+	// }
 
 	state = {
 		showAll: false,
@@ -100,24 +108,45 @@ class CreatePosition extends React.Component {
 		showFinished: false,
 	}
 
-	onSearch = (event) => {
+	searchPositionData = async (event) => {
+		try {
+			this.props.Loading()
+			const getIdToken = await firebase.auth().currentUser.getIdToken()
+			// console.log('getIdToken = ', getIdToken)
+			const searchKeyword = document.getElementById('position-search').value
+			const url = `https://us-central1-hireq-api.cloudfunctions.net/jobs/search?keyword=${searchKeyword}`
 
-		const filter = event.target.value.toUpperCase()
-
-		const result = dataSource.filter(word => {
-			const resultSearch = Object.keys(word).map(e => {
-				if (word[e].toUpperCase().includes(filter)) {
-					return word[e].toUpperCase().includes(filter)
-				}
+			const result = await Axios.get(url, {
+				headers: { Authorization: "Bearer " + getIdToken }
+				// headers: { Authorization: "Bearer " + localStorage.getItem('headerToken') }
 			})
-			if (resultSearch.includes(true)) {
-				return word
-			}
-		})
-		this.setState({
-			dataSource: result
-		})
+			console.log("search result = ", result)
+
+			this.props.updatePositionData(result.data)
+			this.props.LoadingSuccess()
+		} catch (err) {
+			console.log(err)
+		}
 	}
+
+	// onSearch = (event) => {
+
+	// 	const filter = event.target.value.toUpperCase()
+
+	// 	const result = dataSource.filter(word => {
+	// 		const resultSearch = Object.keys(word).map(e => {
+	// 			if (word[e].toUpperCase().includes(filter)) {
+	// 				return word[e].toUpperCase().includes(filter)
+	// 			}
+	// 		})
+	// 		if (resultSearch.includes(true)) {
+	// 			return word
+	// 		}
+	// 	})
+	// 	this.setState({
+	// 		dataSource: result
+	// 	})
+	// }
 
 	filterOnChange = (name) => (event) => {
 		this.setState({
@@ -126,6 +155,7 @@ class CreatePosition extends React.Component {
 	}
 
 	render() {
+		console.log("positionData = ", this.props.positionData)
 		return (
 			<LayoutContentWrapper>
 				<Grid container spacing={0}>
@@ -138,12 +168,13 @@ class CreatePosition extends React.Component {
 									placeholder="Search here"
 									margin="normal"
 									className="floating-textfield"
-									onChange={this.onSearch}
+									onKeyPress={this.searchPoisition} 
+								// onChange={this.onSearch}
 								/>
 							</InputWrapper>
 							<ButtonWrapper>
 								<Button type="primary">Filter</Button>
-								<Button type="primary">Search</Button>
+								<Button onClick={this.searchPositionData} type="primary">Search</Button>
 							</ButtonWrapper>
 							<FormGroup row>
 								<FilterField
@@ -181,9 +212,10 @@ class CreatePosition extends React.Component {
 								expandedRowRender={record => <p style={{ margin: 0 }}>{record.description}</p>}
 							/> */}
 							<Tables
+								key={`myTables`}
 								tableId="myTable"
 								// dataSource={dataSource}
-								dataSource={this.state.dataSource}
+								dataSource={this.props.positionData}
 								columns={columns}
 								rowPerPage={7}
 								ellipsis={4}
@@ -211,4 +243,16 @@ class CreatePosition extends React.Component {
 	}
 }
 
-export default CreatePosition
+const mapStateToProps = (state) => ({
+	searchPosition: state.Positions.searchPoisition,
+	positionData: state.Positions.positionData,
+	headerToken: state.Auth.headerToken
+})
+
+export default connect(mapStateToProps,
+	{
+		searchPosition,
+		updatePositionData,
+		Loading,
+		LoadingSuccess,
+	})(CreatePosition)

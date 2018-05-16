@@ -2,8 +2,10 @@ import React, { Component } from 'react'
 import styled from 'styled-components'
 
 const TRBodyStyled = styled.tr`
-    height: 50px;
-    background: ${props => props.isExpand ? '#954590' : 'white'};
+		height: 50px;
+		cursor: pointer;
+		background: ${props => props.isExpand ? '#954590' : 'white'};
+		border: ${props => props.isActive ? '1px solid red' : 'none'};
 `
 const TRInfoStyled = styled.tr`
     height: 50px;
@@ -17,6 +19,7 @@ const TDStyled = styled.td`
 `
 
 const MoreInfoLink = styled.span`
+		font-weight: 700;
     cursor: pointer;
 `
 
@@ -28,6 +31,10 @@ export default class RowData extends Component {
 	componentWillReceiveProps = (props) => {
 		this.setState({ isExpand: false })
 	}
+
+	// onRowClick = (event) => {
+	// 	console.log(event.target)
+	// }
 	render() {
 		const { data, columns } = this.props
 		const dataWithInfo = {
@@ -50,18 +57,31 @@ export default class RowData extends Component {
 		`
 		return (
 			<React.Fragment>
-				<TRBodyStyled isExpand={this.state.isExpand}>{columns.map((key, index) => (
-					<TDStyled isExpand={this.state.isExpand} key={index}><span>{dataWithInfo[key.key]}</span></TDStyled>
-				))}
+				<TRBodyStyled 
+					// onClick={this.onRowClick}
+					isExpand={this.state.isExpand}
+				>
+					{columns.map((key, index) => (
+						<TDStyled
+							onClick={this.props.onClick}						
+							isExpand={this.state.isExpand}
+							key={index}
+						>
+							{/* {<span>{key.key}</span>} */}
+							<span>{dataWithInfo[key.key]}</span>
+							{/* {console.log("dataWithInfo = ", dataWithInfo.info)} */}
+						</TDStyled>
+					))}
 				</TRBodyStyled>
 				<tr>
 					<MoreInfoBoxStyled isExpand={this.state.isExpand}>
 						<table style={{ width: '100%' }}>
 							<tr>
 								<td>
-									{data.expandData}
+									{ dataWithInfo.info ? dataWithInfo.info.description: ''}
 								</td>
-								<td>
+							</tr>
+							{/* <td>
 									asdasdsadasdasdasdasdasdasdsadsadsadsadas
 								</td>
 							</tr>
@@ -69,7 +89,7 @@ export default class RowData extends Component {
 								<td>
 									asdasdsadasdasdasdasdasdasdsadsadsadsadas
 								</td>
-							</tr>
+							</tr> */}
 						</table>
 					</MoreInfoBoxStyled>
 				</tr>
