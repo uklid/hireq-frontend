@@ -10,6 +10,7 @@ import QuizLayout from './containers/Quiz/QuizLayout'
 import QuizComplete from './containers/Quiz/QuizComplete'
 import Loader from './LoadingComponent'
 import BeforeQuiz from './containers/Quiz/BeforeQuiz'
+import SecondCreatePosition from './containers/Position/SecondCreatePosition'
 
 const RestrictedRoute = ({ component: Component, isLoggedIn, ...rest }) => (
   <Route
@@ -66,6 +67,11 @@ const PublicRoutes = (props) => {
             path={'/privacy'}
             component={asyncComponent(() => import('./containers/Page/Privacy'))}
           />
+          {/* <RestrictedRoute
+            path="/create-position/create-setting"
+            component={SecondCreatePosition}
+            isLoggedIn={props.isLoggedIn}
+          /> */}
           <RestrictedRoute
             path="/dashboard"
             component={App}

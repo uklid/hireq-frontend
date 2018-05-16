@@ -5,7 +5,8 @@ const TRBodyStyled = styled.tr`
 		height: 50px;
 		cursor: pointer;
 		background: ${props => props.isExpand ? '#954590' : 'white'};
-		border: ${props => props.isActive ? '1px solid red' : 'none'};
+		background-color: ${props => props.isActive ? '#eee' : 'white'}
+		border: ${props => props.isActive ? '1px solid #eee' : 'none'};
 `
 const TRInfoStyled = styled.tr`
     height: 50px;
@@ -25,7 +26,8 @@ const MoreInfoLink = styled.span`
 
 export default class RowData extends Component {
 	state = {
-		isExpand: false
+		isExpand: false,
+		isActive: false,
 	}
 
 	componentWillReceiveProps = (props) => {
@@ -57,19 +59,19 @@ export default class RowData extends Component {
 		`
 		return (
 			<React.Fragment>
-				<TRBodyStyled 
+				<TRBodyStyled
 					// onClick={this.onRowClick}
+					onClick={() => this.setState({ isActive: !this.state.isActive })}
+					isActive={this.state.isActive}
 					isExpand={this.state.isExpand}
 				>
 					{columns.map((key, index) => (
 						<TDStyled
-							onClick={this.props.onClick}						
+							onClick={this.props.onClick}
 							isExpand={this.state.isExpand}
 							key={index}
 						>
-							{/* {<span>{key.key}</span>} */}
 							<span>{dataWithInfo[key.key]}</span>
-							{/* {console.log("dataWithInfo = ", dataWithInfo.info)} */}
 						</TDStyled>
 					))}
 				</TRBodyStyled>
@@ -78,7 +80,7 @@ export default class RowData extends Component {
 						<table style={{ width: '100%' }}>
 							<tr>
 								<td>
-									{ dataWithInfo.info ? dataWithInfo.info.description: ''}
+									{dataWithInfo.info ? dataWithInfo.info.description : ''}
 								</td>
 							</tr>
 							{/* <td>

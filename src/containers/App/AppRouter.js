@@ -16,6 +16,10 @@ const routes = [
     component: asyncComponent(() => import("../Position/CreatePosition"))
   },
   {
+    path: "create-position/create-setting",
+    component: asyncComponent(() => import("../Position/SecondCreatePosition"))
+  },
+  {
     path: "edit-position",
     component: asyncComponent(() => import("../Position/EditPosition"))
   },

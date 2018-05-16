@@ -147,6 +147,12 @@ class CreatePosition extends React.Component {
 	// 		dataSource: result
 	// 	})
 	// }
+	goToSettingPosition = () => {
+		this.props.history.push({
+			pathname: '/dashboard/create-position/create-setting',
+			state: { positionSetting: this.props.prepareCreate }
+		})
+	}
 
 	filterOnChange = (name) => (event) => {
 		this.setState({
@@ -168,7 +174,7 @@ class CreatePosition extends React.Component {
 									placeholder="Search here"
 									margin="normal"
 									className="floating-textfield"
-									onKeyPress={this.searchPoisition} 
+									onKeyPress={this.searchPoisition}
 								// onChange={this.onSearch}
 								/>
 							</InputWrapper>
@@ -231,11 +237,13 @@ class CreatePosition extends React.Component {
 				</Grid>
 				<Grid style={{ marginTop: 20 }} container spacing={0}>
 					<Grid item>
-						<Button style={{
-							color: '#fff',
-							backgroundColor: '#954590',
-							borderColor: '#954590',
-						}}>Create position</Button>
+						<Button
+							onClick={this.goToSettingPosition}
+							style={{
+								color: '#fff',
+								backgroundColor: '#954590',
+								borderColor: '#954590',
+							}}>Create position</Button>
 					</Grid>
 				</Grid>
 			</LayoutContentWrapper>
@@ -246,6 +254,7 @@ class CreatePosition extends React.Component {
 const mapStateToProps = (state) => ({
 	searchPosition: state.Positions.searchPoisition,
 	positionData: state.Positions.positionData,
+	prepareCreate: state.Positions.prepareCreate,
 	headerToken: state.Auth.headerToken
 })
 

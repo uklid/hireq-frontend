@@ -2,15 +2,13 @@ import React from 'react'
 import SpecifiedDomainRadarChart from '../../containers/Charts/recharts/charts/specifiedDomainRadarChart'
 import { Slider } from 'antd'
 import styled from 'styled-components'
-
-const onAfterChange = (value) => {
-	console.log("onAfterChange = ", value)
-}
+import { connect } from 'react-redux'
+import { preCreatePosition } from '../../redux/position/actions'
 
 const DataSlider = ({ onChange, value, title }) => (
 	<div>
 		<h4>{title}</h4>
-		<SliderStyled range onChange={onChange} onAfterChange={onAfterChange} defaultValue={value} />
+		<SliderStyled range onChange={onChange} defaultValue={value} />
 	</div>
 )
 
@@ -41,9 +39,6 @@ class CriticalSoftSkills extends React.Component {
 	constructor(props) {
 		super(props)
 		this.state = {
-			dataValue: {
-				
-			},
 			config: {
 				componentName: 'SpecifiedDomainRadarChart',
 				key: 'SpecifiedDomainRadarChart',
@@ -57,46 +52,65 @@ class CriticalSoftSkills extends React.Component {
 				cy: 250,
 				outerRadius: 150,
 			},
-			datas: [
-				{ subject: 'Performance', value: 50, fullMark: 100 },
-				{ subject: 'Leadership', value: 50, fullMark: 100 },
-				{ subject: 'Communication', value: 50, fullMark: 100 },
-				{ subject: 'People', value: 50, fullMark: 100 },
-				{ subject: 'Political', value: 50, fullMark: 100 },
-				{ subject: 'Productivity', value: 50, fullMark: 100 },
-			],
 		}
 	}
 	componentWillMount = () => {
 		this.setState({
-			
+
 		})
 	}
 
 	onChange = (number) => (value) => {
-		this.setState((prevState) => {
-			prevState.datas[number].value = value
-			this.setState({
-				datas: [
-					...prevState.datas,
-				]
-			})
+		const { prepareCreate } = this.props
+		const objName = Object.keys(prepareCreate.info)[number]
+		prepareCreate.info[objName] = { min: value[0], max: value[1] }
+		const newDataToUpdate = { ...prepareCreate }
+
+		this.props.preCreatePosition(newDataToUpdate)
+	}
+
+	datas = () => {
+		const { slideData } = this.props
+		return Object.values(slideData).slice(0, 6).map((data, index) => {
+			const dataName = Object.keys(slideData)[index]
+			// Hack ถ้าตำแหน่งที่ 13 ของ index จะไม่แสดงเพราะ ไม่ใช่ max min
+			if (index < 13) {
+				return {
+					subject: dataName,
+					value: parseInt((Object.values(data)[0] + Object.values(data)[1]) / 2)
+				}
+			}
 		})
 	}
 
 	render() {
+		const { slideData } = this.props
+		let groupIndex = 0
 		return (
 			<ChartWrapper>
-				<SpecifiedDomainRadarChart {...this.state.config} datas={this.state.datas} />
-				<DataSlider title="Performance and Project" onChange={this.onChange(0)} value={[this.state.datas[0].value, 70]} />
-				<DataSlider title="Leadership and Organizational Management" onChange={this.onChange(1)} value={[this.state.datas[1].value, 70]} />
-				<DataSlider title="Communication, Persuation and Negotiation" onChange={this.onChange(2)} value={[this.state.datas[2].value, 80]} />
-				<DataSlider title="People and Interpersonal Skills" onChange={this.onChange(3)} value={[this.state.datas[3].value, 90]} />
-				<DataSlider title="Political and Cultural Skills" onChange={this.onChange(4)} value={[this.state.datas[4].value, 60]} />
-				<DataSlider title="Productivity and Effectiveness at Work" onChange={this.onChange(5)} value={[this.state.datas[5].value, 70]} />
+				<SpecifiedDomainRadarChart {...this.state.config} datas={this.datas()} />
+				{
+					Object.values(slideData).slice(0, 6).map((data, index) => {
+						const dataName = Object.keys(slideData)[index]
+						// Hack ถ้าตำแหน่งที่ 13 ของ index จะไม่แสดงเพราะ ไม่ใช่ max min
+						if (index < 13) {
+							return (
+								<DataSlider
+									title={`${dataName}`}
+									onChange={this.onChange(index)}
+									value={[parseInt(Object.values(data)[0]), parseInt(Object.values(data)[1])]}
+								/>
+							)
+						}
+					})
+				}
 			</ChartWrapper>
 		)
 	}
 }
 
-export default CriticalSoftSkills
+const mapStateToProps = state => ({
+	prepareCreate: state.Positions.prepareCreate,
+})
+
+export default connect(mapStateToProps, { preCreatePosition })(CriticalSoftSkills)
