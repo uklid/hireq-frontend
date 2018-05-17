@@ -1,4 +1,6 @@
 import React from 'react'
+import { connect } from 'react-redux'
+import { withRouter } from 'react-router-dom'
 import { LayoutContentWrapper } from '../../components/utility/layoutWrapper.style'
 import Grid from 'material-ui/Grid'
 import Card from '../../components/uielements/card'
@@ -14,7 +16,13 @@ import Dialog, {
 	DialogContentText,
 	DialogTitle,
 } from 'material-ui/Dialog'
-import ToggleDisplay from 'react-toggle-display'
+import { Loading, LoadingSuccess } from '../../redux/loading/actions'
+import {
+	updatePreEditData
+} from '../../redux/position/actions'
+import Axios from 'axios'
+import firebase from 'firebase'
+
 const SliderStyled = styled(Slider) `
   .ant-slider-handle {
 	border: solid 2px #954590;
@@ -37,61 +45,6 @@ const WhiteWrapper = styled.div`
 		}
 `
 
-const columns = [
-	{
-		title: 'First Name',
-		dataIndex: 'firstName',
-		key: 'firstName',
-	},
-	{
-		title: 'Last Name',
-		dataIndex: 'lastName',
-		key: 'lastName',
-	},
-	{
-		title: 'Email',
-		dataIndex: 'email',
-		key: 'email',
-	},
-	{
-		title: 'Complete',
-		dataIndex: 'complete',
-		key: 'complete',
-	},
-	{
-		title: 'Q-Score',
-		dataIndex: 'qScore',
-		key: 'qScore',
-	}
-]
-
-const dataSouce = []
-const dataSouce2 = []
-const dataSouce3 = []
-for (let i = 0; i <= 30; i++) {
-	dataSouce.push({
-		firstName: `Mike Number ${i}`,
-		lastName: `Mike Last Name ${i}`,
-		email: `xxx${i}@email.com`,
-		complete: `${i}/xx/2000`,
-		qScore: `q  - score : ${i + Math.random()}`
-	})
-	dataSouce2.push({
-		firstName: `Mike Number ${i}`,
-		lastName: `Mike Last Name ${i}`,
-		email: `xxx${i}@email.com`,
-		complete: `${i}/xx/2000`,
-		qScore: `q  - score : ${i + Math.random()}`
-	})
-	dataSouce3.push({
-		firstName: `Mike Number ${i}`,
-		lastName: `Mike Last Name ${i}`,
-		email: `xxx${i}@email.com`,
-		complete: `${i}/xx/2000`,
-		qScore: `q  - score : ${i + Math.random()}`
-	})
-}
-
 const onChange = (date, dateString) => {
 	console.log("date =", date)
 	console.log("data String =", dateString)
@@ -100,58 +53,89 @@ const onChange = (date, dateString) => {
 class EditPosition extends React.Component {
 	state = {
 		open: false,
-		showEdit: true,
-		// showEdit: false,
 	}
-
-	handleClose = () => {
-		this.setState({ open: false })
+	componentWillMount = async () => {
+		try {
+			this.props.Loading()
+			if(!this.props.location.state.positionId) {
+				this.props.history.push('/dashboard')
+			}
+			const test = await firebase.auth().onAuthStateChanged(async (data) => {
+				if (data) {
+					// console.log("มี data =",data)
+					const getIdToken = await firebase.auth().currentUser.getIdToken()
+					console.log("get Id Token = ", getIdToken)
+					const positionId = this.props.location.state.positionId
+					const uid = localStorage.getItem('loginToken')
+					const url = `https://us-central1-hireq-api.cloudfunctions.net/users/${uid}/positions/${positionId}`
+					const result = await Axios.get(url, {
+						headers: { Authorization: "Bearer " + getIdToken }
+					})
+					this.props.updatePreEditData(result.data)
+					this.props.LoadingSuccess()
+				} else {
+					this.props.LoadingSuccess()
+					console.log("ไม่มี")
+				}
+			})
+		} catch (err) {
+			this.props.LoadingSuccess()
+			console.log(err)
+		}
+		// if (Object.keys(this.props.prepareEditData).length === 0) {
+		//   this.props.history.push('/dashboard/create-position')
+		// }
 	}
-
-	handleOpen = () => {
-		this.setState({ open: true })
+	handleToggle = () => {
+		this.setState({
+			open: !this.state.open
+		})
 	}
-
-	openEdit = () => {
-		this.setState({ showEdit: !this.state.showEdit })
+	editPosition = async () => {
+		this.props.Loading()
+		const { prepareEditData } = this.props
+		const uid = localStorage.getItem('loginToken')
+		const url = `https://us-central1-hireq-api.cloudfunctions.net/users/${uid}/positions`
+		const getIdToken = await firebase.auth().currentUser.getIdToken()
+		const result = await Axios.put(url, { ...prepareEditData }, {
+			headers: { Authorization: "Bearer " + getIdToken }
+		})
+		console.log("After Edit = ", result)
+		//change to position detail after create with idCode
+		this.props.LoadingSuccess()
+		this.props.history.push({
+			pathname: '/dashboard/position-detail',
+			state: {
+				message: result.data.message,
+				positionDetail: result.data.code
+			}
+		})
 	}
 
 	render() {
+		const { prepareEditData } = this.props
 		return (
 			<LayoutContentWrapper>
 				<Grid container spacing={24}>
 					<Grid item sm={4} xs={12}>
 						<Card>
-							<p> <Span>Position Name: </Span> Accountant </p>
-							<p> <Span>Category: </Span> Finance </p>
-							<p> <Span>Info: </Span> 123123123123123123123 </p>
+							<p> <Span>Position Name: </Span> {prepareEditData.name} </p>
+							<p> <Span>Category: </Span> {prepareEditData.category} </p>
+							<p> <Span>Info: </Span> {prepareEditData.descriptions} </p>
 						</Card>
-						<Card title="Candidate" >
-
-						</Card>
+						{/* <Card title="Candidate" >
+						</Card> */}
 					</Grid>
 					<Grid item sm={8} xs={12}>
-						<Card
-							title="Outstanding Candidates"
-							style={{ overflowX: 'scroll' }}
-						>
-							<Tables
-								dataSource={dataSouce}
-								columns={columns}
-								rowPerPage={10}
-								ellipsis={10}
-							/>
-						</Card>
 					</Grid>
 				</Grid>
-				<Grid style={{ marginTop: 40 }} container spacing={24}>
+				<Grid style={{ marginTop: 10 }} container spacing={24}>
 					<Grid item sm={12} xs={12}>
 						<Card>
-							<h3 style={{ marginBottom: 30, cursor: 'pointer' }} onClick={this.openEdit}>Edit Position Detail.</h3>
-							<ToggleDisplay show={this.state.showEdit}>
-								<Grid container spacing={0}>
-									<Grid item sm={12} xs={12}>
-										<p>
+							<h3 style={{ marginBottom: 30, cursor: 'pointer' }}>Setting Position Detail.</h3>
+							<Grid container spacing={0}>
+								<Grid item sm={12} xs={12}>
+									{/* <p>
 											<span> Start Date: {`${moment(new Date()).format("DD/MM/YY")}`}</span>
 											<span style={{ marginLeft:70}}>
 												End Date: <DatePicker onChange={onChange} />
@@ -160,81 +144,36 @@ class EditPosition extends React.Component {
 										<Grid container style={{ marginTop: 30 }}>
 											<Grid item sm={2} xs={12}> Cognative Skill: </Grid>
 											<Grid item sm={4} xs={12}><SliderStyled range defaultValue={[30, 50]} /></Grid>
-										</Grid>
+										</Grid> */}
+								</Grid>
+								<Grid style={{ paddingTop: 60 }} container spaceing={24}>
+									<Grid item sm={6} xs={12}>
+										<CriticalSoftSkills
+											slideData={prepareEditData.info}
+										/>
 									</Grid>
-									<Grid style={{ paddingTop: 60 }} container spaceing={24}>
-										<Grid item sm={6} xs={12}>
-											<CriticalSoftSkills />
-										</Grid>
-										<Grid item sm={6} xs={12}>
-											<WorkPreference />
-										</Grid>
+									<Grid item sm={6} xs={12}>
+										<WorkPreference
+											slideData={prepareEditData.info}
+										/>
 									</Grid>
 								</Grid>
-								<Grid container spacing={0}>
-									<Grid item>
-										<Button
-											type="primary"
-											// onClick={modalShow}
-											onClick={this.handleOpen}
-											style={{ backgroundColor: '#954590', marginTop: 30, borderColor: '#954590' }}
-										>
-											Save change.
+							</Grid>
+							<Grid container spacing={0}>
+								<Grid item>
+									<Button
+										type="primary"
+										// onClick={modalShow}
+										onClick={this.handleToggle}
+										style={{ backgroundColor: '#954590', marginTop: 30, borderColor: '#954590' }}
+									>
+										Edit Position.
 									</Button>
-									</Grid>
 								</Grid>
-							</ToggleDisplay>
+							</Grid>
 						</Card>
 					</Grid>
 				</Grid>
-				{/* <ToggleDisplay style={this.state.showEdit ? { width: '100%' } : {}} show={this.state.showEdit}> */}
-				{
-					this.state.showEdit &&
-					<div style={{ width: '100%' }}>
-						<Grid style={{ marginTop: 40 }} container spacing={0}>
-							<Grid item sm={12} xs={12}>
-								<Card
-									title="Complete Candidates"
-									style={{
-										overflowX: 'scroll'
-									}}
-								>
-									<Tables
-										dataSource={dataSouce2}
-										columns={columns}
-										rowPerPage={10}
-										ellipsis={10}
-									/>
-								</Card>
-							</Grid>
-						</Grid>
-						<Grid style={{ marginTop: 40 }} container spacing={0}>
-							<Grid item sm={12} xs={12}>
-								<Card
-									title="Uncomplete Candidates"
-									style={{
-										overflowX: 'scroll'
-									}}
-								>
-									<Tables
-										dataSource={dataSouce3}
-										columns={columns}
-										rowPerPage={10}
-										ellipsis={10}
-									/>
-								</Card>
-							</Grid>
-						</Grid>
-						<Grid style={{ marginTop: 30 }} container spacing={0}>
-							<Grid item>
-								<Button style={{ color: '#fff', backgroundColor: '#954590' }}>
-									Add Candidates.
-								</Button>
-							</Grid>
-						</Grid>
-					</div>
-				}
-				{/* </ToggleDisplay> */}
 				{/* Dialog modal from material ui */}
 				<Dialog
 					open={this.state.open}
@@ -242,18 +181,17 @@ class EditPosition extends React.Component {
 					aria-labelledby="alert-dialog-title"
 					aria-describedby="alert-dialog-description"
 				>
-					<DialogTitle id="alert-dialog-title">{"Use Google's location service?"}</DialogTitle>
+					<DialogTitle id="alert-dialog-title">Please confirm your Edit</DialogTitle>
 					<DialogContent>
 						<DialogContentText id="alert-dialog-description">
-							Let Google help apps determine location. This means sending anonymous location data to
-              Google, even when no apps are running.
-            </DialogContentText>
+
+						</DialogContentText>
 					</DialogContent>
 					<DialogActions>
-						<Button style={{ float: 'left' }} onClick={this.handleClose}>
+						<Button style={{ float: 'left' }} onClick={this.handleToggle}>
 							Disagree
             </Button>
-						<Button style={{ float: 'right' }} onClick={this.handleClose}>
+						<Button style={{ float: 'right' }} onClick={this.editPosition}>
 							Agree
             </Button>
 					</DialogActions>
@@ -264,4 +202,13 @@ class EditPosition extends React.Component {
 	}
 }
 
-export default EditPosition
+const mapStateToProps = state => ({
+	prepareEditData: state.Positions.prepareEditData,
+})
+
+export default connect(mapStateToProps,
+	{
+		Loading,
+		LoadingSuccess,
+		updatePreEditData
+	})(EditPosition)

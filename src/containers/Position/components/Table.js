@@ -3,7 +3,7 @@ import { withRouter } from 'react-router-dom'
 import styled from 'styled-components'
 import RowData from './RowData'
 import { connect } from 'react-redux'
-import { preCreatePosition } from '../../../redux/position/actions'
+import { preCreatePosition, updatePreEditData } from '../../../redux/position/actions'
 
 const TableStyled = styled.table`
     width: 100%;
@@ -82,7 +82,7 @@ class Tables extends Component {
 						</TRheadStyled>
 					</thead>
 					<tbody>
-						{dataSource.slice(startData, endData).map((data,index) => (
+						{dataSource.slice(startData, endData).map((data, index) => (
 							<RowData
 								// onClick={() => console.log(data)}
 								// seeDetailClick={() => console.log(Object.keys(dataSource)[index])}
@@ -92,7 +92,13 @@ class Tables extends Component {
 										state: { positionDetail: data.positionId }
 									})
 								}}
-								onEditPositionClick={() => console.log('onEditPositionClick')}
+								onEditPositionClick={() => {
+									console.log("PositionId = ",data.positionId)
+									this.props.history.push({
+										pathname: '/dashboard/edit-position',
+										state: { poistionId: data.poistionId }
+									})
+								}}
 								onClick={() => {
 									this.props.preCreatePosition(data)
 									this.props.history.push('/dashboard/create-position/create-setting')
@@ -205,4 +211,4 @@ class Tables extends Component {
 	}
 }
 
-export default connect(null, { preCreatePosition })(withRouter(Tables))
+export default connect(null, { preCreatePosition, updatePreEditData })(withRouter(Tables))

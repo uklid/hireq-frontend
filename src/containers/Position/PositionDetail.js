@@ -3,7 +3,7 @@ import { withRouter } from 'react-router-dom'
 import { LayoutContentWrapper } from '../../components/utility/layoutWrapper.style'
 import styled from 'styled-components'
 import Grid from 'material-ui/Grid'
-import { Progress } from 'antd'
+import { Progress, message } from 'antd'
 import SpecifiedDomainRadarChart from '../../containers/Charts/recharts/charts/specifiedDomainRadarChart'
 import { connect } from 'react-redux'
 import { updatePositionDetail } from '../../redux/position/actions'
@@ -71,6 +71,14 @@ class PositionDetail extends React.Component {
 						this.props.LoadingSuccess()
 						return
 					}
+
+					// ถ้ามาจากหน้า create alert message 
+					if (this.props.location.state.message) {
+						message.config({
+							top: 100,
+						})
+						message.success(this.props.location.state.message, 10)
+					}
 					const positionId = this.props.location.state.positionDetail !== undefined ? this.props.location.state.positionDetail : false
 					const url = `https://us-central1-hireq-api.cloudfunctions.net/users/${uid}/positions/${positionId}`
 					const result = await Axios.get(url, {
@@ -116,6 +124,11 @@ class PositionDetail extends React.Component {
 			}
 		})
 	}
+	cogNativePercent = () => {
+		const positionDetail = this.props.positionDetail.info
+		const cogNumber = Object.values(positionDetail).slice(0, 1)
+		return parseInt((cogNumber[0].max + cogNumber[0].min) / 2)
+	}
 	render() {
 		const { positionDetail } = this.props
 		console.log("secondDatas ", positionDetail.info)
@@ -134,7 +147,7 @@ class PositionDetail extends React.Component {
 					<Grid item sm={12} xs={12}>
 						<WhiteWrapper>
 							<h3> Cognative Ability </h3>
-							<ProgressStyled percent={40} />
+							<ProgressStyled percent={Object.keys(positionDetail).length && this.cogNativePercent()} />
 						</WhiteWrapper>
 					</Grid>
 				</Grid>

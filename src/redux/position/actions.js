@@ -32,3 +32,10 @@ export const updateCreatedAllPosition = (data) => (dispatch, getState) => {
     data: data
   })
 }
+
+export const updatePreEditData = (data) => (dispatch,getState) => {
+  dispatch({
+    type: 'UPDATE_PRE_EDIT_DATA',
+    data: data
+  })
+}

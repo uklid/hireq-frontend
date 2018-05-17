@@ -1,6 +1,7 @@
 const initialState = {
   positionDetail: {},
   prepareCreate: {},
+  prepareEditData: {},
   searchPosition: '',
   positionData: [],
   allPositionCreated: {}

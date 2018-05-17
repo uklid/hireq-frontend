@@ -78,7 +78,10 @@ class SecondCreatePosition extends React.Component {
     this.props.LoadingSuccess()
     this.props.history.push({
       pathname: '/dashboard/position-detail',
-      state: { positionDetail: result.data.code }
+      state: {
+        message: result.data.message,
+        positionDetail: result.data.code
+      }
     })
   }
 

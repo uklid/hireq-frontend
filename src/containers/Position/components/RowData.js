@@ -4,7 +4,7 @@ import styled from 'styled-components'
 
 const TRBodyStyled = styled.tr`
 		height: 50px;
-		cursor: pointer;
+		// cursor: pointer;
 		background: ${props => props.isExpand ? '#954590' : 'white'};
 		background-color: ${props => props.isActive ? '#eee' : 'white'}
 		border: ${props => props.isActive ? '1px solid red' : 'none'};
