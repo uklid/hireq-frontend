@@ -1,9 +1,15 @@
 import React from 'react'
+import { withRouter } from 'react-router-dom'
 import { LayoutContentWrapper } from '../../components/utility/layoutWrapper.style'
 import styled from 'styled-components'
 import Grid from 'material-ui/Grid'
 import { Progress } from 'antd'
 import SpecifiedDomainRadarChart from '../../containers/Charts/recharts/charts/specifiedDomainRadarChart'
+import { connect } from 'react-redux'
+import { updatePositionDetail } from '../../redux/position/actions'
+import { Loading, LoadingSuccess } from '../../redux/loading/actions'
+import Axios from 'axios'
+import firebase from 'firebase'
 // const screenHeight = window.innerHeight
 const screenWidth = (window.innerWidth / 2) - 100 <= 250 ? 350 : 600
 
@@ -47,25 +53,80 @@ class PositionDetail extends React.Component {
 				cy: 250,
 				outerRadius: 150,
 			},
-			datas: [
-				{ subject: 'Math', value: 50, fullMark: 100 },
-				{ subject: 'Chinese', value: 50, fullMark: 100 },
-				{ subject: 'English', value: 50, fullMark: 100 },
-				{ subject: 'Geography', value: 50, fullMark: 100 },
-				{ subject: 'Physics', value: 50, fullMark: 100 },
-				{ subject: 'History', value: 50, fullMark: 100 },
-			],
 		}
 	}
+	componentWillMount = async () => {
+		try {
+			firebase.auth().onAuthStateChanged(async (data) => {
+				if (data) {
+					this.props.Loading()
+					const uid = localStorage.getItem('loginToken')
+					const getIdToken = await firebase.auth().currentUser.getIdToken()
+					console.log("getidtoken positiondetail ", getIdToken)
+					console.log("this.props.location", this.props.location.state)
+					//ถ้าเข้าโดยตรงไม่ได้ ต้องส่ง location.state.positionDetail มาด้วย จะได้เอาไป set เป็น ไอดีครับ
+					if (this.props.location.state === undefined) {
+						console.log("ไปอีกหน้าสิจ๊ะ")
+						this.props.history.push('/dashboard')
+						this.props.LoadingSuccess()
+						return
+					}
+					const positionId = this.props.location.state.positionDetail !== undefined ? this.props.location.state.positionDetail : false
+					const url = `https://us-central1-hireq-api.cloudfunctions.net/users/${uid}/positions/${positionId}`
+					const result = await Axios.get(url, {
+						headers: { Authorization: "Bearer " + getIdToken }
+					})
+					this.props.updatePositionDetail(result.data)
+					console.log(result.data)
+					// this.props.updatePositionDetail(result.data)
+					this.props.LoadingSuccess()
+				} else {
+					throw new Error("No User Login Data")
+				}
+			})
+		} catch (err) {
+			console.log(err)
+		}
+	}
+	firstDatas = () => {
+		const positionDetail = this.props.positionDetail.info
+		console.log("positionDatas ==== ", positionDetail)
+		return Object.values(positionDetail).slice(0, 6).map((data, index) => {
+			const dataName = Object.keys(positionDetail)[index]
+			// Hack ถ้าตำแหน่งที่ 13 ของ index จะไม่แสดงเพราะ ไม่ใช่ max min
+			if (index < 13) {
+				return {
+					subject: dataName,
+					value: parseInt((Object.values(data)[0] + Object.values(data)[1]) / 2)
+				}
+			}
+		})
+	}
+	secondDatas = () => {
+		const positionDetail = this.props.positionDetail.info
+		console.log("positionDatas ==== ", positionDetail)
+		return Object.values(positionDetail).slice(7, 12).map((data, index) => {
+			const dataName = Object.keys(positionDetail)[7 + index]
+			// Hack ถ้าตำแหน่งที่ 13 ของ index จะไม่แสดงเพราะ ไม่ใช่ max min
+			if (index < 13) {
+				return {
+					subject: dataName,
+					value: parseInt((Object.values(data)[0] + Object.values(data)[1]) / 2)
+				}
+			}
+		})
+	}
 	render() {
+		const { positionDetail } = this.props
+		console.log("secondDatas ", positionDetail.info)
 		return (
 			<LayoutContentWrapper>
 				<Grid container spacing={0}>
 					<Grid item sm={12} xs={12}>
 						<WhiteWrapper>
-							<p><h4>Position Name: </h4><span> Accountant</span></p>
-							<p><h4>Category: </h4><span> Account</span></p>
-							<p><h4>Info: </h4><span> Analyz xxxxx xxxx detail Ompsdq Lorem spd</span></p>
+							<p><h4>Position Name: </h4><span> {positionDetail.name}</span></p>
+							<p><h4>Category: </h4><span> {positionDetail.category}</span></p>
+							<p><h4>Info: </h4><span> {positionDetail.descriptions}</span></p>
 						</WhiteWrapper>
 					</Grid>
 				</Grid>
@@ -82,7 +143,7 @@ class PositionDetail extends React.Component {
 						<WhiteWrapper>
 							<ChartWrapper>
 								<h3>Critical SoftSkill</h3>
-								<SpecifiedDomainRadarChart {...this.state.config} datas={this.state.datas} />
+								<SpecifiedDomainRadarChart {...this.state.config} datas={Object.keys(positionDetail).length !== 0 && this.firstDatas()} />
 							</ChartWrapper>
 						</WhiteWrapper>
 					</Grid>
@@ -90,7 +151,7 @@ class PositionDetail extends React.Component {
 						<WhiteWrapper>
 							<ChartWrapper>
 								<h3>Work Preference</h3>
-								<SpecifiedDomainRadarChart {...this.state.config} datas={this.state.datas} />
+								<SpecifiedDomainRadarChart {...this.state.config} datas={Object.keys(positionDetail).length !== 0 && this.secondDatas()} />
 							</ChartWrapper>
 						</WhiteWrapper>
 					</Grid>
@@ -100,4 +161,13 @@ class PositionDetail extends React.Component {
 	}
 }
 
-export default PositionDetail
+const mapStateToProps = (state) => ({
+	positionDetail: state.Positions.positionDetail
+})
+
+export default connect(mapStateToProps,
+	{
+		updatePositionDetail,
+		Loading,
+		LoadingSuccess
+	})(withRouter(PositionDetail))

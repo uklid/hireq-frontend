@@ -1,4 +1,5 @@
 import React from 'react'
+import { withRouter } from 'react-router-dom'
 import SpecifiedDomainRadarChart from '../../containers/Charts/recharts/charts/specifiedDomainRadarChart'
 import { Slider } from 'antd'
 import styled from 'styled-components'
@@ -55,11 +56,11 @@ class CriticalSoftSkills extends React.Component {
 		}
 	}
 	componentWillMount = () => {
-		this.setState({
-
-		})
+		const { slideData } = this.props
+		if (slideData === undefined) {
+			this.props.history.push('/dashboard/create-position/')
+		}
 	}
-
 	onChange = (number) => (value) => {
 		const { prepareCreate } = this.props
 		const objName = Object.keys(prepareCreate.info)[number]
@@ -88,9 +89,9 @@ class CriticalSoftSkills extends React.Component {
 		let groupIndex = 0
 		return (
 			<ChartWrapper>
-				<SpecifiedDomainRadarChart {...this.state.config} datas={this.datas()} />
+				<SpecifiedDomainRadarChart {...this.state.config} datas={slideData !== undefined && this.datas()} />
 				{
-					Object.values(slideData).slice(0, 6).map((data, index) => {
+					slideData !== undefined && Object.values(slideData).slice(0, 6).map((data, index) => {
 						const dataName = Object.keys(slideData)[index]
 						// Hack ถ้าตำแหน่งที่ 13 ของ index จะไม่แสดงเพราะ ไม่ใช่ max min
 						if (index < 13) {
@@ -113,4 +114,4 @@ const mapStateToProps = state => ({
 	prepareCreate: state.Positions.prepareCreate,
 })
 
-export default connect(mapStateToProps, { preCreatePosition })(CriticalSoftSkills)
+export default connect(mapStateToProps, { preCreatePosition })(withRouter(CriticalSoftSkills))

@@ -1,5 +1,6 @@
 import React from 'react'
-import {connect} from 'react-redux'
+import { connect } from 'react-redux'
+import { withRouter } from 'react-router-dom'
 import { LayoutContentWrapper } from '../../components/utility/layoutWrapper.style'
 import Grid from 'material-ui/Grid'
 import Card from '../../components/uielements/card'
@@ -15,10 +16,12 @@ import Dialog, {
   DialogContentText,
   DialogTitle,
 } from 'material-ui/Dialog'
-import { Loading,LoadingSuccess } from '../../redux/loading/actions'
+import { Loading, LoadingSuccess } from '../../redux/loading/actions'
 import {
   preCreatePosition
 } from '../../redux/position/actions'
+import Axios from 'axios'
+import firebase from 'firebase'
 
 const SliderStyled = styled(Slider) `
   .ant-slider-handle {
@@ -50,17 +53,37 @@ const onChange = (date, dateString) => {
 class SecondCreatePosition extends React.Component {
   state = {
     open: false,
-    showEdit: true,
   }
   componentWillMount = () => {
     if (Object.keys(this.props.prepareCreate).length === 0) {
       this.props.history.push('/dashboard/create-position')
     }
   }
+  handleToggle = () => {
+    this.setState({
+      open: !this.state.open
+    })
+  }
+  createPosition = async () => {
+    this.props.Loading()
+    const { prepareCreate } = this.props
+    const uid = localStorage.getItem('loginToken')
+    const url = `https://us-central1-hireq-api.cloudfunctions.net/users/${uid}/positions`
+    const getIdToken = await firebase.auth().currentUser.getIdToken()
+    const result = await Axios.post(url, { ...prepareCreate }, {
+      headers: { Authorization: "Bearer " + getIdToken }
+    })
+    console.log("After Create = ", result)
+    //change to position detail after create with idCode
+    this.props.LoadingSuccess()
+    this.props.history.push({
+      pathname: '/dashboard/position-detail',
+      state: { positionDetail: result.data.code }
+    })
+  }
 
   render() {
     const { prepareCreate } = this.props
-    console.log("length = ",Object.keys(prepareCreate.info).length)
     return (
       <LayoutContentWrapper>
         <Grid container spacing={24}>
@@ -68,7 +91,7 @@ class SecondCreatePosition extends React.Component {
             <Card>
               <p> <Span>Position Name: </Span> {prepareCreate.name} </p>
               <p> <Span>Category: </Span> {prepareCreate.category} </p>
-              <p> <Span>Info: </Span> {prepareCreate.info.tags} </p>
+              <p> <Span>Info: </Span> {prepareCreate.descriptions} </p>
             </Card>
             {/* <Card title="Candidate" >
 						</Card> */}
@@ -79,10 +102,10 @@ class SecondCreatePosition extends React.Component {
         <Grid style={{ marginTop: 10 }} container spacing={24}>
           <Grid item sm={12} xs={12}>
             <Card>
-              <h3 style={{ marginBottom: 30, cursor: 'pointer' }}>Edit Position Detail.</h3>
-                <Grid container spacing={0}>
-                  <Grid item sm={12} xs={12}>
-                    {/* <p>
+              <h3 style={{ marginBottom: 30, cursor: 'pointer' }}>Setting Position Detail.</h3>
+              <Grid container spacing={0}>
+                <Grid item sm={12} xs={12}>
+                  {/* <p>
 											<span> Start Date: {`${moment(new Date()).format("DD/MM/YY")}`}</span>
 											<span style={{ marginLeft:70}}>
 												End Date: <DatePicker onChange={onChange} />
@@ -92,30 +115,32 @@ class SecondCreatePosition extends React.Component {
 											<Grid item sm={2} xs={12}> Cognative Skill: </Grid>
 											<Grid item sm={4} xs={12}><SliderStyled range defaultValue={[30, 50]} /></Grid>
 										</Grid> */}
+                </Grid>
+                <Grid style={{ paddingTop: 60 }} container spaceing={24}>
+                  <Grid item sm={6} xs={12}>
+                    <CriticalSoftSkills
+                      slideData={prepareCreate.info}
+                    />
                   </Grid>
-                  <Grid style={{ paddingTop: 60 }} container spaceing={24}>
-                    <Grid item sm={6} xs={12}>
-                      <CriticalSoftSkills 
-                        slideData={prepareCreate.info}
-                      />
-                    </Grid>
-                    <Grid item sm={6} xs={12}>
-                      <WorkPreference />
-                    </Grid>
+                  <Grid item sm={6} xs={12}>
+                    <WorkPreference
+                      slideData={prepareCreate.info}
+                    />
                   </Grid>
                 </Grid>
-                <Grid container spacing={0}>
-                  <Grid item>
-                    <Button
-                      type="primary"
-                      // onClick={modalShow}
-                      onClick={this.handleOpen}
-                      style={{ backgroundColor: '#954590', marginTop: 30, borderColor: '#954590' }}
-                    >
-                      Create Position.
+              </Grid>
+              <Grid container spacing={0}>
+                <Grid item>
+                  <Button
+                    type="primary"
+                    // onClick={modalShow}
+                    onClick={this.handleToggle}
+                    style={{ backgroundColor: '#954590', marginTop: 30, borderColor: '#954590' }}
+                  >
+                    Create Position.
 									</Button>
-                  </Grid>
                 </Grid>
+              </Grid>
             </Card>
           </Grid>
         </Grid>
@@ -126,18 +151,17 @@ class SecondCreatePosition extends React.Component {
           aria-labelledby="alert-dialog-title"
           aria-describedby="alert-dialog-description"
         >
-          <DialogTitle id="alert-dialog-title">{"Use Google's location service?"}</DialogTitle>
+          <DialogTitle id="alert-dialog-title">Please confirm your create</DialogTitle>
           <DialogContent>
             <DialogContentText id="alert-dialog-description">
-              Let Google help apps determine location. This means sending anonymous location data to
-              Google, even when no apps are running.
+
             </DialogContentText>
           </DialogContent>
           <DialogActions>
-            <Button style={{ float: 'left' }} onClick={this.handleClose}>
+            <Button style={{ float: 'left' }} onClick={this.handleToggle}>
               Disagree
             </Button>
-            <Button style={{ float: 'right' }} onClick={this.handleClose}>
+            <Button style={{ float: 'right' }} onClick={this.createPosition}>
               Agree
             </Button>
           </DialogActions>
@@ -153,7 +177,7 @@ const mapStateToProps = state => ({
 })
 
 export default connect(mapStateToProps,
-  { 
+  {
     Loading,
     LoadingSuccess,
     preCreatePosition

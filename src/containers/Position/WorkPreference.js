@@ -1,11 +1,10 @@
 import React from 'react'
+import { withRouter } from 'react-router-dom'
 import SpecifiedDomainRadarChart from '../../containers/Charts/recharts/charts/specifiedDomainRadarChart'
 import { Slider } from 'antd'
 import styled from 'styled-components'
-
-const onAfterChange = (value) => {
-	console.log(value)
-}
+import { connect } from 'react-redux'
+import { preCreatePosition } from '../../redux/position/actions'
 
 const DataSlider = ({ onChange, value, title }) => (
 	<div>
@@ -24,15 +23,18 @@ const ChartWrapper = styled.div`
 
 const SliderStyled = styled(Slider) `
   .ant-slider-handle {
-		border: solid 2px #954590;
+	border: solid 2px #954590;
   }
-  .ant-slider-handle .ant-tooltip-open {
-		border-color: #651562 !important;
-	}
+  .ant-slider-handle.ant-tooltip-open {
+	border-color: #651562 !important;
+}
   .ant-slider-track {
-		background-color: #954590;
-	}
+	background-color: #954590;
+  }
 `
+
+const innerWidth = window.innerWidth
+const innerHeight = window.innerHeight
 
 class WorkPreference extends React.Component {
 	constructor(props) {
@@ -44,48 +46,72 @@ class WorkPreference extends React.Component {
 				title: 'Specified Domain Radar Chart',
 				width: 600,
 				height: 500,
-				colors: ['#788195'],
+				colors: ['#BAA6CA', '#B7DCFA', '#FFE69A', '#788195'],
 				angle: 30,
 				domain: [0, 100],
 				cx: 300,
 				cy: 250,
 				outerRadius: 150,
 			},
-			datas: [
-				{ subject: 'Performance', value: 50, fullMark: 100 },
-				{ subject: 'Leadership', value: 50, fullMark: 100 },
-				{ subject: 'Communication', value: 50, fullMark: 100 },
-				{ subject: 'People', value: 50, fullMark: 100 },
-				{ subject: 'Political', value: 50, fullMark: 100 },
-				{ subject: 'Productivity', value: 50, fullMark: 100 },
-			],
+		}
+	}
+	componentWillMount = () => {
+		const { slideData } = this.props
+		if (slideData === undefined) {
+			this.props.history.push('/dashboard/create-position/')
 		}
 	}
 	onChange = (number) => (value) => {
-		this.setState((prevState) => {
-			prevState.datas[number].value = value
-			this.setState({
-				datas: [
-					...prevState.datas,
-				]
+		const { prepareCreate } = this.props
+		const objName = Object.keys(prepareCreate.info)[number]
+		prepareCreate.info[objName] = { min: value[0], max: value[1] }
+		const newDataToUpdate = { ...prepareCreate }
+
+		this.props.preCreatePosition(newDataToUpdate)
+	}
+
+	datas = () => {
+		const { slideData } = this.props
+		return Object.values(slideData).slice(7, 12).map((data, index) => {
+			const dataName = Object.keys(slideData)[7 + index]
+			// Hack ถ้าตำแหน่งที่ 13 ของ index จะไม่แสดงเพราะ ไม่ใช่ max min
+			if (index < 13) {
+				return {
+					subject: dataName,
+					value: parseInt((Object.values(data)[0] + Object.values(data)[1]) / 2)
+				}
 			}
-			)
 		})
 	}
 
 	render() {
+		const { slideData } = this.props
+		let groupIndex = 0
 		return (
 			<ChartWrapper>
-				<SpecifiedDomainRadarChart {...this.state.config} datas={this.state.datas} />
-				<DataSlider title="Performance and Project" onChange={this.onChange(0)} value={[this.state.datas[0].value, 70]} />
-				<DataSlider title="Leadership and Organizational Management" onChange={this.onChange(1)} value={[this.state.datas[1].value, 80]} />
-				<DataSlider title="Communication, Persuation and Negotiation" onChange={this.onChange(2)} value={[this.state.datas[2].value, 80]} />
-				<DataSlider title="People and Interpersonal Skills" onChange={this.onChange(3)} value={[this.state.datas[3].value, 60]} />
-				<DataSlider title="Political and Cultural Skills" onChange={this.onChange(4)} value={[this.state.datas[4].value, 90]} />
-				<DataSlider title="Productivity and Effectiveness at Work" onChange={this.onChange(5)} value={[this.state.datas[5].value, 90]} />
+				<SpecifiedDomainRadarChart {...this.state.config} datas={slideData !== undefined && this.datas()} />
+				{
+					slideData !== undefined && Object.values(slideData).slice(7, 12).map((data, index) => {
+						const dataName = Object.keys(slideData)[index]
+						// Hack ถ้าตำแหน่งที่ 13 ของ index จะไม่แสดงเพราะ ไม่ใช่ max min
+						if (index < 13) {
+							return (
+								<DataSlider
+									title={`${dataName}`}
+									onChange={this.onChange(7 + index)}
+									value={[parseInt(Object.values(data)[0]), parseInt(Object.values(data)[1])]}
+								/>
+							)
+						}
+					})
+				}
 			</ChartWrapper>
 		)
 	}
 }
 
-export default WorkPreference
+const mapStateToProps = state => ({
+	prepareCreate: state.Positions.prepareCreate,
+})
+
+export default connect(mapStateToProps, { preCreatePosition })(withRouter(WorkPreference))

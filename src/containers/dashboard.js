@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import firebase from 'firebase'
 import LayoutContentWrapper from '../components/utility/layoutWrapper'
 import LayoutContent from '../components/utility/layoutContent'
 import Grid from 'material-ui/Grid'
@@ -7,32 +8,22 @@ import { Table, Progress } from 'antd'
 import Tables from './Position/components/Table'
 import { GoogleChart } from '../containers/Charts/googleChart'
 import styled from 'styled-components'
-// import IsoWidgetsWrapper from '../components/uielements/progress'
-
-const dataSource = [{
-  key: '1',
-  name: 'Mike',
-  age: 32,
-  address: '10 Downing Street'
-}, {
-  key: '2',
-  name: 'John',
-  age: 42,
-  address: '10 Downing Street'
-}]
+import { connect } from 'react-redux'
+import { Loading, LoadingSuccess } from '../redux/loading/actions'
+import Axios from 'axios'
 
 const columns = [{
   title: 'Name',
   dataIndex: 'name',
   key: 'name',
 }, {
-  title: 'Age',
-  dataIndex: 'age',
-  key: 'age',
+  title: 'category',
+  dataIndex: 'category',
+  key: 'category',
 }, {
-  title: 'Address',
-  dataIndex: 'address',
-  key: 'address',
+  title: 'ACTIONS',
+  dataIndex: 'buttonAction',
+  key: 'buttonAction'
 }]
 
 const ProgressBarWithTitle = ({ title, percent, status }) => (
@@ -169,8 +160,36 @@ const Histogram = {
   },
 }
 
-export default class extends Component {
+class Dashboard extends Component {
+  componentDidMount = async () => {
+    try {
+      this.props.Loading()
+      const test = await firebase.auth().onAuthStateChanged(async (data) => {
+        if (data) {
+          // console.log("มี data =",data)
+          const getIdToken = await firebase.auth().currentUser.getIdToken()
+          console.log("get Id Token = ", getIdToken)
+          const uid = localStorage.getItem('loginToken')
+          const url = `https://us-central1-hireq-api.cloudfunctions.net/users/${uid}/positions`
+          const result = await Axios.get(url, {
+            headers: { Authorization: "Bearer " + getIdToken }
+          })
+          console.log("result = ", result)
+          this.props.LoadingSuccess()
+        } else {
+          this.props.LoadingSuccess()
+          console.log("ไม่มี")
+        }
+      })
+      // console.log(test)
+
+    } catch (err) {
+      this.props.LoadingSuccess()
+      console.log(err)
+    }
+  }
   render() {
+    const { allPositionCreated } = this.props
     return (
       <LayoutContentWrapper
       // style={{ height: '100vh' }}
@@ -204,7 +223,7 @@ export default class extends Component {
               style={{ width: '100%', textAlign: 'center' }}
             >
               <Tables
-                dataSource={dataSource}
+                dataSource={allPositionCreated}
                 columns={columns}
                 rowPerPage={10}
                 ellipsis={10}
@@ -227,12 +246,12 @@ export default class extends Component {
               title="Opened Positions"
               style={{ width: '100%', textAlign: 'center' }}
             >
-              <Tables
+              {/* <Tables
                 dataSource={dataSource}
                 columns={columns}
                 rowPerPage={10}
                 ellipsis={10}
-              />
+              /> */}
             </Card>
           </Grid>
         </Grid>
@@ -258,3 +277,12 @@ export default class extends Component {
     )
   }
 }
+
+const mapStateToProps = state => ({
+  allPositionCreated: state.Positions.allPositionCreated
+})
+
+export default connect(mapStateToProps, {
+  Loading,
+  LoadingSuccess
+})(Dashboard)

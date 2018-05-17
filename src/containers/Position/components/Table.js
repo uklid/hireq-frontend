@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { withRouter } from 'react-router-dom'
 import styled from 'styled-components'
 import RowData from './RowData'
 import { connect } from 'react-redux'
@@ -47,7 +48,8 @@ const Ellipsis = styled.span`
 class Tables extends Component {
 	state = {
 		currentPage: 1,
-		createData: {}
+		createData: {},
+		currentRow: null
 	}
 	forward = (numOfPage) => {
 		if (this.state.currentPage < numOfPage) {
@@ -83,7 +85,10 @@ class Tables extends Component {
 						{dataSource.slice(startData, endData).map((data) => (
 							<RowData
 								// onClick={() => console.log(data)}
-								onClick={() => this.props.preCreatePosition(data)}
+								onClick={() => {
+									this.props.preCreatePosition(data)
+									this.props.history.push('/dashboard/create-position/create-setting')
+								}}
 								data={data}
 								columns={columns}
 							/>
@@ -192,4 +197,4 @@ class Tables extends Component {
 	}
 }
 
-export default connect(null,{ preCreatePosition })(Tables)
+export default connect(null, { preCreatePosition })(withRouter(Tables))

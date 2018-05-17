@@ -18,3 +18,10 @@ export const preCreatePosition = (data) => (dispatch, getState) => {
     data: data
   })
 }
+
+export const updatePositionDetail = (data) => (dispatch, getState) => {
+  dispatch({
+    type: 'UPDATE_POSITION_DETAIL',
+    data: data
+  })
+}

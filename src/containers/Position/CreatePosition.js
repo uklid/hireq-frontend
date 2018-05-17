@@ -38,7 +38,12 @@ const columns = [{
 	title: 'Category',
 	dataIndex: 'category',
 	key: 'category',
-}, {
+},{
+	title:'',
+	dataIndex: 'button',
+	key: 'button'
+}
+, {
 	title: 'More info',
 	dataIndex: 'moreInfo',
 	key: 'moreInfo',
@@ -112,7 +117,7 @@ class CreatePosition extends React.Component {
 		try {
 			this.props.Loading()
 			const getIdToken = await firebase.auth().currentUser.getIdToken()
-			// console.log('getIdToken = ', getIdToken)
+			console.log('getIdToken = ', getIdToken)
 			const searchKeyword = document.getElementById('position-search').value
 			const url = `https://us-central1-hireq-api.cloudfunctions.net/jobs/search?keyword=${searchKeyword}`
 

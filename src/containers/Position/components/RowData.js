@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { Button } from 'antd'
 import styled from 'styled-components'
 
 const TRBodyStyled = styled.tr`
@@ -6,7 +7,7 @@ const TRBodyStyled = styled.tr`
 		cursor: pointer;
 		background: ${props => props.isExpand ? '#954590' : 'white'};
 		background-color: ${props => props.isActive ? '#eee' : 'white'}
-		border: ${props => props.isActive ? '1px solid #eee' : 'none'};
+		border: ${props => props.isActive ? '1px solid red' : 'none'};
 `
 const TRInfoStyled = styled.tr`
     height: 50px;
@@ -41,6 +42,19 @@ export default class RowData extends Component {
 		const { data, columns } = this.props
 		const dataWithInfo = {
 			...data,
+			button: <Button
+				onClick={this.props.onClick}
+				style={{
+					color: '#fff',
+					backgroundColor: '#954590',
+					borderColor: '#954590',
+				}}>Create position</Button>,
+			buttonAction:
+				<React.Fragment>
+					<Button onClick={this.props.seeDetailClick}>More Detail</Button>
+					<Button onClick={this.props.onEditPositionClick}>onEditPositionClick</Button>
+				</React.Fragment>
+			,
 			moreInfo: <MoreInfoLink onClick={() => this.setState({ isExpand: !this.state.isExpand })}>More Info</MoreInfoLink>
 		}
 		const totalCol = Object.keys(dataWithInfo)
@@ -67,11 +81,11 @@ export default class RowData extends Component {
 				>
 					{columns.map((key, index) => (
 						<TDStyled
-							onClick={this.props.onClick}
+							// onClick={this.props.onClick}
 							isExpand={this.state.isExpand}
 							key={index}
 						>
-							<span>{dataWithInfo[key.key]}</span>
+							{dataWithInfo[key.key]}
 						</TDStyled>
 					))}
 				</TRBodyStyled>
@@ -80,7 +94,7 @@ export default class RowData extends Component {
 						<table style={{ width: '100%' }}>
 							<tr>
 								<td>
-									{dataWithInfo.info ? dataWithInfo.info.description : ''}
+									{dataWithInfo ? dataWithInfo.descriptions : ''}
 								</td>
 							</tr>
 							{/* <td>
