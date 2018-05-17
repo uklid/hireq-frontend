@@ -10,6 +10,7 @@ import { GoogleChart } from '../containers/Charts/googleChart'
 import styled from 'styled-components'
 import { connect } from 'react-redux'
 import { Loading, LoadingSuccess } from '../redux/loading/actions'
+import { updateCreatedAllPosition } from '../redux/position/actions'
 import Axios from 'axios'
 
 const columns = [{
@@ -174,7 +175,7 @@ class Dashboard extends Component {
           const result = await Axios.get(url, {
             headers: { Authorization: "Bearer " + getIdToken }
           })
-          console.log("result = ", result)
+          this.props.updateCreatedAllPosition(result.data)
           this.props.LoadingSuccess()
         } else {
           this.props.LoadingSuccess()
@@ -188,10 +189,21 @@ class Dashboard extends Component {
       console.log(err)
     }
   }
+  newObject = () => {
+    return Object.values(this.props.allPositionCreated).map((data, index) => {
+      return {
+        ...data,
+        positionId: Object.keys(this.props.allPositionCreated)[index]
+      }
+    })
+  }
   render() {
     const { allPositionCreated } = this.props
+    {console.log(this.newObject())}    
+    // console.log("result = ", { ...Object.values(allPositionCreated), positionId: allPositionCreated })
     return (
       <LayoutContentWrapper
+
       // style={{ height: '100vh' }}
       >
         {/* <LayoutContent>
@@ -202,7 +214,7 @@ class Dashboard extends Component {
               style={{ marginBottom: 20, width: '100%', textAlign: 'center' }}
             >
               <h4>Total Positions</h4>
-              <h1 style={{ fontSize: 50, color: '#954590' }}>50</h1>
+              <h1 style={{ fontSize: 50, color: '#954590' }}>{Object.keys(allPositionCreated).length}</h1>
             </Card>
             <Card
               style={{ marginBottom: 20, width: '100%', textAlign: 'center' }}
@@ -223,7 +235,8 @@ class Dashboard extends Component {
               style={{ width: '100%', textAlign: 'center' }}
             >
               <Tables
-                dataSource={allPositionCreated}
+                // oldDataSource={Object.keys()}
+                dataSource={Object.values(this.newObject())}
                 columns={columns}
                 rowPerPage={10}
                 ellipsis={10}
@@ -283,6 +296,7 @@ const mapStateToProps = state => ({
 })
 
 export default connect(mapStateToProps, {
+  updateCreatedAllPosition,
   Loading,
   LoadingSuccess
 })(Dashboard)

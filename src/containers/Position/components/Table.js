@@ -82,9 +82,17 @@ class Tables extends Component {
 						</TRheadStyled>
 					</thead>
 					<tbody>
-						{dataSource.slice(startData, endData).map((data) => (
+						{dataSource.slice(startData, endData).map((data,index) => (
 							<RowData
 								// onClick={() => console.log(data)}
+								// seeDetailClick={() => console.log(Object.keys(dataSource)[index])}
+								seeDetailClick={() => {
+									this.props.history.push({
+										pathname: '/dashboard/position-detail',
+										state: { positionDetail: data.positionId }
+									})
+								}}
+								onEditPositionClick={() => console.log('onEditPositionClick')}
 								onClick={() => {
 									this.props.preCreatePosition(data)
 									this.props.history.push('/dashboard/create-position/create-setting')

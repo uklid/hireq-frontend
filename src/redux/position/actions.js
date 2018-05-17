@@ -25,3 +25,10 @@ export const updatePositionDetail = (data) => (dispatch, getState) => {
     data: data
   })
 }
+
+export const updateCreatedAllPosition = (data) => (dispatch, getState) => {
+  dispatch({
+    type: 'UPDATE_ALL_POSITION_CREATED',
+    data: data
+  })
+}

@@ -52,7 +52,7 @@ export default class RowData extends Component {
 			buttonAction:
 				<React.Fragment>
 					<Button onClick={this.props.seeDetailClick}>More Detail</Button>
-					<Button onClick={this.props.onEditPositionClick}>onEditPositionClick</Button>
+					<Button onClick={this.props.onEditPositionClick}>Edit</Button>
 				</React.Fragment>
 			,
 			moreInfo: <MoreInfoLink onClick={() => this.setState({ isExpand: !this.state.isExpand })}>More Info</MoreInfoLink>

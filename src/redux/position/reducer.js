@@ -3,7 +3,7 @@ const initialState = {
   prepareCreate: {},
   searchPosition: '',
   positionData: [],
-  allPositionCreated: []
+  allPositionCreated: {}
 }
 
 const Positions = (state = initialState, action) => {
@@ -11,7 +11,7 @@ const Positions = (state = initialState, action) => {
     case 'UPDATE_ALL_POSITION_CREATED':
       return {
         ...state,
-        allPositionCreated: [...action.data]
+        allPositionCreated: action.data
       }
     case 'UPDATE_POSITIONS_DATA':
       return {
