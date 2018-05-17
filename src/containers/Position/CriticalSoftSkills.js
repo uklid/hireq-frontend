@@ -95,11 +95,12 @@ class CriticalSoftSkills extends React.Component {
 						const dataName = Object.keys(slideData)[index]
 						// Hack ถ้าตำแหน่งที่ 13 ของ index จะไม่แสดงเพราะ ไม่ใช่ max min
 						if (index < 13) {
+							console.log("Array valye in Chart" , [parseInt(data['min']), parseInt(data['max'])])
 							return (
 								<DataSlider
 									title={`${dataName}`}
 									onChange={this.onChange(index)}
-									value={[parseInt(Object.values(data)[0]), parseInt(Object.values(data)[1])]}
+									value={[parseInt(data['min']), parseInt(data['max'])]}
 								/>
 							)
 						}

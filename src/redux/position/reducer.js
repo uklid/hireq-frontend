@@ -34,6 +34,11 @@ const Positions = (state = initialState, action) => {
         ...state,
         positionDetail: action.data
       }
+    case 'UPDATE_PRE_EDIT_DATA':
+      return {
+        ...state,
+        prepareEditData: action.data
+      }
     default:
       return state
   }

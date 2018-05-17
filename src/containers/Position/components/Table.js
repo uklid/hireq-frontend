@@ -96,7 +96,7 @@ class Tables extends Component {
 									console.log("PositionId = ",data.positionId)
 									this.props.history.push({
 										pathname: '/dashboard/edit-position',
-										state: { poistionId: data.poistionId }
+										state: { positionId: data.positionId }
 									})
 								}}
 								onClick={() => {

@@ -92,14 +92,14 @@ class WorkPreference extends React.Component {
 				<SpecifiedDomainRadarChart {...this.state.config} datas={slideData !== undefined && this.datas()} />
 				{
 					slideData !== undefined && Object.values(slideData).slice(7, 12).map((data, index) => {
-						const dataName = Object.keys(slideData)[index]
+						const dataName = Object.keys(slideData)[7 + index]
 						// Hack ถ้าตำแหน่งที่ 13 ของ index จะไม่แสดงเพราะ ไม่ใช่ max min
 						if (index < 13) {
 							return (
 								<DataSlider
 									title={`${dataName}`}
 									onChange={this.onChange(7 + index)}
-									value={[parseInt(Object.values(data)[0]), parseInt(Object.values(data)[1])]}
+									value={[parseInt(data['min']), parseInt(data['max'])]}
 								/>
 							)
 						}
