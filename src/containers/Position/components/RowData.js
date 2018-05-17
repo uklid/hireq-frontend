@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Button } from 'antd'
+import { Button, Dropdown, Menu, Icon } from 'antd'
 import styled from 'styled-components'
 
 const TRBodyStyled = styled.tr`
@@ -24,6 +24,20 @@ const MoreInfoLink = styled.span`
 		font-weight: 700;
     cursor: pointer;
 `
+
+const DropDownMenu = (props) => (
+	<Menu>
+		<Menu.Item>
+			<a onClick={props.seeDetailClick} target="_blank">More Detail</a>
+		</Menu.Item>
+		<Menu.Item>
+			<a onClick={props.onEditPositionClick} target="_blank">Edit</a>
+		</Menu.Item>
+		<Menu.Item>
+			<div target="_blank" style={{ color: 'red' }}>DELETE</div>
+		</Menu.Item>
+	</Menu>
+)
 
 export default class RowData extends Component {
 	state = {
@@ -50,10 +64,18 @@ export default class RowData extends Component {
 					borderColor: '#954590',
 				}}>Create position</Button>,
 			buttonAction:
-				<React.Fragment>
-					<Button onClick={this.props.seeDetailClick}>More Detail</Button>
-					<Button onClick={this.props.onEditPositionClick}>Edit</Button>
-				</React.Fragment>
+				<Dropdown overlay={<DropDownMenu
+					seeDetailClick={this.props.seeDetailClick}
+					onEditPositionClick={this.props.onEditPositionClick}
+				/>}>
+					<a className="ant-dropdown-link" href="#">
+						ACTIONS <Icon type="down" />
+					</a>
+				</Dropdown>
+			// <React.Fragment>
+			// 	<Button onClick={this.props.seeDetailClick}>More Detail</Button>
+			// 	<Button onClick={this.props.onEditPositionClick}>Edit</Button>
+			// </React.Fragment>
 			,
 			moreInfo: <MoreInfoLink onClick={() => this.setState({ isExpand: !this.state.isExpand })}>More Info</MoreInfoLink>
 		}

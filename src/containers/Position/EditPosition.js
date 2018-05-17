@@ -55,12 +55,14 @@ class EditPosition extends React.Component {
 	state = {
 		open: false,
 	}
+	componentWillReceiveProps = (props) => {
+		if (!props.location.state.positionId) {
+			props.history.push('/dashboard')
+		}
+	}
 	componentWillMount = async () => {
 		try {
 			this.props.Loading()
-			if (!this.props.location.state.positionId) {
-				this.props.history.push('/dashboard')
-			}
 			const test = await firebase.auth().onAuthStateChanged(async (data) => {
 				if (data) {
 					// console.log("มี data =",data)
