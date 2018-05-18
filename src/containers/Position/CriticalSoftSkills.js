@@ -39,6 +39,8 @@ const innerHeight = window.innerHeight
 class CriticalSoftSkills extends React.Component {
 	constructor(props) {
 		super(props)
+		this.first = 1
+		this.last = 7
 		this.state = {
 			config: {
 				componentName: 'SpecifiedDomainRadarChart',
@@ -72,12 +74,12 @@ class CriticalSoftSkills extends React.Component {
 
 	datas = () => {
 		const { slideData } = this.props
-		return Object.values(slideData).slice(0, 7).map((data, index) => {
-			const dataName = Object.keys(slideData)[index]
+		return Object.values(slideData).slice(this.first, this.last).map((data, index) => {
+			const dataName = Object.keys(slideData)[this.first + index]
 			// Hack ถ้าตำแหน่งที่ 13 ของ index จะไม่แสดงเพราะ ไม่ใช่ max min
 			if (index < 13) {
 				return {
-					subject: dataName,
+					subject: `${dataName}`,
 					value: parseInt((data['min'] + data['max']) / 2)
 					// value: parseInt((Object.values(data)['min'] + Object.values(data)['max']) / 2)
 				}
@@ -88,22 +90,26 @@ class CriticalSoftSkills extends React.Component {
 	render() {
 		const { slideData } = this.props
 		let groupIndex = 0
+		if (slideData !== undefined) {
+			console.log(`DataSlide: `, Object.values(slideData).slice(this.first, this.last))
+		}
 		return (
 			<ChartWrapper>
 				<SpecifiedDomainRadarChart {...this.state.config} datas={slideData !== undefined && this.datas()} />
 				{
-					slideData !== undefined && Object.values(slideData).slice(0, 7).map((data, index) => {
-						const dataName = Object.keys(slideData)[index]
+					slideData !== undefined && Object.values(slideData).slice(this.first, this.last).map((data, index) => {
+						const dataName = Object.keys(slideData)[this.first + index]
+						// console.log(`Data in Slider ${dataName}: `, [data['min'], data['max']])
 						// Hack ถ้าตำแหน่งที่ 13 ของ index จะไม่แสดงเพราะ ไม่ใช่ max min
-						if (index < 13) {
+						// if (index < 13) {
 							return (
 								<DataSlider
 									title={`${dataName}`}
-									onChange={this.onChange(index)}
+									onChange={this.onChange(this.first + index)}
 									value={[parseInt(data['min']), parseInt(data['max'])]}
 								/>
 							)
-						}
+						// }
 					})
 				}
 			</ChartWrapper>
