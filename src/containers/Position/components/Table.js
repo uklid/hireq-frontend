@@ -1,8 +1,11 @@
 import React, { Component } from 'react'
 import { withRouter } from 'react-router-dom'
+import firebase from 'firebase'
 import styled from 'styled-components'
 import RowData from './RowData'
+import Axios from 'axios'
 import { connect } from 'react-redux'
+import { LoadingSuccess, Loading } from '../../../redux/loading/actions'
 import { preCreatePosition, updatePreEditData } from '../../../redux/position/actions'
 
 const TableStyled = styled.table`
@@ -64,6 +67,44 @@ class Tables extends Component {
 	onRowClick = (event) => {
 		console.log(event.target)
 	}
+	onEditPositionClick = async (id) => {
+		try {
+			this.props.Loading()
+			const test = await firebase.auth().onAuthStateChanged(async (data) => {
+				if (data) {
+					const getIdToken = await firebase.auth().currentUser.getIdToken()
+					const uid = localStorage.getItem('loginToken')
+					const url = `https://us-central1-hireq-api.cloudfunctions.net/users/${uid}/positions/${id.positionId}`
+					const result = await Axios.get(url, {
+						headers: { Authorization: "Bearer " + getIdToken }
+					})
+					this.props.preCreatePosition({ ...result.data, positionId: id.positionId })
+					this.props.LoadingSuccess()
+					this.props.history.push({
+						pathname: '/dashboard/edit-position',
+						state: { positionId: id.positionId }
+					})
+				} else {
+					this.props.LoadingSuccess()
+					console.log("ไม่มี")
+				}
+			})
+		} catch (err) {
+			this.props.LoadingSuccess()
+			console.log(err)
+		}
+		// console.log("PositionId = ", data.positionId)
+		// try {
+		// 	const result
+		// 	this.props.history.push({
+		// 		pathname: '/dashboard/edit-position',
+		// 		state: { positionId: data.positionId }
+		// 	})
+		// } catch (err) {
+		// 	console.log(err)
+		// }
+
+	}
 	render() {
 		const { columns, dataSource, dataShow, rowPerPage, ellipsis, tableId } = this.props
 		const numOfPage = Math.ceil(dataSource.length / rowPerPage)
@@ -92,13 +133,7 @@ class Tables extends Component {
 										state: { positionDetail: data.positionId }
 									})
 								}}
-								onEditPositionClick={() => {
-									console.log("PositionId = ",data.positionId)
-									this.props.history.push({
-										pathname: '/dashboard/edit-position',
-										state: { positionId: data.positionId }
-									})
-								}}
+								onEditPositionClick={() => this.onEditPositionClick(data)}
 								onClick={() => {
 									this.props.preCreatePosition(data)
 									this.props.history.push('/dashboard/create-position/create-setting')
@@ -211,4 +246,5 @@ class Tables extends Component {
 	}
 }
 
-export default connect(null, { preCreatePosition, updatePreEditData })(withRouter(Tables))
+export default connect(null,
+	{ preCreatePosition, updatePreEditData, Loading, LoadingSuccess })(withRouter(Tables))
