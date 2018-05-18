@@ -64,7 +64,9 @@ class WorkPreference extends React.Component {
 	onChange = (number) => (value) => {
 		const { prepareCreate } = this.props
 		const objName = Object.keys(prepareCreate.info)[number]
-		prepareCreate.info[objName] = { min: value[0], max: value[1] }
+		console.log('objectName : ', prepareCreate.info[objName])
+		console.log('change value : ', value)
+		prepareCreate.info[objName] = { min: value['min'], max: value['max'] }
 		const newDataToUpdate = { ...prepareCreate }
 
 		this.props.preCreatePosition(newDataToUpdate)
@@ -72,13 +74,16 @@ class WorkPreference extends React.Component {
 
 	datas = () => {
 		const { slideData } = this.props
-		return Object.values(slideData).slice(7, 12).map((data, index) => {
+		return Object.values(slideData).slice(7, 14).map((data, index) => {
 			const dataName = Object.keys(slideData)[7 + index]
+			// console.log(`Work Data ${Object.keys(slideData)[7 + index]}`, `${parseInt(data['min'])}, ${parseInt(data['max'])}`)
 			// Hack ถ้าตำแหน่งที่ 13 ของ index จะไม่แสดงเพราะ ไม่ใช่ max min
-			if (index < 13) {
+			console.log("Array value in Chart", `${parseInt(data['min'])}, ${parseInt(data['max'])}`)
+			if (index <= 13) {
 				return {
 					subject: dataName,
-					value: parseInt((Object.values(data)[0] + Object.values(data)[1]) / 2)
+					value: parseInt((data['max'] + data['min']) / 2)
+					// value: parseInt((Object.values(data)[0] + Object.values(data)[1]) / 2)
 				}
 			}
 		})
@@ -86,20 +91,24 @@ class WorkPreference extends React.Component {
 
 	render() {
 		const { slideData } = this.props
+		console.log('sliceData : ', slideData)
 		let groupIndex = 0
 		return (
 			<ChartWrapper>
 				<SpecifiedDomainRadarChart {...this.state.config} datas={slideData !== undefined && this.datas()} />
 				{
-					slideData !== undefined && Object.values(slideData).slice(7, 12).map((data, index) => {
+					slideData !== undefined && Object.values(slideData).slice(7, 14).map((data, index) => {
 						const dataName = Object.keys(slideData)[7 + index]
+						console.log(`Data in Slider ${dataName}: `, [data['min'], data['max']])
+
 						// Hack ถ้าตำแหน่งที่ 13 ของ index จะไม่แสดงเพราะ ไม่ใช่ max min
-						if (index < 13) {
+						if (index <= 13) {
 							return (
 								<DataSlider
 									title={`${dataName}`}
 									onChange={this.onChange(7 + index)}
 									value={[parseInt(data['min']), parseInt(data['max'])]}
+								// value={[parseInt(data['min']), parseInt(data['max'])]}
 								/>
 							)
 						}

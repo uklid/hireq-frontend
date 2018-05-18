@@ -64,7 +64,7 @@ class CriticalSoftSkills extends React.Component {
 	onChange = (number) => (value) => {
 		const { prepareCreate } = this.props
 		const objName = Object.keys(prepareCreate.info)[number]
-		prepareCreate.info[objName] = { min: value[0], max: value[1] }
+		prepareCreate.info[objName] = { min: value['min'], max: value['max'] }
 		const newDataToUpdate = { ...prepareCreate }
 
 		this.props.preCreatePosition(newDataToUpdate)
@@ -72,13 +72,14 @@ class CriticalSoftSkills extends React.Component {
 
 	datas = () => {
 		const { slideData } = this.props
-		return Object.values(slideData).slice(0, 6).map((data, index) => {
+		return Object.values(slideData).slice(0, 7).map((data, index) => {
 			const dataName = Object.keys(slideData)[index]
 			// Hack ถ้าตำแหน่งที่ 13 ของ index จะไม่แสดงเพราะ ไม่ใช่ max min
 			if (index < 13) {
 				return {
 					subject: dataName,
-					value: parseInt((Object.values(data)[0] + Object.values(data)[1]) / 2)
+					value: parseInt((data['min'] + data['max']) / 2)
+					// value: parseInt((Object.values(data)['min'] + Object.values(data)['max']) / 2)
 				}
 			}
 		})
@@ -91,11 +92,10 @@ class CriticalSoftSkills extends React.Component {
 			<ChartWrapper>
 				<SpecifiedDomainRadarChart {...this.state.config} datas={slideData !== undefined && this.datas()} />
 				{
-					slideData !== undefined && Object.values(slideData).slice(0, 6).map((data, index) => {
+					slideData !== undefined && Object.values(slideData).slice(0, 7).map((data, index) => {
 						const dataName = Object.keys(slideData)[index]
 						// Hack ถ้าตำแหน่งที่ 13 ของ index จะไม่แสดงเพราะ ไม่ใช่ max min
 						if (index < 13) {
-							console.log("Array valye in Chart" , [parseInt(data['min']), parseInt(data['max'])])
 							return (
 								<DataSlider
 									title={`${dataName}`}

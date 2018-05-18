@@ -101,6 +101,7 @@ class EditPosition extends React.Component {
 		const updateId = prepareCreate.positionId
 		const url = `https://us-central1-hireq-api.cloudfunctions.net/users/${uid}/positions/${updateId}`
 		const getIdToken = await firebase.auth().currentUser.getIdToken()
+		// Put Edit
 		const result = await Axios.put(url, { ...prepareCreate }, {
 			headers: { Authorization: "Bearer " + getIdToken }
 		})
@@ -151,7 +152,7 @@ class EditPosition extends React.Component {
 											<Grid item sm={4} xs={12}><SliderStyled range defaultValue={[30, 50]} /></Grid>
 										</Grid> */}
 								</Grid>
-								<Grid style={{ paddingTop: 60 }} container spaceing={24}>
+								<Grid style={{ paddingTop: 60 }} container spacing={24}>
 									<Grid item sm={6} xs={12}>
 										<CriticalSoftSkills
 											slideData={prepareCreate && prepareCreate.info}
