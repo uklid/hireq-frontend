@@ -77,7 +77,7 @@ class PositionDetail extends React.Component {
 						message.config({
 							top: 100,
 						})
-						message.success(this.props.location.state.message, 10)
+						message.success(this.props.location.state.message, 13)
 					}
 					const positionId = this.props.location.state.positionDetail !== undefined ? this.props.location.state.positionDetail : false
 					const url = `https://us-central1-hireq-api.cloudfunctions.net/users/${uid}/positions/${positionId}`
@@ -99,13 +99,13 @@ class PositionDetail extends React.Component {
 	firstDatas = () => {
 		const positionDetail = this.props.positionDetail.info
 		console.log("positionDatas ==== ", positionDetail)
-		return Object.values(positionDetail).slice(0, 6).map((data, index) => {
-			const dataName = Object.keys(positionDetail)[index]
+		return Object.values(positionDetail).slice(1, 7).map((data, index) => {
+			const dataName = Object.keys(positionDetail)[1 + index]
 			// Hack ถ้าตำแหน่งที่ 13 ของ index จะไม่แสดงเพราะ ไม่ใช่ max min
-			if (index < 13) {
+			if (index <= 14) {
 				return {
 					subject: dataName,
-					value: parseInt((Object.values(data)[0] + Object.values(data)[1]) / 2)
+					value: parseInt((data['min'] + data['max']) / 2)
 				}
 			}
 		})
@@ -113,13 +113,13 @@ class PositionDetail extends React.Component {
 	secondDatas = () => {
 		const positionDetail = this.props.positionDetail.info
 		console.log("positionDatas ==== ", positionDetail)
-		return Object.values(positionDetail).slice(7, 12).map((data, index) => {
+		return Object.values(positionDetail).slice(7, 14).map((data, index) => {
 			const dataName = Object.keys(positionDetail)[7 + index]
 			// Hack ถ้าตำแหน่งที่ 13 ของ index จะไม่แสดงเพราะ ไม่ใช่ max min
-			if (index < 13) {
+			if (index <= 14) {
 				return {
 					subject: dataName,
-					value: parseInt((Object.values(data)[0] + Object.values(data)[1]) / 2)
+					value: parseInt((data['min'] + data['max']) / 2)
 				}
 			}
 		})
