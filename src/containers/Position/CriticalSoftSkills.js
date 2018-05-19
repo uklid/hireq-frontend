@@ -63,10 +63,11 @@ class CriticalSoftSkills extends React.Component {
 			this.props.history.push('/dashboard/create-position/')
 		}
 	}
-	onChange = (number) => (value) => {
+	onChange = (dataName) => (value) => {
 		const { prepareCreate } = this.props
-		const objName = Object.keys(prepareCreate.info)[number]
-		prepareCreate.info[objName] = { min: value['min'], max: value['max'] }
+		// const objName = Object.keys(prepareCreate.info)[number]
+		// prepareCreate.info[objName] = { min: value[0], max: value[1] }
+		prepareCreate.info[dataName] = { min: value[0], max: value[1] }
 		const newDataToUpdate = { ...prepareCreate }
 
 		this.props.preCreatePosition(newDataToUpdate)
@@ -91,7 +92,7 @@ class CriticalSoftSkills extends React.Component {
 		const { slideData } = this.props
 		let groupIndex = 0
 		if (slideData !== undefined) {
-			console.log(`DataSlide: `, Object.values(slideData).slice(this.first, this.last))
+			// console.log(`DataSlide: `, Object.values(slideData).slice(this.first, this.last))
 		}
 		return (
 			<ChartWrapper>
@@ -105,7 +106,7 @@ class CriticalSoftSkills extends React.Component {
 							return (
 								<DataSlider
 									title={`${dataName}`}
-									onChange={this.onChange(this.first + index)}
+									onChange={this.onChange(dataName)}
 									value={[parseInt(data['min']), parseInt(data['max'])]}
 								/>
 							)
