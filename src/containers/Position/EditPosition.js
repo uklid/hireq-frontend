@@ -74,7 +74,7 @@ class EditPosition extends React.Component {
 					const result = await Axios.get(url, {
 						headers: { Authorization: "Bearer " + getIdToken }
 					})
-					this.props.preCreatePosition({...result.data, positionId: positionId})
+					this.props.preCreatePosition({ ...result.data, positionId: positionId })
 					this.props.LoadingSuccess()
 				} else {
 					this.props.LoadingSuccess()
@@ -114,12 +114,21 @@ class EditPosition extends React.Component {
 				positionDetail: updateId
 			}
 		})
-		this.props.LoadingSuccess()		
+		this.props.LoadingSuccess()
+	}
+
+	changeCogData = (value) => {
+		const { prepareCreate } = this.props
+		// console.log('dataCOGG',prepareCreate.info['COG']['min'])
+		prepareCreate.info['COG'] = { min: value[0], max: value[1] }
+		const newDataToUpdate = { ...prepareCreate }
+		this.props.preCreatePosition(newDataToUpdate)
 	}
 
 	render() {
 		const { prepareCreate } = this.props
-		console.log("prep = " , prepareCreate)
+		const defaultCogData = prepareCreate && [prepareCreate.info['COG']['min'], prepareCreate.info['COG']['max']]
+		console.log("prep = ", prepareCreate)
 		return (
 			<LayoutContentWrapper>
 				<Grid container spacing={24}>
@@ -138,7 +147,7 @@ class EditPosition extends React.Component {
 				<Grid style={{ marginTop: 10 }} container spacing={24}>
 					<Grid item sm={12} xs={12}>
 						<Card>
-							<h3 style={{ marginBottom: 30, cursor: 'pointer' }}>Edit Position {preCreatePosition.name}.</h3>
+							<h3 style={{ marginBottom: 30, cursor: 'pointer' }}>Edit Position {prepareCreate.name}.</h3>
 							<Grid container spacing={0}>
 								<Grid item sm={12} xs={12}>
 									{/* <p>
@@ -146,11 +155,17 @@ class EditPosition extends React.Component {
 											<span style={{ marginLeft:70}}>
 												End Date: <DatePicker onChange={onChange} />
 											</span>
-										</p>
-										<Grid container style={{ marginTop: 30 }}>
-											<Grid item sm={2} xs={12}> Cognative Skill: </Grid>
-											<Grid item sm={4} xs={12}><SliderStyled range defaultValue={[30, 50]} /></Grid>
-										</Grid> */}
+										</p> */}
+									<Grid container style={{ marginTop: 30 }}>
+										<Grid
+											item sm={2}
+											xs={12}
+											style={{ display: 'flex', alignItems: 'center' }}
+										> Cognative Skill: </Grid>
+										<Grid item sm={4} xs={12}>
+											<SliderStyled range onChange={this.changeCogData} defaultValue={defaultCogData} />
+										</Grid>
+									</Grid>
 								</Grid>
 								<Grid style={{ paddingTop: 60 }} container spacing={24}>
 									<Grid item sm={6} xs={12}>
@@ -210,7 +225,7 @@ class EditPosition extends React.Component {
 
 const mapStateToProps = state => ({
 	prepareCreate: state.Positions.prepareCreate,
-	prepareEditData: state.Positions.prepareEditData
+	// prepareEditData: state.Positions.prepareEditData
 })
 
 export default connect(mapStateToProps,
