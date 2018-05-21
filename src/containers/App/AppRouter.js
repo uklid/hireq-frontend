@@ -29,9 +29,17 @@ const routes = [
     component: asyncComponent(() => import("../Position/PositionDetail"))
   },
   {
-    path: "report",
+    path: "create-candidates",
+    component: asyncComponent(() => import("../Candidates/CreateCandidates"))
+  },
+  {
+    path: "candidate-detail",
     component: asyncComponent(() => import("../Report/Report"))
   }
+  // {
+  //   path: "report",
+  //   component: asyncComponent(() => import("../Report/Report"))
+  // }
 ]
 
 class AppRouter extends Component {

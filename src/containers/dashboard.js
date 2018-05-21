@@ -6,6 +6,7 @@ import Grid from 'material-ui/Grid'
 import Card from '../components/uielements/card'
 import { Table, Progress } from 'antd'
 import Tables from './Position/components/Table'
+import CandidatesTable from './Candidates/components/Table'
 import { GoogleChart } from '../containers/Charts/googleChart'
 import styled from 'styled-components'
 import { connect } from 'react-redux'
@@ -22,6 +23,20 @@ const positionColumns = [{
   title: 'category',
   dataIndex: 'category',
   key: 'category',
+}, {
+  title: 'ACTIONS',
+  dataIndex: 'buttonAction',
+  key: 'buttonAction'
+}]
+
+const candidatesColumn = [{
+  title: 'Name',
+  dataIndex: 'name',
+  key: 'name',
+}, {
+  title: 'Email',
+  dataIndex: 'email',
+  key: 'email',
 }, {
   title: 'ACTIONS',
   dataIndex: 'buttonAction',
@@ -183,7 +198,7 @@ class Dashboard extends Component {
           const candidatesResult = await Axios.get(candidatesURL, {
             headers: { Authorization: "Bearer " + getIdToken }
           })
-          console.log("Candidates: ",candidatesResult)
+          // console.log("Candidates: ", candidatesResult)
           this.props.updateAllCandidates(candidatesResult.data)
           // end all candidate here
           this.props.LoadingSuccess()
@@ -200,6 +215,7 @@ class Dashboard extends Component {
     }
   }
   newObject = () => {
+    // ฟังชั่นนี้ รีกรุ๊บของ array ใหม่ ให้มี positionId เข้าไปด้วย
     return Object.values(this.props.allPositionCreated).map((data, index) => {
       return {
         ...data,
@@ -207,9 +223,19 @@ class Dashboard extends Component {
       }
     })
   }
+  newObjectCandidate = () => {
+    // ฟังชั่นนี้ รีกรุ๊บของ array ใหม่ ให้มี candidateId เข้าไปด้วย
+    return Object.values(this.props.allCandidatesData).map((data, index) => {
+      return {
+        ...data,
+        candidateId: Object.keys(this.props.allCandidatesData)[index]
+      }
+    })
+  }
   render() {
-    const { allPositionCreated, allCandidateData } = this.props
-    console.log('All candidates: ', allCandidateData)
+    const { allPositionCreated, allCandidatesData } = this.props
+    // console.log('All candidates: ', allCandidateData)
+    console.log('candidate after regroup: ', Object.values(allPositionCreated))
     // {console.log(this.newObject())}    
     // console.log("result = ", { ...Object.values(allPositionCreated), positionId: allPositionCreated })
     return (
@@ -230,7 +256,7 @@ class Dashboard extends Component {
               style={{ marginBottom: 20, width: '100%', textAlign: 'center' }}
             >
               <h4>Total Candidates</h4>
-              <h1 style={{ fontSize: 50, color: '#954590' }}>50</h1>
+              <h1 style={{ fontSize: 50, color: '#954590' }}>{Object.keys(allCandidatesData).length}</h1>
             </Card>
             <Card
               style={{ marginBottom: 20, width: '100%', textAlign: 'center' }}
@@ -254,7 +280,7 @@ class Dashboard extends Component {
             </Card>
           </Grid>
         </Grid>
-        <Grid container spacing={8}>
+        <Grid container style={{ marginTop: 12 }} spacing={8}>
           <Grid item md={4} xs={12}>
             <Card
               title="Income"
@@ -269,12 +295,12 @@ class Dashboard extends Component {
               title="Opened Positions"
               style={{ width: '100%', textAlign: 'center' }}
             >
-              {/* <Tables
-                dataSource={dataSource}
-                columns={columns}
+              <CandidatesTable
+                dataSource={Object.values(this.newObjectCandidate())}
+                columns={candidatesColumn}
                 rowPerPage={10}
                 ellipsis={10}
-              /> */}
+              />
             </Card>
           </Grid>
         </Grid>
@@ -303,7 +329,7 @@ class Dashboard extends Component {
 
 const mapStateToProps = state => ({
   allPositionCreated: state.Positions.allPositionCreated,
-  allCandidateData: state.Candidates.allCandidateData
+  allCandidatesData: state.Candidates.allCandidatesData
 })
 
 export default connect(mapStateToProps, {

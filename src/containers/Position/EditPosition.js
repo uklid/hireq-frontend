@@ -7,6 +7,7 @@ import Card from '../../components/uielements/card'
 import styled from 'styled-components'
 import { Table, DatePicker, Slider, Button } from 'antd'
 import Tables from './components/Table'
+import CandidatesTable from '../Candidates/components/Table'
 import CriticalSoftSkills from './CriticalSoftSkills'
 import moment from 'moment'
 import WorkPreference from './WorkPreference'
@@ -21,6 +22,7 @@ import {
 	preCreatePosition,
 	updatePreEditData
 } from '../../redux/position/actions'
+import { updateAllCandidates } from '../../redux/candidates/actions'
 import Axios from 'axios'
 import firebase from 'firebase'
 
@@ -45,6 +47,19 @@ const WhiteWrapper = styled.div`
 			display: inline;
 		}
 `
+const candidatesColumn = [{
+	title: 'Name',
+	dataIndex: 'name',
+	key: 'name',
+}, {
+	title: 'Email',
+	dataIndex: 'email',
+	key: 'email',
+}, {
+	title: 'ACTIONS',
+	dataIndex: 'buttonAction',
+	key: 'buttonAction'
+}]
 
 const onChange = (date, dateString) => {
 	console.log("date =", date)
@@ -75,6 +90,13 @@ class EditPosition extends React.Component {
 						headers: { Authorization: "Bearer " + getIdToken }
 					})
 					this.props.preCreatePosition({ ...result.data, positionId: positionId })
+					// Start Candidate
+					const candidateURL = `https://us-central1-hireq-api.cloudfunctions.net/users/${uid}/positions/${positionId}/candidates`
+					const resultCandidate = await Axios.get(candidateURL, {
+						headers: { Authorization: "Bearer " + getIdToken }
+					})
+					this.props.updateAllCandidates(resultCandidate.data)
+					// End candidate
 					this.props.LoadingSuccess()
 				} else {
 					this.props.LoadingSuccess()
@@ -124,11 +146,19 @@ class EditPosition extends React.Component {
 		const newDataToUpdate = { ...prepareCreate }
 		this.props.preCreatePosition(newDataToUpdate)
 	}
-
+	newObjectCandidate = () => {
+		// ฟังชั่นนี้ รีกรุ๊บของ array ใหม่ ให้มี candidateId เข้าไปด้วย
+		return Object.values(this.props.allCandidatesData).map((data, index) => {
+			return {
+				...data,
+				candidateId: Object.keys(this.props.allCandidatesData)[index]
+			}
+		})
+	}
 	render() {
-		const { prepareCreate } = this.props
+		const { prepareCreate, allCandidatesData } = this.props
 		const defaultCogData = prepareCreate && [prepareCreate.info['COG']['min'], prepareCreate.info['COG']['max']]
-		console.log("prep = ", prepareCreate)
+		// console.log("prep = ", prepareCreate)
 		return (
 			<LayoutContentWrapper>
 				<Grid container spacing={24}>
@@ -142,6 +172,12 @@ class EditPosition extends React.Component {
 						</Card> */}
 					</Grid>
 					<Grid item sm={8} xs={12}>
+						<CandidatesTable
+							dataSource={Object.values(this.newObjectCandidate())}
+							columns={candidatesColumn}
+							rowPerPage={10}
+							ellipsis={10}
+						/>
 					</Grid>
 				</Grid>
 				<Grid style={{ marginTop: 10 }} container spacing={24}>
@@ -225,6 +261,7 @@ class EditPosition extends React.Component {
 
 const mapStateToProps = state => ({
 	prepareCreate: state.Positions.prepareCreate,
+	allCandidatesData: state.Candidates.allCandidatesData,
 	// prepareEditData: state.Positions.prepareEditData
 })
 
@@ -233,7 +270,8 @@ export default connect(mapStateToProps,
 		Loading,
 		LoadingSuccess,
 		preCreatePosition,
-		updatePreEditData
+		updatePreEditData,
+		updateAllCandidates
 	})(EditPosition)
 
 // import React from 'react'
