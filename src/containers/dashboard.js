@@ -11,9 +11,10 @@ import styled from 'styled-components'
 import { connect } from 'react-redux'
 import { Loading, LoadingSuccess } from '../redux/loading/actions'
 import { updateCreatedAllPosition } from '../redux/position/actions'
+import { updateAllCandidates } from '../redux/candidates/actions'
 import Axios from 'axios'
 
-const columns = [{
+const positionColumns = [{
   title: 'Name',
   dataIndex: 'name',
   key: 'name',
@@ -167,15 +168,24 @@ class Dashboard extends Component {
       this.props.Loading()
       const test = await firebase.auth().onAuthStateChanged(async (data) => {
         if (data) {
-          // console.log("มี data =",data)
           const getIdToken = await firebase.auth().currentUser.getIdToken()
-          console.log("get Id Token = ", getIdToken)
           const uid = localStorage.getItem('loginToken')
+          //get all position and keep it to redux store
+          console.log("get Id Token = ", getIdToken)
           const url = `https://us-central1-hireq-api.cloudfunctions.net/users/${uid}/positions`
           const result = await Axios.get(url, {
             headers: { Authorization: "Bearer " + getIdToken }
           })
           this.props.updateCreatedAllPosition(result.data)
+          //  end position data get here
+          // start get all candidates here
+          const candidatesURL = `https://us-central1-hireq-api.cloudfunctions.net/users/${uid}/candidates`
+          const candidatesResult = await Axios.get(candidatesURL, {
+            headers: { Authorization: "Bearer " + getIdToken }
+          })
+          console.log("Candidates: ",candidatesResult)
+          this.props.updateAllCandidates(candidatesResult.data)
+          // end all candidate here
           this.props.LoadingSuccess()
         } else {
           this.props.LoadingSuccess()
@@ -198,12 +208,12 @@ class Dashboard extends Component {
     })
   }
   render() {
-    const { allPositionCreated } = this.props
-    {console.log(this.newObject())}    
+    const { allPositionCreated, allCandidateData } = this.props
+    console.log('All candidates: ', allCandidateData)
+    // {console.log(this.newObject())}    
     // console.log("result = ", { ...Object.values(allPositionCreated), positionId: allPositionCreated })
     return (
       <LayoutContentWrapper
-
       // style={{ height: '100vh' }}
       >
         {/* <LayoutContent>
@@ -237,7 +247,7 @@ class Dashboard extends Component {
               <Tables
                 // oldDataSource={Object.keys()}
                 dataSource={Object.values(this.newObject())}
-                columns={columns}
+                columns={positionColumns}
                 rowPerPage={10}
                 ellipsis={10}
               />
@@ -292,11 +302,13 @@ class Dashboard extends Component {
 }
 
 const mapStateToProps = state => ({
-  allPositionCreated: state.Positions.allPositionCreated
+  allPositionCreated: state.Positions.allPositionCreated,
+  allCandidateData: state.Candidates.allCandidateData
 })
 
 export default connect(mapStateToProps, {
   updateCreatedAllPosition,
+  updateAllCandidates,
   Loading,
   LoadingSuccess
 })(Dashboard)

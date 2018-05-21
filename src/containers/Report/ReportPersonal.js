@@ -253,10 +253,187 @@ export default () => (
                 secondColor="blue"
                 firstTitle="WATCH"
                 secondTitle="READ"
-                description="Lolem IpsumLolem IpsumLolem IpsumLolem
-                IpsumLolem IpsumLolem IpsumLolem IpsumLolem
-                IpsumLolem IpsumLolem IpsumLolem IpsumLolem
-                IpsumLolem Ipsum"
+                description="Lolem IpsumLolem IpsumLolem IpsumLolem IpsumLolem IpsumLolem IpsumLolem IpsumLolem IpsumLolem Ipsum"
+              />
+            </Grid>
+
+          </Grid>
+          <Grid container spacing={8}>
+            <Grid item sm={6}>
+              <GreyWrapper>
+                <h3>Lolem Ipsum</h3>
+                <p>
+                  Lolem IpsumLolem IpsumLolem IpsumLolem
+                  IpsumLolem IpsumLolem IpsumLolem IpsumLolem
+                  IpsumLolem IpsumLolem IpsumLolem IpsumLolem
+                  IpsumLolem Ipsum
+                </p>
+              </GreyWrapper>
+            </Grid>
+            <Grid item sm={3}>
+              <IsoWidgetsWrapper>
+                {/* Sticker Widget */}
+                <StickerWidget
+                  number="80"
+                  text="PERFECT"
+                  // icon="ion-chatbubbles"
+                  fontColor="#ffffff"
+                  bgColor="lightblue"
+                />
+              </IsoWidgetsWrapper>
+            </Grid>
+            <Grid item sm={3}>
+              <IsoWidgetsWrapper>
+                {/* Sticker Widget */}
+                <StickerWidget
+                  number="80"
+                  text="HIGHT"
+                  // icon="ion-chatbubbles"
+                  fontColor="#ffffff"
+                  bgColor="lightblue"
+                />
+              </IsoWidgetsWrapper>
+            </Grid>
+          </Grid>
+          <Grid style={{ marginTop: 13 }} container spacing={24}>
+            <Grid item sm={4} xs={4}>
+              <CardWithStatus
+                title="General xxx"
+                score="30"
+                firstColor="green"
+                secondColor="blue"
+                firstTitle="WATCH"
+                secondTitle="READ"
+              />
+            </Grid>
+          </Grid>
+          <Grid style={{ marginTop: 10 }} container spacing={8}>
+            <Grid item sm={6}>
+              <GreyWrapper>
+                <h3>Lolem Ipsum</h3>
+                <p>
+                  Lolem IpsumLolem IpsumLolem IpsumLolem
+                  IpsumLolem IpsumLolem IpsumLolem IpsumLolem
+                  IpsumLolem IpsumLolem IpsumLolem IpsumLolem
+                  IpsumLolem Ipsum
+                </p>
+              </GreyWrapper>
+            </Grid>
+            <Grid item sm={3}>
+              <IsoWidgetsWrapper>
+                {/* Sticker Widget */}
+                <StickerWidget
+                  number="80"
+                  text="PERFECT"
+                  // icon="ion-chatbubbles"
+                  fontColor="#ffffff"
+                  bgColor="lightblue"
+                />
+              </IsoWidgetsWrapper>
+            </Grid>
+            <Grid item sm={3}>
+              <IsoWidgetsWrapper>
+                {/* Sticker Widget */}
+                <StickerWidget
+                  number="80"
+                  text="HIGHT"
+                  // icon="ion-chatbubbles"
+                  fontColor="#ffffff"
+                  bgColor="lightblue"
+                />
+              </IsoWidgetsWrapper>
+            </Grid>
+          </Grid>
+          <Grid style={{ marginTop: 10 }} container spacing={24}>
+            <Grid item sm={3} xs={12}>
+              <CardWithStatus
+                title="General xxx"
+                score="30"
+                firstColor="green"
+                secondColor="blue"
+                firstTitle="WATCH"
+                secondTitle="READ"
+              />
+            </Grid>
+            <Grid item sm={3} xs={12}>
+              <CardWithStatus
+                title="General xxx"
+                score="30"
+                firstColor="green"
+                secondColor="blue"
+                firstTitle="WATCH"
+                secondTitle="READ"
+              />
+            </Grid>
+            <Grid item sm={3} xs={12}>
+              <CardWithStatus
+                title="General xxx"
+                score="30"
+                firstColor="green"
+                secondColor="blue"
+                firstTitle="WATCH"
+                secondTitle="READ"
+              />
+            </Grid>
+            <Grid item sm={3} xs={12}>
+              <CardWithStatus
+                title="General xxx"
+                score="30"
+                firstColor="green"
+                secondColor="blue"
+                firstTitle="WATCH"
+                secondTitle="READ"
+              />
+            </Grid>
+            <Grid item sm={3} xs={12}>
+              <CardWithStatus
+                title="General xxx"
+                score="30"
+                firstColor="green"
+                secondColor="blue"
+                firstTitle="WATCH"
+                secondTitle="READ"
+              />
+            </Grid>
+            <Grid item sm={3} xs={12}>
+              <CardWithStatus
+                title="General xxx"
+                score="30"
+                firstColor="green"
+                secondColor="blue"
+                firstTitle="WATCH"
+                secondTitle="READ"
+              />
+            </Grid>
+            <Grid item sm={3} xs={12}>
+              <CardWithStatus
+                title="General xxx"
+                score="30"
+                firstColor="green"
+                secondColor="blue"
+                firstTitle="WATCH"
+                secondTitle="READ"
+              />
+            </Grid>
+            <Grid item sm={3} xs={12}>
+              <CardWithStatus
+                title="General xxx"
+                score="30"
+                firstColor="green"
+                secondColor="blue"
+                firstTitle="WATCH"
+                secondTitle="READ"
+              />
+            </Grid>
+            <Grid item sm={3} xs={12}>
+              <CardWithStatus
+                title="General xxx"
+                score="30"
+                firstColor="green"
+                secondColor="blue"
+                firstTitle="WATCH"
+                secondTitle="READ"
+                description="Lolem IpsumLolem IpsumLolem IpsumLolem IpsumLolem IpsumLolem IpsumLolem IpsumLolem IpsumLolem Ipsum"
               />
             </Grid>
 
@@ -264,5 +441,6 @@ export default () => (
         </CardWithStyled>
       </Grid>
     </Grid>
+
   </React.Fragment>
 )

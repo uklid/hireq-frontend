@@ -39,6 +39,8 @@ const innerHeight = window.innerHeight
 class WorkPreference extends React.Component {
 	constructor(props) {
 		super(props)
+		this.first = 8
+		this.last = 15
 		this.state = {
 			config: {
 				componentName: 'SpecifiedDomainRadarChart',
@@ -76,12 +78,12 @@ class WorkPreference extends React.Component {
 
 	datas = () => {
 		const { slideData } = this.props
-		return Object.values(slideData).slice(7, 14).map((data, index) => {
-			const dataName = Object.keys(slideData)[7 + index]
+		return Object.values(slideData).slice(this.first, this.last).map((data, index) => {
+			const dataName = Object.keys(slideData)[this.first + index]
 			// console.log(`Work Data ${Object.keys(slideData)[7 + index]}`, `${parseInt(data['min'])}, ${parseInt(data['max'])}`)
 			// Hack ถ้าตำแหน่งที่ 13 ของ index จะไม่แสดงเพราะ ไม่ใช่ max min
 			// console.log("Array value in Chart", `${parseInt(data['min'])}, ${parseInt(data['max'])}`)
-			if (index <= 13) {
+			if (index <= 15) {
 				return {
 					subject: dataName,
 					value: parseInt((data['max'] + data['min']) / 2)
@@ -99,12 +101,12 @@ class WorkPreference extends React.Component {
 			<ChartWrapper>
 				<SpecifiedDomainRadarChart {...this.state.config} datas={slideData !== undefined && this.datas()} />
 				{
-					slideData !== undefined && Object.values(slideData).slice(7, 14).map((data, index) => {
-						const dataName = Object.keys(slideData)[7 + index]
+					slideData !== undefined && Object.values(slideData).slice(this.first, this.last).map((data, index) => {
+						const dataName = Object.keys(slideData)[this.first + index]
 						// console.log(`Data in Slider ${dataName}: `, [data['min'], data['max']])
 
 						// Hack ถ้าตำแหน่งที่ 13 ของ index จะไม่แสดงเพราะ ไม่ใช่ max min
-						if (index <= 13) {
+						if (index <= 15) {
 							return (
 								<DataSlider
 									title={`${dataName}`}

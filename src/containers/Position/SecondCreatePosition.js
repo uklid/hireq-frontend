@@ -85,8 +85,17 @@ class SecondCreatePosition extends React.Component {
     })
   }
 
+  changeCogData = (value) => {
+    const { prepareCreate } = this.props
+    // console.log('dataCOGG',prepareCreate.info['COG']['min'])
+    prepareCreate.info['COG'] = { min: value[0], max: value[1] }
+    const newDataToUpdate = { ...prepareCreate }
+    this.props.preCreatePosition(newDataToUpdate)
+  }
+
   render() {
     const { prepareCreate } = this.props
+    const defaultCogData = prepareCreate && [prepareCreate.info['COG']['min'], prepareCreate.info['COG']['max']]
     return (
       <LayoutContentWrapper>
         <Grid container spacing={24}>
@@ -113,11 +122,13 @@ class SecondCreatePosition extends React.Component {
 											<span style={{ marginLeft:70}}>
 												End Date: <DatePicker onChange={onChange} />
 											</span>
-										</p>
-										<Grid container style={{ marginTop: 30 }}>
-											<Grid item sm={2} xs={12}> Cognative Skill: </Grid>
-											<Grid item sm={4} xs={12}><SliderStyled range defaultValue={[30, 50]} /></Grid>
-										</Grid> */}
+										</p> */}
+                  <Grid container style={{ marginTop: 30 }}>
+                    <Grid item sm={2} xs={12}> Cognative Skill: </Grid>
+                    <Grid item sm={4} xs={12}>
+                      <SliderStyled range onChange={this.changeCogData} defaultValue={defaultCogData} />
+                    </Grid>
+                  </Grid>
                 </Grid>
                 <Grid style={{ paddingTop: 60 }} container spaceing={24}>
                   <Grid item sm={6} xs={12}>

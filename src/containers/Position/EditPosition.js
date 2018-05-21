@@ -60,7 +60,7 @@ class EditPosition extends React.Component {
 			props.history.push('/dashboard')
 		}
 	}
-	componentWillMount = async () => {
+	componentDidMount = async () => {
 		try {
 			this.props.Loading()
 			const test = await firebase.auth().onAuthStateChanged(async (data) => {

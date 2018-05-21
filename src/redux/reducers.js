@@ -6,6 +6,7 @@ import CurrentPage from './currentPage/reducer'
 import Quiz from './quiz/reducer'
 import CandidateAuth from './candidatesAuth/reducer'
 import Positions from './position/reducer'
+import Candidates from './candidates/reducer'
 
 export default {
   Auth,
@@ -15,5 +16,6 @@ export default {
   CurrentPage,
   Quiz,
   CandidateAuth,
-  Positions
+  Positions,
+  Candidates
 }

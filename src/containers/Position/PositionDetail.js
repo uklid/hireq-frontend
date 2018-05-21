@@ -55,7 +55,7 @@ class PositionDetail extends React.Component {
 			},
 		}
 	}
-	componentWillMount = async () => {
+	componentDidMount = async () => {
 		try {
 			firebase.auth().onAuthStateChanged(async (data) => {
 				if (data) {
@@ -98,9 +98,11 @@ class PositionDetail extends React.Component {
 	}
 	firstDatas = () => {
 		const positionDetail = this.props.positionDetail.info
+		const start = 1
+		const last = 8
 		console.log("positionDatas ==== ", positionDetail)
-		return Object.values(positionDetail).slice(1, 7).map((data, index) => {
-			const dataName = Object.keys(positionDetail)[1 + index]
+		return Object.values(positionDetail).slice(start, last).map((data, index) => {
+			const dataName = Object.keys(positionDetail)[start + index]
 			// Hack ถ้าตำแหน่งที่ 13 ของ index จะไม่แสดงเพราะ ไม่ใช่ max min
 			if (index <= 14) {
 				return {
@@ -112,11 +114,13 @@ class PositionDetail extends React.Component {
 	}
 	secondDatas = () => {
 		const positionDetail = this.props.positionDetail.info
+		const start = 8
+		const last = 15
 		console.log("positionDatas ==== ", positionDetail)
-		return Object.values(positionDetail).slice(7, 14).map((data, index) => {
-			const dataName = Object.keys(positionDetail)[7 + index]
+		return Object.values(positionDetail).slice(start, last).map((data, index) => {
+			const dataName = Object.keys(positionDetail)[start + index]
 			// Hack ถ้าตำแหน่งที่ 13 ของ index จะไม่แสดงเพราะ ไม่ใช่ max min
-			if (index <= 14) {
+			if (index <= 15) {
 				return {
 					subject: dataName,
 					value: parseInt((data['min'] + data['max']) / 2)

@@ -45,7 +45,7 @@ class BeforeQuiz extends React.Component {
   state = {
     startedTime: null
   }
-  componentWillMount = async () => {
+  componentDidMount = async () => {
     //  Start Loading
     this.props.Loading()
     const url = `${apiURL}/candidates/${candidateId}/test`

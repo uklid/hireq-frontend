@@ -33,8 +33,8 @@ const DropDownMenu = (props) => (
 		<Menu.Item>
 			<a onClick={props.onEditPositionClick} target="_blank">Edit</a>
 		</Menu.Item>
-		<Menu.Item>
-			<div target="_blank" style={{ color: 'red' }}>DELETE</div>
+		<Menu.Item >
+			<a onClick={props.onDeleteClick} style={{ color: 'red' }}>DELETE</a>
 		</Menu.Item>
 	</Menu>
 )
@@ -67,6 +67,7 @@ export default class RowData extends Component {
 				<Dropdown overlay={<DropDownMenu
 					seeDetailClick={this.props.seeDetailClick}
 					onEditPositionClick={this.props.onEditPositionClick}
+					onDeleteClick={this.props.onDeleteClick}
 				/>}>
 					<a className="ant-dropdown-link" href="#">
 						ACTIONS <Icon type="down" />

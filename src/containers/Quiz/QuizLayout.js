@@ -136,7 +136,7 @@ class QuizLayout extends React.Component {
 	// 	// 	beforePath
 	// 	// })
 	// }
-	componentWillMount = async () => {
+	componentDidMount = async () => {
 		try {
 			// console.log('id = ', this.props.candidateId)
 			// console.log('api url = ', this.props.apiURL)

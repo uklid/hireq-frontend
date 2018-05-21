@@ -24,7 +24,7 @@ for (let i = 1; i <= 10; i++) {
 }
 
 class TermOfService extends React.Component {
-	componentWillMount = () => {
+	componentDidMount = () => {
 		_mockPrivacy.map(data => {
 			this.setState({
 				[data.id]: false,

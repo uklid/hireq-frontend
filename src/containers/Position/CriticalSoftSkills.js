@@ -40,7 +40,7 @@ class CriticalSoftSkills extends React.Component {
 	constructor(props) {
 		super(props)
 		this.first = 1
-		this.last = 7
+		this.last = 8
 		this.state = {
 			config: {
 				componentName: 'SpecifiedDomainRadarChart',

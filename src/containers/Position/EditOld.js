@@ -15,6 +15,7 @@ import Dialog, {
 	DialogTitle,
 } from 'material-ui/Dialog'
 import ToggleDisplay from 'react-toggle-display'
+
 const SliderStyled = styled(Slider) `
   .ant-slider-handle {
 	border: solid 2px #954590;

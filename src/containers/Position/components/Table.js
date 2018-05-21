@@ -105,6 +105,31 @@ class Tables extends Component {
 		// }
 
 	}
+	onDeleteClick = async (id) => {
+		// console.log('dee=leteeee' , id)
+		try {
+			this.props.Loading()
+			const test = await firebase.auth().onAuthStateChanged(async (data) => {
+				if (data) {
+					const getIdToken = await firebase.auth().currentUser.getIdToken()
+					const uid = localStorage.getItem('loginToken')
+					const url = `https://us-central1-hireq-api.cloudfunctions.net/users/${uid}/positions/${id.positionId}`
+					const result = await Axios.delete(url, {
+						headers: { Authorization: "Bearer " + getIdToken }
+					})
+					console.log("AFter delete = ", result)
+					// this.props.allPositionCreated = 
+					this.props.LoadingSuccess()
+				} else {
+					this.props.LoadingSuccess()
+					console.log("ไม่มี")
+				}
+			})
+		} catch (err) {
+			this.props.LoadingSuccess()
+			console.log(err)
+		}
+	}
 	render() {
 		const { columns, dataSource, dataShow, rowPerPage, ellipsis, tableId } = this.props
 		const numOfPage = Math.ceil(dataSource.length / rowPerPage)
@@ -134,6 +159,7 @@ class Tables extends Component {
 									})
 								}}
 								onEditPositionClick={() => this.onEditPositionClick(data)}
+								onDeleteClick={() => this.onDeleteClick(data)}
 								onClick={() => {
 									this.props.preCreatePosition(data)
 									this.props.history.push('/dashboard/create-position/create-setting')
@@ -246,5 +272,9 @@ class Tables extends Component {
 	}
 }
 
-export default connect(null,
+const mapStateToProps = state => ({
+	allPositionCreated: state.Positions.allPositionCreated
+})
+
+export default connect(mapStateToProps,
 	{ preCreatePosition, updatePreEditData, Loading, LoadingSuccess })(withRouter(Tables))
