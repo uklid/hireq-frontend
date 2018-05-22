@@ -283,7 +283,7 @@ class EditPosition extends React.Component {
 							Agree
             </Button> */}
 						<ButtonContainer>
-							<ButtonStyled style={{ backgroundColor: 'grey' }} onClick={this.handleToggle}>
+							<ButtonStyled style={{ backgroundColor: 'grey' }} onClick={() => this.handleToggle('open')}>
 								Disagree
             </ButtonStyled>
 							<ButtonStyled style={{ backgroundColor: '#954590' }} onClick={this.createPosition}>
