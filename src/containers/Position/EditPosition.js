@@ -158,7 +158,7 @@ class EditPosition extends React.Component {
 	render() {
 		const { prepareCreate, allCandidatesData } = this.props
 		const defaultCogData = prepareCreate && [prepareCreate.info['COG']['min'], prepareCreate.info['COG']['max']]
-		// console.log("prep = ", prepareCreate)
+		console.log("prep = ", prepareCreate)
 		return (
 			<LayoutContentWrapper>
 				<Grid container spacing={24}>

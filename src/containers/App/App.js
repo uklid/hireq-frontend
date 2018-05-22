@@ -14,6 +14,7 @@ import themes from "../../settings/themes"
 import { themeConfig } from "../../settings"
 import AppHolder from "./commonStyle"
 import "./global.css"
+import ConfirmDelete from "../Candidates/components/ConfirmDelete"
 
 const { Content, Footer } = Layout
 // const { logout } = authAction
@@ -63,6 +64,8 @@ export class App extends Component {
                 >
                   <AppRouter url={url} />
                 </Content>
+                {/* Dialog toggle state with redux */}
+                {this.props.toggleDialog && <ConfirmDelete />}
                 {/* <Footer
                   style={{
                     background: "#ffffff",
@@ -81,7 +84,11 @@ export class App extends Component {
   }
 }
 
-export default connect(null, { toggleAll })(App)
+const mapStateToProps = state => ({
+  toggleDialog: state.Candidates.toggleDialog
+})
+
+export default connect(mapStateToProps, { toggleAll })(App)
 
 // export default connect(
 //   state => ({

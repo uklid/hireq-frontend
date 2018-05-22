@@ -34,7 +34,7 @@ const routes = [
   },
   {
     path: "candidate-detail",
-    component: asyncComponent(() => import("../Report/Report"))
+    component: asyncComponent(() => import("../Candidates/CandidateDetail"))
   }
   // {
   //   path: "report",

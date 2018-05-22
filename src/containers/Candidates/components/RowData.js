@@ -30,9 +30,9 @@ const DropDownMenu = (props) => (
 		<Menu.Item>
 			<a onClick={props.seeDetailClick} target="_blank">More Detail</a>
 		</Menu.Item>
-		<Menu.Item>
+		{/* <Menu.Item>
 			<a onClick={props.onEditPositionClick} target="_blank">Edit</a>
-		</Menu.Item>
+		</Menu.Item> */}
 		<Menu.Item>
 			<a onClick={props.onSendEmailClick} target="_blank">Send Email</a>
 		</Menu.Item>

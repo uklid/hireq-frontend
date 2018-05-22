@@ -58,9 +58,12 @@ class Topbar extends Component {
             <Link style={{ marginLeft: 10, marginRight: 10 }} to="/dashboard/position-detail">
               <TextStyled>Position Detail</TextStyled>
             </Link>
-            <Link style={{ marginLeft: 10, marginRight: 10 }} to="/dashboard/report">
-              <TextStyled>Report</TextStyled>
+            <Link style={{ marginLeft: 10, marginRight: 10 }} to="/dashboard/candidate-detail">
+              <TextStyled>Candidate Detail</TextStyled>
             </Link>
+            {/* <Link style={{ marginLeft: 10, marginRight: 10 }} to="/dashboard/report">
+              <TextStyled>Report</TextStyled>
+            </Link> */}
           </div>
 
           <ul className="isoRight">

@@ -7,6 +7,9 @@ import Axios from 'axios'
 import { connect } from 'react-redux'
 import { LoadingSuccess, Loading } from '../../../redux/loading/actions'
 import { preCreatePosition, updatePreEditData } from '../../../redux/position/actions'
+import { message } from 'antd'
+import { ConfirmDelete } from './ConfirmDelete'
+import { updateDeleteId, toggleDialog } from '../../../redux/candidates/actions'
 
 const TableStyled = styled.table`
     width: 100%;
@@ -74,29 +77,33 @@ class CandidatesTable extends Component {
 		})
 	}
 	onDeleteClick = async (id) => {
-		// console.log('dee=leteeee' , id)
-		try {
-			this.props.Loading()
-			const test = await firebase.auth().onAuthStateChanged(async (data) => {
-				if (data) {
-					const getIdToken = await firebase.auth().currentUser.getIdToken()
-					const uid = localStorage.getItem('loginToken')
-					const url = `https://us-central1-hireq-api.cloudfunctions.net/users/${uid}/positions/${id.positionId}`
-					const result = await Axios.delete(url, {
-						headers: { Authorization: "Bearer " + getIdToken }
-					})
-					console.log("AFter delete = ", result)
-					// this.props.allPositionCreated = 
-					this.props.LoadingSuccess()
-				} else {
-					this.props.LoadingSuccess()
-					console.log("ไม่มี")
-				}
-			})
-		} catch (err) {
-			this.props.LoadingSuccess()
-			console.log(err)
-		}
+		console.log('dee=leteeee', id)
+		// this.props.Loading()
+		const positionId = id.position
+		const candidateId = id.candidateId
+		this.props.updateDeleteId({ deleteId: candidateId, positionId: positionId })
+		this.props.toggleDialog()
+		// const test = await firebase.auth().onAuthStateChanged(async (data) => {
+		// 	if (data) {
+		// 		try {
+		// 			const getIdToken = await firebase.auth().currentUser.getIdToken()
+		// 			const uid = localStorage.getItem('loginToken')
+		// 			const url = `https://us-central1-hireq-api.cloudfunctions.net/users/${uid}/positions/${positionId}/candidates/${candidateId}`
+		// 			const result = await Axios.delete(url, {
+		// 				headers: { Authorization: "Bearer " + getIdToken }
+		// 			})
+		// 			console.log("AFter delete = ", result)
+		// 			// this.props.allPositionCreated = 
+		// 			this.props.LoadingSuccess()
+		// 		} catch (err) {
+		// 			this.props.LoadingSuccess()
+		// 			console.log(err)
+		// 		}
+		// 	} else {
+		// 		this.props.LoadingSuccess()
+		// 		console.log("ไม่มี")
+		// 	}
+		// })
 	}
 	onSendEmailClick = async (id) => {
 		console.log("Email data = ", id)
@@ -150,8 +157,8 @@ class CandidatesTable extends Component {
 								// seeDetailClick={() => console.log(Object.keys(dataSource)[index])}
 								seeDetailClick={() => {
 									this.props.history.push({
-										pathname: '/dashboard/position-detail',
-										state: { positionDetail: data.positionId }
+										pathname: '/dashboard/candidate-detail',
+										state: { candidateId: data.candidateId }
 									})
 								}}
 								onEditCandidateClick={() => this.onEditPositionClick(data)}
@@ -274,4 +281,11 @@ const mapStateToProps = state => ({
 })
 
 export default connect(mapStateToProps,
-	{ preCreatePosition, updatePreEditData, Loading, LoadingSuccess })(withRouter(CandidatesTable))
+	{
+		preCreatePosition,
+		updatePreEditData,
+		Loading,
+		LoadingSuccess,
+		updateDeleteId,
+		toggleDialog
+	})(withRouter(CandidatesTable))

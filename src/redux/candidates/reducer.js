@@ -1,5 +1,8 @@
 const initialState = {
-  allCandidatesData: []
+  allCandidatesData: [],
+  deleteId: '',
+  positionId: '',
+  toggleDialog: false
 }
 
 const Candidates = (state = initialState, action) => {
@@ -9,31 +12,17 @@ const Candidates = (state = initialState, action) => {
         ...state,
         allCandidatesData: action.data
       }
-    // case 'UPDATE_POSITIONS_DATA':
-    //   return {
-    //     ...state,
-    //     positionData: [...action.data]
-    //   }
-    // case 'SEARCH_POSITION':
-    //   return {
-    //     ...state,
-    //     searchPosition: action.data
-    //   }
-    // case 'PREPRARE_CREATE':
-    //   return {
-    //     ...state,
-    //     prepareCreate: action.data
-    //   }
-    // case 'UPDATE_POSITION_DETAIL':
-    //   return {
-    //     ...state,
-    //     positionDetail: action.data
-    //   }
-    // case 'UPDATE_PRE_EDIT_DATA':
-    //   return {
-    //     ...state,
-    //     prepareEditData: action.data
-    //   }
+    case 'UPDATE_DELETE_ID':
+      return {
+        ...state,
+        deleteId: action.data.deleteId,
+        positionId: action.data.positionId
+      }
+    case 'UPDATE_TOGGLE_DIALOG':
+      return {
+        ...state,
+        toggleDialog: action.data
+      }
     default:
       return state
   }
