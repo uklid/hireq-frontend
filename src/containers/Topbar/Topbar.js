@@ -13,7 +13,7 @@ const { toggleCollapsed } = appActions
 const customizedTheme = themes[themeConfig.theme]
 
 const TextStyled = styled.span`
-  font-size: 20px;
+  font-size: 17px;
   font-weight: bold;
   color: rgba(0, 0, 0, 0.87);
 `
@@ -52,7 +52,7 @@ class Topbar extends Component {
             <Link style={{ marginLeft: 10, marginRight: 10 }} to="/dashboard/create-position">
               <TextStyled>Position</TextStyled>
             </Link>
-            <Link style={{ marginLeft: 10, marginRight: 10 }} to="/dashboard/edit-position">
+            {/* <Link style={{ marginLeft: 10, marginRight: 10 }} to="/dashboard/edit-position">
               <TextStyled>Edit - Position</TextStyled>
             </Link>
             <Link style={{ marginLeft: 10, marginRight: 10 }} to="/dashboard/position-detail">
@@ -60,7 +60,7 @@ class Topbar extends Component {
             </Link>
             <Link style={{ marginLeft: 10, marginRight: 10 }} to="/dashboard/candidate-detail">
               <TextStyled>Candidate Detail</TextStyled>
-            </Link>
+            </Link> */}
             {/* <Link style={{ marginLeft: 10, marginRight: 10 }} to="/dashboard/report">
               <TextStyled>Report</TextStyled>
             </Link> */}

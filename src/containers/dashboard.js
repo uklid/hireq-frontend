@@ -250,19 +250,19 @@ class Dashboard extends Component {
             <Card
               style={{ marginBottom: 20, width: '100%', textAlign: 'center' }}
             >
-              <h4>Total Positions</h4>
+              <h3>Total Positions</h3>
               <h1 style={{ fontSize: 50, color: '#954590' }}>{Object.keys(allPositionCreated).length}</h1>
             </Card>
             <Card
               style={{ marginBottom: 20, width: '100%', textAlign: 'center' }}
             >
-              <h4>Total Candidates</h4>
+              <h3>Total Candidates</h3>
               <h1 style={{ fontSize: 50, color: '#954590' }}>{Object.keys(allCandidatesData).length}</h1>
             </Card>
             <Card
               style={{ marginBottom: 20, width: '100%', textAlign: 'center' }}
             >
-              <h4>Remaining Positions</h4>
+              <h3>Remaining Positions</h3>
               <h1 style={{ fontSize: 50, color: '#954590' }}>50</h1>
             </Card>
           </Grid>
