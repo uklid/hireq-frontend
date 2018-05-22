@@ -10,6 +10,7 @@ import { updatePositionDetail } from '../../redux/position/actions'
 import { Loading, LoadingSuccess } from '../../redux/loading/actions'
 import Axios from 'axios'
 import firebase from 'firebase'
+import { baseUrl } from '../../libs/url/baseUrl'
 // const screenHeight = window.innerHeight
 const screenWidth = (window.innerWidth / 2) - 100 <= 250 ? 350 : 600
 
@@ -80,7 +81,7 @@ class PositionDetail extends React.Component {
 						message.success(this.props.location.state.message, 13)
 					}
 					const positionId = this.props.location.state.positionDetail !== undefined ? this.props.location.state.positionDetail : false
-					const url = `https://us-central1-hireq-api.cloudfunctions.net/users/${uid}/positions/${positionId}`
+					const url = `${baseUrl}/users/${uid}/positions/${positionId}`
 					const result = await Axios.get(url, {
 						headers: { Authorization: "Bearer " + getIdToken }
 					})

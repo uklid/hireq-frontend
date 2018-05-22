@@ -4,6 +4,7 @@ import Button from '../../components/uielements/button'
 import { connect } from 'react-redux'
 import Axios from 'axios'
 import { Loading, LoadingSuccess } from '../../redux/loading/actions'
+import { baseUrl } from '../../libs/url/baseUrl'
 
 const BeforeQuizWrapper = styled.div`
   min-height: 100vh;
@@ -39,7 +40,7 @@ const BeforeQuizBlock = styled.div`
 
 //candidate ID
 const candidateId = '-L3y6bEU1lxPOpxeoQw-'
-const apiURL = 'https://us-central1-hireq-api.cloudfunctions.net'
+const apiURL = `${baseUrl}`
 
 class BeforeQuiz extends React.Component {
   state = {

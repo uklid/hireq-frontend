@@ -22,6 +22,7 @@ import {
 } from '../../redux/position/actions'
 import Axios from 'axios'
 import firebase from 'firebase'
+import { baseUrl } from '../../libs/url/baseUrl'
 
 const SliderStyled = styled(Slider) `
   .ant-slider-handle {
@@ -68,7 +69,7 @@ class SecondCreatePosition extends React.Component {
     this.props.Loading()
     const { prepareCreate } = this.props
     const uid = localStorage.getItem('loginToken')
-    const url = `https://us-central1-hireq-api.cloudfunctions.net/users/${uid}/positions`
+    const url = `${baseUrl}/users/${uid}/positions`
     const getIdToken = await firebase.auth().currentUser.getIdToken()
     const result = await Axios.post(url, { ...prepareCreate }, {
       headers: { Authorization: "Bearer " + getIdToken }

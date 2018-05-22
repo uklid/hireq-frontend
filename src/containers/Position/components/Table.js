@@ -7,6 +7,7 @@ import Axios from 'axios'
 import { connect } from 'react-redux'
 import { LoadingSuccess, Loading } from '../../../redux/loading/actions'
 import { preCreatePosition, updatePreEditData } from '../../../redux/position/actions'
+import { baseUrl } from '../../../libs/url/baseUrl'
 
 const TableStyled = styled.table`
     width: 100%;
@@ -74,7 +75,7 @@ class Tables extends Component {
 				if (data) {
 					const getIdToken = await firebase.auth().currentUser.getIdToken()
 					const uid = localStorage.getItem('loginToken')
-					const url = `https://us-central1-hireq-api.cloudfunctions.net/users/${uid}/positions/${id.positionId}`
+					const url = `${baseUrl}/users/${uid}/positions/${id.positionId}`
 					const result = await Axios.get(url, {
 						headers: { Authorization: "Bearer " + getIdToken }
 					})
@@ -113,7 +114,7 @@ class Tables extends Component {
 				if (data) {
 					const getIdToken = await firebase.auth().currentUser.getIdToken()
 					const uid = localStorage.getItem('loginToken')
-					const url = `https://us-central1-hireq-api.cloudfunctions.net/users/${uid}/positions/${id.positionId}`
+					const url = `${baseUrl}/users/${uid}/positions/${id.positionId}`
 					const result = await Axios.delete(url, {
 						headers: { Authorization: "Bearer " + getIdToken }
 					})

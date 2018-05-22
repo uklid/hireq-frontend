@@ -11,6 +11,7 @@ import { Loading, LoadingSuccess } from '../../../redux/loading/actions'
 import { updateDeleteId, toggleDialog, updateAllCandidates } from '../../../redux/candidates/actions'
 import firebase from 'firebase'
 import Axios from 'axios'
+import { baseUrl } from '../../../libs/url/baseUrl'
 
 class ConfirmDelete extends React.Component {
 
@@ -22,7 +23,7 @@ class ConfirmDelete extends React.Component {
           const getIdToken = await firebase.auth().currentUser.getIdToken()
           const { positionId, deleteId, allCandidatesData } = this.props
           const uid = localStorage.getItem('loginToken')
-          const url = `https://us-central1-hireq-api.cloudfunctions.net/users/${uid}/candidates/${deleteId}`
+          const url = `${baseUrl}/users/${uid}/candidates/${deleteId}`
           const result = await Axios.delete(url, {
             headers: { Authorization: "Bearer " + getIdToken }
           })

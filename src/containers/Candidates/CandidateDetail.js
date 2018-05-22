@@ -18,6 +18,7 @@ import { updateAllCandidates } from '../../redux/candidates/actions'
 import Ionicon from 'react-ionicons'
 import Axios from 'axios'
 import moment from 'moment'
+import { baseUrl } from '../../libs/url/baseUrl'
 
 const WhiteCard = styled.div`
 	display: flex;
@@ -66,7 +67,7 @@ class CandidateDetail extends React.Component {
 				try {
 					const getIdToken = await firebase.auth().currentUser.getIdToken()
 					const uid = localStorage.getItem('loginToken')
-					const url = `https://us-central1-hireq-api.cloudfunctions.net/users/${uid}/candidates/${candidateId}`
+					const url = `${baseUrl}/users/${uid}/candidates/${candidateId}`
 					const result = await Axios.get(url, {
 						headers: { Authorization: "Bearer " + getIdToken }
 					})
@@ -101,7 +102,7 @@ class CandidateDetail extends React.Component {
 				try {
 					const getIdToken = await firebase.auth().currentUser.getIdToken()
 					const uid = localStorage.getItem('loginToken')
-					const url = `https://us-central1-hireq-api.cloudfunctions.net/users/${uid}/positions/${positionId}/candidates/${candidateId}`
+					const url = `${baseUrl}/users/${uid}/positions/${positionId}/candidates/${candidateId}`
 					const result = await Axios.put(url, allCandidatesData, {
 						headers: { Authorization: "Bearer " + getIdToken }
 					})

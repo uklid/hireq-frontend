@@ -19,16 +19,7 @@ import {
 	searchPosition,
 	updatePositionData
 } from '../../redux/position/actions'
-
-// const dataSource = []
-// for (let i = 0; i < 46; i++) {
-// 	dataSource.push({
-// 		positionName: `Accountants - ${i}`,
-// 		category: `Business and Financial - ${i}`,
-// 		description: `There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable. ${i}`,
-// 		expandData: 'matong xxx'
-// 	})
-// }
+import { baseUrl } from '../../libs/url/baseUrl'
 
 const columns = [{
 	title: 'Position name',
@@ -38,12 +29,12 @@ const columns = [{
 	title: 'Category',
 	dataIndex: 'category',
 	key: 'category',
-},{
-	title:'',
+}, {
+	title: '',
 	dataIndex: 'button',
 	key: 'button'
 }
-, {
+	, {
 	title: 'More info',
 	dataIndex: 'moreInfo',
 	key: 'moreInfo',
@@ -101,12 +92,6 @@ const FilterField = ({ checked, onChange, value, label }) => (
 
 class CreatePosition extends React.Component {
 
-	// componentWillMount = () => {
-	// 	this.setState({
-	// 		dataSource: dataSource
-	// 	})
-	// }
-
 	state = {
 		showAll: false,
 		showOpen: false,
@@ -119,39 +104,22 @@ class CreatePosition extends React.Component {
 			const getIdToken = await firebase.auth().currentUser.getIdToken()
 			console.log('getIdToken = ', getIdToken)
 			const searchKeyword = document.getElementById('position-search').value
-			const url = `https://us-central1-hireq-api.cloudfunctions.net/jobs/search?keyword=${searchKeyword}`
+			const url = `${baseUrl}/jobs/search?keyword=${searchKeyword}`
 
 			const result = await Axios.get(url, {
 				headers: { Authorization: "Bearer " + getIdToken }
 				// headers: { Authorization: "Bearer " + localStorage.getItem('headerToken') }
 			})
 			console.log("search result = ", result)
-
-			this.props.updatePositionData(result.data)
+			if (result.data !== 'No results found') {
+				this.props.updatePositionData(result.data)
+			}
 			this.props.LoadingSuccess()
 		} catch (err) {
+			this.props.LoadingSuccess()
 			console.log(err)
 		}
 	}
-
-	// onSearch = (event) => {
-
-	// 	const filter = event.target.value.toUpperCase()
-
-	// 	const result = dataSource.filter(word => {
-	// 		const resultSearch = Object.keys(word).map(e => {
-	// 			if (word[e].toUpperCase().includes(filter)) {
-	// 				return word[e].toUpperCase().includes(filter)
-	// 			}
-	// 		})
-	// 		if (resultSearch.includes(true)) {
-	// 			return word
-	// 		}
-	// 	})
-	// 	this.setState({
-	// 		dataSource: result
-	// 	})
-	// }
 	goToSettingPosition = () => {
 		this.props.history.push({
 			pathname: '/dashboard/create-position/create-setting',
@@ -184,8 +152,8 @@ class CreatePosition extends React.Component {
 								/>
 							</InputWrapper>
 							<ButtonWrapper>
-								<Button type="primary">Filter</Button>
 								<Button onClick={this.searchPositionData} type="primary">Search</Button>
+								{/* <Button type="primary">Filter</Button> */}
 							</ButtonWrapper>
 							<FormGroup row>
 								<FilterField
@@ -214,7 +182,7 @@ class CreatePosition extends React.Component {
 					<Grid item sm={12} xs={12}>
 						<Card
 							title="Result"
-							style={{ overflowX: 'scroll' }}
+							style={{ overflowX: 'auto' }}
 						>
 							{/* <Table
 								bordered

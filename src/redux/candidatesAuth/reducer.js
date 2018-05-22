@@ -1,6 +1,8 @@
+import { baseUrl } from "../../libs/url/baseUrl"
+
 const initialState = {
   candidateId: '-L3y6bEU1lxPOpxeoQw-',
-  apiURL: 'https://us-central1-hireq-api.cloudfunctions.net'
+  apiURL: `${baseUrl}`
 }
 
 const CandidateAuth = (state = initialState, action) => {

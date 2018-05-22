@@ -10,6 +10,7 @@ import { preCreatePosition, updatePreEditData } from '../../../redux/position/ac
 import { message } from 'antd'
 import { ConfirmDelete } from './ConfirmDelete'
 import { updateDeleteId, toggleDialog } from '../../../redux/candidates/actions'
+import { baseUrl } from '../../../libs/url/baseUrl'
 
 const TableStyled = styled.table`
     width: 100%;
@@ -88,7 +89,7 @@ class CandidatesTable extends Component {
 		// 		try {
 		// 			const getIdToken = await firebase.auth().currentUser.getIdToken()
 		// 			const uid = localStorage.getItem('loginToken')
-		// 			const url = `https://us-central1-hireq-api.cloudfunctions.net/users/${uid}/positions/${positionId}/candidates/${candidateId}`
+		// 			const url = `${baseUrl}/users/${uid}/positions/${positionId}/candidates/${candidateId}`
 		// 			const result = await Axios.delete(url, {
 		// 				headers: { Authorization: "Bearer " + getIdToken }
 		// 			})
@@ -114,7 +115,7 @@ class CandidatesTable extends Component {
 				try {
 					const getIdToken = await firebase.auth().currentUser.getIdToken()
 					const uid = localStorage.getItem('loginToken')
-					const url = `https://us-central1-hireq-api.cloudfunctions.net/users/${uid}/candidates/email`
+					const url = `${baseUrl}/users/${uid}/candidates/email`
 					const result = await Axios.post(url, { candidateId: id.candidateId }, {
 						headers: { Authorization: "Bearer " + getIdToken }
 					})

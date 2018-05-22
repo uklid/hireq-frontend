@@ -25,6 +25,8 @@ import {
 import { updateAllCandidates } from '../../redux/candidates/actions'
 import Axios from 'axios'
 import firebase from 'firebase'
+import CreateCandidates from '../Candidates/CreateCandidates'
+import { baseUrl } from '../../libs/url/baseUrl'
 
 const SliderStyled = styled(Slider) `
   .ant-slider-handle {
@@ -69,6 +71,7 @@ const onChange = (date, dateString) => {
 class EditPosition extends React.Component {
 	state = {
 		open: false,
+		openModalCandidate: false,
 	}
 	componentWillReceiveProps = (props) => {
 		if (!props.location.state.positionId) {
@@ -85,13 +88,13 @@ class EditPosition extends React.Component {
 					// console.log("get Id Token = ", getIdToken)
 					const positionId = this.props.location.state.positionId
 					const uid = localStorage.getItem('loginToken')
-					const url = `https://us-central1-hireq-api.cloudfunctions.net/users/${uid}/positions/${positionId}`
+					const url = `${baseUrl}/users/${uid}/positions/${positionId}`
 					const result = await Axios.get(url, {
 						headers: { Authorization: "Bearer " + getIdToken }
 					})
 					this.props.preCreatePosition({ ...result.data, positionId: positionId })
 					// Start Candidate
-					const candidateURL = `https://us-central1-hireq-api.cloudfunctions.net/users/${uid}/positions/${positionId}/candidates`
+					const candidateURL = `${baseUrl}/users/${uid}/positions/${positionId}/candidates`
 					const resultCandidate = await Axios.get(candidateURL, {
 						headers: { Authorization: "Bearer " + getIdToken }
 					})
@@ -111,9 +114,10 @@ class EditPosition extends React.Component {
 			this.props.history.push('/dashboard')
 		}
 	}
-	handleToggle = () => {
+	handleToggle = (name) => {
+		console.log(name)
 		this.setState({
-			open: !this.state.open
+			[name]: !this.state[name]
 		})
 	}
 	createPosition = async () => {
@@ -121,7 +125,7 @@ class EditPosition extends React.Component {
 		const { prepareCreate } = this.props
 		const uid = localStorage.getItem('loginToken')
 		const updateId = prepareCreate.positionId
-		const url = `https://us-central1-hireq-api.cloudfunctions.net/users/${uid}/positions/${updateId}`
+		const url = `${baseUrl}/users/${uid}/positions/${updateId}`
 		const getIdToken = await firebase.auth().currentUser.getIdToken()
 		// Put Edit
 		const result = await Axios.put(url, { ...prepareCreate }, {
@@ -157,7 +161,7 @@ class EditPosition extends React.Component {
 	}
 	render() {
 		const { prepareCreate, allCandidatesData } = this.props
-		const defaultCogData = prepareCreate && [prepareCreate.info['COG']['min'], prepareCreate.info['COG']['max']]
+		const defaultCogData = prepareCreate.info && [prepareCreate.info['COG']['min'], prepareCreate.info['COG']['max']]
 		console.log("prep = ", prepareCreate)
 		return (
 			<LayoutContentWrapper>
@@ -221,7 +225,7 @@ class EditPosition extends React.Component {
 									<Button
 										type="primary"
 										// onClick={modalShow}
-										onClick={this.handleToggle}
+										onClick={() => this.handleToggle('open')}
 										style={{ backgroundColor: '#954590', marginTop: 30, borderColor: '#954590' }}
 									>
 										Save Edit Position.
@@ -231,10 +235,22 @@ class EditPosition extends React.Component {
 						</Card>
 					</Grid>
 				</Grid>
+				<Grid container spacing={0}>
+					<Grid item>
+						<Button
+							type="primary"
+							// onClick={modalShow}
+							onClick={() => this.handleToggle('openModalCandidate')}
+							style={{ backgroundColor: '#954590', marginTop: 30, borderColor: '#954590' }}
+						>
+							Add new Candidate.
+						</Button>
+					</Grid>
+				</Grid>
 				{/* Dialog modal from material ui */}
 				<Dialog
 					open={this.state.open}
-					onClose={this.handleClose}
+					onClose={() => this.handleToggle('open')}
 					aria-labelledby="alert-dialog-title"
 					aria-describedby="alert-dialog-description"
 				>
@@ -245,13 +261,39 @@ class EditPosition extends React.Component {
 						</DialogContentText>
 					</DialogContent>
 					<DialogActions>
-						<Button style={{ float: 'left' }} onClick={this.handleToggle}>
+						<Button style={{ float: 'left' }} onClick={() => this.handleToggle('open')}>
 							Disagree
             </Button>
 						<Button style={{ float: 'right' }} onClick={this.createPosition}>
 							Agree
             </Button>
 					</DialogActions>
+				</Dialog>
+				{/* end dialog modal */}
+				{/* Dialog modal from material ui */}
+				<Dialog
+					open={this.state.openModalCandidate}
+					onClose={() => this.handleToggle('openModalCandidate')}
+					aria-labelledby="alert-dialog-title"
+					aria-describedby="alert-dialog-description"
+					fullWidth
+				>
+					<DialogTitle id="alert-dialog-title">Add your candidate profile.</DialogTitle>
+					<DialogContent>
+						<DialogContentText id="alert-dialog-description">
+							<CreateCandidates 
+								addPositionId={prepareCreate.positionId}
+							/>
+						</DialogContentText>
+					</DialogContent>
+					{/* <DialogActions>
+						<Button style={{ float: 'left' }} onClick={() => this.handleToggle('openModalCandidate')}>
+							Disagree
+            </Button> */}
+						{/* <Button style={{ float: 'right' }} onClick={this.addNewCandidate}>
+							Agree
+            </Button> */}
+					{/* </DialogActions> */}
 				</Dialog>
 				{/* end dialog modal */}
 			</LayoutContentWrapper>
@@ -343,7 +385,7 @@ export default connect(mapStateToProps,
 // 			// 		console.log("get Id Token = ", getIdToken)
 // 			// 		const positionId = this.props.location.state.positionId
 // 			// 		const uid = localStorage.getItem('loginToken')
-// 			// 		const url = `https://us-central1-hireq-api.cloudfunctions.net/users/${uid}/positions/${positionId}`
+// 			// 		const url = `${baseUrl}/users/${uid}/positions/${positionId}`
 // 			// 		const result = await Axios.get(url, {
 // 			// 			headers: { Authorization: "Bearer " + getIdToken }
 // 			// 		})

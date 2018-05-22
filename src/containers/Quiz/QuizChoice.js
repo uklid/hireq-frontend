@@ -13,6 +13,7 @@ import {
 	updateSS,
 	updateWP
 } from '../../redux/quiz/actions'
+import { baseUrl } from '../../libs/url/baseUrl'
 
 const QuizWrapper = styled.div`
 	position: relative;
@@ -84,7 +85,7 @@ const Container = styled.label`
 `
 
 const candidateId = '-L3y6bEU1lxPOpxeoQw-'
-const apiURL = 'https://us-central1-hireq-api.cloudfunctions.net'
+const apiURL = `${baseUrl}`
 
 class QuizChoice extends React.Component {
 	sendPersonalAnswer = async (event) => {

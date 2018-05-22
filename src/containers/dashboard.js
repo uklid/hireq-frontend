@@ -14,6 +14,7 @@ import { Loading, LoadingSuccess } from '../redux/loading/actions'
 import { updateCreatedAllPosition } from '../redux/position/actions'
 import { updateAllCandidates } from '../redux/candidates/actions'
 import Axios from 'axios'
+import { baseUrl } from '../libs/url/baseUrl'
 
 const positionColumns = [{
   title: 'Name',
@@ -187,14 +188,14 @@ class Dashboard extends Component {
           const uid = localStorage.getItem('loginToken')
           //get all position and keep it to redux store
           console.log("get Id Token = ", getIdToken)
-          const url = `https://us-central1-hireq-api.cloudfunctions.net/users/${uid}/positions`
+          const url = `${baseUrl}/users/${uid}/positions`
           const result = await Axios.get(url, {
             headers: { Authorization: "Bearer " + getIdToken }
           })
           this.props.updateCreatedAllPosition(result.data)
           //  end position data get here
           // start get all candidates here
-          const candidatesURL = `https://us-central1-hireq-api.cloudfunctions.net/users/${uid}/candidates`
+          const candidatesURL = `${baseUrl}/users/${uid}/candidates`
           const candidatesResult = await Axios.get(candidatesURL, {
             headers: { Authorization: "Bearer " + getIdToken }
           })
