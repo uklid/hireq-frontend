@@ -12,7 +12,21 @@ import { updateDeleteId, toggleDialog, updateAllCandidates } from '../../../redu
 import firebase from 'firebase'
 import Axios from 'axios'
 import { baseUrl } from '../../../libs/url/baseUrl'
+import styled from 'styled-components'
 
+const ButtonStyled = styled.button`
+  color: white;
+  border: 0px;
+  height: 36px;
+  width: 80px;
+  cursor: pointer;
+`
+const ButtonContainer = styled.div`
+  display: flex;
+  padding: 20px;
+  width: 100%;
+  justify-content: space-between;
+`
 class ConfirmDelete extends React.Component {
 
   deleteCandidate = async () => {
@@ -56,19 +70,20 @@ class ConfirmDelete extends React.Component {
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
       >
-        <DialogTitle id="alert-dialog-title">Are you sure to delete</DialogTitle>
+        <DialogTitle id="alert-dialog-title">Are you sure to delete ?</DialogTitle>
         <DialogContent>
           <DialogContentText id="alert-dialog-description">
-
           </DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button style={{ float: 'left' }} onClick={() => this.props.toggleDialog()}>
+          <ButtonContainer>
+          <ButtonStyled onClick={() => this.props.toggleDialog()} style={{backgroundColor: 'grey'}}>
             Disagree
-          </Button>
-          <Button style={{ float: 'right' }} onClick={this.deleteCandidate}>
+          </ButtonStyled>
+          <ButtonStyled onClick={this.deleteCandidate} style={{ backgroundColor: '#954590' }}>
             Agree
-          </Button>
+          </ButtonStyled>
+          </ButtonContainer>
         </DialogActions>
       </Dialog>
     )

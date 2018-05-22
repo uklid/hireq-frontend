@@ -24,22 +24,36 @@ const MoreInfoLink = styled.span`
 		font-weight: 700;
     cursor: pointer;
 `
+const LinkStyled = styled.a`
+	color: #954590;
+`
+
+const MenuStyled = styled(Menu)`
+	border: 1px solid #e8e8e8;
+	.list-item:hover {
+		color: #954590 !important;
+	}
+`
 
 const DropDownMenu = (props) => (
-	<Menu>
+	<MenuStyled>
 		<Menu.Item>
-			<a onClick={props.seeDetailClick} target="_blank">More Detail</a>
+			<a
+				className="list-item"
+				onClick={props.seeDetailClick} target="_blank">More Detail</a>
 		</Menu.Item>
 		{/* <Menu.Item>
 			<a onClick={props.onEditPositionClick} target="_blank">Edit</a>
 		</Menu.Item> */}
 		<Menu.Item>
-			<a onClick={props.onSendEmailClick} target="_blank">Send Email</a>
+			<a
+				className="list-item"
+				onClick={props.onSendEmailClick} target="_blank">Send Email</a>
 		</Menu.Item>
 		<Menu.Item >
 			<a onClick={props.onDeleteClick} style={{ color: 'red' }}>DELETE</a>
 		</Menu.Item>
-	</Menu>
+	</MenuStyled>
 )
 
 export default class RowData extends Component {
@@ -73,9 +87,9 @@ export default class RowData extends Component {
 					onSendEmailClick={this.props.onSendEmailClick}
 					onDeleteClick={this.props.onDeleteClick}
 				/>}>
-					<a className="ant-dropdown-link" href="#">
+					<LinkStyled className="ant-dropdown-link" href="#">
 						ACTIONS <Icon type="down" />
-					</a>
+					</LinkStyled>
 				</Dropdown>
 			// <React.Fragment>
 			// 	<Button onClick={this.props.seeDetailClick}>More Detail</Button>

@@ -49,6 +49,21 @@ const WhiteWrapper = styled.div`
 			display: inline;
 		}
 `
+const ButtonStyled = styled.button`
+  color: white;
+  border: 0px;
+  height: 36px;
+  width: 80px;
+  cursor: pointer;
+`
+
+const ButtonContainer = styled.div`
+  display: flex;
+  padding: 20px;
+  width: 100%;
+  justify-content: space-between;
+`
+
 const candidatesColumn = [{
 	title: 'Name',
 	dataIndex: 'name',
@@ -254,19 +269,27 @@ class EditPosition extends React.Component {
 					aria-labelledby="alert-dialog-title"
 					aria-describedby="alert-dialog-description"
 				>
-					<DialogTitle id="alert-dialog-title">Please confirm your Edit</DialogTitle>
+					<DialogTitle id="alert-dialog-title">Please confirm your edit</DialogTitle>
 					<DialogContent>
 						<DialogContentText id="alert-dialog-description">
 
 						</DialogContentText>
 					</DialogContent>
 					<DialogActions>
-						<Button style={{ float: 'left' }} onClick={() => this.handleToggle('open')}>
+						{/* <Button style={{ float: 'left' }} onClick={() => this.handleToggle('open')}>
 							Disagree
             </Button>
 						<Button style={{ float: 'right' }} onClick={this.createPosition}>
 							Agree
-            </Button>
+            </Button> */}
+						<ButtonContainer>
+							<ButtonStyled style={{ backgroundColor: 'grey' }} onClick={this.handleToggle}>
+								Disagree
+            </ButtonStyled>
+							<ButtonStyled style={{ backgroundColor: '#954590' }} onClick={this.createPosition}>
+								Agree
+            </ButtonStyled>
+						</ButtonContainer>
 					</DialogActions>
 				</Dialog>
 				{/* end dialog modal */}
@@ -281,7 +304,7 @@ class EditPosition extends React.Component {
 					<DialogTitle id="alert-dialog-title">Add your candidate profile.</DialogTitle>
 					<DialogContent>
 						<DialogContentText id="alert-dialog-description">
-							<CreateCandidates 
+							<CreateCandidates
 								addPositionId={prepareCreate.positionId}
 							/>
 						</DialogContentText>
@@ -290,7 +313,7 @@ class EditPosition extends React.Component {
 						<Button style={{ float: 'left' }} onClick={() => this.handleToggle('openModalCandidate')}>
 							Disagree
             </Button> */}
-						{/* <Button style={{ float: 'right' }} onClick={this.addNewCandidate}>
+					{/* <Button style={{ float: 'right' }} onClick={this.addNewCandidate}>
 							Agree
             </Button> */}
 					{/* </DialogActions> */}
