@@ -1,7 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import styled from 'styled-components'
-import { Input, Button, message } from 'antd'
+import { Input, Button, message, Form, } from 'antd'
 import { LoadingSuccess, Loading } from '../../redux/loading/actions'
 import { updateAllCandidates } from '../../redux/candidates/actions'
 import Axios from 'axios'
@@ -19,14 +19,26 @@ const WhiteWrapper = styled.div`
 class CreateCandidates extends React.Component {
   state = {
     name: '',
-    email: ''
+    email: '',
+    validEmail: '',
+    validName: '',
   }
   onTextChange = (stateName) => (event) => {
     this.setState({
       [stateName]: event.target.value
     })
+    // Add validation
+    const inputName = stateName === 'email' ? 'validEmail' : 'validName'
+    if (this.state[stateName] === '') {
+      this.setState({
+        [inputName]: 'error'
+      })
+    } else {
+      this.setState({
+        [inputName]: ''
+      })
+    }
   }
-
   addCandidate = async () => {
     const { email, name } = this.state
     try {
@@ -71,14 +83,36 @@ class CreateCandidates extends React.Component {
     return (
       <WhiteWrapper>
         {/* <h3>CREATE CANDIDATES</h3> */}
-        <form>
+        <Form>
           <div className="create-group">
             <div>NAME</div>
-            <Input type="text" onChange={this.onTextChange('name')} placeholder="Enter candidate name " defaultValue={this.state.name} value={this.state.name} />
+            <Form.Item
+              validateStatus={this.state.validName}
+              help={this.state.validName === 'error' && 'Please enter your name.'}
+            >
+              <Input
+                type="text"
+                onChange={this.onTextChange('name')}
+                placeholder="Enter candidate name"
+                defaultValue={this.state.name}
+                value={this.state.name}
+              />
+            </Form.Item>
           </div>
           <div className="create-group">
             <div>EMAIL</div>
-            <Input type="email" onChange={this.onTextChange('email')} placeholder="Enter candidate Email" defaultValue={this.state.email} value={this.state.email} />
+            <Form.Item
+              validateStatus={this.state.validEmail}
+              help={this.state.validEmail === 'error' && 'Please enter your email.'}
+            >
+              <Input
+                type="email"
+                onChange={this.onTextChange('email')}
+                placeholder="Enter candidate Email"
+                defaultValue={this.state.email}
+                value={this.state.email}
+              />
+            </Form.Item>
           </div>
           <Button
             style={{ marginTop: 20 }}
@@ -87,7 +121,7 @@ class CreateCandidates extends React.Component {
           >
             ADD Candidate
           </Button>
-        </form>
+        </Form>
       </WhiteWrapper>
     )
   }

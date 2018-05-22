@@ -39,7 +39,7 @@ const CardWithStyled = styled(Card) `
 `
 
 const FormWrapper = styled.div`
-	width: 240px;
+	width: 350px;
 	padding: 10px;
 	display: flex;
 	justify-content: flex-start;
