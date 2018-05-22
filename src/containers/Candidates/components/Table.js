@@ -156,6 +156,7 @@ class CandidatesTable extends Component {
 								// onClick={() => console.log(data)}
 								// seeDetailClick={() => console.log(Object.keys(dataSource)[index])}
 								seeDetailClick={() => {
+									console.log("data candidate = ", data)
 									this.props.history.push({
 										pathname: '/dashboard/candidate-detail',
 										state: { candidateId: data.candidateId }

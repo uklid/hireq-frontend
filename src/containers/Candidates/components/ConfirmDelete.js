@@ -8,7 +8,7 @@ import Dialog, {
   DialogTitle,
 } from 'material-ui/Dialog'
 import { Loading, LoadingSuccess } from '../../../redux/loading/actions'
-import { updateDeleteId, toggleDialog } from '../../../redux/candidates/actions'
+import { updateDeleteId, toggleDialog, updateAllCandidates } from '../../../redux/candidates/actions'
 import firebase from 'firebase'
 import Axios from 'axios'
 
@@ -20,15 +20,18 @@ class ConfirmDelete extends React.Component {
       if (data) {
         try {
           const getIdToken = await firebase.auth().currentUser.getIdToken()
-          const { positionId, deleteId } = this.props
+          const { positionId, deleteId, allCandidatesData } = this.props
           const uid = localStorage.getItem('loginToken')
           const url = `https://us-central1-hireq-api.cloudfunctions.net/users/${uid}/candidates/${deleteId}`
           const result = await Axios.delete(url, {
             headers: { Authorization: "Bearer " + getIdToken }
           })
-          console.log("afterUpdate Candidate Data: ", { positionId, deleteId })
-          // this.props.updateAllCandidates(result.data)
-          // this.props.updateAllCandidates()
+          const updateDataAfterDelete = Object.values(allCandidatesData).filter((candidate) => {
+            return candidate.candidateId !== deleteId
+          })
+          console.log("after Delete Candidate Data: ", {...updateDataAfterDelete})
+          // allPosition
+          this.props.updateAllCandidates({...updateDataAfterDelete})
           this.props.toggleDialog()
           this.props.LoadingSuccess()
           message.success('Delete candidate success', 10)
@@ -72,6 +75,7 @@ class ConfirmDelete extends React.Component {
 }
 
 const mapStateToProps = state => ({
+  allCandidatesData: state.Candidates.allCandidatesData,
   deleteId: state.Candidates.deleteId,
   positionId: state.Candidates.positionId,
   toggleDialog: state.Candidates.toggleDialog
@@ -81,5 +85,6 @@ export default connect(mapStateToProps, {
   Loading,
   LoadingSuccess,
   updateDeleteId,
-  toggleDialog
+  toggleDialog,
+  updateAllCandidates
 })(ConfirmDelete)

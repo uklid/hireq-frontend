@@ -198,7 +198,7 @@ class Dashboard extends Component {
           const candidatesResult = await Axios.get(candidatesURL, {
             headers: { Authorization: "Bearer " + getIdToken }
           })
-          // console.log("Candidates: ", candidatesResult)
+          console.log("Candidates: ", candidatesResult)
           this.props.updateAllCandidates(candidatesResult.data)
           // end all candidate here
           this.props.LoadingSuccess()
@@ -228,14 +228,14 @@ class Dashboard extends Component {
     return Object.values(this.props.allCandidatesData).map((data, index) => {
       return {
         ...data,
-        candidateId: Object.keys(this.props.allCandidatesData)[index]
+        // candidateId: Object.keys(this.props.allCandidatesData)[index]
       }
     })
   }
   render() {
     const { allPositionCreated, allCandidatesData } = this.props
     // console.log('All candidates: ', allCandidateData)
-    console.log('candidate after regroup: ', Object.values(allPositionCreated))
+    // console.log('candidate after regroup: ', Object.values(allPositionCreated))
     // {console.log(this.newObject())}    
     // console.log("result = ", { ...Object.values(allPositionCreated), positionId: allPositionCreated })
     return (
