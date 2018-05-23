@@ -156,6 +156,10 @@ class CandidateDetail extends React.Component {
 							<FormWrapper style={{ alignSelf: 'flex-start' }}>
 								<h4>CREATE TIME</h4>
 								<p style={{ marginLeft: 10 }}>{moment(allCandidatesData.createdTime).format("DD/MM/YY HH:mm:ss")}</p>
+								<h4>SENT EMAIL</h4>
+								<p style={{ marginLeft: 10 }}>
+									{allCandidatesData.emailSent === true ? 'Already Sent.' : 'No'}
+								</p>
 							</FormWrapper>
 							<div
 								style={{ display: 'flex', justifyContent: 'space-between' }}

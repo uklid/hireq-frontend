@@ -6,6 +6,7 @@ const Button = styled.button`
   color: #fff;
   height: ${props => props.height ? props.height : '35px'};
   width: ${props => props.width ? props.width : '120px'};
+  margin-top: ${props => props.marginTop ? props.marginTop : '2px'};
   cursor: pointer;
 
   &:hover {
@@ -13,11 +14,12 @@ const Button = styled.button`
   }
 `
 
-export default ({ name, onClick, height, width, children }) => (
+export default ({ name, onClick, height, width, children,marginTop }) => (
   <Button
     onClick={onClick}
     height={height}
     width={width}
+    marginTop={marginTop}
   >
     {children}
   </Button>

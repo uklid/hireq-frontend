@@ -3,14 +3,18 @@ import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
 import { LayoutContentWrapper } from '../../components/utility/layoutWrapper.style'
 import Grid from 'material-ui/Grid'
+import { FormGroup, FormControlLabel } from 'material-ui/Form'
+import TextField from 'material-ui/TextField'
 import Card from '../../components/uielements/card'
 import styled from 'styled-components'
-import { Table, DatePicker, Slider, Button, Input } from 'antd'
+import { Table, DatePicker, Slider, Input } from 'antd'
+import Button from '../HireQComponent/Button'
 import Tables from './components/Table'
 import CandidatesTable from '../Candidates/components/Table'
 import CriticalSoftSkills from './CriticalSoftSkills'
 import moment from 'moment'
 import WorkPreference from './WorkPreference'
+import Ionicon from 'react-ionicons'
 import Dialog, {
 	DialogActions,
 	DialogContent,
@@ -74,6 +78,36 @@ const candidatesColumn = [{
 	dataIndex: 'buttonAction',
 	key: 'buttonAction'
 }]
+
+const ButtonWrapper = styled.div`
+		position: absolute;
+		right: 37px;
+		top: 30px;
+
+		button {
+			margin: 0px 10px 0px 10px;
+			background-color: #954590;
+			border-color: #954590;
+		}
+		@media only screen and (max-width: 768px) {
+			display: none;
+		}
+`
+
+const InputWrapper = styled.div`
+    position: relative;
+    // width: 80%;
+
+    .floating-icon {
+        position: absolute;
+    }
+    .floating-textfield {
+        margin-top: 0px;
+        padding-left: 40px;
+        width: 100%;
+    }
+`
+
 const onChange = (date, dateString) => {
 	console.log("date =", date)
 	console.log("data String =", dateString)
@@ -82,6 +116,7 @@ class EditPosition extends React.Component {
 	state = {
 		open: false,
 		openModalCandidate: false,
+		defaultAllCandidatesData: []
 	}
 	componentWillReceiveProps = (props) => {
 		if (!props.location.state.positionId) {
@@ -109,6 +144,9 @@ class EditPosition extends React.Component {
 						headers: { Authorization: "Bearer " + getIdToken }
 					})
 					this.props.updateAllCandidates(resultCandidate.data)
+					this.setState({
+						defaultAllCandidatesData: resultCandidate.data
+					})
 					// End candidate
 					this.props.LoadingSuccess()
 				} else {
@@ -161,10 +199,17 @@ class EditPosition extends React.Component {
 	}
 	newObjectCandidate = () => {
 		// ฟังชั่นนี้ รีกรุ๊บของ array ใหม่ ให้มี candidateId เข้าไปด้วย
-		return Object.values(this.props.allCandidatesData).map((data, index) => {
+		// return Object.values(this.props.allCandidatesData).map((data, index) => {
+		// 	return {
+		// 		...data,
+		// 		candidateId: Object.keys(this.props.allCandidatesData)[index]
+		// 	}
+		// })
+		const { defaultAllCandidatesData } = this.state
+		return Object.values(defaultAllCandidatesData).map((data, index) => {
 			return {
 				...data,
-				candidateId: Object.keys(this.props.allCandidatesData)[index]
+				candidateId: Object.keys(defaultAllCandidatesData)[index]
 			}
 		})
 	}
@@ -175,13 +220,74 @@ class EditPosition extends React.Component {
 		const updateData = { ...prepareCreate }
 		this.props.preCreatePosition(updateData)
 	}
+	searchPoisition = (event) => {
+		const filter = event.target.value.toUpperCase()
+		const { defaultAllCandidatesData } = this.state
+		// console.log("defaultALl" , defaultAllCandidatesData)
+		const result = Object.values(this.props.allCandidatesData).filter((word, i) => {
+			console.log("word = ", word)
+			const name = word.name.toString().toUpperCase().includes(filter)
+			const email = word.email.toString().toUpperCase().includes(filter)
+			if(name || email) {
+				return word
+			}
+		})
+		console.log('result = ', result)
+		this.setState({
+			defaultAllCandidatesData: result
+		})
+
+	}
 	render() {
 		const { prepareCreate, allCandidatesData } = this.props
 		const defaultCogData = prepareCreate.info && [prepareCreate.info['COG']['min'], prepareCreate.info['COG']['max']]
-		console.log("prep = ", prepareCreate)
+		// console.log("prep = ", prepareCreate)
+		console.log("statedefaultAllCandidatesData: ", this.setState.defaultAllCandidatesData)
 		return (
 			<LayoutContentWrapper>
-				<Grid container spacing={24}>
+				<Grid container spacing={0}>
+					<Grid item sm={12} xs={12}>
+						<Card>
+							<InputWrapper>
+								<Ionicon className="floating-icon" icon="ios-search-outline" fontSize="35px" />
+								<TextField
+									id="position-search"
+									placeholder="Search candidates here"
+									margin="normal"
+									className="floating-textfield"
+									onChange={this.searchPoisition}
+								// onChange={this.onSearch}
+								/>
+							</InputWrapper>
+							{/* <ButtonWrapper>
+								<Button
+									style={{ marginRight: 45 }}
+									onClick={this.searchPositionData}>Search</Button>
+							</ButtonWrapper> */}
+							<FormGroup row>
+								{/* <FilterField
+									checked={this.state.showAll}
+									onChange={this.filterOnChange('showAll')}
+									value="All"
+									label="All"
+								/>
+								<FilterField
+									checked={this.state.showOpen}
+									onChange={this.filterOnChange('showOpen')}
+									value="Open"
+									label="Open"
+								/>
+								<FilterField
+									checked={this.state.showFinished}
+									onChange={this.filterOnChange('showFinished')}
+									value="Finished"
+									label="Finished"
+								/> */}
+							</FormGroup>
+						</Card>
+					</Grid>
+				</Grid>
+				<Grid style={{ marginTop: 14 }} container spacing={24}>
 					<Grid item sm={4} xs={12}>
 						<Card>
 							<p> <Span>Position Name: </Span> {prepareCreate.name} </p>
@@ -241,9 +347,9 @@ class EditPosition extends React.Component {
 								<Grid item>
 									<Button
 										type="primary"
-										// onClick={modalShow}
 										onClick={() => this.handleToggle('open')}
-										style={{ backgroundColor: '#954590', marginTop: 30, borderColor: '#954590' }}
+										width="160px"
+										marginTop="30px"
 									>
 										Save Edit Position.
 									</Button>
@@ -256,9 +362,9 @@ class EditPosition extends React.Component {
 					<Grid item>
 						<Button
 							type="primary"
-							// onClick={modalShow}
 							onClick={() => this.handleToggle('openModalCandidate')}
-							style={{ backgroundColor: '#954590', marginTop: 30, borderColor: '#954590' }}
+							width="160px"
+							marginTop="30px"
 						>
 							Add new Candidate.
 						</Button>
@@ -280,10 +386,10 @@ class EditPosition extends React.Component {
 						<ButtonContainer>
 							<ButtonStyled style={{ backgroundColor: 'grey' }} onClick={() => this.handleToggle('open')}>
 								Disagree
-            </ButtonStyled>
+							</ButtonStyled>
 							<ButtonStyled style={{ backgroundColor: '#954590' }} onClick={this.createPosition}>
 								Agree
-            </ButtonStyled>
+							</ButtonStyled>
 						</ButtonContainer>
 					</DialogActions>
 				</Dialog>

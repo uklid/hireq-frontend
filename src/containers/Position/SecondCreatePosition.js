@@ -201,14 +201,14 @@ class SecondCreatePosition extends React.Component {
             </DialogContentText>
           </DialogContent>
           <DialogActions>
-          <ButtonContainer>
-							<ButtonStyled style={{ backgroundColor: 'grey' }} onClick={this.handleToggle}>
-								Disagree
+            <ButtonContainer>
+              <ButtonStyled style={{ backgroundColor: 'grey' }} onClick={this.handleToggle}>
+                Disagree
 							</ButtonStyled>
-							<ButtonStyled style={{ backgroundColor: '#954590' }} onClick={this.createPosition}>
-								Agree
+              <ButtonStyled style={{ backgroundColor: '#954590' }} onClick={this.createPosition}>
+                Agree
 							</ButtonStyled>
-						</ButtonContainer>
+            </ButtonContainer>
             {/* <Button style={{ float: 'left', backgroundColor: '#fff' }} onClick={this.handleToggle}>
               Disagree
             </Button>
