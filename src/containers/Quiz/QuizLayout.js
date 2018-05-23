@@ -136,7 +136,16 @@ class QuizLayout extends React.Component {
 	// 	// 	beforePath
 	// 	// })
 	// }
+	// componentWillMount = async () => {
+		
+	// }
 	componentDidMount = async () => {
+		const { decreaseTime, timeNow } = this.props
+		if (timeNow >= 0 && this.state.currentQuiz === 'cog') {
+			setInterval(() => {
+				decreaseTime()
+			}, 1000)
+		}
 		try {
 			// console.log('id = ', this.props.candidateId)
 			// console.log('api url = ', this.props.apiURL)
@@ -146,6 +155,7 @@ class QuizLayout extends React.Component {
 			// /////////////////////
 			const url = `${apiURL}/candidates/${candidateId}/test`
 			const quizData = await Axios.get(url)
+			console.log("Data: " , quizData)
 			const currentItem = quizData.data.currentItem - 1
 			const currentTest = quizData.data.currentTest
 			// ตำแหน่ง array เริ่มแรกในการตัดหน้า (currentPage - 1) * 10
@@ -178,14 +188,6 @@ class QuizLayout extends React.Component {
 			// //////////////////////////////////////////
 		} catch (err) {
 			console.log(err)
-		}
-	}
-	componentDidMount = async () => {
-		const { decreaseTime, timeNow } = this.props
-		if (timeNow >= 0 && this.state.currentQuiz === 'cog') {
-			setInterval(() => {
-				decreaseTime()
-			}, 1000)
 		}
 	}
 	sendCogAnswer = async (event) => {
@@ -258,6 +260,7 @@ class QuizLayout extends React.Component {
 			// this.props.updateCurrentTest('per')
 		}
 		// if CurrentQuiz = Finish redirect to done page
+		console.log("Current Quiz: " , currentQuiz)
 		if (currentQuiz === 'finish') {
 			this.props.history.replace('/quiz-complete')
 		}

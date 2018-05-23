@@ -11,6 +11,8 @@ import QuizComplete from './containers/Quiz/QuizComplete'
 import Loader from './LoadingComponent'
 import BeforeQuiz from './containers/Quiz/BeforeQuiz'
 import SecondCreatePosition from './containers/Position/SecondCreatePosition'
+import Privacy from './containers/Page/Privacy'
+import TermOfService from './containers/Page/TermOfService'
 
 const RestrictedRoute = ({ component: Component, isLoggedIn, ...rest }) => (
   <Route
@@ -60,12 +62,14 @@ const PublicRoutes = (props) => {
           <Route
             exact
             path={'/term-of-privacy'}
-            component={asyncComponent(() => import('./containers/Page/TermOfService'))}
+            component={TermOfService}
+            // component={asyncComponent(() => import('./containers/Page/TermOfService'))}
           />
           <Route
             exact
             path={'/privacy'}
-            component={asyncComponent(() => import('./containers/Page/Privacy'))}
+            component={Privacy}
+            // component={asyncComponent(() => import('./containers/Page/Privacy'))}
           />
           {/* <RestrictedRoute
             path="/create-position/create-setting"

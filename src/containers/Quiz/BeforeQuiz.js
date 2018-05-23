@@ -1,5 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
+import { Link } from 'react-router-dom'
 import Button from '../../components/uielements/button'
 import { connect } from 'react-redux'
 import Axios from 'axios'
@@ -33,6 +34,12 @@ const WhiteWrapper = styled.div`
 `
 
 const BeforeQuizBlock = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  height: 61%;
+
   @media only screen and (max-width: 767px) {
     width: 85%;
   }
@@ -66,7 +73,7 @@ class BeforeQuiz extends React.Component {
       <BeforeQuizWrapper>
         <WhiteWrapper>
           <BeforeQuizBlock>
-            <h1 style={{ textAlign: 'center', marginBottom: 30 }}>Mister. Doreme Fazonla</h1>
+            <h1 style={{ textAlign: 'center' }}>Mister. Doreme Fazonla</h1>
             <Button
               style={{
                 width: '100%', backgroundColor: '#954590', color: '#fff'
@@ -75,11 +82,13 @@ class BeforeQuiz extends React.Component {
             >
               {this.state.startedTime !== null ? 'continue doing quiz' : 'start doing quiz'}
             </Button>
+            <Link to="/privacy">Privacy</Link>
+            <Link to="/term-of-privacy">Term of service</Link>
           </BeforeQuizBlock>
         </WhiteWrapper>
       </BeforeQuizWrapper>
-    )
+        )
   }
 }
 
-export default connect(null, { Loading, LoadingSuccess })(BeforeQuiz)
+export default connect(null, {Loading, LoadingSuccess })(BeforeQuiz)

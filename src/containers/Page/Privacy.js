@@ -28,7 +28,7 @@ for (let i = 1; i <= 10; i++) {
 }
 
 class Privacy extends React.Component {
-	componentDidMount = () => {
+	componentWillMount = () => {
 		_mockPrivacy.map(data => {
 			this.setState({
 				[data.id]: false,
