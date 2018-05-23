@@ -5,7 +5,8 @@ import styled from 'styled-components'
 import IsoWidgetsWrapper from '../../containers/Widgets/widgets-wrapper'
 import StickerWidget from '../../containers/Widgets/sticker/sticker-widget'
 import CardWithStatus from './components/CardWithStatus'
-
+import { Radar } from 'react-chartjs-2'
+import { data } from './data'
 const CardWithStyled = styled(Card) `
 	.ant-card-head {
 		background-color: lightblue;
@@ -31,9 +32,10 @@ export default () => (
             <StickerWidget
               number="3024"
               text="Total Message"
-              icon="ion-chatbubbles"
+              icon="ion-ios-infinite"
               fontColor="#ffffff"
-              bgColor="#7ED320"
+              bgColor="#006C3D"
+              iconSize={28}
             />
           </IsoWidgetsWrapper>
         </Grid>
@@ -43,9 +45,10 @@ export default () => (
             <StickerWidget
               number="3024"
               text="Total Message"
-              icon="ion-chatbubbles"
+              icon="ion-ios-list-outline"
               fontColor="#ffffff"
-              bgColor="#7ED320"
+              bgColor="#9f9502"
+              iconSize={28}
             />
           </IsoWidgetsWrapper>
         </Grid>
@@ -55,9 +58,10 @@ export default () => (
             <StickerWidget
               number="3024"
               text="Total Message"
-              icon="ion-chatbubbles"
+              icon="ion-ios-heart-outline"
               fontColor="#ffffff"
-              bgColor="#7ED320"
+              bgColor="#41772D"
+              iconSize={28}
             />
           </IsoWidgetsWrapper>
         </Grid>
@@ -67,9 +71,10 @@ export default () => (
             <StickerWidget
               number="3024"
               text="Total Message"
-              icon="ion-chatbubbles"
+              icon="ion-trophy"
               fontColor="#ffffff"
-              bgColor="#7ED320"
+              bgColor="#41772D"
+              iconSize={28}
             />
           </IsoWidgetsWrapper>
         </Grid>
@@ -96,9 +101,10 @@ export default () => (
                 <StickerWidget
                   number="80"
                   text="PERFECT"
+                  oneSideColor
                   // icon="ion-chatbubbles"
-                  fontColor="#ffffff"
-                  bgColor="lightblue"
+                  fontColor="#ABB1BE"
+                  bgColor="#41772D"
                 />
               </IsoWidgetsWrapper>
             </Grid>
@@ -108,9 +114,10 @@ export default () => (
                 <StickerWidget
                   number="80"
                   text="HIGHT"
+                  oneSideColor
                   // icon="ion-chatbubbles"
-                  fontColor="#ffffff"
-                  bgColor="lightblue"
+                  fontColor="#ABB1BE"
+                  bgColor="#41772D"
                 />
               </IsoWidgetsWrapper>
             </Grid>
@@ -145,9 +152,10 @@ export default () => (
                 <StickerWidget
                   number="80"
                   text="PERFECT"
+                  oneSideColor
                   // icon="ion-chatbubbles"
-                  fontColor="#ffffff"
-                  bgColor="lightblue"
+                  fontColor="#ABB1BE"
+                  bgColor="#9A670E"
                 />
               </IsoWidgetsWrapper>
             </Grid>
@@ -157,9 +165,10 @@ export default () => (
                 <StickerWidget
                   number="80"
                   text="HIGHT"
+                  oneSideColor
                   // icon="ion-chatbubbles"
-                  fontColor="#ffffff"
-                  bgColor="lightblue"
+                  fontColor="#ABB1BE"
+                  bgColor="#9F9502"
                 />
               </IsoWidgetsWrapper>
             </Grid>
@@ -276,9 +285,10 @@ export default () => (
                 <StickerWidget
                   number="80"
                   text="PERFECT"
+                  oneSideColor
                   // icon="ion-chatbubbles"
-                  fontColor="#ffffff"
-                  bgColor="lightblue"
+                  fontColor="#ABB1BE"
+                  bgColor="#9A670E"
                 />
               </IsoWidgetsWrapper>
             </Grid>
@@ -288,9 +298,10 @@ export default () => (
                 <StickerWidget
                   number="80"
                   text="HIGHT"
+                  oneSideColor
                   // icon="ion-chatbubbles"
-                  fontColor="#ffffff"
-                  bgColor="lightblue"
+                  fontColor="#ABB1BE"
+                  bgColor="#9F9502"
                 />
               </IsoWidgetsWrapper>
             </Grid>
@@ -325,9 +336,10 @@ export default () => (
                 <StickerWidget
                   number="80"
                   text="PERFECT"
+                  oneSideColor
                   // icon="ion-chatbubbles"
-                  fontColor="#ffffff"
-                  bgColor="lightblue"
+                  fontColor="#ABB1BE"
+                  bgColor="#9A670E"
                 />
               </IsoWidgetsWrapper>
             </Grid>
@@ -337,9 +349,10 @@ export default () => (
                 <StickerWidget
                   number="80"
                   text="HIGHT"
+                  oneSideColor
                   // icon="ion-chatbubbles"
-                  fontColor="#ffffff"
-                  bgColor="lightblue"
+                  fontColor="#ABB1BE"
+                  bgColor="#9F9502"
                 />
               </IsoWidgetsWrapper>
             </Grid>
@@ -437,6 +450,27 @@ export default () => (
               />
             </Grid>
 
+          </Grid>
+        </CardWithStyled>
+        <CardWithStyled title="Report">
+        <Grid style={{ marginTop: 10 }} container spacing={8}>
+            <Grid item sm={6}>
+          <Radar
+            data={data}
+            height={200}
+          />
+          </Grid>
+          <Grid item sm={6}>
+              <GreyWrapper>
+                <h3>Lolem Ipsum</h3>
+                <p>
+                  Lolem IpsumLolem IpsumLolem IpsumLolem
+                  IpsumLolem IpsumLolem IpsumLolem IpsumLolem
+                  IpsumLolem IpsumLolem IpsumLolem IpsumLolem
+                  IpsumLolem Ipsum
+                </p>
+              </GreyWrapper>
+            </Grid>
           </Grid>
         </CardWithStyled>
       </Grid>

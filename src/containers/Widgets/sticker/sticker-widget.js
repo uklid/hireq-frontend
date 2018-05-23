@@ -3,22 +3,26 @@ import './sticker-widget.css'
 
 export default class StickerWidget extends Component {
   render() {
-    const { fontColor, bgColor, width, icon, number, text } = this.props;
+    const { fontColor, bgColor, width, icon, number, text, iconSize, oneSideColor } = this.props;
 
     const textColor = {
       color: fontColor,
     };
     const widgetStyle = {
-      backgroundColor: bgColor,
+      backgroundColor: !oneSideColor ? bgColor : 'white',
       width: width,
     };
     const iconStyle = {
       color: fontColor,
+      fontSize: iconSize
     };
+    const isoIconStyle = {
+      backgroundColor: bgColor,
+    }
 
     return (
       <div className="isoStickerWidget" style={widgetStyle}>
-        <div className="isoIconWrapper">
+        <div className="isoIconWrapper" style={oneSideColor ? isoIconStyle : null}>
           <i className={icon} style={iconStyle} />
         </div>
 
