@@ -3,6 +3,7 @@ const initialState = {
   quizDataPer: [],
   quizDataSS: [],
   quizDataWP: [],
+  allQuizDone: 1,
   currentQuiz: '',
   quizPath: 1,
   quizPercent: 1
@@ -44,6 +45,11 @@ const Quiz = (state = initialState, action) => {
       return {
         ...state,
         quizDataWP: [...action.data]
+      }
+    case 'UPDATE_ALL_QUIZ_DONT':
+      return {
+        ...state,
+        allQuizDone: action.data
       }
     default:
       return state

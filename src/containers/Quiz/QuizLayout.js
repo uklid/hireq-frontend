@@ -117,54 +117,25 @@ const findQuizPath = (currentQuiz) => {
 
 class QuizLayout extends React.Component {
 	state = {
-		// quizPercent: 1,
-		// quizPath: 1,
-		// quizDataCog: [],
-		// quizDataPer: [],
-		// quizDataSS: [],
-		// quizDataWP: [],
 		quizArrayPosition: 0,
-		// currentQuiz: '',
 	}
-	// nextQuizPath = () => {
-	// 	// const quizPercent = this.state.quizPercent + 25
-	// 	// const quizPath = this.state.quizPath + 1
-	// 	// const beforePath = this.state.beforePath + 1
-	// 	// this.setState({
-	// 	// 	quizPath,
-	// 	// 	quizPercent,
-	// 	// 	beforePath
-	// 	// })
-	// }
-	// componentWillMount = async () => {
-		
-	// }
+
 	componentDidMount = async () => {
-		const { decreaseTime, timeNow } = this.props
-		if (timeNow >= 0 && this.state.currentQuiz === 'cog') {
-			setInterval(() => {
-				decreaseTime()
-			}, 1000)
-		}
 		try {
-			// console.log('id = ', this.props.candidateId)
-			// console.log('api url = ', this.props.apiURL)
-			const { apiURL, candidateId } = this.props
+			const { apiURL, candidateId, timeNow, decreaseTime } = this.props
 			// Dispatch loading when call api
 			this.props.Loading()
 			// /////////////////////
 			const url = `${apiURL}/candidates/${candidateId}/test`
 			const quizData = await Axios.get(url)
-			console.log("Data: " , quizData)
 			const currentItem = quizData.data.currentItem - 1
 			const currentTest = quizData.data.currentTest
 			// ตำแหน่ง array เริ่มแรกในการตัดหน้า (currentPage - 1) * 10
-			// const currentPage = (quizData.data.currentPage - 1) * 10
+			// set currentTest
+			this.props.updateCurrentTest(currentTest)
 			this.props.updateQuizPath(findQuizPath(currentTest).quizPath)
 			this.props.updateCurrentPage(quizData.data.currentPage)
 			this.props.updateTimeFromApi(quizData.data.startedTime)
-			// set currentTest
-			this.props.updateCurrentTest(currentTest)
 			// set all test Data
 			this.props.updateCog(quizData.data.cog)
 			this.props.updatePer(quizData.data.per)
@@ -172,15 +143,15 @@ class QuizLayout extends React.Component {
 			this.props.updateWP(quizData.data.wp)
 
 			this.props.updateQuizPercent()
+
+			// Update Time 
+			if (timeNow >= 0 && this.props.currentQuiz === 'cog') {
+				setInterval(() => {
+					decreaseTime()
+				}, 1000)
+			}
 			// ////////////////////////////
 			this.setState({
-				// quizPercent: findQuizPath(currentTest).percent,
-				// quizPath: findPercent(currentTest).quizPath,
-				// currentQuiz: currentTest,
-				// quizDataCog: quizData.data.cog,
-				// quizDataPer: quizData.data.per,
-				// quizDataSS: quizData.data.ss,
-				// quizDataWP: quizData.data.wp,
 				quizArrayPosition: currentItem,
 			})
 			// after set api data to State SuccessLoading
@@ -190,6 +161,17 @@ class QuizLayout extends React.Component {
 			console.log(err)
 		}
 	}
+	// componentDidMount = () => {
+	// 	const { decreaseTime, timeNow } = this.props
+	// 	console.log("Time Now", timeNow)
+	// 	console.log("currentQuiz: ", this.props)
+	// 	if (timeNow >= 0 && this.props.currentQuiz === 'cog') {
+	// 		console.log('ติดเงื่อนไขใน if จ้า')
+	// 		setInterval(() => {
+	// 			decreaseTime()
+	// 		}, 1000)
+	// 	}
+	// }
 	sendCogAnswer = async (event) => {
 		//ADd Loading Spinner after send answer
 		this.props.Loading()
@@ -208,39 +190,22 @@ class QuizLayout extends React.Component {
 		// Update currentTest or Quiz after send answer
 		this.props.updateCurrentTest(sendResult.data.nextTestName)
 		this.props.updateQuizPercent()
-		// this.setState({
-		// 	quizPath: 2,
-		// 	// currentQuiz: sendResult.data.nextTestName
-		// })		
 		////////////////////////
-		// const quizPercent = this.state.quizPercent += 1
 		const quizArrayPosition = this.state.quizArrayPosition += 1
 
-		if (quizArrayPosition <= 24) {
+		if (this.props.currentQuiz === 'cog') {
 			this.setState({ quizArrayPosition })
 		}
-		if (quizArrayPosition === 25) {
-			// this.setState({ quizPath: 2 })
+		if (this.props.currentQuiz === 'per') {
 			this.props.updateCurrentTest('per')
 			this.props.updateQuizPath()
-			// this.setState({
-			// 	// currentQuiz: 'per',
-			// 	quizPath: 2
-			// })
 		}
 		//Remove Loading After Send Answer
 		this.props.LoadingSuccess()
 	}
 	render() {
 		const {
-			// quizPath,
-			// quizDataCog,
-			// quizDataPer,
-			// quizDataSS,
-			// quizDataWP,
 			quizArrayPosition,
-			// beforePath,
-			// currentQuiz,
 		} = this.state
 		const {
 			timeNow,
@@ -252,28 +217,21 @@ class QuizLayout extends React.Component {
 			quizDataSS,
 			quizDataWP,
 			quizPath,
-			quizPercent
+			quizPercent,
+			decreaseTime
 		} = this.props
 		//if timeout and currentQuiz = cog change to personal quiz
 		if (timeNow < 0 && currentQuiz === 'cog') {
 			// if timeout setState to another quizPath or redirect to another page
-			// this.props.updateCurrentTest('per')
+			this.props.updateCurrentTest('per')
 		}
 		// if CurrentQuiz = Finish redirect to done page
-		console.log("Current Quiz: " , currentQuiz)
+		// console.log("Current Quiz: ", currentQuiz)
 		if (currentQuiz === 'finish') {
 			this.props.history.replace('/quiz-complete')
 		}
+		// console.log("quizPercent: " , quizPercent)
 		// Slice before map
-		// const per = quizDataPer.slice(currentPage, lastPage)
-		// const ss = quizDataSS.slice(currentPage, lastPage)
-		// const wp = quizDataWP.slice(currentPage, lastPage)
-		// console.log("per Slice = ", per)
-		// console.log("ss Slice = ", ss)
-		// console.log("Wp Slice = ", wp)
-		// console.log('QuizData', quizDataSS)
-		// console.log('id = ', this.props.candidateId)
-		// console.log('api url = ', this.props.apiURL)
 		return (
 			<Layout style={{ minHeight: '100%' }}>
 				<QuizWrapper>
@@ -398,17 +356,6 @@ class QuizLayout extends React.Component {
 										})
 									}
 								</div>
-								{/* <div className="button-control">
-									<Button
-										style={{
-											color: '#fff',
-											backgroundColor: '#954590',
-											borderColor: '#954590',
-											marginTop: 30,
-										}}
-										onClick={this.nextQuizPath}
-									>Next Quiz Path</Button>
-								</div> */}
 							</Grid>
 						</Grid>
 					</WhiteCard>

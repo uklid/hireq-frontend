@@ -246,7 +246,7 @@ class EditPosition extends React.Component {
 		const { defaultAllCandidatesData } = this.state
 		const defaultCogData = prepareCreate.info && [prepareCreate.info['COG']['min'], prepareCreate.info['COG']['max']]
 		if (Object.keys(allCandidatesData).length !== Object.keys(defaultAllCandidatesData).length) {
-		// Update State If ADd new Candidate			
+		// Update State If ADd new Candidate
 			this.updateStateAfterRender()
 		}
 		return (

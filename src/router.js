@@ -41,7 +41,7 @@ const PublicRoutes = (props) => {
           />
           <Route 
             exact
-            path={'/preperation'}
+            path={'/candidate'}
             component={BeforeQuiz}
           />
           <Route

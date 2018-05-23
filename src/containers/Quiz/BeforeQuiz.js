@@ -6,6 +6,8 @@ import { connect } from 'react-redux'
 import Axios from 'axios'
 import { Loading, LoadingSuccess } from '../../redux/loading/actions'
 import { baseUrl } from '../../libs/url/baseUrl'
+import queryString from 'query-string'
+import { updateCandidateId } from '../../redux/candidatesAuth/actions'
 
 const BeforeQuizWrapper = styled.div`
   min-height: 100vh;
@@ -38,7 +40,7 @@ const BeforeQuizBlock = styled.div`
   flex-direction: column;
   justify-content: space-around;
   align-items: center;
-  height: 61%;
+  height: 83%;
 
   @media only screen and (max-width: 767px) {
     width: 85%;
@@ -46,20 +48,32 @@ const BeforeQuizBlock = styled.div`
 `
 
 //candidate ID
-const candidateId = '-L3y6bEU1lxPOpxeoQw-'
+// const candidateId = '-LD68ZFVrU4H3wekPyKD'
 const apiURL = `${baseUrl}`
 
 class BeforeQuiz extends React.Component {
   state = {
-    startedTime: null
+    startedTime: null,
+    name: '',
+    position: ''
+  }
+  componentWillMount = () => {
+    const id = queryString.parse(this.props.location.search).id
+    this.props.updateCandidateId(id)
   }
   componentDidMount = async () => {
     //  Start Loading
+    const { candidateId } = this.props
     this.props.Loading()
     const url = `${apiURL}/candidates/${candidateId}/test`
     const requestResult = await Axios.get(url)
+    console.log(requestResult)
     const startedTime = requestResult.data.startedTime ? requestResult.data.startedTime : null
-    this.setState({ startedTime })
+    this.setState({
+      startedTime,
+      name: requestResult.data.name,
+      position: requestResult.data.position
+    })
     //oading SUccess
     this.props.LoadingSuccess()
   }
@@ -68,12 +82,13 @@ class BeforeQuiz extends React.Component {
   }
   render() {
     // console.log("Props =",this.props)
-    const { errorMessage } = this.props
+    const { errorMessage, } = this.props
     return (
       <BeforeQuizWrapper>
         <WhiteWrapper>
           <BeforeQuizBlock>
-            <h1 style={{ textAlign: 'center' }}>Mister. Doreme Fazonla</h1>
+            <h1 style={{ textAlign: 'center' }}>{this.state.name}</h1>
+            <p> position: {this.state.position} </p>
             <Button
               style={{
                 width: '100%', backgroundColor: '#954590', color: '#fff'
@@ -87,8 +102,12 @@ class BeforeQuiz extends React.Component {
           </BeforeQuizBlock>
         </WhiteWrapper>
       </BeforeQuizWrapper>
-        )
+    )
   }
 }
 
-export default connect(null, {Loading, LoadingSuccess })(BeforeQuiz)
+const mapStateToProps = state => ({
+  candidateId: state.CandidateAuth.candidateId
+})
+
+export default connect(mapStateToProps, { Loading, LoadingSuccess, updateCandidateId })(BeforeQuiz)

@@ -84,15 +84,17 @@ const Container = styled.label`
 	}
 `
 
-const candidateId = '-L3y6bEU1lxPOpxeoQw-'
+// const candidateId = '-L3y6bEU1lxPOpxeoQw-'
 const apiURL = `${baseUrl}`
 
 class QuizChoice extends React.Component {
 	sendPersonalAnswer = async (event) => {
 		try {
+			const { candidateId } = this.props
 			const answer = parseInt(event.target.value)
 			const testNumber = parseInt(event.target.dataset.testnumber)
 			const testName = event.target.dataset.testname
+			console.log(`ชื่อเทส ${testName} ข้อ ${testNumber} คำตอบ ${answer}`)
 			const url = `${apiURL}/candidates/${candidateId}/answer`
 			const personalResult = await Axios.post(url, {
 				testName: testName,
@@ -195,6 +197,7 @@ class QuizChoice extends React.Component {
 }
 
 const mapStateToProps = (state) => ({
+	candidateId: state.CandidateAuth.candidateId,
 	currentPage: state.CurrentPage.currentPage,
 	currentTest: state.Quiz.currentQuiz
 })
