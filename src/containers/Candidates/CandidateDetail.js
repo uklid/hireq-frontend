@@ -183,9 +183,10 @@ class CandidateDetail extends React.Component {
 							<StickerWidget
 								number="210"
 								text="Unread Email"
-								icon="ion-email-unread"
+								icon="ion-ios-infinite"
 								fontColor="#ffffff"
-								bgColor="#7266BA"
+								bgColor="#7263bc"
+								iconSize={36}
 							/>
 						</IsoWidgetsWrapper>
 					</Grid>
@@ -195,9 +196,10 @@ class CandidateDetail extends React.Component {
 							<StickerWidget
 								number="3024"
 								text="Total Message"
-								icon="ion-chatbubbles"
+								icon="ion-android-list"
 								fontColor="#ffffff"
-								bgColor="#7ED320"
+								bgColor="#42a5f5"
+								iconSize={36}
 							/>
 						</IsoWidgetsWrapper>
 					</Grid>
@@ -207,9 +209,10 @@ class CandidateDetail extends React.Component {
 							<StickerWidget
 								number="3024"
 								text="Total Message"
-								icon="ion-chatbubbles"
+								icon="ion-heart"
 								fontColor="#ffffff"
-								bgColor="#7ED320"
+								bgColor="#7ed321"
+								iconSize={36}
 							/>
 						</IsoWidgetsWrapper>
 					</Grid>
@@ -219,12 +222,14 @@ class CandidateDetail extends React.Component {
 							<StickerWidget
 								number="3024"
 								text="Total Message"
-								icon="ion-chatbubbles"
+								icon="ion-trophy"
 								fontColor="#ffffff"
-								bgColor="#7ED320"
+								bgColor="#e05273"
+								iconSize={36}
 							/>
 						</IsoWidgetsWrapper>
 					</Grid>
+
 					<Grid item xs={12}>
 						<h3 style={{ padding: 10 }}>Report</h3>
 						<Grid container style={{ padding: 20 }}>
@@ -239,6 +244,7 @@ class CandidateDetail extends React.Component {
 					</Grid>
 					{/* </WhiteCard> */}
 				</Grid>
+				
 			</LayoutContentWrapper >
 		)
 	}

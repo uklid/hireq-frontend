@@ -31,9 +31,10 @@ export default () => (
             <StickerWidget
               number="3024"
               text="Total Message"
-              icon="ion-chatbubbles"
+              icon="ion-ios-infinite"
               fontColor="#ffffff"
-              bgColor="#7ED320"
+              bgColor="#006C3D"
+              iconSize={28}
             />
           </IsoWidgetsWrapper>
         </Grid>
@@ -43,9 +44,10 @@ export default () => (
             <StickerWidget
               number="3024"
               text="Total Message"
-              icon="ion-chatbubbles"
+              icon="ion-ios-list-outline"
               fontColor="#ffffff"
-              bgColor="#7ED320"
+              bgColor="#9f9502"
+              iconSize={28}
             />
           </IsoWidgetsWrapper>
         </Grid>
@@ -55,9 +57,10 @@ export default () => (
             <StickerWidget
               number="3024"
               text="Total Message"
-              icon="ion-chatbubbles"
+              icon="ion-ios-heart-outline"
               fontColor="#ffffff"
-              bgColor="#7ED320"
+              bgColor="#41772D"
+              iconSize={28}
             />
           </IsoWidgetsWrapper>
         </Grid>
@@ -67,9 +70,10 @@ export default () => (
             <StickerWidget
               number="3024"
               text="Total Message"
-              icon="ion-chatbubbles"
+              icon="ion-trophy"
               fontColor="#ffffff"
-              bgColor="#7ED320"
+              bgColor="#41772D"
+              iconSize={28}
             />
           </IsoWidgetsWrapper>
         </Grid>
@@ -96,9 +100,10 @@ export default () => (
                 <StickerWidget
                   number="80"
                   text="PERFECT"
+                  oneSideColor
                   // icon="ion-chatbubbles"
-                  fontColor="#ffffff"
-                  bgColor="lightblue"
+                  fontColor="#ABB1BE"
+                  bgColor="#41772D"
                 />
               </IsoWidgetsWrapper>
             </Grid>
@@ -108,9 +113,10 @@ export default () => (
                 <StickerWidget
                   number="80"
                   text="HIGHT"
+                  oneSideColor
                   // icon="ion-chatbubbles"
-                  fontColor="#ffffff"
-                  bgColor="lightblue"
+                  fontColor="#ABB1BE"
+                  bgColor="#41772D"
                 />
               </IsoWidgetsWrapper>
             </Grid>
@@ -145,9 +151,10 @@ export default () => (
                 <StickerWidget
                   number="80"
                   text="PERFECT"
+                  oneSideColor
                   // icon="ion-chatbubbles"
-                  fontColor="#ffffff"
-                  bgColor="lightblue"
+                  fontColor="#ABB1BE"
+                  bgColor="#9A670E"
                 />
               </IsoWidgetsWrapper>
             </Grid>
@@ -157,9 +164,10 @@ export default () => (
                 <StickerWidget
                   number="80"
                   text="HIGHT"
+                  oneSideColor
                   // icon="ion-chatbubbles"
-                  fontColor="#ffffff"
-                  bgColor="lightblue"
+                  fontColor="#ABB1BE"
+                  bgColor="#9F9502"
                 />
               </IsoWidgetsWrapper>
             </Grid>
@@ -276,9 +284,10 @@ export default () => (
                 <StickerWidget
                   number="80"
                   text="PERFECT"
+                  oneSideColor
                   // icon="ion-chatbubbles"
-                  fontColor="#ffffff"
-                  bgColor="lightblue"
+                  fontColor="#ABB1BE"
+                  bgColor="#9A670E"
                 />
               </IsoWidgetsWrapper>
             </Grid>
@@ -288,9 +297,10 @@ export default () => (
                 <StickerWidget
                   number="80"
                   text="HIGHT"
+                  oneSideColor
                   // icon="ion-chatbubbles"
-                  fontColor="#ffffff"
-                  bgColor="lightblue"
+                  fontColor="#ABB1BE"
+                  bgColor="#9F9502"
                 />
               </IsoWidgetsWrapper>
             </Grid>
@@ -325,9 +335,10 @@ export default () => (
                 <StickerWidget
                   number="80"
                   text="PERFECT"
+                  oneSideColor
                   // icon="ion-chatbubbles"
-                  fontColor="#ffffff"
-                  bgColor="lightblue"
+                  fontColor="#ABB1BE"
+                  bgColor="#9A670E"
                 />
               </IsoWidgetsWrapper>
             </Grid>
@@ -337,9 +348,10 @@ export default () => (
                 <StickerWidget
                   number="80"
                   text="HIGHT"
+                  oneSideColor
                   // icon="ion-chatbubbles"
-                  fontColor="#ffffff"
-                  bgColor="lightblue"
+                  fontColor="#ABB1BE"
+                  bgColor="#9F9502"
                 />
               </IsoWidgetsWrapper>
             </Grid>
@@ -438,6 +450,9 @@ export default () => (
             </Grid>
 
           </Grid>
+        </CardWithStyled>
+        <CardWithStyled title="Report">
+          
         </CardWithStyled>
       </Grid>
     </Grid>
