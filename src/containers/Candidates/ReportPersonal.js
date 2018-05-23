@@ -5,7 +5,8 @@ import styled from 'styled-components'
 import IsoWidgetsWrapper from '../../containers/Widgets/widgets-wrapper'
 import StickerWidget from '../../containers/Widgets/sticker/sticker-widget'
 import CardWithStatus from './components/CardWithStatus'
-
+import { Radar } from 'react-chartjs-2'
+import { data } from './data'
 const CardWithStyled = styled(Card) `
 	.ant-card-head {
 		background-color: lightblue;
@@ -452,7 +453,25 @@ export default () => (
           </Grid>
         </CardWithStyled>
         <CardWithStyled title="Report">
-          
+        <Grid style={{ marginTop: 10 }} container spacing={8}>
+            <Grid item sm={6}>
+          <Radar
+            data={data}
+            height={200}
+          />
+          </Grid>
+          <Grid item sm={6}>
+              <GreyWrapper>
+                <h3>Lolem Ipsum</h3>
+                <p>
+                  Lolem IpsumLolem IpsumLolem IpsumLolem
+                  IpsumLolem IpsumLolem IpsumLolem IpsumLolem
+                  IpsumLolem IpsumLolem IpsumLolem IpsumLolem
+                  IpsumLolem Ipsum
+                </p>
+              </GreyWrapper>
+            </Grid>
+          </Grid>
         </CardWithStyled>
       </Grid>
     </Grid>
