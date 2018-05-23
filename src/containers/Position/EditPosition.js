@@ -144,9 +144,6 @@ class EditPosition extends React.Component {
 						headers: { Authorization: "Bearer " + getIdToken }
 					})
 					this.props.updateAllCandidates(resultCandidate.data)
-					this.setState({
-						defaultAllCandidatesData: resultCandidate.data
-					})
 					// End candidate
 					this.props.LoadingSuccess()
 				} else {
@@ -238,11 +235,20 @@ class EditPosition extends React.Component {
 		})
 
 	}
+
+	updateStateAfterRender = () => {
+		this.setState({
+			defaultAllCandidatesData: this.props.allCandidatesData
+		})
+	}
 	render() {
 		const { prepareCreate, allCandidatesData } = this.props
+		const { defaultAllCandidatesData } = this.state
 		const defaultCogData = prepareCreate.info && [prepareCreate.info['COG']['min'], prepareCreate.info['COG']['max']]
-		// console.log("prep = ", prepareCreate)
-		console.log("statedefaultAllCandidatesData: ", this.setState.defaultAllCandidatesData)
+		if (Object.keys(allCandidatesData).length !== Object.keys(defaultAllCandidatesData).length) {
+		// Update State If ADd new Candidate			
+			this.updateStateAfterRender()
+		}
 		return (
 			<LayoutContentWrapper>
 				<Grid container spacing={0}>
@@ -307,7 +313,7 @@ class EditPosition extends React.Component {
 							<CandidatesTable
 								dataSource={allCandidatesData && Object.values(this.newObjectCandidate())}
 								columns={candidatesColumn}
-								rowPerPage={10}
+								rowPerPage={5}
 								ellipsis={10}
 							/>
 						</Card>
