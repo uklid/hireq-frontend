@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
-import { Button, Dropdown, Menu, Icon } from 'antd'
+import { Dropdown, Menu, Icon } from 'antd'
+import Button from '../../HireQComponent/Button'
 import styled from 'styled-components'
 
 const TRBodyStyled = styled.tr`
@@ -28,7 +29,7 @@ const MoreInfoLink = styled.span`
 const LinkStyled = styled.a`
 	color: #954590;
 `
-const MenuStyled = styled(Menu)`
+const MenuStyled = styled(Menu) `
 	border: 1px solid #e8e8e8;
 	.list-item:hover {
 		color: #954590 !important;
@@ -38,14 +39,14 @@ const MenuStyled = styled(Menu)`
 const DropDownMenu = (props) => (
 	<MenuStyled>
 		<Menu.Item>
-			<a 
-			className="list-item"
-			onClick={props.seeDetailClick} target="_blank">More Detail</a>
+			<a
+				className="list-item"
+				onClick={props.seeDetailClick} target="_blank">More Detail</a>
 		</Menu.Item>
 		<Menu.Item>
-			<a 
-			className="list-item"
-			onClick={props.onEditPositionClick} target="_blank">Edit</a>
+			<a
+				className="list-item"
+				onClick={props.onEditPositionClick} target="_blank">Edit</a>
 		</Menu.Item>
 		<Menu.Item >
 			<a onClick={props.onDeleteClick} style={{ color: 'red' }}>DELETE</a>
@@ -72,11 +73,7 @@ export default class RowData extends Component {
 			...data,
 			button: <Button
 				onClick={this.props.onClick}
-				style={{
-					color: '#fff',
-					backgroundColor: '#954590',
-					borderColor: '#954590',
-				}}>Create position</Button>,
+			>Create position</Button>,
 			buttonAction:
 				<Dropdown overlay={<DropDownMenu
 					seeDetailClick={this.props.seeDetailClick}

@@ -5,7 +5,8 @@ import { LayoutContentWrapper } from '../../components/utility/layoutWrapper.sty
 import Grid from 'material-ui/Grid'
 import Card from '../../components/uielements/card'
 import styled from 'styled-components'
-import { Table, DatePicker, Slider, Button } from 'antd'
+import { Table, DatePicker, Slider, Input } from 'antd'
+import Button from '../HireQComponent/Button'
 import Tables from './components/Table'
 import CriticalSoftSkills from './CriticalSoftSkills'
 import moment from 'moment'
@@ -93,18 +94,32 @@ class SecondCreatePosition extends React.Component {
     const newDataToUpdate = { ...prepareCreate }
     this.props.preCreatePosition(newDataToUpdate)
   }
+  onTextAreaChange = (event) => {
+    const { prepareCreate } = this.props
+    const { value } = event.target
+    prepareCreate.descriptions = value
+    const updateData = { ...prepareCreate }
+    this.props.preCreatePosition(updateData)
+  }
 
   render() {
     const { prepareCreate } = this.props
-    const defaultCogData = prepareCreate && [prepareCreate.info['COG']['min'], prepareCreate.info['COG']['max']]
+    const defaultCogData = prepareCreate.info && [prepareCreate.info['COG']['min'], prepareCreate.info['COG']['max']]
     return (
       <LayoutContentWrapper>
         <Grid container spacing={24}>
-          <Grid item sm={4} xs={12}>
+          <Grid item sm={12} xs={12}>
             <Card>
               <p> <Span>Position Name: </Span> {prepareCreate.name} </p>
               <p> <Span>Category: </Span> {prepareCreate.category} </p>
-              <p> <Span>Info: </Span> {prepareCreate.descriptions} </p>
+              <p> <Span>Info: </Span>
+                <Input.TextArea
+                  onChange={this.onTextAreaChange}
+                  defaultValue={prepareCreate.descriptions}
+                  placeholder="position description."
+                  autosize={{ minRows: 5, maxRows: 10 }}
+                />
+              </p>
             </Card>
             {/* <Card title="Candidate" >
 						</Card> */}
@@ -112,7 +127,7 @@ class SecondCreatePosition extends React.Component {
           <Grid item sm={8} xs={12}>
           </Grid>
         </Grid>
-        <Grid style={{ marginTop: 10 }} container spacing={24}>
+        <Grid style={{}} container spacing={24}>
           <Grid item sm={12} xs={12}>
             <Card>
               <h3 style={{ marginBottom: 30, cursor: 'pointer' }}>Setting Position Detail.</h3>
@@ -173,7 +188,7 @@ class SecondCreatePosition extends React.Component {
             </DialogContentText>
           </DialogContent>
           <DialogActions>
-            <Button style={{ float: 'left' }} onClick={this.handleToggle}>
+            <Button style={{ float: 'left', backgroundColor: '#fff' }} onClick={this.handleToggle}>
               Disagree
             </Button>
             <Button style={{ float: 'right' }} onClick={this.createPosition}>

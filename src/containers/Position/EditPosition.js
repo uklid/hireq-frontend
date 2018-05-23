@@ -5,7 +5,7 @@ import { LayoutContentWrapper } from '../../components/utility/layoutWrapper.sty
 import Grid from 'material-ui/Grid'
 import Card from '../../components/uielements/card'
 import styled from 'styled-components'
-import { Table, DatePicker, Slider, Button } from 'antd'
+import { Table, DatePicker, Slider, Button, Input } from 'antd'
 import Tables from './components/Table'
 import CandidatesTable from '../Candidates/components/Table'
 import CriticalSoftSkills from './CriticalSoftSkills'
@@ -168,6 +168,13 @@ class EditPosition extends React.Component {
 			}
 		})
 	}
+	onTextAreaChange = (event) => {
+		const { prepareCreate } = this.props
+		const { value } = event.target
+		prepareCreate.descriptions = value
+		const updateData = { ...prepareCreate }
+		this.props.preCreatePosition(updateData)
+	}
 	render() {
 		const { prepareCreate, allCandidatesData } = this.props
 		const defaultCogData = prepareCreate.info && [prepareCreate.info['COG']['min'], prepareCreate.info['COG']['max']]
@@ -179,7 +186,14 @@ class EditPosition extends React.Component {
 						<Card>
 							<p> <Span>Position Name: </Span> {prepareCreate.name} </p>
 							<p> <Span>Category: </Span> {prepareCreate.category} </p>
-							<p> <Span>Info: </Span> {prepareCreate.descriptions} </p>
+							<p> <Span>Info: </Span>
+								<Input.TextArea
+									onChange={this.onTextAreaChange}
+									defaultValue={prepareCreate.descriptions}
+									placeholder="position description."
+									autosize={{ minRows: 5, maxRows: 10 }}
+								/>
+							</p>
 						</Card>
 					</Grid>
 					<Grid item sm={8} xs={12}>

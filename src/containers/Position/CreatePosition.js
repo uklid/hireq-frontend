@@ -9,7 +9,8 @@ import Ionicon from 'react-ionicons'
 import styled from 'styled-components'
 import { FormGroup, FormControlLabel } from 'material-ui/Form'
 import Checkbox from 'material-ui/Checkbox'
-import { Button } from 'antd'
+import Button from '../HireQComponent/Button'
+// import { Button } from 'antd'
 import Tables from './components/Table'
 import moment from 'moment'
 import firebase from 'firebase'
@@ -152,11 +153,12 @@ class CreatePosition extends React.Component {
 								/>
 							</InputWrapper>
 							<ButtonWrapper>
-								<Button onClick={this.searchPositionData} type="primary">Search</Button>
-								{/* <Button type="primary">Filter</Button> */}
+								<Button
+									style={{ marginRight: 45 }}
+									onClick={this.searchPositionData}>Search</Button>
 							</ButtonWrapper>
 							<FormGroup row>
-								<FilterField
+								{/* <FilterField
 									checked={this.state.showAll}
 									onChange={this.filterOnChange('showAll')}
 									value="All"
@@ -173,7 +175,7 @@ class CreatePosition extends React.Component {
 									onChange={this.filterOnChange('showFinished')}
 									value="Finished"
 									label="Finished"
-								/>
+								/> */}
 							</FormGroup>
 						</Card>
 					</Grid>
@@ -210,13 +212,13 @@ class CreatePosition extends React.Component {
 				</Grid>
 				<Grid style={{ marginTop: 20 }} container spacing={0}>
 					<Grid item>
-						<Button
+						{/* <Button
 							onClick={this.goToSettingPosition}
 							style={{
 								color: '#fff',
 								backgroundColor: '#954590',
 								borderColor: '#954590',
-							}}>Create position</Button>
+							}}>Create position</Button> */}
 					</Grid>
 				</Grid>
 			</LayoutContentWrapper>
