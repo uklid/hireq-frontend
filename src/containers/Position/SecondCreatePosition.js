@@ -46,6 +46,19 @@ const WhiteWrapper = styled.div`
 			display: inline;
 		}
 `
+const ButtonStyled = styled.button`
+  color: white;
+  border: 0px;
+  height: 36px;
+  width: 80px;
+  cursor: pointer;
+`
+const ButtonContainer = styled.div`
+  display: flex;
+  padding: 20px;
+  width: 100%;
+  justify-content: space-between;
+`
 
 const onChange = (date, dateString) => {
   console.log("date =", date)
@@ -188,12 +201,20 @@ class SecondCreatePosition extends React.Component {
             </DialogContentText>
           </DialogContent>
           <DialogActions>
-            <Button style={{ float: 'left', backgroundColor: '#fff' }} onClick={this.handleToggle}>
+          <ButtonContainer>
+							<ButtonStyled style={{ backgroundColor: 'grey' }} onClick={this.handleToggle}>
+								Disagree
+							</ButtonStyled>
+							<ButtonStyled style={{ backgroundColor: '#954590' }} onClick={this.createPosition}>
+								Agree
+							</ButtonStyled>
+						</ButtonContainer>
+            {/* <Button style={{ float: 'left', backgroundColor: '#fff' }} onClick={this.handleToggle}>
               Disagree
             </Button>
             <Button style={{ float: 'right' }} onClick={this.createPosition}>
               Agree
-            </Button>
+            </Button> */}
           </DialogActions>
         </Dialog>
         {/* end dialog modal */}
