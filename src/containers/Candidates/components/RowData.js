@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Button, Dropdown, Menu, Icon } from 'antd'
+import { Button, Dropdown, Menu, Icon, Checkbox } from 'antd'
 import styled from 'styled-components'
 
 const TRBodyStyled = styled.tr`
@@ -28,11 +28,18 @@ const LinkStyled = styled.a`
 	color: #954590;
 `
 
-const MenuStyled = styled(Menu)`
+const MenuStyled = styled(Menu) `
 	border: 1px solid #e8e8e8;
 	.list-item:hover {
 		color: #954590 !important;
 	}
+`
+
+const CheckboxStyled = styled(Checkbox) `
+.ant-checkbox-checked .ant-checkbox-inner, .ant-checkbox-indeterminate .ant-checkbox-inner {
+	background-color: #954590 !important;
+	border-color: #954590 !important;
+}
 `
 
 const DropDownMenu = (props) => (
@@ -72,6 +79,7 @@ export default class RowData extends Component {
 	render() {
 		const { data, columns } = this.props
 		const dataWithInfo = {
+			checkbox: <CheckboxStyled onChange={this.props.onCheckboxChange}>Checkbox</CheckboxStyled>,
 			...data,
 			button: <Button
 				onClick={this.props.onClick}

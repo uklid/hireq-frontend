@@ -4,7 +4,11 @@ import LayoutContentWrapper from '../components/utility/layoutWrapper'
 import LayoutContent from '../components/utility/layoutContent'
 import Grid from 'material-ui/Grid'
 import Card from '../components/uielements/card'
-import { Table, Progress } from 'antd'
+import {
+  Table,
+  Progress,
+  Checkbox
+} from 'antd'
 import Tables from './Position/components/Table'
 import CandidatesTable from './Candidates/components/Table'
 import { GoogleChart } from '../containers/Charts/googleChart'
@@ -30,19 +34,28 @@ const positionColumns = [{
   key: 'buttonAction'
 }]
 
-const candidatesColumn = [{
-  title: 'Name',
-  dataIndex: 'name',
-  key: 'name',
-}, {
-  title: 'Email',
-  dataIndex: 'email',
-  key: 'email',
-}, {
-  title: 'ACTIONS',
-  dataIndex: 'buttonAction',
-  key: 'buttonAction'
-}]
+const candidatesColumn = [
+  {
+    title: <Checkbox
+      // indeterminate={this.state.indeterminate}
+      // onChange={this.onCheckAllChange}
+      // checked={this.state.checkAll}
+    >Check all</Checkbox>,
+    dataIndex: 'checkbox',
+    key: 'checkbox'
+  }, {
+    title: 'Name',
+    dataIndex: 'name',
+    key: 'name',
+  }, {
+    title: 'Email',
+    dataIndex: 'email',
+    key: 'email',
+  }, {
+    title: 'ACTIONS',
+    dataIndex: 'buttonAction',
+    key: 'buttonAction'
+  }]
 
 const ProgressBarWithTitle = ({ title, percent, status }) => (
   <div style={{ marginBottom: 20 }}>

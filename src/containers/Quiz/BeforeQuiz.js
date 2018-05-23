@@ -58,12 +58,13 @@ class BeforeQuiz extends React.Component {
     position: ''
   }
   componentWillMount = () => {
-    const id = queryString.parse(this.props.location.search).id
-    this.props.updateCandidateId(id)
+    
   }
   componentDidMount = async () => {
     //  Start Loading
-    const { candidateId } = this.props
+    // const { candidateId } = this.props
+    const candidateId = queryString.parse(this.props.location.search).id
+    this.props.updateCandidateId(candidateId)
     this.props.Loading()
     const url = `${apiURL}/candidates/${candidateId}/test`
     const requestResult = await Axios.get(url)

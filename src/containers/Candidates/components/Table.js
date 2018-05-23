@@ -134,6 +134,9 @@ class CandidatesTable extends Component {
 		// } catch (err) {
 		// }
 	}
+	onCheckboxChange = () => {
+		
+	}
 	render() {
 		const { columns, dataSource, dataShow, rowPerPage, ellipsis, tableId } = this.props
 		const numOfPage = Math.ceil(dataSource.length / rowPerPage)
@@ -156,6 +159,7 @@ class CandidatesTable extends Component {
 							<RowData
 								// onClick={() => console.log(data)}
 								// seeDetailClick={() => console.log(Object.keys(dataSource)[index])}
+								onCheckboxChange={this.onCheckboxChange}
 								seeDetailClick={() => {
 									console.log("data candidate = ", data)
 									this.props.history.push({

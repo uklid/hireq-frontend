@@ -1,7 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import styled from 'styled-components'
-import { Input, Button, message, Form, } from 'antd'
+import { Input, Button, message, Form, Select } from 'antd'
 import { LoadingSuccess, Loading } from '../../redux/loading/actions'
 import { updateAllCandidates } from '../../redux/candidates/actions'
 import Axios from 'axios'
@@ -113,6 +113,18 @@ class CreateCandidates extends React.Component {
                 value={this.state.email}
               />
             </Form.Item>
+          </div>
+          <div className="create-group">
+            <Select
+              showSearch
+              style={{ width: 200 }}
+              placeholder="Select a Job"
+              optionFilterProp="children"
+            >
+              <Select.Option value="jack">Dev</Select.Option>
+              <Select.Option value="lucy">Programmer</Select.Option>
+              <Select.Option value="tom">Coder</Select.Option>
+            </Select>
           </div>
           <Button
             style={{ marginTop: 20 }}

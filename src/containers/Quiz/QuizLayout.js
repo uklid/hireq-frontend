@@ -7,8 +7,10 @@ import {
 	Timeline,
 	Card,
 	Layout,
-	Button
+	Button,
+	Tooltip
 } from 'antd'
+import Ionicon from 'react-ionicons'
 import QuizChoice from './QuizChoice'
 import QuizLogic from './QuizLogic'
 import { connect } from 'react-redux'
@@ -158,6 +160,8 @@ class QuizLayout extends React.Component {
 			this.props.LoadingSuccess()
 			// //////////////////////////////////////////
 		} catch (err) {
+			this.props.history.push('/404')
+			this.props.LoadingSuccess()
 			console.log(err)
 		}
 	}
@@ -276,7 +280,9 @@ class QuizLayout extends React.Component {
 							<Grid
 								style={{
 									display: 'flex',
-									justifyContent: 'center'
+									flexDirection: 'column',
+									justifyContent: 'flex-start',
+									alignItems: 'center'
 								}}
 								item
 								sm={3}
@@ -288,6 +294,12 @@ class QuizLayout extends React.Component {
 									<Timeline.Item id={`${currentQuiz === 'ss' && 'activeTimeline'}`} color={`${quizPath > 3 ? '#954590' : '#eee'}`}>ส่วนที่ 3 </Timeline.Item>
 									<Timeline.Item id={`${currentQuiz === 'wp' && 'activeTimeline'}`} color={`${quizPath > 4 ? '#954590' : '#eee'}`}>ส่วนที่ 4</Timeline.Item>
 								</TimelineStyled>
+								<Tooltip title="tool Hint">
+									<Ionicon icon="ios-information-circle" fontSize={30} />
+								</Tooltip>
+								<Tooltip title="prompt text">
+									<span>Tooltip will show when mouse enter.</span>
+								</Tooltip>
 							</Grid>
 							<Grid item sm={9} xs={12}>
 								<div className="quiz-choice">
