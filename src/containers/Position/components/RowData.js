@@ -48,9 +48,9 @@ const DropDownMenu = (props) => (
 				className="list-item"
 				onClick={props.onEditPositionClick} target="_blank">Edit</a>
 		</Menu.Item>
-		<Menu.Item >
+		{/* <Menu.Item >
 			<a onClick={props.onDeleteClick} style={{ color: 'red' }}>DELETE</a>
-		</Menu.Item>
+		</Menu.Item> */}
 	</MenuStyled>
 )
 

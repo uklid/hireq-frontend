@@ -47,7 +47,8 @@ const DropDownMenu = (props) => (
 		<Menu.Item>
 			<a
 				className="list-item"
-				onClick={props.seeDetailClick} target="_blank">More Detail</a>
+				onClick={props.seeDetailClick} target="_blank"
+			>More Detail</a>
 		</Menu.Item>
 		{/* <Menu.Item>
 			<a onClick={props.onEditPositionClick} target="_blank">Edit</a>
@@ -79,7 +80,7 @@ export default class RowData extends Component {
 	render() {
 		const { data, columns } = this.props
 		const dataWithInfo = {
-			checkbox: <CheckboxStyled onChange={this.props.onCheckboxChange}>Checkbox</CheckboxStyled>,
+			checkbox: <CheckboxStyled defaultChecked={this.props.allChecked} onChange={this.props.onCheckboxChange}></CheckboxStyled>,
 			...data,
 			button: <Button
 				onClick={this.props.onClick}

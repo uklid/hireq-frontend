@@ -7,7 +7,7 @@ import { FormGroup, FormControlLabel } from 'material-ui/Form'
 import TextField from 'material-ui/TextField'
 import Card from '../../components/uielements/card'
 import styled from 'styled-components'
-import { Table, DatePicker, Slider, Input } from 'antd'
+import { Table, DatePicker, Slider, Input, Checkbox } from 'antd'
 import Button from '../HireQComponent/Button'
 import Tables from './components/Table'
 import CandidatesTable from '../Candidates/components/Table'
@@ -26,7 +26,7 @@ import {
 	preCreatePosition,
 	updatePreEditData
 } from '../../redux/position/actions'
-import { updateAllCandidates } from '../../redux/candidates/actions'
+import { updateAllCandidates, updateAllChecked } from '../../redux/candidates/actions'
 import Axios from 'axios'
 import firebase from 'firebase'
 import CreateCandidates from '../Candidates/CreateCandidates'
@@ -65,19 +65,30 @@ const ButtonContainer = styled.div`
   width: 100%;
   justify-content: space-between;
 `
-const candidatesColumn = [{
-	title: 'Name',
-	dataIndex: 'name',
-	key: 'name',
-}, {
-	title: 'Email',
-	dataIndex: 'email',
-	key: 'email',
-}, {
-	title: 'ACTIONS',
-	dataIndex: 'buttonAction',
-	key: 'buttonAction'
-}]
+
+const onCheckAllChange = () => {
+	console.log(" ติด all check ")
+}
+const candidatesColumn = [
+	{
+		title: <Checkbox onChange={onCheckAllChange}>Check all</Checkbox>,
+		dataIndex: 'checkbox',
+		key: 'checkbox'
+	},
+	{
+		title: 'Name',
+		dataIndex: 'name',
+		key: 'name',
+	}, {
+		title: 'Email',
+		dataIndex: 'email',
+		key: 'email',
+	}, {
+		title: 'ACTIONS',
+		dataIndex: 'buttonAction',
+		key: 'buttonAction'
+	}
+]
 
 const ButtonWrapper = styled.div`
 		position: absolute;
@@ -108,15 +119,12 @@ const InputWrapper = styled.div`
     }
 `
 
-const onChange = (date, dateString) => {
-	console.log("date =", date)
-	console.log("data String =", dateString)
-}
 class EditPosition extends React.Component {
 	state = {
 		open: false,
 		openModalCandidate: false,
-		defaultAllCandidatesData: []
+		defaultAllCandidatesData: [],
+		allCandidate: []
 	}
 	componentWillReceiveProps = (props) => {
 		if (!props.location.state.positionId) {
@@ -142,6 +150,10 @@ class EditPosition extends React.Component {
 					const candidateURL = `${baseUrl}/users/${uid}/positions/${positionId}/candidates`
 					const resultCandidate = await Axios.get(candidateURL, {
 						headers: { Authorization: "Bearer " + getIdToken }
+					})
+					this.setState({
+						// allCandidate: resultCandidate.data
+						defaultAllCandidatesData: resultCandidate.data
 					})
 					this.props.updateAllCandidates(resultCandidate.data)
 					// End candidate
@@ -196,12 +208,6 @@ class EditPosition extends React.Component {
 	}
 	newObjectCandidate = () => {
 		// ฟังชั่นนี้ รีกรุ๊บของ array ใหม่ ให้มี candidateId เข้าไปด้วย
-		// return Object.values(this.props.allCandidatesData).map((data, index) => {
-		// 	return {
-		// 		...data,
-		// 		candidateId: Object.keys(this.props.allCandidatesData)[index]
-		// 	}
-		// })
 		const { defaultAllCandidatesData } = this.state
 		return Object.values(defaultAllCandidatesData).map((data, index) => {
 			return {
@@ -221,11 +227,11 @@ class EditPosition extends React.Component {
 		const filter = event.target.value.toUpperCase()
 		const { defaultAllCandidatesData } = this.state
 		// console.log("defaultALl" , defaultAllCandidatesData)
-		const result = Object.values(this.props.allCandidatesData).filter((word, i) => {
+		const result = Object.values(this.props.allCandidatesData).filter((word) => {
 			console.log("word = ", word)
 			const name = word.name.toString().toUpperCase().includes(filter)
 			const email = word.email.toString().toUpperCase().includes(filter)
-			if(name || email) {
+			if (name || email) {
 				return word
 			}
 		})
@@ -233,22 +239,23 @@ class EditPosition extends React.Component {
 		this.setState({
 			defaultAllCandidatesData: result
 		})
-
 	}
-
 	updateStateAfterRender = () => {
 		this.setState({
-			defaultAllCandidatesData: this.props.allCandidatesData
+			defaultAllCandidatesData: this.props.allCandidatesData,
 		})
+	}
+	onCheckAllChange = () => {
+		this.props.updateAllChecked()
 	}
 	render() {
 		const { prepareCreate, allCandidatesData } = this.props
-		const { defaultAllCandidatesData } = this.state
+		const { defaultAllCandidatesData, allCandidate } = this.state
 		const defaultCogData = prepareCreate.info && [prepareCreate.info['COG']['min'], prepareCreate.info['COG']['max']]
-		if (Object.keys(allCandidatesData).length !== Object.keys(defaultAllCandidatesData).length) {
-		// Update State If ADd new Candidate
-			this.updateStateAfterRender()
-		}
+		// if (Object.keys(allCandidatesData).length !== Object.keys(defaultAllCandidatesData).length) {
+		// // Update State If ADd new Candidate
+		// 	this.updateStateAfterRender()
+		// }
 		return (
 			<LayoutContentWrapper>
 				<Grid container spacing={0}>
@@ -432,5 +439,6 @@ export default connect(mapStateToProps,
 		LoadingSuccess,
 		preCreatePosition,
 		updatePreEditData,
-		updateAllCandidates
+		updateAllCandidates,
+		updateAllChecked
 	})(EditPosition)

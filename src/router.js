@@ -14,6 +14,18 @@ import SecondCreatePosition from './containers/Position/SecondCreatePosition'
 import Privacy from './containers/Page/Privacy'
 import TermOfService from './containers/Page/TermOfService'
 
+const NotFound = (
+  <div
+    style={{
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center'
+    }}
+  >
+    <h1 style={{ color: 'red' }}>404 Not Found. Sorry</h1>
+  </div>
+)
+
 const RestrictedRoute = ({ component: Component, isLoggedIn, ...rest }) => (
   <Route
     {...rest}
@@ -34,12 +46,12 @@ const PublicRoutes = (props) => {
       <div>
         {props.isLoading && <Loader />}
         <Switch>
-          <Route
+          {/* <Route
             exact
             path={'/'}
             component={asyncComponent(() => import('./containers/Page/signin'))}
-          />
-          <Route 
+          /> */}
+          <Route
             exact
             path={'/candidate'}
             component={BeforeQuiz}
@@ -63,13 +75,13 @@ const PublicRoutes = (props) => {
             exact
             path={'/term-of-privacy'}
             component={TermOfService}
-            // component={asyncComponent(() => import('./containers/Page/TermOfService'))}
+          // component={asyncComponent(() => import('./containers/Page/TermOfService'))}
           />
           <Route
             exact
             path={'/privacy'}
             component={Privacy}
-            // component={asyncComponent(() => import('./containers/Page/Privacy'))}
+          // component={asyncComponent(() => import('./containers/Page/Privacy'))}
           />
           {/* <RestrictedRoute
             path="/create-position/create-setting"
@@ -91,7 +103,7 @@ const PublicRoutes = (props) => {
             component={QuizComplete}
             isLoggedIn={props.isLoggedIn}
           /> */}
-          <Route render={() => <h1>404 Not Found. Sorry</h1>} />
+          <Route render={() => NotFound} />
         </Switch>
       </div>
     </ConnectedRouter>

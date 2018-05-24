@@ -2,7 +2,9 @@ const initialState = {
   allCandidatesData: [],
   deleteId: '',
   positionId: '',
-  toggleDialog: false
+  toggleDialog: false,
+  candidateCheckId: [],
+  allChecked: false
 }
 
 const Candidates = (state = initialState, action) => {
@@ -22,6 +24,21 @@ const Candidates = (state = initialState, action) => {
       return {
         ...state,
         toggleDialog: action.data
+      }
+    case 'UPDATE_CANDIDATE_CHECK_ID':
+      return {
+        ...state,
+        candidateCheckId: [...state.candidateCheckId, action.data]
+      }
+    case 'UPDATE_ALL_CHECKED':
+      return {
+        ...state,
+        allChecked: action.data
+      }
+    case 'UPDATE_UNCHECK_ID':
+      return {
+        ...state,
+        candidateCheckId: [...action.data]
       }
     default:
       return state

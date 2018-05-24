@@ -9,8 +9,15 @@ import { LoadingSuccess, Loading } from '../../../redux/loading/actions'
 import { preCreatePosition, updatePreEditData } from '../../../redux/position/actions'
 import { message } from 'antd'
 import { ConfirmDelete } from './ConfirmDelete'
-import { updateDeleteId, toggleDialog } from '../../../redux/candidates/actions'
+import {
+	updateDeleteId,
+	toggleDialog,
+	updateCandidateCheckId,
+	updateAllChecked,
+	updateUncheckCandidateId
+} from '../../../redux/candidates/actions'
 import { baseUrl } from '../../../libs/url/baseUrl'
+import Button from '../../HireQComponent/Button'
 
 const TableStyled = styled.table`
     width: 100%;
@@ -32,7 +39,7 @@ const THstyled = styled.th`
 
 const Pagination = styled.div`
 	display: flex;
-	justify-content: flex-end;
+	justify-content: space-between;
 `
 const PaginationItem = styled.span`
     color: black;
@@ -134,8 +141,46 @@ class CandidatesTable extends Component {
 		// } catch (err) {
 		// }
 	}
-	onCheckboxChange = () => {
-		
+	onCheckboxChange = (data) => (event) => {
+		if (event.target.checked) {
+			this.props.updateCandidateCheckId(data.candidateId)
+		} else {
+			const oldData = this.props.candidateCheckId
+			const updateData = oldData.filter(id => {
+				console.log(`${id} === ${data.candidateId}`)
+				if(id !== data.candidateId) {
+					return id
+				}
+			})
+			this.props.updateUncheckCandidateId(updateData)
+		}
+	}
+	sendAllEmail = async () => {
+		const { candidateCheckId } = this.props
+		this.props.Loading()
+		const test = await firebase.auth().onAuthStateChanged(async (data) => {
+			if (data) {
+				try {
+					candidateCheckId.map(async id => {
+						const getIdToken = await firebase.auth().currentUser.getIdToken()
+						const uid = localStorage.getItem('loginToken')
+						const url = `${baseUrl}/users/${uid}/candidates/email`
+						const result = await Axios.post(url, { candidateId: id }, {
+							headers: { Authorization: "Bearer " + getIdToken }
+						})
+						console.log("ID Email Send:", id)
+					})
+					// this.props.allPositionCreated = 
+					this.props.LoadingSuccess()
+				} catch (err) {
+					this.props.LoadingSuccess()
+					console.log(err)
+				}
+			} else {
+				this.props.LoadingSuccess()
+				console.log("ไม่มี")
+			}
+		})
 	}
 	render() {
 		const { columns, dataSource, dataShow, rowPerPage, ellipsis, tableId } = this.props
@@ -159,7 +204,8 @@ class CandidatesTable extends Component {
 							<RowData
 								// onClick={() => console.log(data)}
 								// seeDetailClick={() => console.log(Object.keys(dataSource)[index])}
-								onCheckboxChange={this.onCheckboxChange}
+								allChecked={this.props.allChecked}
+								onCheckboxChange={this.onCheckboxChange(data)}
 								seeDetailClick={() => {
 									console.log("data candidate = ", data)
 									this.props.history.push({
@@ -181,101 +227,104 @@ class CandidatesTable extends Component {
 					</tbody>
 				</TableStyled>
 				<Pagination>
-					<PaginationItem
-						onClick={() => this.backward(numOfPage)}
-					>
-						&lt;
-          </PaginationItem>
-					{pages.length < ellipsis && pages.map(page => (
+					<Button onClick={this.sendAllEmail}>Send Email</Button>
+					<div>
 						<PaginationItem
-							currentPage={this.state.currentPage}
-							page={page + 1}
-							onClick={() => this.setState({ currentPage: page + 1 })}
+							onClick={() => this.backward(numOfPage)}
 						>
-							{page + 1}
-						</PaginationItem>
-					))}
-					{this.state.currentPage < 4 && pages.length >= ellipsis && (
-						<React.Fragment>
-							{pages.slice(0, 4).map(page => (
+							&lt;
+          </PaginationItem>
+						{pages.length < ellipsis && pages.map(page => (
+							<PaginationItem
+								currentPage={this.state.currentPage}
+								page={page + 1}
+								onClick={() => this.setState({ currentPage: page + 1 })}
+							>
+								{page + 1}
+							</PaginationItem>
+						))}
+						{this.state.currentPage < 4 && pages.length >= ellipsis && (
+							<React.Fragment>
+								{pages.slice(0, 4).map(page => (
+									<PaginationItem
+										currentPage={this.state.currentPage}
+										page={page + 1}
+										onClick={() => this.setState({ currentPage: page + 1 })}
+									>
+										{page + 1}
+									</PaginationItem>
+								))}
+								<Ellipsis>...</Ellipsis>
 								<PaginationItem
 									currentPage={this.state.currentPage}
-									page={page + 1}
-									onClick={() => this.setState({ currentPage: page + 1 })}
+									page={numOfPage}
+									onClick={() => this.setState({ currentPage: numOfPage })}
 								>
-									{page + 1}
+									{numOfPage}
 								</PaginationItem>
-							))}
-							<Ellipsis>...</Ellipsis>
-							<PaginationItem
-								currentPage={this.state.currentPage}
-								page={numOfPage}
-								onClick={() => this.setState({ currentPage: numOfPage })}
-							>
-								{numOfPage}
-							</PaginationItem>
-						</React.Fragment>
-					)}
+							</React.Fragment>
+						)}
 
-					{this.state.currentPage + 3 > numOfPage && pages.length >= ellipsis && (
-						<React.Fragment>
+						{this.state.currentPage + 3 > numOfPage && pages.length >= ellipsis && (
+							<React.Fragment>
 
-							<PaginationItem
-								currentPage={this.state.currentPage}
-								page={1}
-								onClick={() => this.setState({ currentPage: 1 })}
-							>
-								{1}
-							</PaginationItem>
-							<Ellipsis>...</Ellipsis>
-							{pages.slice(numOfPage - 4, numOfPage).map(page => (
 								<PaginationItem
 									currentPage={this.state.currentPage}
-									page={page + 1}
-									onClick={() => this.setState({ currentPage: page + 1 })}
+									page={1}
+									onClick={() => this.setState({ currentPage: 1 })}
 								>
-									{page + 1}
+									{1}
 								</PaginationItem>
-							))}
-						</React.Fragment>
-					)}
+								<Ellipsis>...</Ellipsis>
+								{pages.slice(numOfPage - 4, numOfPage).map(page => (
+									<PaginationItem
+										currentPage={this.state.currentPage}
+										page={page + 1}
+										onClick={() => this.setState({ currentPage: page + 1 })}
+									>
+										{page + 1}
+									</PaginationItem>
+								))}
+							</React.Fragment>
+						)}
 
-					{this.state.currentPage + 2 < numOfPage && this.state.currentPage > 3 && pages.length >= ellipsis && (
-						<React.Fragment>
+						{this.state.currentPage + 2 < numOfPage && this.state.currentPage > 3 && pages.length >= ellipsis && (
+							<React.Fragment>
 
-							<PaginationItem
-								currentPage={this.state.currentPage}
-								page={1}
-								onClick={() => this.setState({ currentPage: 1 })}
-							>
-								{1}
-							</PaginationItem>
-							<Ellipsis>...</Ellipsis>
-							{pages.slice(this.state.currentPage - 2, this.state.currentPage + 1).map(page => (
 								<PaginationItem
 									currentPage={this.state.currentPage}
-									page={page + 1}
-									onClick={() => this.setState({ currentPage: page + 1 })}
+									page={1}
+									onClick={() => this.setState({ currentPage: 1 })}
 								>
-									{page + 1}
+									{1}
 								</PaginationItem>
-							))}
-							<Ellipsis>...</Ellipsis>
-							<PaginationItem
-								currentPage={this.state.currentPage}
-								page={numOfPage}
-								onClick={() => this.setState({ currentPage: numOfPage })}
-							>
-								{numOfPage}
-							</PaginationItem>
-						</React.Fragment>
-					)}
+								<Ellipsis>...</Ellipsis>
+								{pages.slice(this.state.currentPage - 2, this.state.currentPage + 1).map(page => (
+									<PaginationItem
+										currentPage={this.state.currentPage}
+										page={page + 1}
+										onClick={() => this.setState({ currentPage: page + 1 })}
+									>
+										{page + 1}
+									</PaginationItem>
+								))}
+								<Ellipsis>...</Ellipsis>
+								<PaginationItem
+									currentPage={this.state.currentPage}
+									page={numOfPage}
+									onClick={() => this.setState({ currentPage: numOfPage })}
+								>
+									{numOfPage}
+								</PaginationItem>
+							</React.Fragment>
+						)}
 
-					<PaginationItem
-						onClick={() => this.forward(numOfPage)}
-					>
-						&gt;
+						<PaginationItem
+							onClick={() => this.forward(numOfPage)}
+						>
+							&gt;
                     </PaginationItem>
+					</div>
 				</Pagination>
 			</div>
 		)
@@ -283,7 +332,9 @@ class CandidatesTable extends Component {
 }
 
 const mapStateToProps = state => ({
-	allPositionCreated: state.Positions.allPositionCreated
+	allPositionCreated: state.Positions.allPositionCreated,
+	candidateCheckId: state.Candidates.candidateCheckId,
+	allChecked: state.Candidates.allChecked
 })
 
 export default connect(mapStateToProps,
@@ -293,5 +344,8 @@ export default connect(mapStateToProps,
 		Loading,
 		LoadingSuccess,
 		updateDeleteId,
-		toggleDialog
+		toggleDialog,
+		updateCandidateCheckId,
+		updateAllChecked,
+		updateUncheckCandidateId
 	})(withRouter(CandidatesTable))

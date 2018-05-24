@@ -16,7 +16,7 @@ import styled from 'styled-components'
 import { connect } from 'react-redux'
 import { Loading, LoadingSuccess } from '../redux/loading/actions'
 import { updateCreatedAllPosition } from '../redux/position/actions'
-import { updateAllCandidates } from '../redux/candidates/actions'
+import { updateAllCandidates, updateAllChecked } from '../redux/candidates/actions'
 import Axios from 'axios'
 import { baseUrl } from '../libs/url/baseUrl'
 
@@ -36,11 +36,7 @@ const positionColumns = [{
 
 const candidatesColumn = [
   {
-    title: <Checkbox
-      // indeterminate={this.state.indeterminate}
-      // onChange={this.onCheckAllChange}
-      // checked={this.state.checkAll}
-    >Check all</Checkbox>,
+    title: <Checkbox onChange={this.onCheckAllChange}>Check all</Checkbox>,
     dataIndex: 'checkbox',
     key: 'checkbox'
   }, {
@@ -228,6 +224,9 @@ class Dashboard extends Component {
       console.log(err)
     }
   }
+  onCheckAllChange = () => {
+    this.props.updateAllChecked()
+  }
   newObject = () => {
     // ฟังชั่นนี้ รีกรุ๊บของ array ใหม่ ให้มี positionId เข้าไปด้วย
     return Object.values(this.props.allPositionCreated).map((data, index) => {
@@ -350,5 +349,6 @@ export default connect(mapStateToProps, {
   updateCreatedAllPosition,
   updateAllCandidates,
   Loading,
-  LoadingSuccess
+  LoadingSuccess,
+  updateAllChecked
 })(Dashboard)
