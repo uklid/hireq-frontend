@@ -66,30 +66,6 @@ const ButtonContainer = styled.div`
   justify-content: space-between;
 `
 
-const onCheckAllChange = () => {
-	console.log(" ติด all check ")
-}
-const candidatesColumn = [
-	{
-		title: <Checkbox onChange={onCheckAllChange}>Check all</Checkbox>,
-		dataIndex: 'checkbox',
-		key: 'checkbox'
-	},
-	{
-		title: 'Name',
-		dataIndex: 'name',
-		key: 'name',
-	}, {
-		title: 'Email',
-		dataIndex: 'email',
-		key: 'email',
-	}, {
-		title: 'ACTIONS',
-		dataIndex: 'buttonAction',
-		key: 'buttonAction'
-	}
-]
-
 const ButtonWrapper = styled.div`
 		position: absolute;
 		right: 37px;
@@ -177,6 +153,33 @@ class EditPosition extends React.Component {
 			[name]: !this.state[name]
 		})
 	}
+	onCheckAllChange = (event) => {
+		console.log(" ติด all check ", event.target)
+		console.log("Props s s s s: " , this.props)
+		this.props.updateAllChecked()
+	}
+	candidatesColumn = [
+		{
+			title: <Checkbox onChange={this.onCheckAllChange}>Check all</Checkbox>,
+			dataIndex: 'checkbox',
+			key: 'checkbox'
+		},
+		{
+			title: 'Name',
+			dataIndex: 'name',
+			key: 'name',
+		},
+		{
+			title: 'Email',
+			dataIndex: 'email',
+			key: 'email',
+		},
+		{
+			title: 'ACTIONS',
+			dataIndex: 'buttonAction',
+			key: 'buttonAction'
+		}
+	]
 	createPosition = async () => {
 		this.props.Loading()
 		const { prepareCreate } = this.props
@@ -319,7 +322,7 @@ class EditPosition extends React.Component {
 						<Card title="Outstanding Candidates">
 							<CandidatesTable
 								dataSource={allCandidatesData && Object.values(this.newObjectCandidate())}
-								columns={candidatesColumn}
+								columns={this.candidatesColumn}
 								rowPerPage={5}
 								ellipsis={10}
 							/>

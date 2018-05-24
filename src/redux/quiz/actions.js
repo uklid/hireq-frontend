@@ -58,8 +58,16 @@ export const updateQuizPercent = () => (dispatch, getState) => {
 
   const allQuizDoneLength = filterCogDone + filterPerDone + filterSSDone + filterWPDone
 
+  dispatch({
+    type: 'UPDATE_ALL_QUIZ_DONE',
+    data: getState().Quiz.allQuizDone + 1
+  })
+
+  const allDone = getState().Quiz.allQuizDone + allQuizDoneLength
+  console.log("All DOne: ", allDone)
+
   const calculatePercent = () => {
-    const result = (allQuizDoneLength / allQuizLength) * 100
+    const result = (allDone / allQuizLength) * 100
     return parseInt(result)
   }
   // console.log("all quiz:", allQuizLength)

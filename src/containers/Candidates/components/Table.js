@@ -148,7 +148,7 @@ class CandidatesTable extends Component {
 			const oldData = this.props.candidateCheckId
 			const updateData = oldData.filter(id => {
 				console.log(`${id} === ${data.candidateId}`)
-				if(id !== data.candidateId) {
+				if (id !== data.candidateId) {
 					return id
 				}
 			})
@@ -156,20 +156,32 @@ class CandidatesTable extends Component {
 		}
 	}
 	sendAllEmail = async () => {
-		const { candidateCheckId } = this.props
+		const { candidateCheckId, allChecked, allCandidatesData } = this.props
 		this.props.Loading()
 		const test = await firebase.auth().onAuthStateChanged(async (data) => {
 			if (data) {
 				try {
-					candidateCheckId.map(async id => {
-						const getIdToken = await firebase.auth().currentUser.getIdToken()
-						const uid = localStorage.getItem('loginToken')
-						const url = `${baseUrl}/users/${uid}/candidates/email`
-						const result = await Axios.post(url, { candidateId: id }, {
-							headers: { Authorization: "Bearer " + getIdToken }
+					if (allChecked) {
+						Object.values(allCandidatesData).map(async data => {
+							const getIdToken = await firebase.auth().currentUser.getIdToken()
+							const uid = localStorage.getItem('loginToken')
+							const url = `${baseUrl}/users/${uid}/candidates/email`
+							const result = await Axios.post(url, { candidateId: data.candidateId }, {
+								headers: { Authorization: "Bearer " + getIdToken }
+							})
+							console.log("ID Email Send:", data.candidateId)
 						})
-						console.log("ID Email Send:", id)
-					})
+					} else {
+						candidateCheckId.map(async id => {
+							const getIdToken = await firebase.auth().currentUser.getIdToken()
+							const uid = localStorage.getItem('loginToken')
+							const url = `${baseUrl}/users/${uid}/candidates/email`
+							const result = await Axios.post(url, { candidateId: id }, {
+								headers: { Authorization: "Bearer " + getIdToken }
+							})
+							console.log("ID Email Send:", id)
+						})
+					}
 					// this.props.allPositionCreated = 
 					this.props.LoadingSuccess()
 				} catch (err) {
@@ -334,7 +346,8 @@ class CandidatesTable extends Component {
 const mapStateToProps = state => ({
 	allPositionCreated: state.Positions.allPositionCreated,
 	candidateCheckId: state.Candidates.candidateCheckId,
-	allChecked: state.Candidates.allChecked
+	allChecked: state.Candidates.allChecked,
+	allCandidatesData: state.Candidates.allCandidatesData
 })
 
 export default connect(mapStateToProps,

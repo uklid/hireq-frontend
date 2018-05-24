@@ -34,25 +34,6 @@ const positionColumns = [{
   key: 'buttonAction'
 }]
 
-const candidatesColumn = [
-  {
-    title: <Checkbox onChange={this.onCheckAllChange}>Check all</Checkbox>,
-    dataIndex: 'checkbox',
-    key: 'checkbox'
-  }, {
-    title: 'Name',
-    dataIndex: 'name',
-    key: 'name',
-  }, {
-    title: 'Email',
-    dataIndex: 'email',
-    key: 'email',
-  }, {
-    title: 'ACTIONS',
-    dataIndex: 'buttonAction',
-    key: 'buttonAction'
-  }]
-
 const ProgressBarWithTitle = ({ title, percent, status }) => (
   <div style={{ marginBottom: 20 }}>
     <p style={{ marginBottom: 0 }}>{title}</p>
@@ -245,6 +226,33 @@ class Dashboard extends Component {
       }
     })
   }
+  onCheckAllChange = (event) => {
+		console.log(" ติด all check ", event.target)
+		console.log("Props s s s s: " , this.props)
+		this.props.updateAllChecked()
+	}
+	candidatesColumn = [
+		{
+			title: <Checkbox onChange={this.onCheckAllChange}>Check all</Checkbox>,
+			dataIndex: 'checkbox',
+			key: 'checkbox'
+		},
+		{
+			title: 'Name',
+			dataIndex: 'name',
+			key: 'name',
+		},
+		{
+			title: 'Email',
+			dataIndex: 'email',
+			key: 'email',
+		},
+		{
+			title: 'ACTIONS',
+			dataIndex: 'buttonAction',
+			key: 'buttonAction'
+		}
+	]
   render() {
     const { allPositionCreated, allCandidatesData } = this.props
     // console.log('All candidates: ', allCandidateData)
@@ -310,7 +318,7 @@ class Dashboard extends Component {
             >
               <CandidatesTable
                 dataSource={Object.values(this.newObjectCandidate())}
-                columns={candidatesColumn}
+                columns={this.candidatesColumn}
                 rowPerPage={10}
                 ellipsis={10}
               />
