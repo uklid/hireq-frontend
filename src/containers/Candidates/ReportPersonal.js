@@ -420,7 +420,232 @@ export default () => (
           , and visual and spatial processing."
         />
       </Grid>
+      <Grid item xs={6}>
+        <CardWithPowerBar
+          title="PHYSICAL, PRACTICAL AND MECHANICAL"
+          firstColor="green"
+          secondColor="green"
+          firstTitle="HIGH"
+          secondTitle="MATCH"
+          max={78}
+          min={46}
+          score={90}
+          description="Cognitive ability is brain-base skills that candidate need to carry out work task.
+          It difines the mechanism of how people learn solve problems, and make dicisions.
+          It relates to many essential functions of the brain such as memory, perception, attension
+          , and visual and spatial processing."
+        />
+      </Grid>
+      <Grid item xs={6}>
+        <CardWithPowerBar
+          title="PHYSICAL, PRACTICAL AND MECHANICAL"
+          firstColor="green"
+          secondColor="green"
+          firstTitle="HIGH"
+          secondTitle="MATCH"
+          max={80}
+          min={20}
+          score={40}
+          description="Cognitive ability is brain-base skills that candidate need to carry out work task.
+          It difines the mechanism of how people learn solve problems, and make dicisions.
+          It relates to many essential functions of the brain such as memory, perception, attension
+          , and visual and spatial processing."
+        />
+      </Grid>
+      <Grid item xs={6}>
+        <CardWithPowerBar
+          title="PHYSICAL, PRACTICAL AND MECHANICAL"
+          firstColor="green"
+          secondColor="green"
+          firstTitle="HIGH"
+          secondTitle="MATCH"
+          max={78}
+          min={46}
+          score={90}
+          description="Cognitive ability is brain-base skills that candidate need to carry out work task.
+          It difines the mechanism of how people learn solve problems, and make dicisions.
+          It relates to many essential functions of the brain such as memory, perception, attension
+          , and visual and spatial processing."
+        />
+      </Grid>
+      <Grid item xs={6}>
+        <CardWithPowerBar
+          title="PHYSICAL, PRACTICAL AND MECHANICAL"
+          firstColor="green"
+          secondColor="green"
+          firstTitle="HIGH"
+          secondTitle="MATCH"
+          max={40}
+          min={10}
+          score={60}
+          description="Cognitive ability is brain-base skills that candidate need to carry out work task.
+          It difines the mechanism of how people learn solve problems, and make dicisions.
+          It relates to many essential functions of the brain such as memory, perception, attension
+          , and visual and spatial processing."
+        />
+      </Grid>
+      <Grid item xs={6}>
+        <CardWithPowerBar
+          title="PHYSICAL, PRACTICAL AND MECHANICAL"
+          firstColor="green"
+          secondColor="green"
+          firstTitle="HIGH"
+          secondTitle="MATCH"
+          max={100}
+          min={80}
+          score={30}
+          description="Cognitive ability is brain-base skills that candidate need to carry out work task.
+          It difines the mechanism of how people learn solve problems, and make dicisions.
+          It relates to many essential functions of the brain such as memory, perception, attension
+          , and visual and spatial processing."
+        />
+      </Grid>
+      <Grid item xs={6}>
+        <CardWithPowerBar
+          title="PHYSICAL, PRACTICAL AND MECHANICAL"
+          firstColor="green"
+          secondColor="green"
+          firstTitle="HIGH"
+          secondTitle="MATCH"
+          max={40}
+          min={10}
+          score={60}
+          description="Cognitive ability is brain-base skills that candidate need to carry out work task.
+          It difines the mechanism of how people learn solve problems, and make dicisions.
+          It relates to many essential functions of the brain such as memory, perception, attension
+          , and visual and spatial processing."
+        />
+      </Grid>
+      <Grid item xs={6}>
+        <CardWithPowerBar
+          title="PHYSICAL, PRACTICAL AND MECHANICAL"
+          firstColor="green"
+          secondColor="green"
+          firstTitle="HIGH"
+          secondTitle="MATCH"
+          max={100}
+          min={80}
+          score={30}
+          description="Cognitive ability is brain-base skills that candidate need to carry out work task.
+          It difines the mechanism of how people learn solve problems, and make dicisions.
+          It relates to many essential functions of the brain such as memory, perception, attension
+          , and visual and spatial processing."
+        />
+      </Grid>
       {/* End card with power bar */}
+      <Grid item xs={6}>
+          <Radar
+            data={data}
+            height={140}
+          />
+        </Grid>
+        <Grid item xs={6}>
+          <GreyWrapper>
+            <h4>Critical Softskills</h4>
+            <p style={{ fontSize: 12 }}>
+              Cognitive ability is brain-base skills that candidate need to carry out work task.
+              It difines the mechanism of how people learn solve problems, and make dicisions.
+              It relates to many essential functions of the brain such as memory, perception, attension
+              , and visual and spatial processing.
+            </p>
+          </GreyWrapper>
+        </Grid>
+        <Grid item xs={6}>
+        <CardWithPowerBar
+          title="PHYSICAL, PRACTICAL AND MECHANICAL"
+          firstColor="green"
+          secondColor="green"
+          firstTitle="HIGH"
+          secondTitle="MATCH"
+          max={40}
+          min={10}
+          score={60}
+          description="Cognitive ability is brain-base skills that candidate need to carry out work task.
+          It difines the mechanism of how people learn solve problems, and make dicisions.
+          It relates to many essential functions of the brain such as memory, perception, attension
+          , and visual and spatial processing."
+        />
+      </Grid>
+      <Grid item xs={6}>
+        <CardWithPowerBar
+          title="PHYSICAL, PRACTICAL AND MECHANICAL"
+          firstColor="green"
+          secondColor="green"
+          firstTitle="HIGH"
+          secondTitle="MATCH"
+          max={100}
+          min={80}
+          score={30}
+          description="Cognitive ability is brain-base skills that candidate need to carry out work task.
+          It difines the mechanism of how people learn solve problems, and make dicisions.
+          It relates to many essential functions of the brain such as memory, perception, attension
+          , and visual and spatial processing."
+        />
+      </Grid>
+      <Grid item xs={6}>
+        <CardWithPowerBar
+          title="PHYSICAL, PRACTICAL AND MECHANICAL"
+          firstColor="green"
+          secondColor="green"
+          firstTitle="HIGH"
+          secondTitle="MATCH"
+          max={40}
+          min={10}
+          score={60}
+          description="Cognitive ability is brain-base skills that candidate need to carry out work task.
+          It difines the mechanism of how people learn solve problems, and make dicisions.
+          It relates to many essential functions of the brain such as memory, perception, attension
+          , and visual and spatial processing."
+        />
+      </Grid>
+      <Grid item xs={6}>
+        <CardWithPowerBar
+          title="PHYSICAL, PRACTICAL AND MECHANICAL"
+          firstColor="green"
+          secondColor="green"
+          firstTitle="HIGH"
+          secondTitle="MATCH"
+          max={100}
+          min={80}
+          score={30}
+          description="Cognitive ability is brain-base skills that candidate need to carry out work task.
+          It difines the mechanism of how people learn solve problems, and make dicisions.
+          It relates to many essential functions of the brain such as memory, perception, attension
+          , and visual and spatial processing."
+        />
+      </Grid>
+      <Grid item xs={6}>
+        <CardWithPowerBar
+          title="PHYSICAL, PRACTICAL AND MECHANICAL"
+          firstColor="green"
+          secondColor="green"
+          firstTitle="HIGH"
+          secondTitle="MATCH"
+          max={40}
+          min={10}
+          score={60}
+          description="Cognitive ability is brain-base skills that candidate need to carry out work task.
+          It difines the mechanism of how people learn solve problems, and make dicisions.
+          It relates to many essential functions of the brain such as memory, perception, attension
+          , and visual and spatial processing."
+        />
+      </Grid>
+      <Grid item xs={6}>
+        <CardWithPowerBar
+          title="PHYSICAL, PRACTICAL AND MECHANICAL"
+          firstColor="green"
+          secondColor="green"
+          firstTitle="HIGH"
+          secondTitle="MATCH"
+          max={100}
+          min={80}
+          score={30}
+          description="Cognitive ability is brain-base skills that candidate need to carry out work task.
+          It difines the mechanism of how people learn solve problems, and make dicisions.
+          It relates to many essential functions of the brain such as memory, perception, attension
+          , and visual and spatial processing."
+        />
+      </Grid>
     </Grid>
     {/* <Grid style={{ backgroundColor: '#eee', marginTop: 30 }} container spacing={8}> */}
 
