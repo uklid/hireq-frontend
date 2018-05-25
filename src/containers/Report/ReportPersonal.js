@@ -436,11 +436,9 @@ export default () => (
                 description="Lolem IpsumLolem IpsumLolem IpsumLolem IpsumLolem IpsumLolem IpsumLolem IpsumLolem IpsumLolem Ipsum"
               />
             </Grid>
-
           </Grid>
         </CardWithStyled>
       </Grid>
     </Grid>
-
   </React.Fragment>
 )

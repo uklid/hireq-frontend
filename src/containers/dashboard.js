@@ -233,7 +233,7 @@ class Dashboard extends Component {
 	}
 	candidatesColumn = [
 		{
-			title: <Checkbox onChange={this.onCheckAllChange}>Check all</Checkbox>,
+			title: <Checkbox indeterminate={this.props.allChecked} onChange={this.onCheckAllChange}>Check all</Checkbox>,
 			dataIndex: 'checkbox',
 			key: 'checkbox'
 		},

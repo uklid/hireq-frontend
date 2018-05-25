@@ -143,8 +143,10 @@ class CandidatesTable extends Component {
 	}
 	onCheckboxChange = (data) => (event) => {
 		if (event.target.checked) {
+			event.target.checked === true
 			this.props.updateCandidateCheckId(data.candidateId)
 		} else {
+			event.target.checked === false
 			const oldData = this.props.candidateCheckId
 			const updateData = oldData.filter(id => {
 				console.log(`${id} === ${data.candidateId}`)
@@ -216,7 +218,8 @@ class CandidatesTable extends Component {
 							<RowData
 								// onClick={() => console.log(data)}
 								// seeDetailClick={() => console.log(Object.keys(dataSource)[index])}
-								allChecked={this.props.allChecked}
+
+								// allChecked={this.props.allChecked}
 								onCheckboxChange={this.onCheckboxChange(data)}
 								seeDetailClick={() => {
 									console.log("data candidate = ", data)

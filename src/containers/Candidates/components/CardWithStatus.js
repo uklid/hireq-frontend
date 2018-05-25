@@ -54,6 +54,6 @@ export default ({
         <BadgeItem style={{ fontSize: 10 }} color={secondColor}>{secondTitle}</BadgeItem>
       </div>
     </ScoreWithBage>
-    <p>{description}</p>
+    <p style={{ fontSize: 12 }}>{description}</p>
   </CardWrapper>
 )

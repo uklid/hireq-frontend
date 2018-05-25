@@ -107,7 +107,7 @@ class EditPosition extends React.Component {
 			props.history.push('/dashboard')
 		}
 	}
-	componentDidMount = async () => {
+	componentWillMount = async () => {
 		try {
 			this.props.Loading()
 			const test = await firebase.auth().onAuthStateChanged(async (data) => {
@@ -128,7 +128,7 @@ class EditPosition extends React.Component {
 						headers: { Authorization: "Bearer " + getIdToken }
 					})
 					this.setState({
-						// allCandidate: resultCandidate.data
+						allCandidate: resultCandidate.data,
 						defaultAllCandidatesData: resultCandidate.data
 					})
 					this.props.updateAllCandidates(resultCandidate.data)
@@ -155,7 +155,7 @@ class EditPosition extends React.Component {
 	}
 	onCheckAllChange = (event) => {
 		console.log(" ติด all check ", event.target)
-		console.log("Props s s s s: " , this.props)
+		console.log("Props s s s s: ", this.props)
 		this.props.updateAllChecked()
 	}
 	candidatesColumn = [
@@ -200,6 +200,7 @@ class EditPosition extends React.Component {
 				positionDetail: updateId
 			}
 		})
+		// this.componentDidMount()
 		this.props.LoadingSuccess()
 	}
 	changeCogData = (value) => {
@@ -212,10 +213,10 @@ class EditPosition extends React.Component {
 	newObjectCandidate = () => {
 		// ฟังชั่นนี้ รีกรุ๊บของ array ใหม่ ให้มี candidateId เข้าไปด้วย
 		const { defaultAllCandidatesData } = this.state
-		return Object.values(defaultAllCandidatesData).map((data, index) => {
+		return Object.values(this.props.allCandidatesData).map((data, index) => {
 			return {
 				...data,
-				candidateId: Object.keys(defaultAllCandidatesData)[index]
+				candidateId: Object.keys(this.props.allCandidatesData)[index]
 			}
 		})
 	}
@@ -230,7 +231,8 @@ class EditPosition extends React.Component {
 		const filter = event.target.value.toUpperCase()
 		const { defaultAllCandidatesData } = this.state
 		// console.log("defaultALl" , defaultAllCandidatesData)
-		const result = Object.values(this.props.allCandidatesData).filter((word) => {
+		// const result = Object.values(this.props.allCandidatesData).filter((word) => {
+		const result = Object.values(defaultAllCandidatesData).filter((word) => {
 			console.log("word = ", word)
 			const name = word.name.toString().toUpperCase().includes(filter)
 			const email = word.email.toString().toUpperCase().includes(filter)
@@ -239,9 +241,10 @@ class EditPosition extends React.Component {
 			}
 		})
 		console.log('result = ', result)
-		this.setState({
-			defaultAllCandidatesData: result
-		})
+		this.props.updateAllCandidates(result)
+		// this.setState({
+		// 	defaultAllCandidatesData: result
+		// })
 	}
 	updateStateAfterRender = () => {
 		this.setState({
@@ -255,9 +258,9 @@ class EditPosition extends React.Component {
 		const { prepareCreate, allCandidatesData } = this.props
 		const { defaultAllCandidatesData, allCandidate } = this.state
 		const defaultCogData = prepareCreate.info && [prepareCreate.info['COG']['min'], prepareCreate.info['COG']['max']]
-		// if (Object.keys(allCandidatesData).length !== Object.keys(defaultAllCandidatesData).length) {
-		// // Update State If ADd new Candidate
-		// 	this.updateStateAfterRender()
+		// if (Object.keys(allCandidate).length !== Object.keys(allCandidatesData).length) {
+		// 	// Update State If ADd new Candidate
+		// this.updateStateAfterRender()
 		// }
 		return (
 			<LayoutContentWrapper>
@@ -423,6 +426,7 @@ class EditPosition extends React.Component {
 						<DialogContentText id="alert-dialog-description">
 							<CreateCandidates
 								addPositionId={prepareCreate.positionId}
+								// onClick={this.add}
 							/>
 						</DialogContentText>
 					</DialogContent>

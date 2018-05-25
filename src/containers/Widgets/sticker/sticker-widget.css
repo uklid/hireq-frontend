@@ -20,7 +20,7 @@
 }
 
 i {
-    font-size: 20px
+    font-size: 15px
 }
 
 .isoContentWrapper {
@@ -32,7 +32,7 @@ i {
 
 .isoLabel {
     /* font-size: @isoFontSize + 2; */
-    font-size: 20px;
+    font-size: 15px;
     font-weight: 400;
     margin: 0;
     line-height: 1.2;
@@ -40,7 +40,7 @@ i {
 
 .isoStatNumber {
     /* font-size: @isoFontSize + 6; */
-    font-size: 20px;
+    font-size: 15px;
     font-weight: 500;
     line-height: 1.1;
     margin: 0 0 5px;
