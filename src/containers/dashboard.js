@@ -232,18 +232,20 @@ class Dashboard extends Component {
     const allCheckBox = document.getElementsByClassName("ant-checkbox")
     if(event.target.checked === true) {
       for(let i = 1; i < allCheckBox.length; i++) {
-        console.log("ติดแล้วในลูป" , allCheckBox[i])
+        // console.log("ติดแล้วในลูป" , allCheckBox[i])
         allCheckBox[i].classList.add("ant-checkbox-checked")
-        allCheckBox[i].click()
+        console.log("Children: " , allCheckBox[i].children)
+        if (!allCheckBox[i].children[0].checked) {
+          allCheckBox[i].children[0].click()
+        }
       }
     } else {
       for(let i = 1; i < allCheckBox.length; i++) {
-        console.log("ติดแล้วในลูป" , allCheckBox[i])
+        // console.log("ติดแล้วในลูป" , allCheckBox[i])
         allCheckBox[i].classList.remove("ant-checkbox-checked")
-        allCheckBox[i].click()        
+        // allCheckBox[i].click()
       }
     }
-   
 		this.props.updateAllChecked()
 	}
 	candidatesColumn = [
