@@ -231,14 +231,16 @@ class Dashboard extends Component {
     // console.log("Props s s s s: " , this.props)
     const allCheckBox = document.getElementsByClassName("ant-checkbox")
     if(event.target.checked === true) {
-      for(let i = 0; i < allCheckBox.length; i++) {
-        console.log("ติดแล้วในลูป")
+      for(let i = 1; i < allCheckBox.length; i++) {
+        console.log("ติดแล้วในลูป" , allCheckBox[i])
         allCheckBox[i].classList.add("ant-checkbox-checked")
+        allCheckBox[i].click()
       }
     } else {
-      for(let i = 0; i < allCheckBox.length; i++) {
-        console.log("ติดแล้วในลูป")
+      for(let i = 1; i < allCheckBox.length; i++) {
+        console.log("ติดแล้วในลูป" , allCheckBox[i])
         allCheckBox[i].classList.remove("ant-checkbox-checked")
+        allCheckBox[i].click()        
       }
     }
    

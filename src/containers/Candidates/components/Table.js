@@ -142,7 +142,7 @@ class CandidatesTable extends Component {
 		// }
 	}
 	onCheckboxChange = (data) => (event) => {
-		console.log("Change target: ", event.target)
+		console.log("Change target: ", event)
 		if (event.target.checked) {
 			console.log("True checked")
 			event.target.checked = false
