@@ -83,7 +83,7 @@ export default class RowData extends Component {
 			checkbox: <CheckboxStyled
 				defaultChecked={this.props.allChecked} 
 				onChange={this.props.onCheckboxChange}
-				// checked={this.props.allChecked}
+				checked={this.props.allChecked}
 				>
 			</CheckboxStyled>,
 			...data,

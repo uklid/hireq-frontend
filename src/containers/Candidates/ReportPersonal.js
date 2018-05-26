@@ -201,23 +201,23 @@ export default () => (
       </Grid>
       <Grid item xs={3}>
         <CardWithStatus
-          title="GENERAL INTELLIGENCE AND LEARNING ABILITY "
+          title="LEADERSHIP AND ORGANIZATIONAL MANAGEMENT"
           score="70"
           firstColor="green"
           secondColor="green"
           firstTitle="HIGH"
           secondTitle="WATCH"
-          description="The General Intelligence and Learning Ability (GIL) scale score reflects Uklid
-          Yeesarapat's global intelligence and capacity to reason, solve problems, and learn new
-        skills and abilities in new situations."
+          description="The Leadership and Organizational Management (LOM) scale score measures how
+          good Uklid Yeesarapat is at developing goals and strategies, delegating tasks, and
+          motivating others to achieve them"
         />
       </Grid>
       <Grid item xs={3}>
         <CardWithStatus
           title="GENERAL INTELLIGENCE AND LEARNING ABILITY "
-          score="70"
+          score="40"
           firstColor="green"
-          secondColor="green"
+          secondColor="lightgreen"
           firstTitle="HIGH"
           secondTitle="WATCH"
           description="The General Intelligence and Learning Ability (GIL) scale score reflects Uklid
@@ -388,7 +388,25 @@ export default () => (
         <Grid item xs={6}>
           <Radar
             data={data}
-            height={140}
+            height={170}
+            options={
+              {
+                scale: {
+                  ticks: {
+                    beginAtZero: true,
+                    min: 0,
+                    max: 100,
+                    stepSize: 20,
+                  },
+                  pointLabels: {
+                    fontSize: 14
+                  },
+                },
+                legend: {
+                  display: false
+                },
+              }
+            }
           />
         </Grid>
         <Grid item xs={6}>
@@ -534,23 +552,41 @@ export default () => (
       </Grid>
       {/* End card with power bar */}
       <Grid item xs={6}>
-          <Radar
-            data={data}
-            height={140}
-          />
-        </Grid>
-        <Grid item xs={6}>
-          <GreyWrapper>
-            <h4>Critical Softskills</h4>
-            <p style={{ fontSize: 12 }}>
-              Cognitive ability is brain-base skills that candidate need to carry out work task.
+        <Radar
+          data={data}
+          height={170}
+          options={
+            {
+              scale: {
+                ticks: {
+                  beginAtZero: true,
+                  min: 0,
+                  max: 100,
+                  stepSize: 20,
+                },
+                pointLabels: {
+                  fontSize: 14
+                },
+              },
+              legend: {
+                display: false
+              },
+            }
+          }
+        />
+      </Grid>
+      <Grid item xs={6}>
+        <GreyWrapper>
+          <h4>Critical Softskills</h4>
+          <p style={{ fontSize: 12 }}>
+            Cognitive ability is brain-base skills that candidate need to carry out work task.
               It difines the mechanism of how people learn solve problems, and make dicisions.
               It relates to many essential functions of the brain such as memory, perception, attension
               , and visual and spatial processing.
             </p>
-          </GreyWrapper>
-        </Grid>
-        <Grid item xs={6}>
+        </GreyWrapper>
+      </Grid>
+      <Grid item xs={6}>
         <CardWithPowerBar
           title="PHYSICAL, PRACTICAL AND MECHANICAL"
           firstColor="green"

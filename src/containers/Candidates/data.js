@@ -2,14 +2,14 @@ const data = {
     labels: ['Eating', 'Drinking', 'Sleeping', 'Designing', 'Coding', 'Cycling'],
     datasets: [
       {
-        label: 'My First dataset',
         backgroundColor: 'rgba(72,166,242,0.2)',
         borderColor: 'rgba(72,166,242,1)',
         pointBackgroundColor: 'rgba(72,166,242,1)',
         pointBorderColor: '#fff',
         pointHoverBackgroundColor: '#fff',
         pointHoverBorderColor: 'rgba(72,166,242,1)',
-        data: [65, 59, 90, 81, 56, 55]
+        data: [65, 59, 90, 81, 56, 55],
+        
       },
       {
         label: 'My Second dataset',
