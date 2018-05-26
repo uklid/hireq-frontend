@@ -221,8 +221,9 @@ class CandidatesTable extends Component {
 							<RowData
 								// onClick={() => console.log(data)}
 								// seeDetailClick={() => console.log(Object.keys(dataSource)[index])}
-
-								allChecked={this.props.allChecked}
+								dataValue={data.candidateId}
+								// allChecked={this.props.allChecked}
+								// checked={data.checked}
 								onCheckboxChange={this.onCheckboxChange(data)}
 								seeDetailClick={() => {
 									console.log("data candidate = ", data)

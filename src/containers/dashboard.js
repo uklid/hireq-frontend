@@ -222,13 +222,26 @@ class Dashboard extends Component {
     return Object.values(this.props.allCandidatesData).map((data, index) => {
       return {
         ...data,
-        // candidateId: Object.keys(this.props.allCandidatesData)[index]
+        checked: false
       }
     })
   }
   onCheckAllChange = (event) => {
 		console.log(" ติด all check ", event.target)
-		console.log("Props s s s s: " , this.props)
+    // console.log("Props s s s s: " , this.props)
+    const allCheckBox = document.getElementsByClassName("ant-checkbox")
+    if(event.target.checked === true) {
+      for(let i = 0; i < allCheckBox.length; i++) {
+        console.log("ติดแล้วในลูป")
+        allCheckBox[i].classList.add("ant-checkbox-checked")
+      }
+    } else {
+      for(let i = 0; i < allCheckBox.length; i++) {
+        console.log("ติดแล้วในลูป")
+        allCheckBox[i].classList.remove("ant-checkbox-checked")
+      }
+    }
+   
 		this.props.updateAllChecked()
 	}
 	candidatesColumn = [
