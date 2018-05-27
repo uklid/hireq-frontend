@@ -65,6 +65,7 @@ class Report extends React.Component {
 		// pdf.save("download.pdf")
 	}
 	render() {
+		
 		return (
 			<LayoutContentWrapper>
 				<Grid container spacing={0}>
@@ -131,7 +132,9 @@ class Report extends React.Component {
 						<h3 style={{ padding: 10 }}>Report</h3>
 						<Grid container style={{ padding: 20 }}>
 							<Grid item xs={12}>
+								<div  id="reportCard">
 								<ReportPersonal />
+								</div>
 								<div id="testBody">
 									<img id="testImage" src="" />
 								</div>

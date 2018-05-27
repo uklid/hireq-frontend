@@ -123,13 +123,33 @@ class CandidateDetail extends React.Component {
 		})
 	}
 	renderPDFViaHtml = () => {
-		const report = document.getElementById("reportCard")
-		window.print()
+		let doc = new jspdf();
+		html2canvas(document.getElementById("testBody2"), {
+			allowTaint: false,
+			useCORS: false
+			}).then(function(canvas) {
+			let data1 = canvas.toDataURL("image/jpeg", 1.0)
+			let width = doc.internal.pageSize.width;    
+			let height = doc.internal.pageSize.height;
+			doc.addImage(data1, 'JPEG', 0 ,0, width, height);
+			doc.addPage()
+			});
+				html2canvas(document.getElementById("testBody3"), {
+					allowTaint: false,
+					useCORS: false
+					}).then(function(canvas) {
+			let data1 = canvas.toDataURL("image/jpeg", 1.0)
+			let width = doc.internal.pageSize.width;    
+			let height = doc.internal.pageSize.height;
+			doc.addImage(data1, 'JPEG', 0 ,0, width, height);
+			doc.save("Report.pdf");
+					});
 	}
 	render() {
 		const { allCandidatesData } = this.props
 		return (
-			<LayoutContentWrapper>
+			<div id="testBody1" >
+			<LayoutContentWrapper >
 				<Grid container spacing={0}>
 					<WhiteCard>
 						<Grid item xs={6}>
@@ -238,11 +258,9 @@ class CandidateDetail extends React.Component {
 						<h3 style={{ padding: 10 }}>Report</h3>
 						<Grid container style={{ padding: 20 }}>
 							<Grid item xs={12}>
-								<ReportPersonal 
-									candidateId={this.props.location.state.candidateId}
-								/>
-								<div id="testBody">
-									<img id="testImage" src="" />
+							<div id="testBody"  ref={(elem) => this.Line1 = elem} >
+								<ReportPersonal />
+									{/* <img id="testImage" src="" /> */}
 								</div>
 								<button onClick={this.renderPDFViaHtml}>TestPDF</button>
 							</Grid>
@@ -252,6 +270,7 @@ class CandidateDetail extends React.Component {
 				</Grid>
 				
 			</LayoutContentWrapper >
+			</div>
 		)
 	}
 }

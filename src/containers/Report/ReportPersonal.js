@@ -23,7 +23,7 @@ const GreyWrapper = styled.div`
 
 export default () => (
   <React.Fragment>
-    <CardWithStyled id="reportCard" title="Sumary of Q-Score Result">
+    <CardWithStyled title="Sumary of Q-Score Result">
       <Grid container spacing={8}>
         <Grid item xs={3}>
           <IsoWidgetsWrapper>
