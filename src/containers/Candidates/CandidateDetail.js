@@ -123,153 +123,164 @@ class CandidateDetail extends React.Component {
 		})
 	}
 	renderPDFViaHtml = () => {
-		let doc = new jspdf();
-		html2canvas(document.getElementById("testBody2"), {
+		const { allCandidatesData } = this.props
+		let doc = new jspdf()
+		html2canvas(document.getElementById("reportBody1"), {
 			allowTaint: false,
 			useCORS: false
-			}).then(function(canvas) {
+		}).then(function (canvas) {
 			let data1 = canvas.toDataURL("image/jpeg", 1.0)
-			let width = doc.internal.pageSize.width;    
-			let height = doc.internal.pageSize.height;
-			doc.addImage(data1, 'JPEG', 0 ,0, width, height);
+			let width = doc.internal.pageSize.width
+			let height = doc.internal.pageSize.height
+			doc.addImage(data1, 'JPEG', 0, 0, width, height)
 			doc.addPage()
-			});
-				html2canvas(document.getElementById("testBody3"), {
-					allowTaint: false,
-					useCORS: false
-					}).then(function(canvas) {
+		})
+		html2canvas(document.getElementById("reportBody2"), {
+			allowTaint: false,
+			useCORS: false
+		}).then(function (canvas) {
 			let data1 = canvas.toDataURL("image/jpeg", 1.0)
-			let width = doc.internal.pageSize.width;    
-			let height = doc.internal.pageSize.height;
-			doc.addImage(data1, 'JPEG', 0 ,0, width, height);
-			doc.save("Report.pdf");
-					});
+			let width = doc.internal.pageSize.width
+			let height = doc.internal.pageSize.height
+			doc.addImage(data1, 'JPEG', 0, 0, width, height)
+			doc.addPage()
+		})
+		html2canvas(document.getElementById("reportBody3"), {
+			allowTaint: false,
+			useCORS: false
+		}).then(function (canvas) {
+			let data1 = canvas.toDataURL("image/jpeg", 1.0)
+			let width = doc.internal.pageSize.width
+			let height = doc.internal.pageSize.height
+			doc.addImage(data1, 'JPEG', 0, 0, width, 40)
+			doc.save(`${allCandidatesData.name}-${new Date}.pdf`)
+		})
 	}
 	render() {
 		const { allCandidatesData } = this.props
 		return (
 			<div id="testBody1" >
-			<LayoutContentWrapper >
-				<Grid container spacing={0}>
-					<WhiteCard>
-						<Grid item xs={6}>
-							<FormWrapper>
-								<h4>NAME: </h4>
-								{
-									this.state.isEdit ?
-										<Input name="name" onChange={this.handleChange} defaultValue={allCandidatesData.name} /> : <p style={{ marginLeft: 10 }}>{allCandidatesData.name}</p>
-								}
-							</FormWrapper>
-							<FormWrapper>
-								<h4>EMAIL: </h4>
-								{
-									this.state.isEdit ?
-										<Input name="email" onChange={this.handleChange} defaultValue={allCandidatesData.email} /> : <p style={{ marginLeft: 10 }}>{allCandidatesData.email}</p>}
-							</FormWrapper>
-						</Grid>
-						<Grid item xs={6}
-							style={{
-								display: 'flex',
-								justifyContent: 'space-between'
-							}}
-						>
-							<FormWrapper style={{ alignSelf: 'flex-start' }}>
-								<h4>CREATE TIME</h4>
-								<p style={{ marginLeft: 10 }}>{moment(allCandidatesData.createdTime).format("DD/MM/YY HH:mm:ss")}</p>
-								<h4>SENT EMAIL</h4>
-								<p style={{ marginLeft: 10 }}>
-									{allCandidatesData.emailSent === true ? 'Already Sent.' : 'No'}
-								</p>
-							</FormWrapper>
-							<div
-								style={{ display: 'flex', justifyContent: 'space-between' }}
+				<LayoutContentWrapper >
+					<Grid container spacing={0}>
+						<WhiteCard>
+							<Grid item xs={6}>
+								<FormWrapper>
+									<h4>NAME: </h4>
+									{
+										this.state.isEdit ?
+											<Input name="name" onChange={this.handleChange} defaultValue={allCandidatesData.name} /> : <p style={{ marginLeft: 10 }}>{allCandidatesData.name}</p>
+									}
+								</FormWrapper>
+								<FormWrapper>
+									<h4>EMAIL: </h4>
+									{
+										this.state.isEdit ?
+											<Input name="email" onChange={this.handleChange} defaultValue={allCandidatesData.email} /> : <p style={{ marginLeft: 10 }}>{allCandidatesData.email}</p>}
+								</FormWrapper>
+							</Grid>
+							<Grid item xs={6}
+								style={{
+									display: 'flex',
+									justifyContent: 'space-between'
+								}}
 							>
-								{this.state.isEdit && <Button onClick={this.saveChange}>Save Edit</Button>}
-								<Ionicon
-									style={{ cursor: 'pointer' }}
-									icon="ios-cog"
-									fontSize="35px"
-									onClick={() => { this.setState({ isEdit: !this.state.isEdit }) }}
-									color="rgb(149, 69, 144)"
-								/>
-							</div>
-						</Grid>
-					</WhiteCard>
-				</Grid>
-				<Grid style={{ backgroundColor: '#fff' }} container spacing={8}>
-					{/* <WhiteCard> */}
-					<Grid item xs={12}>
-						<h2 style={{ padding: 10 }}>Summary of Q-score Results</h2>
-					</Grid>
-					<Grid item sm={3} xs={12}>
-						<IsoWidgetsWrapper>
-							{/* Report Widget */}
-							<StickerWidget
-								number="210"
-								text="Unread Email"
-								icon="ion-ios-infinite"
-								fontColor="#ffffff"
-								bgColor="#7263bc"
-								iconSize={36}
-							/>
-						</IsoWidgetsWrapper>
-					</Grid>
-					<Grid item sm={3} xs={12}>
-						<IsoWidgetsWrapper>
-							{/* Sticker Widget */}
-							<StickerWidget
-								number="3024"
-								text="Total Message"
-								icon="ion-android-list"
-								fontColor="#ffffff"
-								bgColor="#42a5f5"
-								iconSize={36}
-							/>
-						</IsoWidgetsWrapper>
-					</Grid>
-					<Grid item sm={3} xs={12}>
-						<IsoWidgetsWrapper>
-							{/* Sticker Widget */}
-							<StickerWidget
-								number="3024"
-								text="Total Message"
-								icon="ion-heart"
-								fontColor="#ffffff"
-								bgColor="#7ed321"
-								iconSize={36}
-							/>
-						</IsoWidgetsWrapper>
-					</Grid>
-					<Grid item sm={3} xs={12}>
-						<IsoWidgetsWrapper>
-							{/* Sticker Widget */}
-							<StickerWidget
-								number="3024"
-								text="Total Message"
-								icon="ion-trophy"
-								fontColor="#ffffff"
-								bgColor="#e05273"
-								iconSize={36}
-							/>
-						</IsoWidgetsWrapper>
-					</Grid>
-
-					<Grid item xs={12}>
-						<h3 style={{ padding: 10 }}>Report</h3>
-						<Grid container style={{ padding: 20 }}>
-							<Grid item xs={12}>
-							<div id="testBody"  ref={(elem) => this.Line1 = elem} >
-								<ReportPersonal />
-									{/* <img id="testImage" src="" /> */}
+								<FormWrapper style={{ alignSelf: 'flex-start' }}>
+									<h4>CREATE TIME</h4>
+									<p style={{ marginLeft: 10 }}>{moment(allCandidatesData.createdTime).format("DD/MM/YY HH:mm:ss")}</p>
+									<h4>SENT EMAIL</h4>
+									<p style={{ marginLeft: 10 }}>
+										{allCandidatesData.emailSent === true ? 'Already Sent.' : 'No'}
+									</p>
+								</FormWrapper>
+								<div
+									style={{ display: 'flex', justifyContent: 'space-between' }}
+								>
+									{this.state.isEdit && <Button onClick={this.saveChange}>Save Edit</Button>}
+									<Ionicon
+										style={{ cursor: 'pointer' }}
+										icon="ios-cog"
+										fontSize="35px"
+										onClick={() => { this.setState({ isEdit: !this.state.isEdit }) }}
+										color="rgb(149, 69, 144)"
+									/>
 								</div>
-								<button onClick={this.renderPDFViaHtml}>TestPDF</button>
+							</Grid>
+						</WhiteCard>
+					</Grid>
+					<Grid style={{ backgroundColor: '#fff' }} container spacing={8}>
+						{/* <WhiteCard> */}
+						<Grid item xs={12}>
+							<h2 style={{ padding: 10 }}>Summary of Q-score Results</h2>
+						</Grid>
+						<Grid item sm={3} xs={12}>
+							<IsoWidgetsWrapper>
+								{/* Report Widget */}
+								<StickerWidget
+									number="210"
+									text="Unread Email"
+									icon="ion-ios-infinite"
+									fontColor="#ffffff"
+									bgColor="#7263bc"
+									iconSize={36}
+								/>
+							</IsoWidgetsWrapper>
+						</Grid>
+						<Grid item sm={3} xs={12}>
+							<IsoWidgetsWrapper>
+								{/* Sticker Widget */}
+								<StickerWidget
+									number="3024"
+									text="Total Message"
+									icon="ion-android-list"
+									fontColor="#ffffff"
+									bgColor="#42a5f5"
+									iconSize={36}
+								/>
+							</IsoWidgetsWrapper>
+						</Grid>
+						<Grid item sm={3} xs={12}>
+							<IsoWidgetsWrapper>
+								{/* Sticker Widget */}
+								<StickerWidget
+									number="3024"
+									text="Total Message"
+									icon="ion-heart"
+									fontColor="#ffffff"
+									bgColor="#7ed321"
+									iconSize={36}
+								/>
+							</IsoWidgetsWrapper>
+						</Grid>
+						<Grid item sm={3} xs={12}>
+							<IsoWidgetsWrapper>
+								{/* Sticker Widget */}
+								<StickerWidget
+									number="3024"
+									text="Total Message"
+									icon="ion-trophy"
+									fontColor="#ffffff"
+									bgColor="#e05273"
+									iconSize={36}
+								/>
+							</IsoWidgetsWrapper>
+						</Grid>
+
+						<Grid item xs={12}>
+							<h3 style={{ padding: 10 }}>Report</h3>
+							<Grid container style={{ padding: 20 }}>
+								<Grid item xs={12}>
+									<div id="testBody" ref={(elem) => this.Line1 = elem} >
+										<ReportPersonal />
+										{/* <img id="testImage" src="" /> */}
+									</div>
+									<button onClick={this.renderPDFViaHtml}>TestPDF</button>
+								</Grid>
 							</Grid>
 						</Grid>
+						{/* </WhiteCard> */}
 					</Grid>
-					{/* </WhiteCard> */}
-				</Grid>
-				
-			</LayoutContentWrapper >
+
+				</LayoutContentWrapper >
 			</div>
 		)
 	}
