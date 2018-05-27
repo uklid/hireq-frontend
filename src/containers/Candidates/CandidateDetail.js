@@ -238,7 +238,9 @@ class CandidateDetail extends React.Component {
 						<h3 style={{ padding: 10 }}>Report</h3>
 						<Grid container style={{ padding: 20 }}>
 							<Grid item xs={12}>
-								<ReportPersonal />
+								<ReportPersonal 
+									candidateId={this.props.location.state.candidateId}
+								/>
 								<div id="testBody">
 									<img id="testImage" src="" />
 								</div>
