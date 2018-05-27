@@ -26,7 +26,7 @@ import {
 	preCreatePosition,
 	updatePreEditData
 } from '../../redux/position/actions'
-import { updateAllCandidates, updateAllChecked } from '../../redux/candidates/actions'
+import { updateAllCandidates, updateAllChecked,updateUncheckCandidateId } from '../../redux/candidates/actions'
 import Axios from 'axios'
 import firebase from 'firebase'
 import CreateCandidates from '../Candidates/CreateCandidates'
@@ -155,7 +155,7 @@ class EditPosition extends React.Component {
 	}
 	onCheckAllChange = async (event) => {
 		const allCheckBox = document.getElementsByClassName("ant-checkbox")
-		console.log("Checked all Event: " , event.target)
+		console.log("Checked all Event: ", event.target)
 		if (event.target.checked === true) {
 			for (let i = 1; i < allCheckBox.length; i++) {
 				allCheckBox[i].classList.add("ant-checkbox-checked")
@@ -172,6 +172,7 @@ class EditPosition extends React.Component {
 					// Hack ให้คลิกที่ input 1 ทีเพื่อแก้บัคในการ checkall เพื่อต้องกดอีกที
 					await allCheckBox[i].children[0].click()
 				}
+				// this.props.updateUncheckCandidateId([])				
 			}
 		}
 		// this.props.updateAllChecked()
@@ -465,5 +466,6 @@ export default connect(mapStateToProps,
 		preCreatePosition,
 		updatePreEditData,
 		updateAllCandidates,
-		updateAllChecked
+		updateAllChecked,
+		updateUncheckCandidateId
 	})(EditPosition)

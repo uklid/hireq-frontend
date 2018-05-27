@@ -16,7 +16,7 @@ import styled from 'styled-components'
 import { connect } from 'react-redux'
 import { Loading, LoadingSuccess } from '../redux/loading/actions'
 import { updateCreatedAllPosition } from '../redux/position/actions'
-import { updateAllCandidates, updateAllChecked } from '../redux/candidates/actions'
+import { updateAllCandidates, updateAllChecked, updateUncheckCandidateId } from '../redux/candidates/actions'
 import Axios from 'axios'
 import { baseUrl } from '../libs/url/baseUrl'
 
@@ -226,46 +226,52 @@ class Dashboard extends Component {
       }
     })
   }
-  onCheckAllChange = (event) => {
+  onCheckAllChange = async (event) => {
     const allCheckBox = document.getElementsByClassName("ant-checkbox")
-    if(event.target.checked === true) {
-      for(let i = 1; i < allCheckBox.length; i++) {
+    console.log("Checked all Event: ", event.target)
+    if (event.target.checked === true) {
+      for (let i = 1; i < allCheckBox.length; i++) {
         allCheckBox[i].classList.add("ant-checkbox-checked")
-        console.log("Children: " , allCheckBox[i].children)
+        console.log("Children: ", allCheckBox[i].children)
         if (allCheckBox[i].children[0].checked === false) {
-          // Hack ให้คลิกที่ inut 1 ทีเพื่อแก้บัคในการ checkall เพื่อต้องกดอีกที
-          allCheckBox[i].children[0].click()
+          // Hack ให้คลิกที่ input 1 ทีเพื่อแก้บัคในการ checkall เพื่อต้องกดอีกที
+          await allCheckBox[i].children[0].click()
         }
       }
     } else {
-      for(let i = 1; i < allCheckBox.length; i++) {
+      for (let i = 1; i < allCheckBox.length; i++) {
         allCheckBox[i].classList.remove("ant-checkbox-checked")
+        if (allCheckBox[i].children[0].checked === true) {
+          // Hack ให้คลิกที่ input 1 ทีเพื่อแก้บัคในการ checkall เพื่อต้องกดอีกที
+          await allCheckBox[i].children[0].click()
+        }
       }
+      // this.props.updateUncheckCandidateId([])      
     }
-		this.props.updateAllChecked()
-	}
-	candidatesColumn = [
-		{
-			title: <Checkbox onChange={this.onCheckAllChange}>Check all</Checkbox>,
-			dataIndex: 'checkbox',
-			key: 'checkbox'
-		},
-		{
-			title: 'Name',
-			dataIndex: 'name',
-			key: 'name',
-		},
-		{
-			title: 'Email',
-			dataIndex: 'email',
-			key: 'email',
-		},
-		{
-			title: 'ACTIONS',
-			dataIndex: 'buttonAction',
-			key: 'buttonAction'
-		}
-	]
+    // this.props.updateAllChecked()
+  }
+  candidatesColumn = [
+    {
+      title: <Checkbox onChange={this.onCheckAllChange}>Check all</Checkbox>,
+      dataIndex: 'checkbox',
+      key: 'checkbox'
+    },
+    {
+      title: 'Name',
+      dataIndex: 'name',
+      key: 'name',
+    },
+    {
+      title: 'Email',
+      dataIndex: 'email',
+      key: 'email',
+    },
+    {
+      title: 'ACTIONS',
+      dataIndex: 'buttonAction',
+      key: 'buttonAction'
+    }
+  ]
   render() {
     const { allPositionCreated, allCandidatesData } = this.props
     // console.log('All candidates: ', allCandidateData)
@@ -371,5 +377,6 @@ export default connect(mapStateToProps, {
   updateAllCandidates,
   Loading,
   LoadingSuccess,
-  updateAllChecked
+  updateAllChecked,
+  updateUncheckCandidateId
 })(Dashboard)
