@@ -153,10 +153,28 @@ class EditPosition extends React.Component {
 			[name]: !this.state[name]
 		})
 	}
-	onCheckAllChange = (event) => {
-		console.log(" ติด all check ", event.target)
-		console.log("Props s s s s: ", this.props)
-		this.props.updateAllChecked()
+	onCheckAllChange = async (event) => {
+		const allCheckBox = document.getElementsByClassName("ant-checkbox")
+		console.log("Checked all Event: " , event.target)
+		if (event.target.checked === true) {
+			for (let i = 1; i < allCheckBox.length; i++) {
+				allCheckBox[i].classList.add("ant-checkbox-checked")
+				console.log("Children: ", allCheckBox[i].children)
+				if (allCheckBox[i].children[0].checked === false) {
+					// Hack ให้คลิกที่ input 1 ทีเพื่อแก้บัคในการ checkall เพื่อต้องกดอีกที
+					await allCheckBox[i].children[0].click()
+				}
+			}
+		} else {
+			for (let i = 1; i < allCheckBox.length; i++) {
+				allCheckBox[i].classList.remove("ant-checkbox-checked")
+				if (allCheckBox[i].children[0].checked === true) {
+					// Hack ให้คลิกที่ input 1 ทีเพื่อแก้บัคในการ checkall เพื่อต้องกดอีกที
+					await allCheckBox[i].children[0].click()
+				}
+			}
+		}
+		// this.props.updateAllChecked()
 	}
 	candidatesColumn = [
 		{
@@ -426,7 +444,7 @@ class EditPosition extends React.Component {
 						<DialogContentText id="alert-dialog-description">
 							<CreateCandidates
 								addPositionId={prepareCreate.positionId}
-								// onClick={this.add}
+							// onClick={this.add}
 							/>
 						</DialogContentText>
 					</DialogContent>

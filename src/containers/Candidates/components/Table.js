@@ -141,23 +141,21 @@ class CandidatesTable extends Component {
 		// } catch (err) {
 		// }
 	}
-	onCheckboxChange = (data) => (event) => {
+	onCheckboxChange = (data) => async (event) => {
 		console.log("Change target: ", event)
 		if (event.target.checked) {
 			console.log("True checked")
-			event.target.checked = false
 			this.props.updateCandidateCheckId(data.candidateId)
 		} else {
-			console.log("false checked")
-			event.target.checked = true
 			const oldData = this.props.candidateCheckId
-			const updateData = oldData.filter(id => {
+			console.log("false checked", oldData)
+			const updateData = await oldData.filter(id => {
 				console.log(`${id} === ${data.candidateId}`)
 				if (id !== data.candidateId) {
 					return id
 				}
 			})
-			this.props.updateUncheckCandidateId(updateData)
+			await this.props.updateUncheckCandidateId(updateData)
 		}
 	}
 	sendAllEmail = async () => {
@@ -166,27 +164,31 @@ class CandidatesTable extends Component {
 		const test = await firebase.auth().onAuthStateChanged(async (data) => {
 			if (data) {
 				try {
-					if (allChecked) {
-						Object.values(allCandidatesData).map(async data => {
-							const getIdToken = await firebase.auth().currentUser.getIdToken()
-							const uid = localStorage.getItem('loginToken')
-							const url = `${baseUrl}/users/${uid}/candidates/email`
-							const result = await Axios.post(url, { candidateId: data.candidateId }, {
-								headers: { Authorization: "Bearer " + getIdToken }
-							})
-							console.log("ID Email Send:", data.candidateId)
+					// if (allChecked) {
+					// 	Object.values(allCandidatesData).map(async data => {
+					// 		const getIdToken = await firebase.auth().currentUser.getIdToken()
+					// 		const uid = localStorage.getItem('loginToken')
+					// 		const url = `${baseUrl}/users/${uid}/candidates/email`
+					// 		const result = await Axios.post(url, { candidateId: data.candidateId }, {
+					// 			headers: { Authorization: "Bearer " + getIdToken }
+					// 		})
+					// 		console.log("ID Email Send:", data.candidateId)
+					// 	})
+					// } else {
+
+					console.log("Email send array: ", candidateCheckId)
+					candidateCheckId.map(async id => {
+						const getIdToken = await firebase.auth().currentUser.getIdToken()
+						const uid = localStorage.getItem('loginToken')
+						const url = `${baseUrl}/users/${uid}/candidates/email`
+						const result = await Axios.post(url, { candidateId: id }, {
+							headers: { Authorization: "Bearer " + getIdToken }
 						})
-					} else {
-						candidateCheckId.map(async id => {
-							const getIdToken = await firebase.auth().currentUser.getIdToken()
-							const uid = localStorage.getItem('loginToken')
-							const url = `${baseUrl}/users/${uid}/candidates/email`
-							const result = await Axios.post(url, { candidateId: id }, {
-								headers: { Authorization: "Bearer " + getIdToken }
-							})
-							console.log("ID Email Send:", id)
-						})
-					}
+						console.log("ID Email Send:", id)
+					})
+
+
+					// }
 					// this.props.allPositionCreated = 
 					this.props.LoadingSuccess()
 				} catch (err) {

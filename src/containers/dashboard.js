@@ -227,23 +227,19 @@ class Dashboard extends Component {
     })
   }
   onCheckAllChange = (event) => {
-		console.log(" ติด all check ", event.target)
-    // console.log("Props s s s s: " , this.props)
     const allCheckBox = document.getElementsByClassName("ant-checkbox")
     if(event.target.checked === true) {
       for(let i = 1; i < allCheckBox.length; i++) {
-        // console.log("ติดแล้วในลูป" , allCheckBox[i])
         allCheckBox[i].classList.add("ant-checkbox-checked")
         console.log("Children: " , allCheckBox[i].children)
-        if (!allCheckBox[i].children[0].checked) {
+        if (allCheckBox[i].children[0].checked === false) {
+          // Hack ให้คลิกที่ inut 1 ทีเพื่อแก้บัคในการ checkall เพื่อต้องกดอีกที
           allCheckBox[i].children[0].click()
         }
       }
     } else {
       for(let i = 1; i < allCheckBox.length; i++) {
-        // console.log("ติดแล้วในลูป" , allCheckBox[i])
         allCheckBox[i].classList.remove("ant-checkbox-checked")
-        // allCheckBox[i].click()
       }
     }
 		this.props.updateAllChecked()
