@@ -126,18 +126,18 @@ class CandidateDetail extends React.Component {
 		const { allCandidatesData } = this.props
 		let doc = new jspdf()
 		html2canvas(document.getElementById("reportBody1"), {
-			allowTaint: false,
-			useCORS: false
+			// allowTaint: false,
+			// useCORS: false
 		}).then(function (canvas) {
 			let data1 = canvas.toDataURL("image/jpeg", 1.0)
 			let width = doc.internal.pageSize.width
-			let height = doc.internal.pageSize.height
+			let height = doc.internal.pageSize.height - 20
 			doc.addImage(data1, 'JPEG', 0, 0, width, height)
 			doc.addPage()
 		})
 		html2canvas(document.getElementById("reportBody2"), {
-			allowTaint: false,
-			useCORS: false
+			// allowTaint: false,
+			// useCORS: false
 		}).then(function (canvas) {
 			let data1 = canvas.toDataURL("image/jpeg", 1.0)
 			let width = doc.internal.pageSize.width
@@ -146,14 +146,14 @@ class CandidateDetail extends React.Component {
 			doc.addPage()
 		})
 		html2canvas(document.getElementById("reportBody3"), {
-			allowTaint: false,
-			useCORS: false
+			// allowTaint: false,
+			// useCORS: false
 		}).then(function (canvas) {
 			let data1 = canvas.toDataURL("image/jpeg", 1.0)
 			let width = doc.internal.pageSize.width
-			let height = doc.internal.pageSize.height
-			doc.addImage(data1, 'JPEG', 0, 0, width, 40)
-			doc.save(`${allCandidatesData.name}-${new Date}.pdf`)
+			let height = doc.internal.pageSize.height - 20
+			doc.addImage(data1, 'JPEG', 0, 0, width, 55)
+			doc.save(`${allCandidatesData.name}-${moment(new Date()).format("DD/MM/YY_HH:mm:ss")}.pdf`)
 		})
 	}
 	render() {
@@ -187,10 +187,10 @@ class CandidateDetail extends React.Component {
 								<FormWrapper style={{ alignSelf: 'flex-start' }}>
 									<h4>CREATE TIME</h4>
 									<p style={{ marginLeft: 10 }}>{moment(allCandidatesData.createdTime).format("DD/MM/YY HH:mm:ss")}</p>
-									<h4>SENT EMAIL</h4>
+									{/* <h4>SENT EMAIL</h4>
 									<p style={{ marginLeft: 10 }}>
 										{allCandidatesData.emailSent === true ? 'Already Sent.' : 'No'}
-									</p>
+									</p> */}
 								</FormWrapper>
 								<div
 									style={{ display: 'flex', justifyContent: 'space-between' }}

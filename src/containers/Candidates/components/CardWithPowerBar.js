@@ -52,7 +52,7 @@ const ScoreWithPowerBar = styled.div`
     flex: 3;
     width: 100%;
     height: 23px;
-    background-color: orange;
+    background-color: #d3d3d3;
     margin-right: 30px;
 
     position: relative;
@@ -68,7 +68,7 @@ const ScoreWithPowerBar = styled.div`
   }
 
   .scoreBar {
-    background-color: lightgreen;
+    background-color: #8fb209;
     position: absolute;
     height: 23px;
     z-index: 20;
@@ -76,7 +76,7 @@ const ScoreWithPowerBar = styled.div`
 
   .scoreLine {
     position: absolute;
-    background-color: black;
+    background-color: #055a31;
     height: 23px;
     width: 2px;
     z-index: 30;

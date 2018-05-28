@@ -66,7 +66,7 @@ class ReportPersonal extends React.Component {
                 text="Cognative Ability"
                 icon="ion-ios-infinite"
                 fontColor="#ffffff"
-                bgColor="#006C3D"
+                bgColor="#055a31"
                 iconSize={28}
               />
             </IsoWidgetsWrapper>
@@ -78,7 +78,7 @@ class ReportPersonal extends React.Component {
                 text="Critical SoftSkills"
                 icon="ion-ios-list-outline"
                 fontColor="#ffffff"
-                bgColor="#9f9502"
+                bgColor="#18713d"
                 iconSize={28}
               />
             </IsoWidgetsWrapper>
@@ -86,11 +86,11 @@ class ReportPersonal extends React.Component {
               width='32%'
             >
               <StickerWidget
-                number="40%"
+                number="60%"
                 text="Work Preference"
                 icon="ion-ios-heart-outline"
                 fontColor="#ffffff"
-                bgColor="#41772D"
+                bgColor="#8fb209"
                 iconSize={28}
               />
             </IsoWidgetsWrapper>
@@ -98,11 +98,12 @@ class ReportPersonal extends React.Component {
           <Grid item xs={4}>
             <IsoWidgetsWrapper>
               <StickerWidget
-                number="86%"
+                number="40%"
                 text="Total Q-Score"
                 icon="ion-trophy"
                 fontColor="#ffffff"
-                bgColor="#41772D"
+                // ถ้าต่ำกว่านี้จะเป็น สี #dfd89b
+                bgColor="#d4d159"
                 iconSize={28}
               />
             </IsoWidgetsWrapper>
@@ -202,10 +203,10 @@ class ReportPersonal extends React.Component {
             <CardWithStatus
               title="PERFORMANCE AND PROJECT MANAGEMENT"
               score="70"
-              firstColor="green"
-              secondColor="green"
-              firstTitle="HIGH"
-              secondTitle="WATCH"
+              firstColor="#055a31"
+              secondColor="#3a9f56"
+              firstTitle="MATCH"
+              secondTitle="HIGH"
               description={`The Performance and Project Management (PPM) scale score reflects ${allCandidatesData.name} 
               ability  to handle work, lead projects, and manage the performance of others and he.`}
             />
@@ -214,10 +215,10 @@ class ReportPersonal extends React.Component {
             <CardWithStatus
               title="LEADERSHIP AND ORGANIZATIONAL MANAGEMEN"
               score="70"
-              firstColor="green"
-              secondColor="green"
-              firstTitle="HIGH"
-              secondTitle="WATCH"
+              firstColor="#c0c0c0"
+              secondColor="#d3d3d3"
+              firstTitle="BELOW"
+              secondTitle="LOW"
               description={`The Leadership and Organizational Management (LOM) scale score measures how
               good ${allCandidatesData.name} is at developing goals and strategies, delegating tasks, and
               motivating others to achieve them.`}
@@ -683,6 +684,8 @@ class ReportPersonal extends React.Component {
                his preference dose not match the perference profile of the job at all (70% match) `}
             />
           </Grid>
+        </Grid>
+        <Grid id="reportBody3" container style={{ backgroundColor: '#eee', margin: 0 }} spacing={8}>
           <Grid item xs={6}>
             <CardWithPowerBar
               title="PERSUASIVE, ADVENTUROUS AND MOTIVATIONAL"
@@ -714,8 +717,7 @@ class ReportPersonal extends React.Component {
               ${name} attitude towards Conscientious, Effecient and Orderly tasks matches the preference profile of the job Chief Executive Officer very well (92% match).`}
             />
           </Grid>
-        </Grid>
-        <Grid id="reportBody3" container style={{ backgroundColor: '#eee', margin: 0 }} spacing={8}>
+          {/* </Grid> */}
           <Grid item xs={12}>
             <H4>{name} Q-Score Validity</H4>
           </Grid>
