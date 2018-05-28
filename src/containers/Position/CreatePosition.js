@@ -10,7 +10,6 @@ import styled from 'styled-components'
 import { FormGroup, FormControlLabel } from 'material-ui/Form'
 import Checkbox from 'material-ui/Checkbox'
 import Button from '../HireQComponent/Button'
-// import { Button } from 'antd'
 import Tables from './components/Table'
 import moment from 'moment'
 import firebase from 'firebase'
@@ -78,7 +77,6 @@ const NewButton = styled.button`
 
 const FilterField = ({ checked, onChange, value, label }) => (
 	<FormControlLabel
-		// style={{ marginLeft: 20, marginRight: 20, }}
 		control={
 			<Checkbox
 				checked={checked}
@@ -145,7 +143,6 @@ class CreatePosition extends React.Component {
 									margin="normal"
 									className="floating-textfield"
 									onKeyPress={this.searchPoisition}
-								// onChange={this.onSearch}
 								/>
 							</InputWrapper>
 							<ButtonWrapper>
@@ -182,27 +179,15 @@ class CreatePosition extends React.Component {
 							title="Result"
 							style={{ overflowX: 'auto' }}
 						>
-							{/* <Table
-								bordered
-								dataSource={dataSource}
-								columns={columns}
-								expandedRowRender={record => <p style={{ margin: 0 }}>{record.description}</p>}
-							/> */}
 							<Tables
 								key={`myTables`}
 								tableId="myTable"
-								// dataSource={dataSource}
 								dataSource={this.props.positionData}
 								columns={columns}
 								rowPerPage={7}
 								ellipsis={4}
 							/>
-							{/* <Tables
-								dataSource={dataSource}
-								columns={columns}
-								rowPerPage={4}
-								ellipsis={4}
-							/> */}
+							
 						</Card>
 					</Grid>
 				</Grid>

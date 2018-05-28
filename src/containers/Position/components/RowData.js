@@ -5,7 +5,6 @@ import styled from 'styled-components'
 
 const TRBodyStyled = styled.tr`
 		height: 50px;
-		// cursor: pointer;
 		background: ${props => props.isExpand ? '#954590' : 'white'};
 		background-color: ${props => props.isActive ? '#eee' : 'white'}
 		border: ${props => props.isActive ? '1px solid red' : 'none'};
@@ -80,10 +79,6 @@ export default class RowData extends Component {
 						ACTIONS <Icon type="down" />
 					</LinkStyled>
 				</Dropdown>
-			// <React.Fragment>
-			// 	<Button onClick={this.props.seeDetailClick}>More Detail</Button>
-			// 	<Button onClick={this.props.onEditPositionClick}>Edit</Button>
-			// </React.Fragment>
 			,
 			moreInfo: <MoreInfoLink onClick={() => this.setState({ isExpand: !this.state.isExpand })}>More Info</MoreInfoLink>
 		}
@@ -104,14 +99,12 @@ export default class RowData extends Component {
 		return (
 			<React.Fragment>
 				<TRBodyStyled
-					// onClick={this.onRowClick}
 					onClick={() => this.setState({ isActive: !this.state.isActive })}
 					isActive={this.state.isActive}
 					isExpand={this.state.isExpand}
 				>
 					{columns.map((key, index) => (
 						<TDStyled
-							// onClick={this.props.onClick}
 							isExpand={this.state.isExpand}
 							key={index}
 						>

@@ -8,14 +8,8 @@ import styled from 'styled-components'
 import Grid from 'material-ui/Grid'
 import { Card } from 'antd'
 import ReportPersonal from './ReportPersonal'
-// import rasterizeHTML from 'rasterizehtml'
 import html2canvas from 'html2canvas'
 import jspdf from 'jspdf'
-
-// window.rasterizeHTML = rasterizeHTML
-// window.html2canvas = html2canvas
-// import { Page, Text, View, Document, StyleSheet } from '@react-pdf/core'
-// import 'regenerator-runtime/runtime'
 
 const WhiteCard = styled.div`
 	display: flex;

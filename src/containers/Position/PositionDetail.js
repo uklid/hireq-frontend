@@ -11,7 +11,6 @@ import { Loading, LoadingSuccess } from '../../redux/loading/actions'
 import Axios from 'axios'
 import firebase from 'firebase'
 import { baseUrl } from '../../libs/url/baseUrl'
-// const screenHeight = window.innerHeight
 const screenWidth = (window.innerWidth / 2) - 100 <= 250 ? 350 : 600
 
 const WhiteWrapper = styled.div`

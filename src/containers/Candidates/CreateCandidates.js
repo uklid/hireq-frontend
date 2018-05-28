@@ -48,7 +48,6 @@ class CreateCandidates extends React.Component {
           const getIdToken = await firebase.auth().currentUser.getIdToken()
           const uid = localStorage.getItem('loginToken')
           const positionId = this.props.addPositionId
-          // const positionId = '-LD0mn77k5QHqPo6YLdz'
           const addCandidateURL = `${baseUrl}/users/${uid}/positions/${positionId}/candidates/`
           const resultAfterCreate = await Axios.post(addCandidateURL, { name, email }, {
             headers: { Authorization: "Bearer " + getIdToken }

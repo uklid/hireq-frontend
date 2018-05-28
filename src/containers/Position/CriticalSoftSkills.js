@@ -65,8 +65,6 @@ class CriticalSoftSkills extends React.Component {
 	}
 	onChange = (dataName) => (value) => {
 		const { prepareCreate } = this.props
-		// const objName = Object.keys(prepareCreate.info)[number]
-		// prepareCreate.info[objName] = { min: value[0], max: value[1] }
 		prepareCreate.info[dataName] = { min: value[0], max: value[1] }
 		const newDataToUpdate = { ...prepareCreate }
 
@@ -98,8 +96,6 @@ class CriticalSoftSkills extends React.Component {
 				{
 					slideData !== undefined && Object.values(slideData).slice(this.first, this.last).map((data, index) => {
 						const dataName = Object.keys(slideData)[this.first + index]
-						// Hack ถ้าตำแหน่งที่ 13 ของ index จะไม่แสดงเพราะ ไม่ใช่ max min
-						// if (index < 13) {
 							return (
 								<DataSlider
 									title={`${dataName}`}
@@ -107,7 +103,6 @@ class CriticalSoftSkills extends React.Component {
 									value={[parseInt(data['min']), parseInt(data['max'])]}
 								/>
 							)
-						// }
 					})
 				}
 			</ChartWrapper>

@@ -17,7 +17,6 @@ import "./global.css"
 import ConfirmDelete from "../Candidates/components/ConfirmDelete"
 
 const { Content, Footer } = Layout
-// const { logout } = authAction
 const { toggleAll } = appActions
 
 export class App extends Component {

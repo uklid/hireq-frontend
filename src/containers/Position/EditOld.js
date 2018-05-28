@@ -96,7 +96,6 @@ class EditPosition1 extends React.Component {
 	state = {
 		open: false,
 		showEdit: true,
-		// showEdit: false,
 	}
 
 	handleClose = () => {
@@ -170,7 +169,6 @@ class EditPosition1 extends React.Component {
 									<Grid item>
 										<Button
 											type="primary"
-											// onClick={modalShow}
 											onClick={this.handleOpen}
 											style={{ backgroundColor: '#954590', marginTop: 30, borderColor: '#954590' }}
 										>

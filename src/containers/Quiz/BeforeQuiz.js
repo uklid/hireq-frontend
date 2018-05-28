@@ -46,9 +46,6 @@ const BeforeQuizBlock = styled.div`
     width: 85%;
   }
 `
-
-//candidate ID
-// const candidateId = '-LD68ZFVrU4H3wekPyKD'
 const apiURL = `${baseUrl}`
 
 class BeforeQuiz extends React.Component {
@@ -62,7 +59,6 @@ class BeforeQuiz extends React.Component {
   }
   componentDidMount = async () => {
     //  Start Loading
-    // const { candidateId } = this.props
     const candidateId = queryString.parse(this.props.location.search).id
     this.props.updateCandidateId(candidateId)
     this.props.Loading()
@@ -74,7 +70,7 @@ class BeforeQuiz extends React.Component {
       name: requestResult.data.name,
       position: requestResult.data.position
     })
-    //oading SUccess
+    //Loading SUccess
     this.props.LoadingSuccess()
   }
   getStartedQuiz = () => {

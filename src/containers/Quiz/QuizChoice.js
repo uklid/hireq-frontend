@@ -108,7 +108,6 @@ class QuizChoice extends React.Component {
 				this.props.updateCurrentTest(personalResult.data.nextTestName)
 				this.props.updateQuizPercent()
 				this.props.LoadingSuccess()
-				//if finish return redirect to done page
 			} else {
 				this.props.updateCurrentPage(personalResult.data.page)
 				this.props.updateQuizPercent()

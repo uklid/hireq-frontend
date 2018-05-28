@@ -69,7 +69,6 @@ class QuizLogic extends React.Component {
                 onClick={onClick}
                 key={index}
                 data-answer={data.c}
-                // data-imageFileName={imageDetail}
                 src={require(`../../image/QuizImage/Answer/${data.img}`)}
               />
             })

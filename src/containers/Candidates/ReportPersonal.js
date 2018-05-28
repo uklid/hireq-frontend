@@ -9,8 +9,6 @@ import { Radar } from 'react-chartjs-2'
 import { data } from './data'
 import CardWithPowerBar from './components/CardWithPowerBar'
 import { connect } from 'react-redux'
-// import firebase from 'firebase'
-// import { baseUrl } from '../../libs/url/baseUrl'
 
 const CardWithStyled = styled(Card) `
 	.ant-card-head {
@@ -132,7 +130,6 @@ class ReportPersonal extends React.Component {
                 number="80"
                 text="PERFECT"
                 oneSideColor
-                // icon="ion-chatbubbles"
                 fontColor="#ABB1BE"
                 bgColor="#41772D"
               />
@@ -144,7 +141,6 @@ class ReportPersonal extends React.Component {
                 number="80"
                 text="HIGHT"
                 oneSideColor
-                // icon="ion-chatbubbles"
                 fontColor="#ABB1BE"
                 bgColor="#41772D"
               />
@@ -184,7 +180,6 @@ class ReportPersonal extends React.Component {
                   number="80"
                   text="PERFECT"
                   oneSideColor
-                  // icon="ion-chatbubbles"
                   fontColor="#ABB1BE"
                   bgColor="#41772D"
                 />
@@ -196,7 +191,6 @@ class ReportPersonal extends React.Component {
                   number="80"
                   text="HIGHT"
                   oneSideColor
-                  // icon="ion-chatbubbles"
                   fontColor="#ABB1BE"
                   bgColor="#41772D"
                 />
@@ -311,7 +305,6 @@ class ReportPersonal extends React.Component {
                 number="80"
                 text="PERFECT"
                 oneSideColor
-                // icon="ion-chatbubbles"
                 fontColor="#ABB1BE"
                 bgColor="#41772D"
               />
@@ -394,16 +387,9 @@ class ReportPersonal extends React.Component {
               procedures and routines. They wil enioy working with data and details more than with ideas."
             />
           </Grid>
-
-
-
         </Grid>
-
         {/* แบ่ง Container 2 ตรงนี้ไป */}
         <Grid container spacing={8} id="reportBody2" style={{ margin: 0, backgroundColor: '#eee' }} >
-
-
-
           <Grid container spacing={8} style={{ margin: 0 }}>
             <Grid item xs={12}>
               <H4>Itemized Score Report</H4>
@@ -742,7 +728,6 @@ class ReportPersonal extends React.Component {
                 number="80"
                 text="PERFECT"
                 oneSideColor
-                // icon="ion-chatbubbles"
                 fontColor="#ABB1BE"
                 bgColor="#41772D"
               />

@@ -66,7 +66,6 @@ class WorkPreference extends React.Component {
 	onChange = (dataName) => (value) => {
 		const { prepareCreate } = this.props
 		prepareCreate.info[dataName] = { min: value[0] , max: value[1] }
-		// prepareCreate.info[objName] = { min: value['min'], max: value['max'] }
 		const newDataToUpdate = { ...prepareCreate }
 
 		this.props.preCreatePosition(newDataToUpdate)

@@ -168,7 +168,6 @@ class SecondCreatePosition extends React.Component {
                 <Grid item>
                   <Button
                     type="primary"
-                    // onClick={modalShow}
                     onClick={this.handleToggle}
                     style={{ backgroundColor: '#954590', marginTop: 30, borderColor: '#954590' }}
                   >

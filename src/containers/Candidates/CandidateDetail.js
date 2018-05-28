@@ -8,7 +8,6 @@ import styled from 'styled-components'
 import Grid from 'material-ui/Grid'
 import { Card, message, Input, Button } from 'antd'
 import ReportPersonal from './ReportPersonal'
-// import rasterizeHTML from 'rasterizehtml'
 import html2canvas from 'html2canvas'
 import jspdf from 'jspdf'
 import firebase from 'firebase'
@@ -55,8 +54,6 @@ const FormWrapper = styled.div`
 class CandidateDetail extends React.Component {
 	state = {
 		isEdit: false,
-		// name: '',
-		// email: ''
 	}
 	componentDidMount = async () => {
 		const { candidateId } = this.props.location.state
@@ -182,10 +179,6 @@ class CandidateDetail extends React.Component {
 								<FormWrapper style={{ alignSelf: 'flex-start' }}>
 									<h4>CREATE TIME</h4>
 									<p style={{ marginLeft: 10 }}>{moment(allCandidatesData.createdTime).format("DD/MM/YY HH:mm:ss")}</p>
-									{/* <h4>SENT EMAIL</h4>
-									<p style={{ marginLeft: 10 }}>
-										{allCandidatesData.emailSent === true ? 'Already Sent.' : 'No'}
-									</p> */}
 								</FormWrapper>
 								<div
 									style={{ display: 'flex', justifyContent: 'space-between' }}

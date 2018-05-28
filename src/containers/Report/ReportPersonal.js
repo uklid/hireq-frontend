@@ -96,7 +96,6 @@ export default () => (
                 <StickerWidget
                   number="80"
                   text="PERFECT"
-                  // icon="ion-chatbubbles"
                   fontColor="#ffffff"
                   bgColor="lightblue"
                 />
@@ -108,7 +107,6 @@ export default () => (
                 <StickerWidget
                   number="80"
                   text="HIGHT"
-                  // icon="ion-chatbubbles"
                   fontColor="#ffffff"
                   bgColor="lightblue"
                 />
@@ -145,7 +143,6 @@ export default () => (
                 <StickerWidget
                   number="80"
                   text="PERFECT"
-                  // icon="ion-chatbubbles"
                   fontColor="#ffffff"
                   bgColor="lightblue"
                 />
@@ -157,7 +154,6 @@ export default () => (
                 <StickerWidget
                   number="80"
                   text="HIGHT"
-                  // icon="ion-chatbubbles"
                   fontColor="#ffffff"
                   bgColor="lightblue"
                 />
@@ -276,7 +272,6 @@ export default () => (
                 <StickerWidget
                   number="80"
                   text="PERFECT"
-                  // icon="ion-chatbubbles"
                   fontColor="#ffffff"
                   bgColor="lightblue"
                 />
@@ -288,7 +283,6 @@ export default () => (
                 <StickerWidget
                   number="80"
                   text="HIGHT"
-                  // icon="ion-chatbubbles"
                   fontColor="#ffffff"
                   bgColor="lightblue"
                 />
@@ -325,7 +319,6 @@ export default () => (
                 <StickerWidget
                   number="80"
                   text="PERFECT"
-                  // icon="ion-chatbubbles"
                   fontColor="#ffffff"
                   bgColor="lightblue"
                 />
@@ -337,7 +330,6 @@ export default () => (
                 <StickerWidget
                   number="80"
                   text="HIGHT"
-                  // icon="ion-chatbubbles"
                   fontColor="#ffffff"
                   bgColor="lightblue"
                 />
