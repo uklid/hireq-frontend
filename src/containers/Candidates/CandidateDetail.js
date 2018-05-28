@@ -130,9 +130,9 @@ class CandidateDetail extends React.Component {
 			// useCORS: false
 		}).then(function (canvas) {
 			let data1 = canvas.toDataURL("image/jpeg", 1.0)
-			let width = doc.internal.pageSize.width
+			let width = doc.internal.pageSize.width - 10
 			let height = doc.internal.pageSize.height - 20
-			doc.addImage(data1, 'JPEG', 0, 0, width, height)
+			doc.addImage(data1, 'JPEG', 5, 5, width, height)
 			doc.addPage()
 		})
 		html2canvas(document.getElementById("reportBody2"), {
@@ -140,9 +140,9 @@ class CandidateDetail extends React.Component {
 			// useCORS: false
 		}).then(function (canvas) {
 			let data1 = canvas.toDataURL("image/jpeg", 1.0)
-			let width = doc.internal.pageSize.width
-			let height = doc.internal.pageSize.height
-			doc.addImage(data1, 'JPEG', 0, 0, width, height)
+			let width = doc.internal.pageSize.width - 10
+			let height = doc.internal.pageSize.height - 8
+			doc.addImage(data1, 'JPEG', 5, 5, width, height)
 			doc.addPage()
 		})
 		html2canvas(document.getElementById("reportBody3"), {
@@ -150,10 +150,10 @@ class CandidateDetail extends React.Component {
 			// useCORS: false
 		}).then(function (canvas) {
 			let data1 = canvas.toDataURL("image/jpeg", 1.0)
-			let width = doc.internal.pageSize.width
+			let width = doc.internal.pageSize.width - 10
 			let height = doc.internal.pageSize.height - 20
-			doc.addImage(data1, 'JPEG', 0, 0, width, 55)
-			doc.save(`${allCandidatesData.name}-${moment(new Date()).format("DD/MM/YY_HH:mm:ss")}.pdf`)
+			doc.addImage(data1, 'JPEG', 5, 5, width, 55)
+			doc.save(`${allCandidatesData.name}-${moment(new Date()).format("DD-MM-YY_HH-mm-ss")}.pdf`)
 		})
 	}
 	render() {

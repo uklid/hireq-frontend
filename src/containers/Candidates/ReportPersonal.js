@@ -54,6 +54,10 @@ class ReportPersonal extends React.Component {
           <Grid item xs={12}>
             <H4>Sumary of Q-Score Result</H4>
           </Grid>
+          <Grid item xs={12} style={{ padding: 10 }}>
+            <div style={{ fontSize: 17, fontWeight: 600 }}>Candidate Name: <span style={{ fontSize: 14, fontWeight: 500 }}>{name}</span></div>
+            <div style={{ fontSize: 17, fontWeight: 600 }}>Position Name: <span style={{ fontSize: 14, fontWeight: 500 }}>{allCandidatesData.position}</span></div>
+          </Grid>
           <Grid item xs={8} style={{
             display: 'flex',
             justifyContent: 'space-between'
@@ -229,7 +233,7 @@ class ReportPersonal extends React.Component {
               title="COMMUNICATION, PERSUASION AND NEGOTIATION"
               score="40"
               firstColor="green"
-              secondColor="lightgreen"
+              secondColor="green"
               firstTitle="HIGH"
               secondTitle="WATCH"
               description={`The Communication. Persuasion and Negotiation (CPN) scale score provides a gauge
@@ -458,13 +462,14 @@ class ReportPersonal extends React.Component {
               max={90}
               min={60}
               score={75}
-              description="Uklid Yeesarapat receives the GIL soore of 76 points 
+              description={`${name} receives the GIL soore of 76 points 
               (80 percentile), which is considerad moderately high, Gl score at this
               level indicates that he will be able to process meanlingful information,
               think critically, and solve work problems quite effectively, It Would not
-              take long for Uklid
-              Yeesarapat to leam new job skills and put them to use.
-              The GIL score that Uklid Yeesarapat receives is within the ideal range for the job Chief Executive Officer, which means he would have no trouble dealing with cognitive demands of the job (99% match)."
+              take long for ${name} to leam new job skills and put them to use.
+              The GIL score that ${name} receives is within the ideal range for 
+              the job Chief Executive Officer, which means he would have no trouble dealing
+               with cognitive demands of the job (99% match).`}
             />
           </Grid>
           <Grid item xs={6}>
@@ -477,10 +482,10 @@ class ReportPersonal extends React.Component {
               max={78}
               min={46}
               score={90}
-              description="Uklid Yeesarapat receives the PPM score of 70 points (74 percentile). This PPM score is considered moderately high. It suggests that Uklid Yeesarapat will be able to
+              description={`${name} receives the PPM score of 70 points (74 percentile). This PPM score is considered moderately high. It suggests that ${name} will be able to
               handle work tasks and projects quite efficiently.His ability to anaiyze needs, articulate expectabions, and manage performance is strong, which is likely to make him a good supervisor and manager of the job. Ukid Yeesarapat will likely be a capable mentor and trainer, too.
 
-              The PPM score that Uklid Yeesarapat gets is within the ideal range for the job Chief Executive Officer (97% match). This suggests that Ukid Yeesarapat will be able to manage the work, responsibility, and performance required by the job successtuly."
+              The PPM score that ${name} gets is within the ideal range for the job Chief Executive Officer (97% match). This suggests that Ukid Yeesarapat will be able to manage the work, responsibility, and performance required by the job successtuly.`}
             />
           </Grid>
           <Grid item xs={6}>
@@ -531,10 +536,10 @@ class ReportPersonal extends React.Component {
               max={40}
               min={10}
               score={60}
-              description="Uklid Yeesarapat's PIS score is 60 points (63 percenile). This is a moderately high PlS score. It predicts that Ukid Yeesarapat will be able to establish and maintain
-              interpersonal and working relatonships well.He can get people to work together to accomplish tasks. Uklid Yeesarapat will collaborate well with colleagues, customers, and clients, making him a good team member. He can resolve work conflicts quite satisfactorily.
+              description={`${name} PIS score is 60 points (63 percenile). This is a moderately high PlS score. It predicts that ${name} will be able to establish and maintain
+              interpersonal and working relatonships well.He can get people to work together to accomplish tasks. ${name} will collaborate well with colleagues, customers, and clients, making him a good team member. He can resolve work conflicts quite satisfactorily.
 
-              The PIS score that Uklid Yeesarapat receives is within the ideal range for the job Chiet Executive Officer (95% matcn). It indicates that Ukid Yeesarapat will be able to deal with the interpersonal and people aspect of the job very well."
+              The PIS score that ${name} receives is within the ideal range for the job Chiet Executive Officer (95% matcn). It indicates that ${name} will be able to deal with the interpersonal and people aspect of the job very well.`}
             />
           </Grid>
           <Grid item xs={6}>
@@ -564,10 +569,10 @@ class ReportPersonal extends React.Component {
               max={40}
               min={10}
               score={60}
-              description="Ukilid Yeesarapat receives the PEW score of 60 points (63 percentile). This PEW score is considered moderately high. It predicts that Uklid Yeesarapat will be productive
+              description={`${name} receives the PEW score of 60 points (63 percentile). This PEW score is considered moderately high. It predicts that ${name} will be productive
               and efficient.He is careful about detail and
-               thorouch in completing work tasks. He displays cooperative attiude and is pieasant with colleagues and clients. Uklid
-              Yeesarapat is honest and ethical. Ii is likely that Uklid Yeesarapats will be honest and ethical, as well as reliable, and dependable in fulfilling obligations."
+               thorouch in completing work tasks. He displays cooperative attiude and is pieasant with colleagues and clients. ${name}
+                is honest and ethical. Ii is likely that ${name} will be honest and ethical, as well as reliable, and dependable in fulfilling obligations.`}
             />
           </Grid>
           <Grid item xs={6}>
@@ -580,10 +585,9 @@ class ReportPersonal extends React.Component {
               max={100}
               min={80}
               score={30}
-              description="Uklid Yeesarapat receives the SMC score of 88 points (89 percentile), which is considered very high. SMC score this high indicates very strong EQ. Uklid Yeesarapat is his own boss. He takes responsibility for his performance, work, ane behaviors very seriously, His level of personal drive. commitment, and optimism is significantly above average. Uklid Yeesarapat will Ikely be able to control and manage his emotions and stress very well in every cccasion
+              description={`${name} receives the SMC score of 88 points (89 percentile), which is considered very high. SMC score this high indicates very strong EQ. ${name} is his own boss. He takes responsibility for his performance, work, ane behaviors very seriously, His level of personal drive. commitment, and optimism is significantly above average. ${name} will Ikely be able to control and manage his emotions and stress very well in every cccasion
 
-              The SMC score that Uklid Yeesarapat receives is within the ideal range for the job Chief Executive Officer (98 match). This illustrates that Uklid Yeesarapat will be able to control emotions, tolerate stress, and deal with demands aft the job in this respect. Uklid Yeeserapat is also sutficiently motivated to succeed in the job.
-              "
+              The SMC score that ${name} receives is within the ideal range for the job Chief Executive Officer (98 match). This illustrates that ${name} will be able to control emotions, tolerate stress, and deal with demands aft the job in this respect. ${name} is also sutficiently motivated to succeed in the job.`}
             />
           </Grid>
           {/* End card with power bar */}
@@ -615,10 +619,10 @@ class ReportPersonal extends React.Component {
             <GreyWrapper>
               <h4>Itemized Q-score Preferences Breakdown</h4>
               <p style={{ fontSize: 12 }}>
-                The radar chart on the left shows Uklid Yeesarapat's work preference profile containing six basic types of work environments, compared to the typical work environment and style of the job Chief Executive Officer. It is more likely that Uklid Yeesarapat will be successful and satisfied if his preference profile matches the charactoristics and nature of the job.
+                The radar chart on the left shows {name} work preference profile containing six basic types of work environments, compared to the typical work environment and style of the job Chief Executive Officer. It is more likely that {name} will be successful and satisfied if his preference profile matches the charactoristics and nature of the job.
 
-              The following six work preference scales are outcomes that have resulted from Uklid Yeesarapat's responses. To succeed and be
-              satisfied with the job Chief Executive Officer, Uklid Yeesarapat's score in each trait should be within the ideal range shown in GREEN. A score that is TOO LOW or TOO HIGhHi suggests that there is a preference mismatch in that dimension.
+              The following six work preference scales are outcomes that have resulted from  {name} responses. To succeed and be
+              satisfied with the job Chief Executive Officer, {name} score in each trait should be within the ideal range shown in GREEN. A score that is TOO LOW or TOO HIGhHi suggests that there is a preference mismatch in that dimension.
                 </p>
             </GreyWrapper>
           </Grid>

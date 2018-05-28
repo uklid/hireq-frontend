@@ -37,9 +37,15 @@ export const updateUncheckCandidateId = (data) => (dispatch, getState) => {
 
 export const updateAllChecked = () => (dispatch, getState) => {
   const checked = getState().Candidates.allChecked
-  console.log("checked: ", checked)
   dispatch({
     type: 'UPDATE_ALL_CHECKED',
     data: !checked
+  })
+}
+
+export const updateAllCheckedByOne = (data) => dispatch => {
+  dispatch({
+    type: 'UPDATE_ALL_CHECKED',
+    data: data
   })
 }

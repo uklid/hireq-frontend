@@ -16,7 +16,7 @@ import styled from 'styled-components'
 import { connect } from 'react-redux'
 import { Loading, LoadingSuccess } from '../redux/loading/actions'
 import { updateCreatedAllPosition } from '../redux/position/actions'
-import { updateAllCandidates, updateAllChecked, updateUncheckCandidateId } from '../redux/candidates/actions'
+import { updateAllCandidates, updateAllChecked, updateUncheckCandidateId, updateAllCheckedByOne } from '../redux/candidates/actions'
 import Axios from 'axios'
 import { baseUrl } from '../libs/url/baseUrl'
 
@@ -235,9 +235,11 @@ class Dashboard extends Component {
         console.log("Children: ", allCheckBox[i].children)
         if (allCheckBox[i].children[0].checked === false) {
           // Hack ให้คลิกที่ input 1 ทีเพื่อแก้บัคในการ checkall เพื่อต้องกดอีกที
-          await allCheckBox[i].children[0].click()
+          allCheckBox[i].children[0].click()
         }
       }
+      this.props.updateAllCheckedByOne(true)
+      // this.props.updateAllChecked()
     } else {
       for (let i = 1; i < allCheckBox.length; i++) {
         allCheckBox[i].classList.remove("ant-checkbox-checked")
@@ -246,34 +248,36 @@ class Dashboard extends Component {
           await allCheckBox[i].children[0].click()
         }
       }
+      // this.props.updateAllChecked()
       // this.props.updateUncheckCandidateId([])      
+      this.props.updateAllCheckedByOne(false)
     }
-    // this.props.updateAllChecked()
   }
-  candidatesColumn = [
-    {
-      title: <Checkbox onChange={this.onCheckAllChange}>Check all</Checkbox>,
-      dataIndex: 'checkbox',
-      key: 'checkbox'
-    },
-    {
-      title: 'Name',
-      dataIndex: 'name',
-      key: 'name',
-    },
-    {
-      title: 'Email',
-      dataIndex: 'email',
-      key: 'email',
-    },
-    {
-      title: 'ACTIONS',
-      dataIndex: 'buttonAction',
-      key: 'buttonAction'
-    }
-  ]
   render() {
-    const { allPositionCreated, allCandidatesData } = this.props
+    const { allPositionCreated, allCandidatesData, allChecked } = this.props
+    console.log("AllChecked = :", allChecked)
+    const candidatesColumn = [
+      {
+        title: <Checkbox id="checkAllId" checked={this.props.allChecked} onChange={this.onCheckAllChange}>Check all</Checkbox>,
+        dataIndex: 'checkbox',
+        key: 'checkbox'
+      },
+      {
+        title: 'Name',
+        dataIndex: 'name',
+        key: 'name',
+      },
+      {
+        title: 'Email',
+        dataIndex: 'email',
+        key: 'email',
+      },
+      {
+        title: 'ACTIONS',
+        dataIndex: 'buttonAction',
+        key: 'buttonAction'
+      }
+    ]
     // console.log('All candidates: ', allCandidateData)
     // console.log('candidate after regroup: ', Object.values(allPositionCreated))
     // {console.log(this.newObject())}    
@@ -337,7 +341,7 @@ class Dashboard extends Component {
             >
               <CandidatesTable
                 dataSource={Object.values(this.newObjectCandidate())}
-                columns={this.candidatesColumn}
+                columns={candidatesColumn}
                 rowPerPage={10}
                 ellipsis={10}
               />
@@ -369,7 +373,8 @@ class Dashboard extends Component {
 
 const mapStateToProps = state => ({
   allPositionCreated: state.Positions.allPositionCreated,
-  allCandidatesData: state.Candidates.allCandidatesData
+  allCandidatesData: state.Candidates.allCandidatesData,
+  allChecked: state.Candidates.allChecked,
 })
 
 export default connect(mapStateToProps, {
@@ -378,5 +383,6 @@ export default connect(mapStateToProps, {
   Loading,
   LoadingSuccess,
   updateAllChecked,
-  updateUncheckCandidateId
+  updateUncheckCandidateId,
+  updateAllCheckedByOne
 })(Dashboard)

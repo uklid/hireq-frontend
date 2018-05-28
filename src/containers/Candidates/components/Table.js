@@ -14,7 +14,8 @@ import {
 	toggleDialog,
 	updateCandidateCheckId,
 	updateAllChecked,
-	updateUncheckCandidateId
+	updateUncheckCandidateId,
+	updateAllCheckedByOne
 } from '../../../redux/candidates/actions'
 import { baseUrl } from '../../../libs/url/baseUrl'
 import Button from '../../HireQComponent/Button'
@@ -155,6 +156,7 @@ class CandidatesTable extends Component {
 					return id
 				}
 			})
+			this.props.updateAllCheckedByOne(false)
 			await this.props.updateUncheckCandidateId(updateData)
 		}
 	}
@@ -177,15 +179,15 @@ class CandidatesTable extends Component {
 					// } else {
 
 					console.log("Email send array: ", candidateCheckId)
-					candidateCheckId.map(async id => {
-						const getIdToken = await firebase.auth().currentUser.getIdToken()
-						const uid = localStorage.getItem('loginToken')
-						const url = `${baseUrl}/users/${uid}/candidates/email`
-						const result = await Axios.post(url, { candidateId: id }, {
-							headers: { Authorization: "Bearer " + getIdToken }
-						})
-						console.log("ID Email Send:", id)
-					})
+					// candidateCheckId.map(async id => {
+					// 	const getIdToken = await firebase.auth().currentUser.getIdToken()
+					// 	const uid = localStorage.getItem('loginToken')
+					// 	const url = `${baseUrl}/users/${uid}/candidates/email`
+					// 	const result = await Axios.post(url, { candidateId: id }, {
+					// 		headers: { Authorization: "Bearer " + getIdToken }
+					// 	})
+					// 	console.log("ID Email Send:", id)
+					// })
 
 
 					// }
@@ -369,5 +371,6 @@ export default connect(mapStateToProps,
 		toggleDialog,
 		updateCandidateCheckId,
 		updateAllChecked,
-		updateUncheckCandidateId
+		updateUncheckCandidateId,
+		updateAllCheckedByOne
 	})(withRouter(CandidatesTable))
