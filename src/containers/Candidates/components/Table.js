@@ -179,15 +179,15 @@ class CandidatesTable extends Component {
 					// } else {
 
 					console.log("Email send array: ", candidateCheckId)
-					// candidateCheckId.map(async id => {
-					// 	const getIdToken = await firebase.auth().currentUser.getIdToken()
-					// 	const uid = localStorage.getItem('loginToken')
-					// 	const url = `${baseUrl}/users/${uid}/candidates/email`
-					// 	const result = await Axios.post(url, { candidateId: id }, {
-					// 		headers: { Authorization: "Bearer " + getIdToken }
-					// 	})
-					// 	console.log("ID Email Send:", id)
-					// })
+					candidateCheckId.map(async id => {
+						const getIdToken = await firebase.auth().currentUser.getIdToken()
+						const uid = localStorage.getItem('loginToken')
+						const url = `${baseUrl}/users/${uid}/candidates/email`
+						const result = await Axios.post(url, { candidateId: id }, {
+							headers: { Authorization: "Bearer " + getIdToken }
+						})
+						console.log("ID Email Send:", id)
+					})
 
 
 					// }

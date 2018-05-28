@@ -152,7 +152,7 @@ class CandidateDetail extends React.Component {
 			let data1 = canvas.toDataURL("image/jpeg", 1.0)
 			let width = doc.internal.pageSize.width - 10
 			let height = doc.internal.pageSize.height - 20
-			doc.addImage(data1, 'JPEG', 5, 5, width, 55)
+			doc.addImage(data1, 'JPEG', 5, 5, width, 93)
 			doc.save(`${allCandidatesData.name}-${moment(new Date()).format("DD-MM-YY_HH-mm-ss")}.pdf`)
 		})
 	}
@@ -273,7 +273,16 @@ class CandidateDetail extends React.Component {
 										<ReportPersonal />
 										{/* <img id="testImage" src="" /> */}
 									</div>
-									<button onClick={this.renderPDFViaHtml}>TestPDF</button>
+									<button style={{
+										backgroundColor: '#D0021B',
+										color: 'white',
+										width: 200,
+										height: 40,
+										alignItems: 'center',
+										alignSelf: 'center',
+										marginTop: 30
+									}}
+										onClick={this.renderPDFViaHtml}>Print Report.</button>
 								</Grid>
 							</Grid>
 						</Grid>

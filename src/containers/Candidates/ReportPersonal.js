@@ -55,8 +55,8 @@ class ReportPersonal extends React.Component {
             <H4>Sumary of Q-Score Result</H4>
           </Grid>
           <Grid item xs={12} style={{ padding: 10 }}>
-            <div style={{ fontSize: 17, fontWeight: 600 }}>Candidate Name: <span style={{ fontSize: 14, fontWeight: 500 }}>{name}</span></div>
-            <div style={{ fontSize: 17, fontWeight: 600 }}>Position Name: <span style={{ fontSize: 14, fontWeight: 500 }}>{allCandidatesData.position}</span></div>
+            <div style={{ fontSize: 15, fontWeight: 500 }}>Candidate Name: <span style={{ fontSize: 14, fontWeight: 500 }}>{name}</span></div>
+            <div style={{ fontSize: 15, fontWeight: 500 }}>Position Name: <span style={{ fontSize: 14, fontWeight: 500 }}>{allCandidatesData.position}</span></div>
           </Grid>
           <Grid item xs={8} style={{
             display: 'flex',
@@ -657,6 +657,8 @@ class ReportPersonal extends React.Component {
                Analytical and Methodological. The job Chief Executive Officer involves tasks that are a lot less Intellectual,  Analytical and Methodological than what ${name}, Thus, his preference dose not match the preference profile of the job at all (xxx match )`}
             />
           </Grid>
+        </Grid>
+        <Grid id="reportBody3" container style={{ backgroundColor: '#eee', margin: 0 }} spacing={8}>
           <Grid item xs={6}>
             <CardWithPowerBar
               title="CREATIVE, INNOVATIVE AND IMAGINATIVE"
@@ -688,8 +690,7 @@ class ReportPersonal extends React.Component {
                his preference dose not match the perference profile of the job at all (70% match) `}
             />
           </Grid>
-        </Grid>
-        <Grid id="reportBody3" container style={{ backgroundColor: '#eee', margin: 0 }} spacing={8}>
+          {/* </Grid> */}
           <Grid item xs={6}>
             <CardWithPowerBar
               title="PERSUASIVE, ADVENTUROUS AND MOTIVATIONAL"
