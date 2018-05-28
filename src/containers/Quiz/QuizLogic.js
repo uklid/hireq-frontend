@@ -55,9 +55,6 @@ const Wrapper = styled.div`
 `
 
 class QuizLogic extends React.Component {
-  // sendAnswer = (data) => {
-  //   console.log("Key = ", data)
-  // }
   render() {
     const { imageData, quizImage, onClick, imageDetail } = this.props
     return (

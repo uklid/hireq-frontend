@@ -177,7 +177,6 @@ class Dashboard extends Component {
           const getIdToken = await firebase.auth().currentUser.getIdToken()
           const uid = localStorage.getItem('loginToken')
           //get all position and keep it to redux store
-          console.log("get Id Token = ", getIdToken)
           const url = `${baseUrl}/users/${uid}/positions`
           const result = await Axios.get(url, {
             headers: { Authorization: "Bearer " + getIdToken }
@@ -189,17 +188,13 @@ class Dashboard extends Component {
           const candidatesResult = await Axios.get(candidatesURL, {
             headers: { Authorization: "Bearer " + getIdToken }
           })
-          console.log("Candidates: ", candidatesResult)
           this.props.updateAllCandidates(candidatesResult.data)
           // end all candidate here
           this.props.LoadingSuccess()
         } else {
           this.props.LoadingSuccess()
-          console.log("ไม่มี")
         }
       })
-      // console.log(test)
-
     } catch (err) {
       this.props.LoadingSuccess()
       console.log(err)
@@ -228,11 +223,9 @@ class Dashboard extends Component {
   }
   onCheckAllChange = async (event) => {
     const allCheckBox = document.getElementsByClassName("ant-checkbox")
-    console.log("Checked all Event: ", event.target)
     if (event.target.checked === true) {
       for (let i = 1; i < allCheckBox.length; i++) {
         allCheckBox[i].classList.add("ant-checkbox-checked")
-        console.log("Children: ", allCheckBox[i].children)
         if (allCheckBox[i].children[0].checked === false) {
           // Hack ให้คลิกที่ input 1 ทีเพื่อแก้บัคในการ checkall เพื่อต้องกดอีกที
           allCheckBox[i].children[0].click()
@@ -255,7 +248,6 @@ class Dashboard extends Component {
   }
   render() {
     const { allPositionCreated, allCandidatesData, allChecked } = this.props
-    console.log("AllChecked = :", allChecked)
     const candidatesColumn = [
       {
         title: <Checkbox id="checkAllId" checked={this.props.allChecked} onChange={this.onCheckAllChange}>Check all</Checkbox>,
@@ -278,10 +270,6 @@ class Dashboard extends Component {
         key: 'buttonAction'
       }
     ]
-    // console.log('All candidates: ', allCandidateData)
-    // console.log('candidate after regroup: ', Object.values(allPositionCreated))
-    // {console.log(this.newObject())}    
-    // console.log("result = ", { ...Object.values(allPositionCreated), positionId: allPositionCreated })
     return (
       <LayoutContentWrapper
       // style={{ height: '100vh' }}

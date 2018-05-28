@@ -165,17 +165,6 @@ class QuizLayout extends React.Component {
 			console.log(err)
 		}
 	}
-	// componentDidMount = () => {
-	// 	const { decreaseTime, timeNow } = this.props
-	// 	console.log("Time Now", timeNow)
-	// 	console.log("currentQuiz: ", this.props)
-	// 	if (timeNow >= 0 && this.props.currentQuiz === 'cog') {
-	// 		console.log('ติดเงื่อนไขใน if จ้า')
-	// 		setInterval(() => {
-	// 			decreaseTime()
-	// 		}, 1000)
-	// 	}
-	// }
 	sendCogAnswer = async (event) => {
 		//ADd Loading Spinner after send answer
 		this.props.Loading()
@@ -190,7 +179,6 @@ class QuizLayout extends React.Component {
 			answer: parseInt(answer),
 		})
 		// set State
-		console.log("sendResult = ", sendResult)
 		// Update currentTest or Quiz after send answer
 		this.props.updateCurrentTest(sendResult.data.nextTestName)
 		this.props.updateQuizPercent()
@@ -230,11 +218,9 @@ class QuizLayout extends React.Component {
 			this.props.updateCurrentTest('per')
 		}
 		// if CurrentQuiz = Finish redirect to done page
-		// console.log("Current Quiz: ", currentQuiz)
 		if (currentQuiz === 'finish') {
 			this.props.history.replace('/quiz-complete')
 		}
-		// console.log("quizPercent: " , quizPercent)
 		// Slice before map
 		return (
 			<Layout style={{ minHeight: '100%' }}>

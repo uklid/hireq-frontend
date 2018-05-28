@@ -92,12 +92,6 @@ for (let i = 0; i <= 30; i++) {
 		qScore: `q  - score : ${i + Math.random()}`
 	})
 }
-
-const onChange = (date, dateString) => {
-	console.log("date =", date)
-	console.log("data String =", dateString)
-}
-
 class EditPosition1 extends React.Component {
 	state = {
 		open: false,

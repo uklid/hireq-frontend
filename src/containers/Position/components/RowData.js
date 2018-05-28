@@ -63,10 +63,6 @@ export default class RowData extends Component {
 	componentWillReceiveProps = (props) => {
 		this.setState({ isExpand: false })
 	}
-
-	// onRowClick = (event) => {
-	// 	console.log(event.target)
-	// }
 	render() {
 		const { data, columns } = this.props
 		const dataWithInfo = {

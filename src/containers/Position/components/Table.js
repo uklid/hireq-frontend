@@ -65,9 +65,6 @@ class Tables extends Component {
 			this.setState({ currentPage: this.state.currentPage - 1 })
 		}
 	}
-	onRowClick = (event) => {
-		console.log(event.target)
-	}
 	onEditPositionClick = async (id) => {
 		try {
 			this.props.Loading()
@@ -87,27 +84,15 @@ class Tables extends Component {
 					})
 				} else {
 					this.props.LoadingSuccess()
-					console.log("ไม่มี")
+					("ไม่มี")
 				}
 			})
 		} catch (err) {
 			this.props.LoadingSuccess()
 			console.log(err)
 		}
-		// console.log("PositionId = ", data.positionId)
-		// try {
-		// 	const result
-		// 	this.props.history.push({
-		// 		pathname: '/dashboard/edit-position',
-		// 		state: { positionId: data.positionId }
-		// 	})
-		// } catch (err) {
-		// 	console.log(err)
-		// }
-
 	}
 	onDeleteClick = async (id) => {
-		// console.log('dee=leteeee' , id)
 		try {
 			this.props.Loading()
 			const test = await firebase.auth().onAuthStateChanged(async (data) => {
@@ -118,12 +103,9 @@ class Tables extends Component {
 					const result = await Axios.delete(url, {
 						headers: { Authorization: "Bearer " + getIdToken }
 					})
-					console.log("AFter delete = ", result)
-					// this.props.allPositionCreated = 
 					this.props.LoadingSuccess()
 				} else {
 					this.props.LoadingSuccess()
-					console.log("ไม่มี")
 				}
 			})
 		} catch (err) {
@@ -151,8 +133,6 @@ class Tables extends Component {
 					<tbody>
 						{dataSource.slice(startData, endData).map((data, index) => (
 							<RowData
-								// onClick={() => console.log(data)}
-								// seeDetailClick={() => console.log(Object.keys(dataSource)[index])}
 								seeDetailClick={() => {
 									this.props.history.push({
 										pathname: '/dashboard/position-detail',

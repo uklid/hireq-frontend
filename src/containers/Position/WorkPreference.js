@@ -65,10 +65,6 @@ class WorkPreference extends React.Component {
 	}
 	onChange = (dataName) => (value) => {
 		const { prepareCreate } = this.props
-		// const objName = Object.keys(prepareCreate.info)[number]
-		// console.log('objectName : ', prepareCreate.info[objName])
-		console.log('data name = ', dataName)
-		console.log('change value : ', value[0] + ' , ' + value[1])
 		prepareCreate.info[dataName] = { min: value[0] , max: value[1] }
 		// prepareCreate.info[objName] = { min: value['min'], max: value['max'] }
 		const newDataToUpdate = { ...prepareCreate }
@@ -80,14 +76,11 @@ class WorkPreference extends React.Component {
 		const { slideData } = this.props
 		return Object.values(slideData).slice(this.first, this.last).map((data, index) => {
 			const dataName = Object.keys(slideData)[this.first + index]
-			// console.log(`Work Data ${Object.keys(slideData)[7 + index]}`, `${parseInt(data['min'])}, ${parseInt(data['max'])}`)
 			// Hack ถ้าตำแหน่งที่ 13 ของ index จะไม่แสดงเพราะ ไม่ใช่ max min
-			// console.log("Array value in Chart", `${parseInt(data['min'])}, ${parseInt(data['max'])}`)
 			if (index <= 15) {
 				return {
 					subject: dataName,
 					value: parseInt((data['max'] + data['min']) / 2)
-					// value: parseInt((Object.values(data)[0] + Object.values(data)[1]) / 2)
 				}
 			}
 		})
@@ -95,7 +88,6 @@ class WorkPreference extends React.Component {
 
 	render() {
 		const { slideData } = this.props
-		console.log('sliceData : ', slideData)
 		let groupIndex = 0
 		return (
 			<ChartWrapper>
@@ -103,8 +95,6 @@ class WorkPreference extends React.Component {
 				{
 					slideData !== undefined && Object.values(slideData).slice(this.first, this.last).map((data, index) => {
 						const dataName = Object.keys(slideData)[this.first + index]
-						// console.log(`Data in Slider ${dataName}: `, [data['min'], data['max']])
-
 						// Hack ถ้าตำแหน่งที่ 13 ของ index จะไม่แสดงเพราะ ไม่ใช่ max min
 						if (index <= 15) {
 							return (
@@ -112,7 +102,6 @@ class WorkPreference extends React.Component {
 									title={`${dataName}`}
 									onChange={this.onChange(dataName)}
 									value={[parseInt(data['min']), parseInt(data['max'])]}
-								// value={[parseInt(data['min']), parseInt(data['max'])]}
 								/>
 							)
 						}

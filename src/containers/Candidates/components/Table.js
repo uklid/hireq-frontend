@@ -76,9 +76,6 @@ class CandidatesTable extends Component {
 			this.setState({ currentPage: this.state.currentPage - 1 })
 		}
 	}
-	onRowClick = (event) => {
-		console.log(event.target)
-	}
 	onEditCandidateClick = async (data) => {
 		this.props.history.push({
 			pathname: '/dashboard/candidate-detail',
@@ -86,37 +83,12 @@ class CandidatesTable extends Component {
 		})
 	}
 	onDeleteClick = async (id) => {
-		console.log('dee=leteeee', id)
-		// this.props.Loading()
 		const positionId = id.position
 		const candidateId = id.candidateId
 		this.props.updateDeleteId({ deleteId: candidateId, positionId: positionId })
 		this.props.toggleDialog()
-		// const test = await firebase.auth().onAuthStateChanged(async (data) => {
-		// 	if (data) {
-		// 		try {
-		// 			const getIdToken = await firebase.auth().currentUser.getIdToken()
-		// 			const uid = localStorage.getItem('loginToken')
-		// 			const url = `${baseUrl}/users/${uid}/positions/${positionId}/candidates/${candidateId}`
-		// 			const result = await Axios.delete(url, {
-		// 				headers: { Authorization: "Bearer " + getIdToken }
-		// 			})
-		// 			console.log("AFter delete = ", result)
-		// 			// this.props.allPositionCreated = 
-		// 			this.props.LoadingSuccess()
-		// 		} catch (err) {
-		// 			this.props.LoadingSuccess()
-		// 			console.log(err)
-		// 		}
-		// 	} else {
-		// 		this.props.LoadingSuccess()
-		// 		console.log("ไม่มี")
-		// 	}
-		// })
 	}
 	onSendEmailClick = async (id) => {
-		console.log("Email data = ", id)
-		// try {
 		this.props.Loading()
 		const test = await firebase.auth().onAuthStateChanged(async (data) => {
 			if (data) {
@@ -127,8 +99,6 @@ class CandidatesTable extends Component {
 					const result = await Axios.post(url, { candidateId: id.candidateId }, {
 						headers: { Authorization: "Bearer " + getIdToken }
 					})
-					console.log("Email Send:", id.candidateId)
-					// this.props.allPositionCreated = 
 					this.props.LoadingSuccess()
 				} catch (err) {
 					this.props.LoadingSuccess()
@@ -136,22 +106,15 @@ class CandidatesTable extends Component {
 				}
 			} else {
 				this.props.LoadingSuccess()
-				console.log("ไม่มี")
 			}
 		})
-		// } catch (err) {
-		// }
 	}
 	onCheckboxChange = (data) => async (event) => {
-		console.log("Change target: ", event)
 		if (event.target.checked) {
-			console.log("True checked")
 			this.props.updateCandidateCheckId(data.candidateId)
 		} else {
 			const oldData = this.props.candidateCheckId
-			console.log("false checked", oldData)
 			const updateData = await oldData.filter(id => {
-				console.log(`${id} === ${data.candidateId}`)
 				if (id !== data.candidateId) {
 					return id
 				}
@@ -166,19 +129,6 @@ class CandidatesTable extends Component {
 		const test = await firebase.auth().onAuthStateChanged(async (data) => {
 			if (data) {
 				try {
-					// if (allChecked) {
-					// 	Object.values(allCandidatesData).map(async data => {
-					// 		const getIdToken = await firebase.auth().currentUser.getIdToken()
-					// 		const uid = localStorage.getItem('loginToken')
-					// 		const url = `${baseUrl}/users/${uid}/candidates/email`
-					// 		const result = await Axios.post(url, { candidateId: data.candidateId }, {
-					// 			headers: { Authorization: "Bearer " + getIdToken }
-					// 		})
-					// 		console.log("ID Email Send:", data.candidateId)
-					// 	})
-					// } else {
-
-					console.log("Email send array: ", candidateCheckId)
 					candidateCheckId.map(async id => {
 						const getIdToken = await firebase.auth().currentUser.getIdToken()
 						const uid = localStorage.getItem('loginToken')
@@ -186,13 +136,8 @@ class CandidatesTable extends Component {
 						const result = await Axios.post(url, { candidateId: id }, {
 							headers: { Authorization: "Bearer " + getIdToken }
 						})
-						console.log("ID Email Send:", id)
 						message.success(`complete send email to candidate.`,5)
 					})
-
-
-					// }
-					// this.props.allPositionCreated = 
 					this.props.LoadingSuccess()
 				} catch (err) {
 					this.props.LoadingSuccess()
@@ -224,14 +169,9 @@ class CandidatesTable extends Component {
 					<tbody>
 						{dataSource.slice(startData, endData).map((data, index) => (
 							<RowData
-								// onClick={() => console.log(data)}
-								// seeDetailClick={() => console.log(Object.keys(dataSource)[index])}
 								dataValue={data.candidateId}
-								// allChecked={this.props.allChecked}
-								// checked={data.checked}
 								onCheckboxChange={this.onCheckboxChange(data)}
 								seeDetailClick={() => {
-									console.log("data candidate = ", data)
 									this.props.history.push({
 										pathname: '/dashboard/candidate-detail',
 										state: { candidateId: data.candidateId }

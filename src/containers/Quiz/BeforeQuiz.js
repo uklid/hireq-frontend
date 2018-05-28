@@ -68,7 +68,6 @@ class BeforeQuiz extends React.Component {
     this.props.Loading()
     const url = `${apiURL}/candidates/${candidateId}/test`
     const requestResult = await Axios.get(url)
-    console.log(requestResult)
     const startedTime = requestResult.data.startedTime ? requestResult.data.startedTime : null
     this.setState({
       startedTime,
@@ -82,7 +81,6 @@ class BeforeQuiz extends React.Component {
     this.props.history.push('/quiz')
   }
   render() {
-    // console.log("Props =",this.props)
     const { errorMessage, } = this.props
     return (
       <BeforeQuizWrapper>

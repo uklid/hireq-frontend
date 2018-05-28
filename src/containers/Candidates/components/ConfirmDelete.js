@@ -44,8 +44,6 @@ class ConfirmDelete extends React.Component {
           const updateDataAfterDelete = Object.values(allCandidatesData).filter((candidate) => {
             return candidate.candidateId !== deleteId
           })
-          console.log("after Delete Candidate Data: ", {...updateDataAfterDelete})
-          // allPosition
           this.props.updateAllCandidates({...updateDataAfterDelete})
           this.props.toggleDialog()
           this.props.LoadingSuccess()
@@ -62,7 +60,6 @@ class ConfirmDelete extends React.Component {
     })
   }
   render() {
-    // const { toggleDialog } = this.props
     return (
       <Dialog
         open={true}

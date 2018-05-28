@@ -38,31 +38,6 @@ class Report extends React.Component {
 	renderPDFViaHtml = () => {
 		const report = document.getElementById("reportCard")
 		window.print()
-		// const pdf = new jspdf()
-		// console.log(report)
-		// // const raster = await rasterizeHTML.drawHTML(report)
-		// // console.log(raster)
-		// pdf.addHTML(report, () => {
-		// 	pdf.save("download.pdf")
-		// })
-		// report.style.width = "210mm"
-		// const canvas = await html2canvas(report)
-		// canvas.style.width = "210px"
-		// canvas.style.marginLeft = "auto"
-		// canvas.style.marginRight = "auto"
-		// console.log(canvas)
-		// const imageData = canvas.toDataURL('image/png')
-		// document.getElementById("testImage").setAttribute("src", imageData)
-
-		// const pdf = new jspdf()
-		// pdf.addHTML(canvas)
-		// pdf.addImage(imageData, 'JPEG', 0, 0, 210, report.offsetHeight)
-		// pdf.addImage(imageData, 'JPEG', 0, 0, 210, 300)
-		// pdf.addHTML(canvas, function(){
-		// 	pdf.save("download.pdf")
-		// })
-		// pdf.output('dataurlnewwindow')
-		// pdf.save("download.pdf")
 	}
 	render() {
 		

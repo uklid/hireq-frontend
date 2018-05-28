@@ -63,16 +63,12 @@ class PositionDetail extends React.Component {
 					this.props.Loading()
 					const uid = localStorage.getItem('loginToken')
 					const getIdToken = await firebase.auth().currentUser.getIdToken()
-					console.log("getidtoken positiondetail ", getIdToken)
-					console.log("this.props.location", this.props.location.state)
 					//ถ้าเข้าโดยตรงไม่ได้ ต้องส่ง location.state.positionDetail มาด้วย จะได้เอาไป set เป็น ไอดีครับ
 					if (this.props.location.state === undefined) {
-						console.log("ไปอีกหน้าสิจ๊ะ")
 						this.props.history.push('/dashboard')
 						this.props.LoadingSuccess()
 						return
 					}
-
 					// ถ้ามาจากหน้า create alert message 
 					if (this.props.location.state.message) {
 						message.config({
@@ -86,8 +82,6 @@ class PositionDetail extends React.Component {
 						headers: { Authorization: "Bearer " + getIdToken }
 					})
 					this.props.updatePositionDetail(result.data)
-					console.log(result.data)
-					// this.props.updatePositionDetail(result.data)
 					this.props.LoadingSuccess()
 				} else {
 					throw new Error("No User Login Data")
@@ -101,7 +95,6 @@ class PositionDetail extends React.Component {
 		const positionDetail = this.props.positionDetail.info
 		const start = 1
 		const last = 8
-		console.log("positionDatas ==== ", positionDetail)
 		return Object.values(positionDetail).slice(start, last).map((data, index) => {
 			const dataName = Object.keys(positionDetail)[start + index]
 			// Hack ถ้าตำแหน่งที่ 13 ของ index จะไม่แสดงเพราะ ไม่ใช่ max min
@@ -117,7 +110,6 @@ class PositionDetail extends React.Component {
 		const positionDetail = this.props.positionDetail.info
 		const start = 8
 		const last = 15
-		console.log("positionDatas ==== ", positionDetail)
 		return Object.values(positionDetail).slice(start, last).map((data, index) => {
 			const dataName = Object.keys(positionDetail)[start + index]
 			// Hack ถ้าตำแหน่งที่ 13 ของ index จะไม่แสดงเพราะ ไม่ใช่ max min
@@ -136,7 +128,6 @@ class PositionDetail extends React.Component {
 	}
 	render() {
 		const { positionDetail } = this.props
-		console.log("secondDatas ", positionDetail.info)
 		return (
 			<LayoutContentWrapper>
 				<Grid container spacing={0}>

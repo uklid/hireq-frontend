@@ -49,10 +49,8 @@ class SignIn extends Component {
     Loading()
     await LoginCheck()
     LoadingSuccess()
-    // this.props.history.push('/dashboard')
   }
   render() {
-    console.log("Props =",this.props)
     const { errorMessage } = this.props
     return (
       <SignInWrapper>

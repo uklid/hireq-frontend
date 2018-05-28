@@ -24,7 +24,6 @@ export const updateTimeFromApi = (startTime) => (dispatch, getState) => {
   const minute = ((moment(differentTime, "HH:mm:ss").format("mm") * 60)) * 1000 // change minute to millisecond
   const changeToMilliSecond = hour + minute
   const realTime = getState().Time.time - changeToMilliSecond
-  console.log("realTime = ", realTime)
   dispatch({
     type: UPDATE_TIME,
     data: realTime

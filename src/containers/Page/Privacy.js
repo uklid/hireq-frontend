@@ -39,7 +39,6 @@ class Privacy extends React.Component {
 		this.setState({
 			[Id]: !this.state[Id]
 		})
-		console.log('TeeHit', Id)
 	}
 	render() {
 		return (

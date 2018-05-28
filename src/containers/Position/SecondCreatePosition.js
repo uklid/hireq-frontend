@@ -59,12 +59,6 @@ const ButtonContainer = styled.div`
   width: 100%;
   justify-content: space-between;
 `
-
-const onChange = (date, dateString) => {
-  console.log("date =", date)
-  console.log("data String =", dateString)
-}
-
 class SecondCreatePosition extends React.Component {
   state = {
     open: false,
@@ -88,7 +82,6 @@ class SecondCreatePosition extends React.Component {
     const result = await Axios.post(url, { ...prepareCreate }, {
       headers: { Authorization: "Bearer " + getIdToken }
     })
-    console.log("After Create = ", result)
     //change to position detail after create with idCode
     this.props.LoadingSuccess()
     this.props.history.push({
@@ -102,7 +95,6 @@ class SecondCreatePosition extends React.Component {
 
   changeCogData = (value) => {
     const { prepareCreate } = this.props
-    // console.log('dataCOGG',prepareCreate.info['COG']['min'])
     prepareCreate.info['COG'] = { min: value[0], max: value[1] }
     const newDataToUpdate = { ...prepareCreate }
     this.props.preCreatePosition(newDataToUpdate)

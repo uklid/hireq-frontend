@@ -58,7 +58,6 @@ class CreateCandidates extends React.Component {
             headers: { Authorization: "Bearer " + getIdToken }
           })
           this.props.updateAllCandidates(resultCandidate.data)
-          console.log('After create candidate: ', resultAfterCreate)
           this.setState({
             email: '',
             name: '',
@@ -71,8 +70,6 @@ class CreateCandidates extends React.Component {
           console.log("ไม่มี")
         }
       })
-      // console.log(test)
-
     } catch (err) {
       this.props.LoadingSuccess()
       console.log(err)

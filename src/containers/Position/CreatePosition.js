@@ -103,15 +103,12 @@ class CreatePosition extends React.Component {
 		try {
 			this.props.Loading()
 			const getIdToken = await firebase.auth().currentUser.getIdToken()
-			console.log('getIdToken = ', getIdToken)
 			const searchKeyword = document.getElementById('position-search').value
 			const url = `${baseUrl}/jobs/search?keyword=${searchKeyword}`
 
 			const result = await Axios.get(url, {
 				headers: { Authorization: "Bearer " + getIdToken }
-				// headers: { Authorization: "Bearer " + localStorage.getItem('headerToken') }
 			})
-			console.log("search result = ", result)
 			if (result.data !== 'No results found') {
 				this.props.updatePositionData(result.data)
 			}
@@ -135,7 +132,6 @@ class CreatePosition extends React.Component {
 	}
 
 	render() {
-		console.log("positionData = ", this.props.positionData)
 		return (
 			<LayoutContentWrapper>
 				<Grid container spacing={0}>

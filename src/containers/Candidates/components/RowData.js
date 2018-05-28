@@ -69,14 +69,9 @@ export default class RowData extends Component {
 		isExpand: false,
 		isActive: false,
 	}
-
 	componentWillReceiveProps = (props) => {
 		this.setState({ isExpand: false })
 	}
-
-	// onRowClick = (event) => {
-	// 	console.log(event.target)
-	// }
 	render() {
 		const { data, columns } = this.props
 		const dataWithInfo = {
@@ -84,8 +79,6 @@ export default class RowData extends Component {
 				defaultChecked={this.props.allChecked}
 				onChange={this.props.onCheckboxChange}
 				value={this.props.dataValue}
-				// checked={this.props.checked}
-				// checked={this.props.allChecked ? this.props.allChecked : null}
 			>
 			</CheckboxStyled>,
 			...data,
@@ -107,10 +100,6 @@ export default class RowData extends Component {
 						ACTIONS <Icon type="down" />
 					</LinkStyled>
 				</Dropdown>
-			// <React.Fragment>
-			// 	<Button onClick={this.props.seeDetailClick}>More Detail</Button>
-			// 	<Button onClick={this.props.onEditPositionClick}>Edit</Button>
-			// </React.Fragment>
 			,
 			moreInfo: <MoreInfoLink onClick={() => this.setState({ isExpand: !this.state.isExpand })}>More Info</MoreInfoLink>
 		}

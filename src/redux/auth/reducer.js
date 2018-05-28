@@ -3,7 +3,6 @@ import actions from './actions'
 
 const checkIsLoggedIn = () => {
   const isSignin = localStorage.getItem('loginToken')
-  console.log("isSingin = ",isSignin)
   if (isSignin) {
     return true
   }

@@ -12,7 +12,6 @@ import basicStyle from '../../../config/basicStyle';
 import IntlMessages from '../../../components/utility/intlMessages';
 
 function handleMenuClick(e) {
-  console.log('click', e);
 }
 
 const menu = (

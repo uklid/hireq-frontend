@@ -28,8 +28,6 @@ export const LoginCheck = () => async dispatch => {
   try {
     const req = await firebase.auth().signInWithEmailAndPassword('test@hireq.io', 'hireq01')
     const getIdToken = await firebase.auth().currentUser.getIdToken()
-    console.log("getIdToken = " , getIdToken)
-    console.log("firebase req = ", req)
     await localStorage.setItem('loginToken', req.uid)
     await localStorage.setItem('headerToken', getIdToken)
 

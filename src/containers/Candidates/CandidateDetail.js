@@ -60,7 +60,6 @@ class CandidateDetail extends React.Component {
 	}
 	componentDidMount = async () => {
 		const { candidateId } = this.props.location.state
-		console.log("Candidate Id = ", candidateId)
 		this.props.Loading()
 		const test = await firebase.auth().onAuthStateChanged(async (data) => {
 			if (data) {
@@ -71,7 +70,6 @@ class CandidateDetail extends React.Component {
 					const result = await Axios.get(url, {
 						headers: { Authorization: "Bearer " + getIdToken }
 					})
-					console.log("get candidate by one: ", result)
 					this.props.updateAllCandidates(result.data)
 					this.props.LoadingSuccess()
 				} catch (err) {
@@ -96,7 +94,6 @@ class CandidateDetail extends React.Component {
 		const { candidateId } = this.props.location.state
 		const positionId = this.props.allCandidatesData.position
 		const { allCandidatesData } = this.props
-		console.log("candidate data beforeChange: ", allCandidatesData)
 		const test = await firebase.auth().onAuthStateChanged(async (data) => {
 			if (data) {
 				try {
@@ -106,8 +103,6 @@ class CandidateDetail extends React.Component {
 					const result = await Axios.put(url, allCandidatesData, {
 						headers: { Authorization: "Bearer " + getIdToken }
 					})
-					console.log("afterUpdate Candidate Data: ", result)
-					// this.props.updateAllCandidates(result.data)
 					this.props.updateAllCandidates(allCandidatesData)
 					this.props.LoadingSuccess()
 					message.success('Update candidate success', 10)
