@@ -187,6 +187,7 @@ class CandidatesTable extends Component {
 							headers: { Authorization: "Bearer " + getIdToken }
 						})
 						console.log("ID Email Send:", id)
+						message.success(`complete send email to candidate.`,5)
 					})
 
 
