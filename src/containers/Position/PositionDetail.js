@@ -3,7 +3,7 @@ import { withRouter } from 'react-router-dom'
 import { LayoutContentWrapper } from '../../components/utility/layoutWrapper.style'
 import styled from 'styled-components'
 import Grid from 'material-ui/Grid'
-import { Progress, message, Checkbox, Button } from 'antd'
+import { Progress, message, Checkbox, Button, Tooltip } from 'antd'
 import SpecifiedDomainRadarChart from '../../containers/Charts/recharts/charts/specifiedDomainRadarChart'
 import { connect } from 'react-redux'
 import { updatePositionDetail, preCreatePosition } from '../../redux/position/actions'
@@ -247,7 +247,14 @@ class PositionDetail extends React.Component {
 				<Grid style={{ marginTop: 30 }} container spacing={0}>
 					<Grid item sm={12} xs={12}>
 						<WhiteWrapper>
-							<h3> Cognative Ability </h3>
+							<div style={{ display: 'flex', justifyContent: 'flex-start' }}>
+								<h3>Critical SoftSkill</h3>
+								<Tooltip title="prompt text">
+									<span style={{ marginLeft: 10 }}>
+										<Ionicon icon="ios-alert" fontSize={20} />
+									</span>
+								</Tooltip>
+							</div>
 							<ProgressStyled percent={Object.keys(positionDetail).length && this.cogNativePercent()} />
 						</WhiteWrapper>
 					</Grid>
@@ -256,7 +263,14 @@ class PositionDetail extends React.Component {
 					<Grid item sm={6} xs={12}>
 						<WhiteWrapper>
 							<ChartWrapper>
-								<h3>Critical SoftSkill</h3>
+								<div style={{ display: 'flex', justifyContent: 'flex-start' }}>
+									<h3>Critical Softskill</h3>
+									<Tooltip title="prompt text">
+										<span style={{ marginLeft: 10 }}>
+											<Ionicon icon="ios-alert" fontSize={20} />
+										</span>
+									</Tooltip>
+								</div>
 								<SpecifiedDomainRadarChart {...this.state.config} datas={Object.keys(positionDetail).length !== 0 && this.firstDatas()} />
 							</ChartWrapper>
 						</WhiteWrapper>
@@ -264,7 +278,14 @@ class PositionDetail extends React.Component {
 					<Grid item sm={6} xs={12}>
 						<WhiteWrapper>
 							<ChartWrapper>
-								<h3>Work Preference</h3>
+								<div style={{ display: 'flex', justifyContent: 'flex-start' }}>
+									<h3>Work Preference</h3>
+									<Tooltip title="prompt text">
+										<span style={{ marginLeft: 10 }}>
+											<Ionicon icon="ios-alert" fontSize={20} />
+										</span>
+									</Tooltip>
+								</div>
 								<SpecifiedDomainRadarChart {...this.state.config} datas={Object.keys(positionDetail).length !== 0 && this.secondDatas()} />
 							</ChartWrapper>
 						</WhiteWrapper>

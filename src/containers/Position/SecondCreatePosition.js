@@ -5,7 +5,7 @@ import { LayoutContentWrapper } from '../../components/utility/layoutWrapper.sty
 import Grid from 'material-ui/Grid'
 import Card from '../../components/uielements/card'
 import styled from 'styled-components'
-import { Table, DatePicker, Slider, Input, Switch } from 'antd'
+import { Table, DatePicker, Slider, Input, Switch , Tooltip } from 'antd'
 import Button from '../HireQComponent/Button'
 import Tables from './components/Table'
 import CriticalSoftSkills from './CriticalSoftSkills'

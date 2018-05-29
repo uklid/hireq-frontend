@@ -1,14 +1,22 @@
 import React from 'react'
 import { withRouter } from 'react-router-dom'
 import SpecifiedDomainRadarChart from '../../containers/Charts/recharts/charts/specifiedDomainRadarChart'
-import { Slider } from 'antd'
+import { Slider, Tooltip } from 'antd'
 import styled from 'styled-components'
 import { connect } from 'react-redux'
 import { preCreatePosition } from '../../redux/position/actions'
+import Ionicon from 'react-ionicons'
 
-const DataSlider = ({ onChange, value, title, disabled }) => (
+const DataSlider = ({ onChange, value, title, disabled, toolTip }) => (
 	<div>
-		<h4>{title}</h4>
+		<div style={{ display: 'flex', justifyContent: 'flex-start' }}>
+			<h4>{title}</h4>
+			<Tooltip title="prompt text">
+				<span>
+					<Ionicon icon="ios-alert" fontSize={20} />
+				</span>
+			</Tooltip>
+		</div>
 		<SliderStyled range disabled={disabled} onChange={onChange} defaultValue={value} />
 	</div>
 )
@@ -99,6 +107,7 @@ class CriticalSoftSkills extends React.Component {
 						const dataName = Object.keys(slideData)[this.first + index]
 						return (
 							<DataSlider
+								toolTip={"ToolTip"}
 								disabled={this.props.disabled}
 								title={`${dataName}`}
 								onChange={this.onChange(dataName)}
