@@ -5,7 +5,7 @@ import { LayoutContentWrapper } from '../../components/utility/layoutWrapper.sty
 import Grid from 'material-ui/Grid'
 import Card from '../../components/uielements/card'
 import styled from 'styled-components'
-import { Table, DatePicker, Slider, Input, Switch , Tooltip } from 'antd'
+import { Table, DatePicker, Slider, Input, Switch, Tooltip } from 'antd'
 import Button from '../HireQComponent/Button'
 import Tables from './components/Table'
 import CriticalSoftSkills from './CriticalSoftSkills'
@@ -139,8 +139,10 @@ class SecondCreatePosition extends React.Component {
         <Grid style={{}} container spacing={24}>
           <Grid item sm={12} xs={12}>
             <Card>
-              <h3 style={{ marginBottom: 20, cursor: 'pointer' }}>Setting Position Detail.</h3>
-              Change Value: <Switch size="default" onChange={this.handleDisabledChange} />
+              <div style={{ display: 'flex', justifyContent: 'space-between'}}>
+                <h3 style={{ marginBottom: 20, cursor: 'pointer' }}>Setting Position Detail.</h3>
+                <div>Enable change: <Switch size="default" onChange={this.handleDisabledChange} /></div>
+              </div>
               <Grid container spacing={0}>
                 <Grid item sm={12} xs={12}>
                   {/* <p>

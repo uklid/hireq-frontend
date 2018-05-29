@@ -1,7 +1,7 @@
 import React from 'react'
 import { withRouter } from 'react-router-dom'
 import SpecifiedDomainRadarChart from '../../containers/Charts/recharts/charts/specifiedDomainRadarChart'
-import { Slider, Tooltip } from 'antd'
+import { Slider, Tooltip, Badge } from 'antd'
 import styled from 'styled-components'
 import { connect } from 'react-redux'
 import { preCreatePosition } from '../../redux/position/actions'
@@ -12,10 +12,11 @@ const DataSlider = ({ onChange, value, title, disabled, toolTip }) => (
 		<div style={{ display: 'flex', justifyContent: 'flex-start' }}>
 			<h4>{title}</h4>
 			<Tooltip title="prompt text">
-				<span>
+				<span style={{ marginLeft: 10, marginRight: 10 }}>
 					<Ionicon icon="ios-alert" fontSize={20} />
 				</span>
 			</Tooltip>
+			<Badge style={{ backgroundColor: 'rgba(149, 69, 144)' }} count={parseInt((value[0] + value[1]) / 2)} />
 		</div>
 		<SliderStyled range disabled={disabled} onChange={onChange} defaultValue={value} />
 	</div>
