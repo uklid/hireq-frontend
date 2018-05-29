@@ -3,10 +3,10 @@ import { withRouter } from 'react-router-dom'
 import { LayoutContentWrapper } from '../../components/utility/layoutWrapper.style'
 import styled from 'styled-components'
 import Grid from 'material-ui/Grid'
-import { Progress, message, Checkbox, Button, Tooltip } from 'antd'
+import { Progress, message, Checkbox, Tooltip } from 'antd'
 import SpecifiedDomainRadarChart from '../../containers/Charts/recharts/charts/specifiedDomainRadarChart'
 import { connect } from 'react-redux'
-import { updatePositionDetail, preCreatePosition } from '../../redux/position/actions'
+import { updatePositionDetail, preCreatePosition , prepareCreatePosition } from '../../redux/position/actions'
 import { updateAllCandidates, updateAllCheckedByOne } from '../../redux/candidates/actions'
 import { Loading, LoadingSuccess } from '../../redux/loading/actions'
 import Axios from 'axios'
@@ -14,6 +14,14 @@ import firebase from 'firebase'
 import { baseUrl } from '../../libs/url/baseUrl'
 import CandidatesTable from '../Candidates/components/Table'
 import Ionicon from 'react-ionicons'
+import Dialog, {
+	DialogActions,
+	DialogContent,
+	DialogContentText,
+	DialogTitle,
+} from 'material-ui/Dialog'
+import CreateCandidates from '../Candidates/CreateCandidates'
+import Button from '../HireQComponent/Button'
 
 const screenWidth = (window.innerWidth / 2) - 100 <= 250 ? 350 : 600
 const WhiteWrapper = styled.div`
@@ -57,6 +65,7 @@ class PositionDetail extends React.Component {
 				cy: 250,
 				outerRadius: 150,
 			},
+			open: false
 		}
 	}
 	componentDidMount = async () => {
@@ -199,6 +208,11 @@ class PositionDetail extends React.Component {
 			this.props.updateAllCheckedByOne(false)
 		}
 	}
+	handleToggle = () => {
+		this.setState({
+			open: !this.state.open
+		})
+	}
 	render() {
 		const { positionDetail, allCandidatesData } = this.props
 		console.log("candidate Id : ", positionDetail)
@@ -303,6 +317,38 @@ class PositionDetail extends React.Component {
 						</WhiteWrapper>
 					</Grid>
 				</Grid>
+				<Grid container spacing={0}>
+					<Grid item>
+						<Button
+							type="primary"
+							onClick={this.handleToggle}
+							width="160px"
+							marginTop="30px"
+						>
+							Add new Candidate.
+						</Button>
+					</Grid>
+				</Grid>
+				{/* Modal dialog */}
+				<Dialog
+					open={this.state.open}
+					onClose={this.handleToggle}
+					aria-labelledby="alert-dialog-title"
+					aria-describedby="alert-dialog-description"
+					fullWidth
+				>
+					<DialogTitle id="alert-dialog-title">Add your candidate profile.</DialogTitle>
+					<DialogContent>
+						<DialogContentText id="alert-dialog-description">
+							<CreateCandidates
+								addPositionId={this.props.location.state.positionDetail}
+							// onClick={this.add}
+							/>
+						</DialogContentText>
+					</DialogContent>
+				</Dialog>
+				{/* end dialog modal */}
+				{/* Dialog */}
 			</LayoutContentWrapper>
 		)
 	}

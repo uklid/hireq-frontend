@@ -41,20 +41,25 @@ const SignInBlock = styled.div`
 `
 
 class SignIn extends Component {
+
   handleLogin = async () => {
-    const { LoginCheck , Loading, LoadingSuccess } = this.props
+    const { LoginCheck, Loading, LoadingSuccess } = this.props
     Loading()
     await LoginCheck()
     LoadingSuccess()
   }
   render() {
     const { errorMessage } = this.props
+    // Check if alreay signin redirect to dashboard page
+    if (localStorage.getItem('loginToken')) {
+      return <Redirect to="/dashboard" />
+    }
     return (
       <SignInWrapper>
         <WhiteWrapper>
           <SignInBlock>
             <h1 style={{ textAlign: 'center', marginBottom: 30 }}>LOGIN</h1>
-            <p style={{ color:'red' }}> { errorMessage && errorMessage } </p>
+            <p style={{ color: 'red' }}> {errorMessage && errorMessage} </p>
             <Input style={{ marginBottom: 15 }} size="large" placeholder="Username" />
             <Input style={{ marginBottom: 23 }} size="large" placeholder="Password" />
             <Button
@@ -72,10 +77,8 @@ class SignIn extends Component {
   }
 }
 
-const mapStateToProps = (state) => {
-  return {
-    errorMessage: state.Auth.errorMessage
-  }
-}
+const mapStateToProps = state => ({
+  errorMessage: state.Auth.errorMessage
+})
 
 export default connect(mapStateToProps, { LoginCheck, Loading, LoadingSuccess })(SignIn)
