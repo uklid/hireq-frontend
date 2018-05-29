@@ -155,6 +155,7 @@ class CandidatesTable extends Component {
 		const pages = [...Array(numOfPage).keys()];
 		const startData = (this.state.currentPage - 1) * rowPerPage
 		const endData = (this.state.currentPage) * rowPerPage
+		console.log("Candidate Id :::::", dataSource)
 		return (
 			<div>
 				<TableStyled

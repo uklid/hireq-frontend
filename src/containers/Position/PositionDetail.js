@@ -3,19 +3,23 @@ import { withRouter } from 'react-router-dom'
 import { LayoutContentWrapper } from '../../components/utility/layoutWrapper.style'
 import styled from 'styled-components'
 import Grid from 'material-ui/Grid'
-import { Progress, message } from 'antd'
+import { Progress, message, Checkbox, Button } from 'antd'
 import SpecifiedDomainRadarChart from '../../containers/Charts/recharts/charts/specifiedDomainRadarChart'
 import { connect } from 'react-redux'
-import { updatePositionDetail } from '../../redux/position/actions'
+import { updatePositionDetail, preCreatePosition } from '../../redux/position/actions'
+import { updateAllCandidates, updateAllCheckedByOne } from '../../redux/candidates/actions'
 import { Loading, LoadingSuccess } from '../../redux/loading/actions'
 import Axios from 'axios'
 import firebase from 'firebase'
 import { baseUrl } from '../../libs/url/baseUrl'
-const screenWidth = (window.innerWidth / 2) - 100 <= 250 ? 350 : 600
+import CandidatesTable from '../Candidates/components/Table'
+import Ionicon from 'react-ionicons'
 
+const screenWidth = (window.innerWidth / 2) - 100 <= 250 ? 350 : 600
 const WhiteWrapper = styled.div`
 		background-color: #fff;
 		padding: 20px;
+		width: 100%;
 
 		h4 {
 			display: inline;
@@ -81,6 +85,13 @@ class PositionDetail extends React.Component {
 						headers: { Authorization: "Bearer " + getIdToken }
 					})
 					this.props.updatePositionDetail(result.data)
+
+					// const candidatesURL = `${baseUrl}/users/${uid}/candidates`
+					const candidateURL = `${baseUrl}/users/${uid}/positions/${positionId}/candidates`
+					const candidatesResult = await Axios.get(candidateURL, {
+						headers: { Authorization: "Bearer " + getIdToken }
+					})
+					this.props.updateAllCandidates(candidatesResult.data)
 					this.props.LoadingSuccess()
 				} else {
 					throw new Error("No User Login Data")
@@ -125,19 +136,114 @@ class PositionDetail extends React.Component {
 		const cogNumber = Object.values(positionDetail).slice(0, 1)
 		return parseInt((cogNumber[0].max + cogNumber[0].min) / 2)
 	}
+	onEditPositionClick = async (id) => {
+		try {
+			this.props.Loading()
+			const test = await firebase.auth().onAuthStateChanged(async (data) => {
+				if (data) {
+					const getIdToken = await firebase.auth().currentUser.getIdToken()
+					const uid = localStorage.getItem('loginToken')
+					const url = `${baseUrl}/users/${uid}/positions/${id}`
+					const result = await Axios.get(url, {
+						headers: { Authorization: "Bearer " + getIdToken }
+					})
+					this.props.preCreatePosition({ ...result.data, positionId: id })
+					this.props.LoadingSuccess()
+					this.props.history.push({
+						pathname: '/dashboard/edit-position',
+						state: { positionId: id }
+					})
+				} else {
+					this.props.LoadingSuccess()
+					console.log("ไม่มี")
+				}
+			})
+		} catch (err) {
+			this.props.LoadingSuccess()
+			console.log(err)
+		}
+	}
+	newObjectCandidate = () => {
+		// ฟังชั่นนี้ รีกรุ๊บของ array ใหม่ ให้มี candidateId เข้าไปด้วย
+		return Object.values(this.props.allCandidatesData).map((data, index) => {
+			return {
+				...data,
+				candidateId: Object.keys(this.props.allCandidatesData)[index]
+			}
+		})
+	}
+	onCheckAllChange = async (event) => {
+		const allCheckBox = document.getElementsByClassName("ant-checkbox")
+		console.log("Checked all Event: ", event.target)
+		if (event.target.checked === true) {
+			for (let i = 1; i < allCheckBox.length; i++) {
+				allCheckBox[i].classList.add("ant-checkbox-checked")
+				console.log("Children: ", allCheckBox[i].children)
+				if (allCheckBox[i].children[0].checked === false) {
+					// Hack ให้คลิกที่ input 1 ทีเพื่อแก้บัคในการ checkall เพื่อต้องกดอีกที
+					allCheckBox[i].children[0].click()
+				}
+			}
+			this.props.updateAllCheckedByOne(true)
+			// this.props.updateAllChecked()
+		} else {
+			for (let i = 1; i < allCheckBox.length; i++) {
+				allCheckBox[i].classList.remove("ant-checkbox-checked")
+				if (allCheckBox[i].children[0].checked === true) {
+					// Hack ให้คลิกที่ input 1 ทีเพื่อแก้บัคในการ checkall เพื่อต้องกดอีกที
+					await allCheckBox[i].children[0].click()
+				}
+			}
+			// this.props.updateAllChecked()
+			// this.props.updateUncheckCandidateId([])      
+			this.props.updateAllCheckedByOne(false)
+		}
+	}
 	render() {
-		const { positionDetail } = this.props
+		const { positionDetail, allCandidatesData } = this.props
+		console.log("candidate Id : ", positionDetail)
+		const candidatesColumn = [
+			{
+				title: <Checkbox id="checkAllId" checked={this.props.allChecked} onChange={this.onCheckAllChange}>Check all</Checkbox>,
+				dataIndex: 'checkbox',
+				key: 'checkbox'
+			},
+			{
+				title: 'Name',
+				dataIndex: 'name',
+				key: 'name',
+			},
+			{
+				title: 'Email',
+				dataIndex: 'email',
+				key: 'email',
+			},
+			{
+				title: 'ACTIONS',
+				dataIndex: 'buttonAction',
+				key: 'buttonAction'
+			}
+		]
 		return (
 			<LayoutContentWrapper>
-				<Grid container spacing={0}>
-					<Grid item sm={12} xs={12}>
-						<WhiteWrapper>
+				<WhiteWrapper>
+					<Grid container spacing={0}>
+						<Grid item sm={6} xs={6}>
 							<p><h4>Position Name: </h4><span> {positionDetail.name}</span></p>
 							<p><h4>Category: </h4><span> {positionDetail.category}</span></p>
 							<p><h4>Info: </h4><span> {positionDetail.descriptions}</span></p>
-						</WhiteWrapper>
+						</Grid>
+						<Grid style={{ display: 'flex', justifyContent: 'flex-end' }} item sm={6} xs={6}>
+							<Ionicon
+								style={{ cursor: 'pointer' }}
+								icon="ios-cog"
+								fontSize="35px"
+								onClick={() => this.onEditPositionClick(this.props.location.state.positionDetail)}
+								color="rgb(149, 69, 144)"
+							/>
+						</Grid>
 					</Grid>
-				</Grid>
+				</WhiteWrapper>
 				<Grid style={{ marginTop: 30 }} container spacing={0}>
 					<Grid item sm={12} xs={12}>
 						<WhiteWrapper>
@@ -164,18 +270,35 @@ class PositionDetail extends React.Component {
 						</WhiteWrapper>
 					</Grid>
 				</Grid>
+				<Grid style={{ marginTop: 20 }} container spacing={0}>
+					<Grid item xs={12}>
+						<WhiteWrapper>
+							<CandidatesTable
+								dataSource={Object.keys(allCandidatesData).length !== 0 ? Object.values(this.newObjectCandidate()) : []}
+								columns={candidatesColumn}
+								rowPerPage={10}
+								ellipsis={10}
+							/>
+						</WhiteWrapper>
+					</Grid>
+				</Grid>
 			</LayoutContentWrapper>
 		)
 	}
 }
 
 const mapStateToProps = (state) => ({
-	positionDetail: state.Positions.positionDetail
+	positionDetail: state.Positions.positionDetail,
+	allCandidatesData: state.Candidates.allCandidatesData,
+	allChecked: state.Candidates.allChecked
 })
 
 export default connect(mapStateToProps,
 	{
 		updatePositionDetail,
 		Loading,
-		LoadingSuccess
+		LoadingSuccess,
+		updateAllCandidates,
+		updateAllCheckedByOne,
+		preCreatePosition
 	})(withRouter(PositionDetail))

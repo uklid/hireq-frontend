@@ -84,7 +84,7 @@ class Tables extends Component {
 					})
 				} else {
 					this.props.LoadingSuccess()
-					("ไม่มี")
+					console.log("ไม่มี")
 				}
 			})
 		} catch (err) {

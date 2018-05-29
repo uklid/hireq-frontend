@@ -250,8 +250,6 @@ class Dashboard extends Component {
   }
   render() {
     const { allPositionCreated, allCandidatesData, allChecked } = this.props
-    console.log(`Position:`, allPositionCreated)
-    console.log(`Candidate: `, allCandidatesData)
     const candidatesColumn = [
       {
         title: <Checkbox id="checkAllId" checked={this.props.allChecked} onChange={this.onCheckAllChange}>Check all</Checkbox>,
