@@ -344,9 +344,8 @@ class EditPosition extends React.Component {
 						</Card>
 					</Grid>
 					<Grid item sm={8} xs={12}>
-						<Card style={{ textAlign: 'center' }} title="Outstanding Candidates">
+						<Card title="Outstanding Candidates">
 							<CandidatesTable
-								style={{ textAlign: 'center' }}
 								dataSource={allCandidatesData && Object.values(this.newObjectCandidate())}
 								columns={candidatesColumn}
 								rowPerPage={5}

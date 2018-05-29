@@ -35,7 +35,15 @@ const routes = [
   {
     path: "candidate-detail",
     component: asyncComponent(() => import("../Candidates/CandidateDetail"))
+  },
+  {
+    path: "position-list",
+    component: asyncComponent(() => import("../Position/PositionList"))
   }
+  // {
+  //   path: "candidate-list",
+  //   component: asyncComponent(() => import("../Candidates/CandidateList"))
+  // }
   // {
   //   path: "report",
   //   component: asyncComponent(() => import("../Report/Report"))

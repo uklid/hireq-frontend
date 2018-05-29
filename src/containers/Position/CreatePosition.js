@@ -95,7 +95,11 @@ class CreatePosition extends React.Component {
 		showOpen: false,
 		showFinished: false,
 	}
-
+	componentWillMount = () => {
+		// Hack set ให้มันเป็นค่าว่างรอการ search เสมอ ไม่งั้นหน้า position list จะไปใช้ 
+		// state ใน store ตัวเดียวกัน
+		this.props.updatePositionData([])
+	}
 	searchPositionData = async (event) => {
 		try {
 			this.props.Loading()
@@ -129,6 +133,7 @@ class CreatePosition extends React.Component {
 	}
 
 	render() {
+		const { positionData } = this.props
 		return (
 			<LayoutContentWrapper>
 				<Grid container spacing={0}>
@@ -181,7 +186,7 @@ class CreatePosition extends React.Component {
 							<Tables
 								key={`myTables`}
 								tableId="myTable"
-								dataSource={this.props.positionData}
+								dataSource={positionData ? Object.values(positionData) : []}
 								columns={columns}
 								rowPerPage={7}
 								ellipsis={4}

@@ -17,7 +17,7 @@ const Positions = (state = initialState, action) => {
     case 'UPDATE_POSITIONS_DATA':
       return {
         ...state,
-        positionData: [...action.data]
+        positionData: action.data
       }
     case 'SEARCH_POSITION':
       return {

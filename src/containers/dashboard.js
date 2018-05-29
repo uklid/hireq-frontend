@@ -302,13 +302,12 @@ class Dashboard extends Component {
           <Grid item md={8} xs={12}>
             <Card
               title="Opened Positions"
-              style={{ width: '100%', textAlign: 'center' }}
+              style={{ width: '100%'}}
             >
               <Tables
-                // oldDataSource={Object.keys()}
                 dataSource={Object.keys(allPositionCreated).length !== 0 ? Object.values(this.newObject()) : []}
                 columns={positionColumns}
-                rowPerPage={10}
+                rowPerPage={7}
                 ellipsis={10}
               />
             </Card>
@@ -327,12 +326,12 @@ class Dashboard extends Component {
           <Grid item md={8} xs={12}>
             <Card
               title="Opened Positions"
-              style={{ width: '100%', textAlign: 'center' }}
+              style={{ width: '100%' }}
             >
               <CandidatesTable
                 dataSource={Object.keys(allCandidatesData).length !== 0 ? Object.values(this.newObjectCandidate()) : []}
                 columns={candidatesColumn}
-                rowPerPage={10}
+                rowPerPage={7}
                 ellipsis={10}
               />
             </Card>
