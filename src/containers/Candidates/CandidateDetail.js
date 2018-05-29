@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 import IsoWidgetsWrapper from '../../containers/Widgets/widgets-wrapper'
 import StickerWidget from '../../containers/Widgets/sticker/sticker-widget'
 import ReportsWidget from '../../containers/Widgets/report/report-widget'
@@ -150,6 +151,7 @@ class CandidateDetail extends React.Component {
 	}
 	render() {
 		const { allCandidatesData } = this.props
+		console.log("Candidate Data: ", allCandidatesData)
 		return (
 			<div id="testBody1" >
 				<LayoutContentWrapper >
@@ -168,6 +170,18 @@ class CandidateDetail extends React.Component {
 									{
 										this.state.isEdit ?
 											<Input name="email" onChange={this.handleChange} defaultValue={allCandidatesData.email} /> : <p style={{ marginLeft: 10 }}>{allCandidatesData.email}</p>}
+								</FormWrapper>
+								<FormWrapper>
+									<h4>POSITION: </h4>
+									<p style={{ marginLeft: 10 }}>
+										<Link to={{
+											pathname: '/dashboard/position-detail',
+											state: { positionDetail: allCandidatesData.position }
+										}}
+										>
+											{allCandidatesData.position}
+										</Link>
+									</p>
 								</FormWrapper>
 							</Grid>
 							<Grid item xs={6}
