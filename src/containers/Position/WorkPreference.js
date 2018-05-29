@@ -60,7 +60,8 @@ class WorkPreference extends React.Component {
 	componentWillMount = () => {
 		const { slideData } = this.props
 		if (slideData === undefined) {
-			this.props.history.push('/dashboard/create-position/')
+			this.props.history.replace('/dashboard')
+			return
 		}
 	}
 	onChange = (dataName) => (value) => {

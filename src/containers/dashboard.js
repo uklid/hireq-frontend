@@ -205,6 +205,7 @@ class Dashboard extends Component {
   }
   newObject = () => {
     // ฟังชั่นนี้ รีกรุ๊บของ array ใหม่ ให้มี positionId เข้าไปด้วย
+    console.log("ติดใน ฟังชั่น แรก")
     return Object.values(this.props.allPositionCreated).map((data, index) => {
       return {
         ...data,
@@ -213,7 +214,8 @@ class Dashboard extends Component {
     })
   }
   newObjectCandidate = () => {
-    // ฟังชั่นนี้ รีกรุ๊บของ array ใหม่ ให้มี candidateId เข้าไปด้วย
+    console.log("ติดใน ฟังชั่น สอง")    
+    // ฟังชั่นนี้ รีกรุ๊บของ array ใหม่ ให้มี checked candidate เข้าไปด้วย
     return Object.values(this.props.allCandidatesData).map((data, index) => {
       return {
         ...data,
@@ -242,12 +244,14 @@ class Dashboard extends Component {
         }
       }
       // this.props.updateAllChecked()
-      // this.props.updateUncheckCandidateId([])      
+      // this.props.updateUncheckCandidateId([])
       this.props.updateAllCheckedByOne(false)
     }
   }
   render() {
     const { allPositionCreated, allCandidatesData, allChecked } = this.props
+    console.log(`Position:`, allPositionCreated)
+    console.log(`Candidate: `, allCandidatesData)
     const candidatesColumn = [
       {
         title: <Checkbox id="checkAllId" checked={this.props.allChecked} onChange={this.onCheckAllChange}>Check all</Checkbox>,
@@ -304,7 +308,7 @@ class Dashboard extends Component {
             >
               <Tables
                 // oldDataSource={Object.keys()}
-                dataSource={Object.values(this.newObject())}
+                dataSource={Object.keys(allPositionCreated).length !== 0 ? Object.values(this.newObject()) : []}
                 columns={positionColumns}
                 rowPerPage={10}
                 ellipsis={10}
@@ -328,7 +332,7 @@ class Dashboard extends Component {
               style={{ width: '100%', textAlign: 'center' }}
             >
               <CandidatesTable
-                dataSource={Object.values(this.newObjectCandidate())}
+                dataSource={Object.keys(allCandidatesData).length !== 0 ? Object.values(this.newObjectCandidate()) : []}
                 columns={candidatesColumn}
                 rowPerPage={10}
                 ellipsis={10}

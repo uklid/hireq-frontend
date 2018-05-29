@@ -167,7 +167,7 @@ class CandidatesTable extends Component {
 						</TRheadStyled>
 					</thead>
 					<tbody>
-						{dataSource.slice(startData, endData).map((data, index) => (
+						{dataSource.length !== 0  && dataSource.slice(startData, endData).map((data, index) => (
 							<RowData
 								dataValue={data.candidateId}
 								onCheckboxChange={this.onCheckboxChange(data)}

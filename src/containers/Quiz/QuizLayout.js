@@ -113,10 +113,6 @@ const findQuizPath = (currentQuiz) => {
 	}
 }
 
-//candidate ID
-// const candidateId = '-L3y6bEU1lxPOpxeoQw-'
-// const apiURL = 'https://us-central1-hireq-api.cloudfunctions.net'
-
 class QuizLayout extends React.Component {
 	state = {
 		quizArrayPosition: 0,

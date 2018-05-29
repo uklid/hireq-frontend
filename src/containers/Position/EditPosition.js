@@ -26,7 +26,7 @@ import {
 	preCreatePosition,
 	updatePreEditData
 } from '../../redux/position/actions'
-import { updateAllCandidates, updateAllChecked,updateUncheckCandidateId,updateAllCheckedByOne } from '../../redux/candidates/actions'
+import { updateAllCandidates, updateAllChecked, updateUncheckCandidateId, updateAllCheckedByOne } from '../../redux/candidates/actions'
 import Axios from 'axios'
 import firebase from 'firebase'
 import CreateCandidates from '../Candidates/CreateCandidates'
@@ -143,9 +143,6 @@ class EditPosition extends React.Component {
 			this.props.LoadingSuccess()
 			console.log(err)
 		}
-		if (Object.keys(this.props.prepareCreate).length === 0) {
-			this.props.history.push('/dashboard')
-		}
 	}
 	handleToggle = (name) => {
 		console.log(name)
@@ -154,32 +151,32 @@ class EditPosition extends React.Component {
 		})
 	}
 	onCheckAllChange = async (event) => {
-    const allCheckBox = document.getElementsByClassName("ant-checkbox")
-    console.log("Checked all Event: ", event.target)
-    if (event.target.checked === true) {
-      for (let i = 1; i < allCheckBox.length; i++) {
-        allCheckBox[i].classList.add("ant-checkbox-checked")
-        console.log("Children: ", allCheckBox[i].children)
-        if (allCheckBox[i].children[0].checked === false) {
-          // Hack ให้คลิกที่ input 1 ทีเพื่อแก้บัคในการ checkall เพื่อต้องกดอีกที
-          allCheckBox[i].children[0].click()
-        }
-      }
-      this.props.updateAllCheckedByOne(true)
-      // this.props.updateAllChecked()
-    } else {
-      for (let i = 1; i < allCheckBox.length; i++) {
-        allCheckBox[i].classList.remove("ant-checkbox-checked")
-        if (allCheckBox[i].children[0].checked === true) {
-          // Hack ให้คลิกที่ input 1 ทีเพื่อแก้บัคในการ checkall เพื่อต้องกดอีกที
-          await allCheckBox[i].children[0].click()
-        }
-      }
-      // this.props.updateAllChecked()
-      // this.props.updateUncheckCandidateId([])      
-      this.props.updateAllCheckedByOne(false)
-    }
-  }
+		const allCheckBox = document.getElementsByClassName("ant-checkbox")
+		console.log("Checked all Event: ", event.target)
+		if (event.target.checked === true) {
+			for (let i = 1; i < allCheckBox.length; i++) {
+				allCheckBox[i].classList.add("ant-checkbox-checked")
+				console.log("Children: ", allCheckBox[i].children)
+				if (allCheckBox[i].children[0].checked === false) {
+					// Hack ให้คลิกที่ input 1 ทีเพื่อแก้บัคในการ checkall เพื่อต้องกดอีกที
+					allCheckBox[i].children[0].click()
+				}
+			}
+			this.props.updateAllCheckedByOne(true)
+			// this.props.updateAllChecked()
+		} else {
+			for (let i = 1; i < allCheckBox.length; i++) {
+				allCheckBox[i].classList.remove("ant-checkbox-checked")
+				if (allCheckBox[i].children[0].checked === true) {
+					// Hack ให้คลิกที่ input 1 ทีเพื่อแก้บัคในการ checkall เพื่อต้องกดอีกที
+					await allCheckBox[i].children[0].click()
+				}
+			}
+			// this.props.updateAllChecked()
+			// this.props.updateUncheckCandidateId([])      
+			this.props.updateAllCheckedByOne(false)
+		}
+	}
 	createPosition = async () => {
 		this.props.Loading()
 		const { prepareCreate } = this.props
@@ -255,6 +252,9 @@ class EditPosition extends React.Component {
 	// 	this.props.updateAllChecked()
 	// }
 	render() {
+		if (Object.keys(this.props.prepareCreate).length === 0) {
+			this.props.history.replace('/dashboard')
+		}
 		const { prepareCreate, allCandidatesData } = this.props
 		const { defaultAllCandidatesData, allCandidate } = this.state
 		const defaultCogData = prepareCreate.info && [prepareCreate.info['COG']['min'], prepareCreate.info['COG']['max']]
@@ -263,27 +263,27 @@ class EditPosition extends React.Component {
 		// this.updateStateAfterRender()
 		// }
 		const candidatesColumn = [
-      {
-        title: <Checkbox id="checkAllId" checked={this.props.allChecked} onChange={this.onCheckAllChange}>Check all</Checkbox>,
-        dataIndex: 'checkbox',
-        key: 'checkbox'
-      },
-      {
-        title: 'Name',
-        dataIndex: 'name',
-        key: 'name',
-      },
-      {
-        title: 'Email',
-        dataIndex: 'email',
-        key: 'email',
-      },
-      {
-        title: 'ACTIONS',
-        dataIndex: 'buttonAction',
-        key: 'buttonAction'
-      }
-    ]
+			{
+				title: <Checkbox id="checkAllId" checked={this.props.allChecked} onChange={this.onCheckAllChange}>Check all</Checkbox>,
+				dataIndex: 'checkbox',
+				key: 'checkbox'
+			},
+			{
+				title: 'Name',
+				dataIndex: 'name',
+				key: 'name',
+			},
+			{
+				title: 'Email',
+				dataIndex: 'email',
+				key: 'email',
+			},
+			{
+				title: 'ACTIONS',
+				dataIndex: 'buttonAction',
+				key: 'buttonAction'
+			}
+		]
 		return (
 			<LayoutContentWrapper>
 				<Grid container spacing={0}>
@@ -344,8 +344,9 @@ class EditPosition extends React.Component {
 						</Card>
 					</Grid>
 					<Grid item sm={8} xs={12}>
-						<Card title="Outstanding Candidates">
+						<Card style={{ textAlign: 'center' }} title="Outstanding Candidates">
 							<CandidatesTable
+								style={{ textAlign: 'center' }}
 								dataSource={allCandidatesData && Object.values(this.newObjectCandidate())}
 								columns={candidatesColumn}
 								rowPerPage={5}

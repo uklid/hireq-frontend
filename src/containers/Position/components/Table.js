@@ -131,7 +131,7 @@ class Tables extends Component {
 						</TRheadStyled>
 					</thead>
 					<tbody>
-						{dataSource.slice(startData, endData).map((data, index) => (
+						{dataSource.length !== 0 && dataSource.slice(startData, endData).map((data, index) => (
 							<RowData
 								seeDetailClick={() => {
 									this.props.history.push({
