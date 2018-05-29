@@ -6,10 +6,10 @@ import styled from 'styled-components'
 import { connect } from 'react-redux'
 import { preCreatePosition } from '../../redux/position/actions'
 
-const DataSlider = ({ onChange, value, title }) => (
+const DataSlider = ({ onChange, value, title, disabled }) => (
 	<div>
 		<h4>{title}</h4>
-		<SliderStyled range onChange={onChange} defaultValue={value} />
+		<SliderStyled range disabled={disabled} onChange={onChange} defaultValue={value} />
 	</div>
 )
 
@@ -99,6 +99,7 @@ class WorkPreference extends React.Component {
 						if (index <= 15) {
 							return (
 								<DataSlider
+									disabled={this.props.disabled}
 									title={`${dataName}`}
 									onChange={this.onChange(dataName)}
 									value={[parseInt(data['min']), parseInt(data['max'])]}

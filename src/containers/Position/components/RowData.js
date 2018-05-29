@@ -66,9 +66,6 @@ export default class RowData extends Component {
 		const { data, columns } = this.props
 		const dataWithInfo = {
 			...data,
-			button: <Button
-				onClick={this.props.onClick}
-			>Create position</Button>,
 			buttonAction:
 				<Dropdown overlay={<DropDownMenu
 					seeDetailClick={this.props.seeDetailClick}
@@ -80,7 +77,10 @@ export default class RowData extends Component {
 					</LinkStyled>
 				</Dropdown>
 			,
-			moreInfo: <MoreInfoLink onClick={() => this.setState({ isExpand: !this.state.isExpand })}>More Info</MoreInfoLink>
+			moreInfo: <MoreInfoLink onClick={() => this.setState({ isExpand: !this.state.isExpand })}>More Info</MoreInfoLink>,
+			button: <Button
+				onClick={this.props.onClick}
+			>Create position</Button>
 		}
 		const totalCol = Object.keys(dataWithInfo)
 		const MoreInfoBox = ({ className, children }) => (

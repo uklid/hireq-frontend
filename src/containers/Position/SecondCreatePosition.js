@@ -5,7 +5,7 @@ import { LayoutContentWrapper } from '../../components/utility/layoutWrapper.sty
 import Grid from 'material-ui/Grid'
 import Card from '../../components/uielements/card'
 import styled from 'styled-components'
-import { Table, DatePicker, Slider, Input } from 'antd'
+import { Table, DatePicker, Slider, Input, Switch } from 'antd'
 import Button from '../HireQComponent/Button'
 import Tables from './components/Table'
 import CriticalSoftSkills from './CriticalSoftSkills'
@@ -62,6 +62,10 @@ const ButtonContainer = styled.div`
 class SecondCreatePosition extends React.Component {
   state = {
     open: false,
+    disabled: true,
+  }
+  handleDisabledChange = (disabled) => {
+    this.setState({ disabled: !this.state.disabled })
   }
   componentWillMount = () => {
     if (Object.keys(this.props.prepareCreate).length === 0) {
@@ -135,7 +139,8 @@ class SecondCreatePosition extends React.Component {
         <Grid style={{}} container spacing={24}>
           <Grid item sm={12} xs={12}>
             <Card>
-              <h3 style={{ marginBottom: 30, cursor: 'pointer' }}>Setting Position Detail.</h3>
+              <h3 style={{ marginBottom: 20, cursor: 'pointer' }}>Setting Position Detail.</h3>
+              Change Value: <Switch size="default" onChange={this.handleDisabledChange} />
               <Grid container spacing={0}>
                 <Grid item sm={12} xs={12}>
                   {/* <p>
@@ -147,18 +152,20 @@ class SecondCreatePosition extends React.Component {
                   <Grid container style={{ marginTop: 30 }}>
                     <Grid item sm={2} xs={12}> Cognative Skill: </Grid>
                     <Grid item sm={4} xs={12}>
-                      <SliderStyled range onChange={this.changeCogData} defaultValue={defaultCogData} />
+                      <SliderStyled disabled={this.state.disabled} range onChange={this.changeCogData} defaultValue={defaultCogData} />
                     </Grid>
                   </Grid>
                 </Grid>
                 <Grid style={{ paddingTop: 60 }} container spaceing={24}>
                   <Grid item sm={6} xs={12}>
                     <CriticalSoftSkills
+                      disabled={this.state.disabled}
                       slideData={prepareCreate.info}
                     />
                   </Grid>
                   <Grid item sm={6} xs={12}>
                     <WorkPreference
+                      disabled={this.state.disabled}
                       slideData={prepareCreate.info}
                     />
                   </Grid>

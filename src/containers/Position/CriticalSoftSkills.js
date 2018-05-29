@@ -6,10 +6,10 @@ import styled from 'styled-components'
 import { connect } from 'react-redux'
 import { preCreatePosition } from '../../redux/position/actions'
 
-const DataSlider = ({ onChange, value, title }) => (
+const DataSlider = ({ onChange, value, title, disabled }) => (
 	<div>
 		<h4>{title}</h4>
-		<SliderStyled range onChange={onChange} defaultValue={value} />
+		<SliderStyled range disabled={disabled} onChange={onChange} defaultValue={value} />
 	</div>
 )
 
@@ -97,13 +97,14 @@ class CriticalSoftSkills extends React.Component {
 				{
 					slideData !== undefined && Object.values(slideData).slice(this.first, this.last).map((data, index) => {
 						const dataName = Object.keys(slideData)[this.first + index]
-							return (
-								<DataSlider
-									title={`${dataName}`}
-									onChange={this.onChange(dataName)}
-									value={[parseInt(data['min']), parseInt(data['max'])]}
-								/>
-							)
+						return (
+							<DataSlider
+								disabled={this.props.disabled}
+								title={`${dataName}`}
+								onChange={this.onChange(dataName)}
+								value={[parseInt(data['min']), parseInt(data['max'])]}
+							/>
+						)
 					})
 				}
 			</ChartWrapper>

@@ -30,14 +30,13 @@ const columns = [{
 	dataIndex: 'category',
 	key: 'category',
 }, {
-	title: '',
-	dataIndex: 'button',
-	key: 'button'
-}
-	, {
 	title: 'More info',
 	dataIndex: 'moreInfo',
 	key: 'moreInfo',
+}, {
+	title: '',
+	dataIndex: 'button',
+	key: 'button'
 }]
 
 const InputWrapper = styled.div`
@@ -187,7 +186,6 @@ class CreatePosition extends React.Component {
 								rowPerPage={7}
 								ellipsis={4}
 							/>
-							
 						</Card>
 					</Grid>
 				</Grid>
