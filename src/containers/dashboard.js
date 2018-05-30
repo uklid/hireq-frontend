@@ -214,7 +214,7 @@ class Dashboard extends Component {
     })
   }
   newObjectCandidate = () => {
-    console.log("ติดใน ฟังชั่น สอง")    
+    console.log("ติดใน ฟังชั่น สอง")
     // ฟังชั่นนี้ รีกรุ๊บของ array ใหม่ ให้มี checked candidate เข้าไปด้วย
     return Object.values(this.props.allCandidatesData).map((data, index) => {
       return {
@@ -278,36 +278,45 @@ class Dashboard extends Component {
       >
         {/* <LayoutContent>
         </LayoutContent> */}
-        <Grid container spacing={8}>
-          <Grid item md={4} xs={12}>
-            <Card
-              style={{ marginBottom: 20, width: '100%', textAlign: 'center' }}
-            >
-              <h3>Total Positions</h3>
-              <h1 style={{ fontSize: 50, color: '#954590' }}>{Object.keys(allPositionCreated).length}</h1>
-            </Card>
-            <Card
-              style={{ marginBottom: 20, width: '100%', textAlign: 'center' }}
-            >
-              <h3>Total Candidates</h3>
-              <h1 style={{ fontSize: 50, color: '#954590' }}>{Object.keys(allCandidatesData).length}</h1>
-            </Card>
-            <Card
-              style={{ marginBottom: 20, width: '100%', textAlign: 'center' }}
-            >
-              <h3>Remaining Positions</h3>
-              <h1 style={{ fontSize: 50, color: '#954590' }}>50</h1>
-            </Card>
+        <Grid container spacing={16}>
+          <Grid item md={4} xs={12}
+          >
+            <Grid container spacing={16} direction={'column'}>
+              <Grid item>
+                <Card
+                  style={{ width: '100%', textAlign: 'center' }}
+                >
+                  <h3>Total Positions</h3>
+                  <h1 style={{ fontSize: 50, color: '#954590' }}>{Object.keys(allPositionCreated).length}</h1>
+                </Card>
+              </Grid>
+              <Grid item>
+                <Card
+                  style={{ width: '100%', textAlign: 'center' }}
+                >
+                  <h3>Total Candidates</h3>
+                  <h1 style={{ fontSize: 50, color: '#954590' }}>{Object.keys(allCandidatesData).length}</h1>
+                </Card>
+              </Grid>
+              <Grid item>
+                <Card
+                  style={{ width: '100%', textAlign: 'center' }}
+                >
+                  <h3>Remaining Positions</h3>
+                  <h1 style={{ fontSize: 50, color: '#954590' }}>50</h1>
+                </Card>
+              </Grid>
+            </Grid>
           </Grid>
           <Grid item md={8} xs={12}>
             <Card
               title="Opened Positions"
-              style={{ width: '100%'}}
+              style={{ height: '100%' }}
             >
               <Tables
                 dataSource={Object.keys(allPositionCreated).length !== 0 ? Object.values(this.newObject()) : []}
                 columns={positionColumns}
-                rowPerPage={7}
+                rowPerPage={6}
                 ellipsis={10}
               />
             </Card>
@@ -326,7 +335,7 @@ class Dashboard extends Component {
           <Grid item md={8} xs={12}>
             <Card
               title="Opened Positions"
-              style={{ width: '100%' }}
+              style={{ height: '100%' }}
             >
               <CandidatesTable
                 dataSource={Object.keys(allCandidatesData).length !== 0 ? Object.values(this.newObjectCandidate()) : []}
