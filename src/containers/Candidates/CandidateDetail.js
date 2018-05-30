@@ -123,9 +123,10 @@ class CandidateDetail extends React.Component {
 			// useCORS: false
 		}).then(function (canvas) {
 			let data1 = canvas.toDataURL("image/jpeg", 1.0)
+			canvas.width = 200
 			let width = doc.internal.pageSize.width - 10
-			let height = doc.internal.pageSize.height - 20
-			doc.addImage(data1, 'JPEG', 5, 5, width, height)
+			let height = doc.internal.pageSize.height - 10
+			doc.addImage(data1, 'JPEG', 5, 5, canvas.width, height)
 			doc.addPage()
 		})
 		html2canvas(document.getElementById("reportBody2"), {
@@ -133,9 +134,10 @@ class CandidateDetail extends React.Component {
 			// useCORS: false
 		}).then(function (canvas) {
 			let data1 = canvas.toDataURL("image/jpeg", 1.0)
+			canvas.width = 200
 			let width = doc.internal.pageSize.width - 10
-			let height = doc.internal.pageSize.height - 8
-			doc.addImage(data1, 'JPEG', 5, 5, width, height)
+			let height = doc.internal.pageSize.height - 10
+			doc.addImage(data1, 'JPEG', 5, 5, canvas.width, height)
 			doc.addPage()
 		})
 		html2canvas(document.getElementById("reportBody3"), {
@@ -210,13 +212,11 @@ class CandidateDetail extends React.Component {
 						</WhiteCard>
 					</Grid>
 					<Grid style={{ backgroundColor: '#fff' }} container spacing={8}>
-						{/* <WhiteCard> */}
-						<Grid item xs={12}>
+						{/* <Grid item xs={12}>
 							<h2 style={{ padding: 10 }}>Summary of Q-score Results</h2>
 						</Grid>
 						<Grid item sm={3} xs={12}>
 							<IsoWidgetsWrapper>
-								{/* Report Widget */}
 								<StickerWidget
 									number="210"
 									text="Unread Email"
@@ -229,7 +229,6 @@ class CandidateDetail extends React.Component {
 						</Grid>
 						<Grid item sm={3} xs={12}>
 							<IsoWidgetsWrapper>
-								{/* Sticker Widget */}
 								<StickerWidget
 									number="3024"
 									text="Total Message"
@@ -242,7 +241,6 @@ class CandidateDetail extends React.Component {
 						</Grid>
 						<Grid item sm={3} xs={12}>
 							<IsoWidgetsWrapper>
-								{/* Sticker Widget */}
 								<StickerWidget
 									number="3024"
 									text="Total Message"
@@ -255,7 +253,6 @@ class CandidateDetail extends React.Component {
 						</Grid>
 						<Grid item sm={3} xs={12}>
 							<IsoWidgetsWrapper>
-								{/* Sticker Widget */}
 								<StickerWidget
 									number="3024"
 									text="Total Message"
@@ -265,7 +262,7 @@ class CandidateDetail extends React.Component {
 									iconSize={36}
 								/>
 							</IsoWidgetsWrapper>
-						</Grid>
+						</Grid> */}
 
 						<Grid item xs={12}>
 							<h3 style={{ padding: 10 }}>Report</h3>

@@ -52,17 +52,17 @@ class ReportPersonal extends React.Component {
           <Grid item xs={12}>
             <H4>Sumary of Q-Score Result</H4>
           </Grid>
+
           <Grid item xs={12} style={{ padding: 10 }}>
             <div style={{ fontSize: 15, fontWeight: 500 }}>Candidate Name: <span style={{ fontSize: 14, fontWeight: 500 }}>{name}</span></div>
             <div style={{ fontSize: 15, fontWeight: 500 }}>Position Name: <span style={{ fontSize: 14, fontWeight: 500 }}>{allCandidatesData.position}</span></div>
+            <div style={{ fontSize: 15, fontWeight: 500 }}>Email: <span style={{ fontSize: 14, fontWeight: 500 }}>{allCandidatesData.email}</span></div>
           </Grid>
-          <Grid item xs={8} style={{
+          <Grid item xs={12} style={{
             display: 'flex',
             justifyContent: 'space-between'
           }}>
-            <IsoWidgetsWrapper
-              width='32%'
-            >
+            <IsoWidgetsWrapper>
               <StickerWidget
                 number="90%"
                 text="Cognative Ability"
@@ -72,9 +72,7 @@ class ReportPersonal extends React.Component {
                 iconSize={28}
               />
             </IsoWidgetsWrapper>
-            <IsoWidgetsWrapper
-              width='32%'
-            >
+            <IsoWidgetsWrapper>
               <StickerWidget
                 number="70%"
                 text="Critical SoftSkills"
@@ -84,9 +82,7 @@ class ReportPersonal extends React.Component {
                 iconSize={28}
               />
             </IsoWidgetsWrapper>
-            <IsoWidgetsWrapper
-              width='32%'
-            >
+            <IsoWidgetsWrapper>
               <StickerWidget
                 number="60%"
                 text="Work Preference"
@@ -96,8 +92,6 @@ class ReportPersonal extends React.Component {
                 iconSize={28}
               />
             </IsoWidgetsWrapper>
-          </Grid>
-          <Grid item xs={4}>
             <IsoWidgetsWrapper>
               <StickerWidget
                 number="40%"
@@ -113,7 +107,7 @@ class ReportPersonal extends React.Component {
           <Grid item xs={12}>
             <H4>Pitchaya Sumary Q-score overview</H4>
           </Grid>
-          <Grid item xs={8}>
+          <Grid item xs={6}>
             <GreyWrapper>
               <h4>Cognitive Ability</h4>
               <p style={{ fontSize: 12 }}>
@@ -124,7 +118,7 @@ class ReportPersonal extends React.Component {
               </p>
             </GreyWrapper>
           </Grid>
-          <Grid item xs={2}>
+          <Grid item xs={3}>
             <IsoWidgetsWrapper>
               <StickerWidget
                 number="80"
@@ -135,7 +129,7 @@ class ReportPersonal extends React.Component {
               />
             </IsoWidgetsWrapper>
           </Grid>
-          <Grid item xs={2}>
+          <Grid item xs={3}>
             <IsoWidgetsWrapper>
               <StickerWidget
                 number="80"
@@ -161,7 +155,7 @@ class ReportPersonal extends React.Component {
             />
           </Grid>
           <Grid container spacing={8} style={{ margin: 0 }}>
-            <Grid item xs={8}>
+            <Grid item xs={6}>
               <GreyWrapper>
                 <h4>Critical Softskills</h4>
                 <p style={{ fontSize: 12 }}>
@@ -174,7 +168,7 @@ class ReportPersonal extends React.Component {
                 </p>
               </GreyWrapper>
             </Grid>
-            <Grid item xs={2}>
+            <Grid item xs={3}>
               <IsoWidgetsWrapper>
                 <StickerWidget
                   number="80"
@@ -185,7 +179,7 @@ class ReportPersonal extends React.Component {
                 />
               </IsoWidgetsWrapper>
             </Grid>
-            <Grid item xs={2}>
+            <Grid item xs={3}>
               <IsoWidgetsWrapper>
                 <StickerWidget
                   number="80"
@@ -288,7 +282,7 @@ class ReportPersonal extends React.Component {
           </Grid>
           <Grid item xs={3}>
           </Grid>
-          <Grid item xs={10}>
+          <Grid item xs={9}>
             <GreyWrapper>
               <h4>Work Preferences</h4>
               <p style={{ fontSize: 12 }}>
@@ -299,7 +293,7 @@ class ReportPersonal extends React.Component {
               </p>
             </GreyWrapper>
           </Grid>
-          <Grid item xs={2}>
+          <Grid item xs={3}>
             <IsoWidgetsWrapper>
               <StickerWidget
                 number="80"
@@ -712,7 +706,7 @@ class ReportPersonal extends React.Component {
           <Grid item xs={12}>
             <H4>{name} Q-Score Validity</H4>
           </Grid>
-          <Grid item xs={10}>
+          <Grid item xs={9}>
             <GreyWrapper>
               <h4>{name} Q-Score Validity</h4>
               <p style={{ fontSize: 12 }}>
@@ -722,7 +716,7 @@ class ReportPersonal extends React.Component {
               </p>
             </GreyWrapper>
           </Grid>
-          <Grid item xs={2}>
+          <Grid item xs={3}>
             <IsoWidgetsWrapper>
               <StickerWidget
                 number="80"
