@@ -3,11 +3,12 @@ import firebase from 'firebase'
 import LayoutContentWrapper from '../components/utility/layoutWrapper'
 import LayoutContent from '../components/utility/layoutContent'
 import Grid from 'material-ui/Grid'
-import Card from '../components/uielements/card'
+// import Card from '../components/uielements/card'
+import Card from '../containers/HireQComponent/Card'
+import Checkbox from '../containers/HireQComponent/Checkbox'
 import {
   Table,
   Progress,
-  Checkbox
 } from 'antd'
 import Tables from './Position/components/Table'
 import CandidatesTable from './Candidates/components/Table'
@@ -326,6 +327,7 @@ class Dashboard extends Component {
           <Grid item md={4} xs={12}>
             <Card
               title="Income"
+              style={{ height: '100%' }}
             >
               <ProgressBarWithTitle title="Progress 1" percent={50} status="active" />
               <ProgressBarWithTitle title="Progress 1" percent={50} status="active" />
@@ -334,8 +336,8 @@ class Dashboard extends Component {
           </Grid>
           <Grid item md={8} xs={12}>
             <Card
-              title="Opened Positions"
-              style={{ height: '100%' }}
+              title="Candidates List"
+              style={{ width: '100%' }}
             >
               <CandidatesTable
                 dataSource={Object.keys(allCandidatesData).length !== 0 ? Object.values(this.newObjectCandidate()) : []}

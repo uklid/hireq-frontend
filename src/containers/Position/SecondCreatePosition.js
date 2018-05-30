@@ -3,7 +3,8 @@ import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
 import { LayoutContentWrapper } from '../../components/utility/layoutWrapper.style'
 import Grid from 'material-ui/Grid'
-import Card from '../../components/uielements/card'
+// import Card from '../../components/uielements/card'
+import Card from '../../containers/HireQComponent/Card'
 import styled from 'styled-components'
 import { Table, DatePicker, Slider, Input, Switch, Tooltip } from 'antd'
 import Button from '../HireQComponent/Button'
@@ -52,6 +53,7 @@ const ButtonStyled = styled.button`
   height: 36px;
   width: 80px;
   cursor: pointer;
+  border-radius: 20px;
 `
 const ButtonContainer = styled.div`
   display: flex;

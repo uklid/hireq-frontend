@@ -8,7 +8,8 @@ import { Table } from 'antd'
 import Ionicon from 'react-ionicons'
 import styled from 'styled-components'
 import { FormGroup, FormControlLabel } from 'material-ui/Form'
-import Checkbox from 'material-ui/Checkbox'
+// import Checkbox from 'material-ui/Checkbox'
+import Checkbox from '../HireQComponent/Checkbox'
 import Button from '../HireQComponent/Button'
 import Tables from './components/Table'
 import moment from 'moment'
@@ -168,7 +169,7 @@ class PositionList extends React.Component {
                   style={{ marginRight: 45 }}
                   onClick={this.searchPositionData}>Search</Button>
               </ButtonWrapper> */}
-              <FormGroup row>
+              <FormGroup style={{  marginLeft: 40, marginTop: 10 }} row>
                 <FilterField
                   checked={this.state.showAll}
                   onChange={this.filterOnChange('showAll')}

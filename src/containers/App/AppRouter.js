@@ -39,6 +39,10 @@ const routes = [
   {
     path: "position-list",
     component: asyncComponent(() => import("../Position/PositionList"))
+  },
+  {
+    path: "candidate-list",
+    component: asyncComponent(() => import("../Candidates/CandidateList"))
   }
   // {
   //   path: "candidate-list",
