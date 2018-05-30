@@ -1,0 +1,291 @@
+import React from 'react'
+import { connect } from 'react-redux'
+import TextField from 'material-ui/TextField'
+import Grid from 'material-ui/Grid'
+import { LayoutContentWrapper } from '../../components/utility/layoutWrapper.style'
+import Card from '../../components/uielements/card'
+import { Table, Checkbox } from 'antd'
+import Ionicon from 'react-ionicons'
+import styled from 'styled-components'
+import { FormGroup, FormControlLabel } from 'material-ui/Form'
+import Button from '../HireQComponent/Button'
+import CandidatesTable from '../Candidates/components/Table'
+import moment from 'moment'
+import firebase, { database } from 'firebase'
+import Axios from 'axios'
+import { Loading, LoadingSuccess } from '../../redux/loading/actions'
+import {
+  updateAllCandidates,
+  updateAllChecked,
+  updateAllCheckedByOne
+} from '../../redux/candidates/actions'
+import { baseUrl } from '../../libs/url/baseUrl'
+
+const InputWrapper = styled.div`
+    position: relative;
+    // width: 80%;
+
+    .floating-icon {
+        position: absolute;
+    }
+    .floating-textfield {
+        margin-top: 0px;
+        padding-left: 40px;
+        width: 100%;
+    }
+`
+
+const ButtonWrapper = styled.div`
+		position: absolute;
+		right: 37px;
+		top: 30px;
+
+		button {
+			margin: 0px 10px 0px 10px;
+			background-color: #954590;
+			border-color: #954590;
+		}
+		@media only screen and (max-width: 768px) {
+			display: none;
+		}
+`
+
+const NewButton = styled.button`
+	color: #fff;
+	background-color: #954590;
+	border-color: #954590;
+`
+
+const CheckboxStyle = styled(Checkbox) `
+  .ant-checkbox-checked .ant-checkbox-inner, .ant-checkbox-indeterminate .ant-checkbox-inner {
+    background-color: #954590 !important;
+    border-color: #954590 !important;
+  }
+`
+
+const FilterField = ({ checked, onChange, value, label }) => (
+  <FormControlLabel
+    control={
+      <CheckboxStyle
+        checked={checked}
+        onChange={onChange}
+        value={value}
+        style={{ color: '#954590' }}
+      />
+    }
+    label={label}
+  />
+)
+
+class PositionList extends React.Component {
+
+  state = {
+    showAll: false,
+    showOpen: false,
+    showFinished: false,
+    candidateData: []
+  }
+
+  searchPoisition = (event) => {
+    const filter = event.target.value.toUpperCase()
+    const { allCandidatesData } = this.props
+    const searchResult = Object.values(allCandidatesData).filter((obj) => {
+      const name = obj['name'].toUpperCase().includes(filter)
+      const email = obj['email'].toUpperCase().includes(filter)
+      // ถ้ามี option ในการ search อย่างอื่นก็สามารถทำได้ เพิ่มตัว filter เข้าไป
+      if (email || name) {
+        return obj
+      }
+    })
+    console.log("search result:", searchResult)
+    this.setState({
+      candidateData: searchResult
+    })
+  }
+
+  filterOnChange = (name) => async (event) => {
+    await this.setState({
+      [name]: !this.state[name],
+    })
+
+    if (this.state[name] && name === 'showFinished') {
+      // const { allCandidatesData } = this.props
+      const { candidateData } = this.state 
+      const searchResult = Object.values(candidateData).filter((obj) => {
+        const emailSent = obj['emailSent'] === false
+        // ถ้ามี option ในการ search อย่างอื่นก็สามารถทำได้ เพิ่มตัว filter เข้าไป
+        if (emailSent) {
+          return obj
+        }
+      })
+      console.log("search result:", searchResult)
+      this.setState({
+        candidateData: searchResult
+      })
+    } else if (!this.state[name] && name === 'showFinished') {
+
+    }
+  }
+  componentDidMount = async () => {
+    try {
+      this.props.Loading()
+      const test = await firebase.auth().onAuthStateChanged(async (data) => {
+        if (data) {
+          const getIdToken = await firebase.auth().currentUser.getIdToken()
+          const uid = localStorage.getItem('loginToken')
+          // start get all candidates here
+          const candidatesURL = `${baseUrl}/users/${uid}/candidates`
+          const candidatesResult = await Axios.get(candidatesURL, {
+            headers: { Authorization: "Bearer " + getIdToken }
+          })
+          this.setState({ candidateData: candidatesResult.data })
+          this.props.updateAllCandidates(candidatesResult.data)
+          // end all candidate here
+          this.props.LoadingSuccess()
+        } else {
+          this.props.LoadingSuccess()
+        }
+      })
+    } catch (err) {
+      this.props.LoadingSuccess()
+      console.log(err)
+    }
+  }
+  onCheckAllChange = async (event) => {
+    const allCheckBox = document.getElementsByClassName("ant-checkbox")
+    if (event.target.checked === true) {
+      for (let i = 1; i < allCheckBox.length; i++) {
+        allCheckBox[i].classList.add("ant-checkbox-checked")
+        if (allCheckBox[i].children[0].checked === false) {
+          // Hack ให้คลิกที่ input 1 ทีเพื่อแก้บัคในการ checkall เพื่อต้องกดอีกที
+          allCheckBox[i].children[0].click()
+        }
+      }
+      this.props.updateAllCheckedByOne(true)
+      // this.props.updateAllChecked()
+    } else {
+      for (let i = 1; i < allCheckBox.length; i++) {
+        allCheckBox[i].classList.remove("ant-checkbox-checked")
+        if (allCheckBox[i].children[0].checked === true) {
+          // Hack ให้คลิกที่ input 1 ทีเพื่อแก้บัคในการ checkall เพื่อต้องกดอีกที
+          await allCheckBox[i].children[0].click()
+        }
+      }
+      // this.props.updateAllChecked()
+      // this.props.updateUncheckCandidateId([])
+      this.props.updateAllCheckedByOne(false)
+    }
+  }
+  render() {
+    console.log("candidateData::", this.props.allCandidatesData)
+    const candidatesColumn = [
+      {
+        title: <Checkbox id="checkAllId" checked={this.props.allChecked} onChange={this.onCheckAllChange}>Check all</Checkbox>,
+        dataIndex: 'checkbox',
+        key: 'checkbox'
+      },
+      {
+        title: 'Name',
+        dataIndex: 'name',
+        key: 'name',
+      },
+      {
+        title: 'Email',
+        dataIndex: 'email',
+        key: 'email',
+      },
+      {
+        title: 'ACTIONS',
+        dataIndex: 'buttonAction',
+        key: 'buttonAction'
+      }
+    ]
+    return (
+      <LayoutContentWrapper>
+        <Grid container spacing={0}>
+          <Grid item sm={12} xs={12}>
+            <Card>
+              <InputWrapper>
+                <Ionicon className="floating-icon" icon="ios-search-outline" fontSize="35px" />
+                <TextField
+                  placeholder="Search Candidates or detail here"
+                  margin="normal"
+                  className="floating-textfield"
+                  onChange={this.searchPoisition}
+                />
+              </InputWrapper>
+              {/* <ButtonWrapper>
+                <Button
+                  style={{ marginRight: 45 }}
+                  onClick={this.searchPositionData}>Search</Button>
+              </ButtonWrapper> */}
+              <FormGroup style={{ marginLeft: 30, marginTop: 5 }} row>
+                {/* <FilterField
+                  checked={this.state.showAll}
+                  onChange={this.filterOnChange('showAll')}
+                  value="All"
+                  label="All"
+                /> */}
+                <FilterField
+                  checked={this.state.showOpen}
+                  onChange={this.filterOnChange('showOpen')}
+                  value="Open"
+                  label="Open"
+                />
+                <FilterField
+                  checked={this.state.showFinished}
+                  onChange={this.filterOnChange('showFinished')}
+                  value="Finished"
+                  label="Finished"
+                />
+              </FormGroup>
+            </Card>
+          </Grid>
+        </Grid>
+        <Grid style={{ marginTop: 30 }} container spacing={0}>
+          <Grid item sm={12} xs={12}>
+            <Card
+              title="Candidates List"
+              style={{ overflowX: 'auto' }}
+            >
+              <CandidatesTable
+                dataSource={Object.values(this.state.candidateData)}
+                columns={candidatesColumn}
+                rowPerPage={7}
+                ellipsis={10}
+              />
+            </Card>
+          </Grid>
+        </Grid>
+        <Grid style={{ marginTop: 20 }} container spacing={0}>
+          <Grid item>
+            {/* <Button
+							onClick={this.goToSettingPosition}
+							style={{
+								color: '#fff',
+								backgroundColor: '#954590',
+								borderColor: '#954590',
+							}}>Create position</Button> */}
+          </Grid>
+        </Grid>
+      </LayoutContentWrapper>
+    )
+  }
+}
+
+const mapStateToProps = (state) => ({
+  searchPosition: state.Positions.searchPoisition,
+  allCandidatesData: state.Candidates.allCandidatesData,
+  prepareCreate: state.Positions.prepareCreate,
+  headerToken: state.Auth.headerToken,
+  allChecked: state.Candidates.allChecked
+})
+
+export default connect(mapStateToProps,
+  {
+    updateAllChecked,
+    updateAllCandidates,
+    Loading,
+    LoadingSuccess,
+    updateAllCheckedByOne,
+  })(PositionList)
