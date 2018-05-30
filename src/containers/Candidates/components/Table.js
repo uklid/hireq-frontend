@@ -191,7 +191,7 @@ class CandidatesTable extends Component {
 						))}
 					</tbody>
 				</TableStyled>
-				<Pagination>
+				<Pagination style={{ marginTop: 10 }}>
 					<Button onClick={this.sendAllEmail}>Send Email</Button>
 					<div>
 						<PaginationItem

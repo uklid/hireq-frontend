@@ -215,7 +215,7 @@ class Dashboard extends Component {
     })
   }
   newObjectCandidate = () => {
-    console.log("ติดใน ฟังชั่น สอง")    
+    console.log("ติดใน ฟังชั่น สอง")
     // ฟังชั่นนี้ รีกรุ๊บของ array ใหม่ ให้มี checked candidate เข้าไปด้วย
     return Object.values(this.props.allCandidatesData).map((data, index) => {
       return {
@@ -303,7 +303,7 @@ class Dashboard extends Component {
           <Grid item md={8} xs={12}>
             <Card
               title="Opened Positions"
-              style={{ width: '100%'}}
+              style={{ width: '100%' }}
             >
               <Tables
                 dataSource={Object.keys(allPositionCreated).length !== 0 ? Object.values(this.newObject()) : []}
@@ -318,6 +318,7 @@ class Dashboard extends Component {
           <Grid item md={4} xs={12}>
             <Card
               title="Income"
+              style={{ height: '100%' }}
             >
               <ProgressBarWithTitle title="Progress 1" percent={50} status="active" />
               <ProgressBarWithTitle title="Progress 1" percent={50} status="active" />
@@ -326,7 +327,7 @@ class Dashboard extends Component {
           </Grid>
           <Grid item md={8} xs={12}>
             <Card
-              title="Opened Positions"
+              title="Candidates List"
               style={{ width: '100%' }}
             >
               <CandidatesTable

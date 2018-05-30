@@ -151,7 +151,7 @@ class Tables extends Component {
 						))}
 					</tbody>
 				</TableStyled>
-				<Pagination>
+				<Pagination style={{ marginTop: 10 }}>
 					<PaginationItem
 						onClick={() => this.backward(numOfPage)}
 					>
