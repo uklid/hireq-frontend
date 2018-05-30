@@ -3,8 +3,9 @@ import { connect } from 'react-redux'
 import TextField from 'material-ui/TextField'
 import Grid from 'material-ui/Grid'
 import { LayoutContentWrapper } from '../../components/utility/layoutWrapper.style'
-import Card from '../../components/uielements/card'
-import { Table, Checkbox } from 'antd'
+import Card from '../../containers/HireQComponent/Card'
+import Checkbox from '../../containers/HireQComponent/Checkbox'
+import { Table } from 'antd'
 import Ionicon from 'react-ionicons'
 import styled from 'styled-components'
 import { FormGroup, FormControlLabel } from 'material-ui/Form'
@@ -56,17 +57,11 @@ const NewButton = styled.button`
 	border-color: #954590;
 `
 
-const CheckboxStyle = styled(Checkbox) `
-  .ant-checkbox-checked .ant-checkbox-inner, .ant-checkbox-indeterminate .ant-checkbox-inner {
-    background-color: #954590 !important;
-    border-color: #954590 !important;
-  }
-`
 
 const FilterField = ({ checked, onChange, value, label }) => (
   <FormControlLabel
     control={
-      <CheckboxStyle
+      <Checkbox
         checked={checked}
         onChange={onChange}
         value={value}
@@ -110,7 +105,7 @@ class PositionList extends React.Component {
 
     if (this.state[name] && name === 'showFinished') {
       // const { allCandidatesData } = this.props
-      const { candidateData } = this.state 
+      const { candidateData } = this.state
       const searchResult = Object.values(candidateData).filter((obj) => {
         const emailSent = obj['emailSent'] === false
         // ถ้ามี option ในการ search อย่างอื่นก็สามารถทำได้ เพิ่มตัว filter เข้าไป
@@ -123,7 +118,9 @@ class PositionList extends React.Component {
         candidateData: searchResult
       })
     } else if (!this.state[name] && name === 'showFinished') {
-
+      this.setState({
+        candidateData: this.props.allCandidatesData
+      })
     }
   }
   componentDidMount = async () => {
@@ -153,8 +150,10 @@ class PositionList extends React.Component {
   }
   onCheckAllChange = async (event) => {
     const allCheckBox = document.getElementsByClassName("ant-checkbox")
+    console.log("Checkbox ElementId: ", allCheckBox)
     if (event.target.checked === true) {
-      for (let i = 1; i < allCheckBox.length; i++) {
+      // ไล่ลูบตั้งแต่  checkbox ในตำแหน่ง index ที่ 2 เนื่องจากไม่งั้นจะไปกวนกับตัว filter ด้านบน      
+      for (let i = 2; i < allCheckBox.length; i++) {
         allCheckBox[i].classList.add("ant-checkbox-checked")
         if (allCheckBox[i].children[0].checked === false) {
           // Hack ให้คลิกที่ input 1 ทีเพื่อแก้บัคในการ checkall เพื่อต้องกดอีกที
@@ -164,7 +163,8 @@ class PositionList extends React.Component {
       this.props.updateAllCheckedByOne(true)
       // this.props.updateAllChecked()
     } else {
-      for (let i = 1; i < allCheckBox.length; i++) {
+      // ไล่ลูบตั้งแต่  checkbox ในตำแหน่ง index ที่ 2 เนื่องจากไม่งั้นจะไปกวนกับตัว filter ด้านบน
+      for (let i = 2; i < allCheckBox.length; i++) {
         allCheckBox[i].classList.remove("ant-checkbox-checked")
         if (allCheckBox[i].children[0].checked === true) {
           // Hack ให้คลิกที่ input 1 ทีเพื่อแก้บัคในการ checkall เพื่อต้องกดอีกที

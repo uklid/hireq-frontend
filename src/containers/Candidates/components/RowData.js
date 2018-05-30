@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
-import { Button, Dropdown, Menu, Icon, Checkbox } from 'antd'
+import { Button, Dropdown, Menu, Icon } from 'antd'
+import Checkbox from '../../HireQComponent/Checkbox'
 import styled from 'styled-components'
 
 const TRBodyStyled = styled.tr`
@@ -32,13 +33,6 @@ const MenuStyled = styled(Menu) `
 	.list-item:hover {
 		color: #954590 !important;
 	}
-`
-
-const CheckboxStyled = styled(Checkbox) `
-.ant-checkbox-checked .ant-checkbox-inner, .ant-checkbox-indeterminate .ant-checkbox-inner {
-	background-color: #954590 !important;
-	border-color: #954590 !important;
-}
 `
 
 const DropDownMenu = (props) => (
@@ -74,12 +68,12 @@ export default class RowData extends Component {
 	render() {
 		const { data, columns } = this.props
 		const dataWithInfo = {
-			checkbox: <CheckboxStyled
+			checkbox: <Checkbox
 				defaultChecked={this.props.allChecked}
 				onChange={this.props.onCheckboxChange}
 				value={this.props.dataValue}
 			>
-			</CheckboxStyled>,
+			</Checkbox>,
 			...data,
 			button: <Button
 				onClick={this.props.onClick}
