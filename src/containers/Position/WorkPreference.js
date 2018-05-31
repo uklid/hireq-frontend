@@ -16,7 +16,7 @@ const DataSlider = ({ onChange, value, title, disabled, toolTip }) => (
 					<Ionicon icon="ios-alert" fontSize={20} />
 				</span>
 			</Tooltip>
-			<Badge style={{ backgroundColor: 'rgba(149, 69, 144)' }} count={parseInt((value[0] + value[1]) / 2)} />
+			<Badge style={{ backgroundColor: 'rgba(149, 69, 144)' }} count={parseInt((value[0] + value[1]) / 2, 10)} />
 		</div>
 		<SliderStyled range disabled={disabled} onChange={onChange} defaultValue={value} />
 	</div>
@@ -41,9 +41,6 @@ const SliderStyled = styled(Slider) `
 	background-color: #954590;
   }
 `
-
-const innerWidth = window.innerWidth
-const innerHeight = window.innerHeight
 
 class WorkPreference extends React.Component {
 	constructor(props) {
@@ -89,7 +86,7 @@ class WorkPreference extends React.Component {
 			if (index <= 15) {
 				return {
 					subject: dataName,
-					value: parseInt((data['max'] + data['min']) / 2)
+					value: parseInt((data['max'] + data['min']) / 2, 10)
 				}
 			}
 		})
@@ -97,7 +94,6 @@ class WorkPreference extends React.Component {
 
 	render() {
 		const { slideData } = this.props
-		let groupIndex = 0
 		return (
 			<ChartWrapper>
 				<SpecifiedDomainRadarChart {...this.state.config} datas={slideData !== undefined && this.datas()} />
@@ -112,7 +108,7 @@ class WorkPreference extends React.Component {
 									disabled={this.props.disabled}
 									title={`${dataName}`}
 									onChange={this.onChange(dataName)}
-									value={[parseInt(data['min']), parseInt(data['max'])]}
+									value={[parseInt(data['min'], 10), parseInt(data['max'], 10)]}
 								/>
 							)
 						}

@@ -1,12 +1,9 @@
-import axios from 'axios'
 import firebase from 'firebase'
 import { push } from 'react-router-redux'
 
 export const LOGIN_REQUEST = 'LOGIN_REQUEST'
 export const LOGIN_SUCCESS = 'LOGIN_SUCCESS'
 export const LOGOUT = 'LOGOUT'
-
-const fakeApiCall = true
 
 export const LoginCheck = () => async dispatch => {
   try {

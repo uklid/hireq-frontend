@@ -1,6 +1,3 @@
-import { Map } from 'immutable'
-import actions from './actions'
-
 const checkIsLoggedIn = () => {
   const isSignin = localStorage.getItem('loginToken')
   if (isSignin) {
