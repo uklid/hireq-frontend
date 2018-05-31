@@ -1,5 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
+import { Redirect } from 'react-router-dom'
 import { LayoutContentWrapper } from '../../components/utility/layoutWrapper.style'
 import Grid from 'material-ui/Grid'
 import Card from '../../containers/HireQComponent/Card'
@@ -56,11 +57,11 @@ class SecondCreatePosition extends React.Component {
   handleDisabledChange = (disabled) => {
     this.setState({ disabled: !this.state.disabled })
   }
-  componentWillMount = () => {
-    if (Object.keys(this.props.prepareCreate).length === 0) {
-      this.props.history.push('/dashboard/create-position')
-    }
-  }
+  // componentWillMount = () => {
+  //   if (Object.keys(this.props.prepareCreate).length === 0) {
+  //     this.props.history.push('/dashboard/create-position')
+  //   }
+  // }
   handleToggle = () => {
     this.setState({
       open: !this.state.open
@@ -101,6 +102,10 @@ class SecondCreatePosition extends React.Component {
   }
 
   render() {
+    if (Object.keys(this.props.prepareCreate).length === 0) {
+      // this.props.history.push('/dashboard/create-position')
+      return <Redirect to="/dashboard/create-position" />
+    }
     const { prepareCreate } = this.props
     const defaultCogData = prepareCreate.info && [prepareCreate.info['COG']['min'], prepareCreate.info['COG']['max']]
     return (
@@ -128,7 +133,7 @@ class SecondCreatePosition extends React.Component {
         <Grid style={{}} container spacing={24}>
           <Grid item sm={12} xs={12}>
             <Card>
-              <div style={{ display: 'flex', justifyContent: 'space-between'}}>
+              <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                 <h3 style={{ marginBottom: 20, cursor: 'pointer' }}>Setting Position Detail.</h3>
                 <div>Enable change: <Switch size="default" onChange={this.handleDisabledChange} /></div>
               </div>

@@ -67,13 +67,13 @@ class CriticalSoftSkills extends React.Component {
 			},
 		}
 	}
-	componentWillMount = () => {
-		const { slideData } = this.props
-		if (slideData === undefined) {
-			this.props.history.replace('/dashboard')
-			return
-		}
-	}
+	// componentWillMount = () => {
+	// 	const { slideData } = this.props
+	// 	if (slideData === undefined) {
+	// 		this.props.history.replace('/dashboard')
+	// 		return
+	// 	}
+	// }
 	onChange = (dataName) => (value) => {
 		const { prepareCreate } = this.props
 		prepareCreate.info[dataName] = { min: value[0], max: value[1] }
