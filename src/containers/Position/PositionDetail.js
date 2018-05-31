@@ -187,11 +187,9 @@ class PositionDetail extends React.Component {
 	}
 	onCheckAllChange = async (event) => {
 		const allCheckBox = document.getElementsByClassName("ant-checkbox")
-		console.log("Checked all Event: ", event.target)
 		if (event.target.checked === true) {
 			for (let i = 1; i < allCheckBox.length; i++) {
 				allCheckBox[i].classList.add("ant-checkbox-checked")
-				console.log("Children: ", allCheckBox[i].children)
 				if (allCheckBox[i].children[0].checked === false) {
 					// Hack ให้คลิกที่ input 1 ทีเพื่อแก้บัคในการ checkall เพื่อต้องกดอีกที
 					allCheckBox[i].children[0].click()
@@ -219,7 +217,6 @@ class PositionDetail extends React.Component {
 	}
 	render() {
 		const { positionDetail, allCandidatesData } = this.props
-		console.log("candidate Id : ", positionDetail)
 		const candidatesColumn = [
 			{
 				title: <Checkbox id="checkAllId" checked={this.props.allChecked} onChange={this.onCheckAllChange}>Check all</Checkbox>,

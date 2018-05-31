@@ -87,9 +87,7 @@ class EditPosition extends React.Component {
 			this.props.Loading()
 			await firebase.auth().onAuthStateChanged(async (data) => {
 				if (data) {
-					// console.log("มี data =",data)
 					const getIdToken = await firebase.auth().currentUser.getIdToken()
-					// console.log("get Id Token = ", getIdToken)
 					const positionId = this.props.location.state.positionId
 					const uid = localStorage.getItem('loginToken')
 					const url = `${baseUrl}/users/${uid}/positions/${positionId}`
@@ -127,11 +125,9 @@ class EditPosition extends React.Component {
 	}
 	onCheckAllChange = async (event) => {
 		const allCheckBox = document.getElementsByClassName("ant-checkbox")
-		console.log("Checked all Event: ", event.target)
 		if (event.target.checked === true) {
 			for (let i = 1; i < allCheckBox.length; i++) {
 				allCheckBox[i].classList.add("ant-checkbox-checked")
-				console.log("Children: ", allCheckBox[i].children)
 				if (allCheckBox[i].children[0].checked === false) {
 					// Hack ให้คลิกที่ input 1 ทีเพื่อแก้บัคในการ checkall เพื่อต้องกดอีกที
 					allCheckBox[i].children[0].click()
@@ -163,7 +159,6 @@ class EditPosition extends React.Component {
 		const result = await Axios.put(url, { ...prepareCreate }, {
 			headers: { Authorization: "Bearer " + getIdToken }
 		})
-		console.log("After Create = ", result)
 		//change to position detail after create with idCode
 		this.props.history.push({
 			pathname: '/dashboard/position-detail',
@@ -177,7 +172,6 @@ class EditPosition extends React.Component {
 	}
 	changeCogData = (value) => {
 		const { prepareCreate } = this.props
-		// console.log('dataCOGG',prepareCreate.info['COG']['min'])
 		prepareCreate.info['COG'] = { min: value[0], max: value[1] }
 		const newDataToUpdate = { ...prepareCreate }
 		this.props.preCreatePosition(newDataToUpdate)
@@ -201,8 +195,6 @@ class EditPosition extends React.Component {
 	searchPoisition = (event) => {
 		const filter = event.target.value.toUpperCase()
 		const { defaultAllCandidatesData } = this.state
-		// console.log("defaultALl" , defaultAllCandidatesData)
-		// const result = Object.values(this.props.allCandidatesData).filter((word) => {
 		const result = Object.values(defaultAllCandidatesData).filter((word) => {
 			const name = word.name.toString().toUpperCase().includes(filter)
 			const email = word.email.toString().toUpperCase().includes(filter)

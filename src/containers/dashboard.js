@@ -203,7 +203,6 @@ class Dashboard extends Component {
   }
   newObject = () => {
     // ฟังชั่นนี้ รีกรุ๊บของ array ใหม่ ให้มี positionId เข้าไปด้วย
-    console.log("ติดใน ฟังชั่น แรก")
     return Object.values(this.props.allPositionCreated).map((data, index) => {
       return {
         ...data,
@@ -212,7 +211,6 @@ class Dashboard extends Component {
     })
   }
   newObjectCandidate = () => {
-    console.log("ติดใน ฟังชั่น สอง")
     // ฟังชั่นนี้ รีกรุ๊บของ array ใหม่ ให้มี checked candidate เข้าไปด้วย
     return Object.values(this.props.allCandidatesData).map((data, index) => {
       return {

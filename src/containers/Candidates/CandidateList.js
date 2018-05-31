@@ -89,7 +89,6 @@ class PositionList extends React.Component {
         }
         return false
       })
-      console.log("search result:", searchResult)
       this.setState({
         candidateData: searchResult
       })
@@ -126,7 +125,6 @@ class PositionList extends React.Component {
   }
   onCheckAllChange = async (event) => {
     const allCheckBox = document.getElementsByClassName("ant-checkbox")
-    console.log("Checkbox ElementId: ", allCheckBox)
     if (event.target.checked === true) {
       // ไล่ลูบตั้งแต่  checkbox ในตำแหน่ง index ที่ 2 เนื่องจากไม่งั้นจะไปกวนกับตัว filter ด้านบน      
       for (let i = 2; i < allCheckBox.length; i++) {
@@ -153,7 +151,6 @@ class PositionList extends React.Component {
     }
   }
   render() {
-    console.log("candidateData::", this.props.allCandidatesData)
     const candidatesColumn = [
       {
         title: <Checkbox id="checkAllId" checked={this.props.allChecked} onChange={this.onCheckAllChange}>Check all</Checkbox>,

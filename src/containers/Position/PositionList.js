@@ -84,7 +84,6 @@ class PositionList extends React.Component {
       }
       return false
     })
-    console.log("search result:" , searchResult)
     this.setState({
       positionData: searchResult
     })
@@ -127,7 +126,6 @@ class PositionList extends React.Component {
     }
   }
   render() {
-    console.log("positiondata::" , this.props.positionData)
     return (
       <LayoutContentWrapper>
         <Grid container spacing={0}>

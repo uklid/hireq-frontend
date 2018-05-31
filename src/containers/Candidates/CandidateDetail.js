@@ -138,7 +138,6 @@ class CandidateDetail extends React.Component {
 	}
 	render() {
 		const { allCandidatesData } = this.props
-		console.log("Candidate Data: ", allCandidatesData)
 		return (
 			<div id="testBody1" >
 				<LayoutContentWrapper >
