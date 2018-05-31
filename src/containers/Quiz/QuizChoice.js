@@ -88,8 +88,8 @@ class QuizChoice extends React.Component {
 	sendPersonalAnswer = async (event) => {
 		try {
 			const { candidateId } = this.props
-			const answer = parseInt(event.target.value)
-			const testNumber = parseInt(event.target.dataset.testnumber)
+			const answer = parseInt(event.target.value, 10)
+			const testNumber = parseInt(event.target.dataset.testnumber, 10)
 			const testName = event.target.dataset.testname
 			const url = `${apiURL}/candidates/${candidateId}/answer`
 			const personalResult = await Axios.post(url, {

@@ -77,7 +77,6 @@ class BeforeQuiz extends React.Component {
     this.props.history.push('/quiz')
   }
   render() {
-    const { errorMessage, } = this.props
     return (
       <BeforeQuizWrapper>
         <WhiteWrapper>

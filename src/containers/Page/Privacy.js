@@ -33,6 +33,7 @@ class Privacy extends React.Component {
 			this.setState({
 				[data.id]: false,
 			})
+			return false
 		})
 	}
 	handleClick = (Id) => {

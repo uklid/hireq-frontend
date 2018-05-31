@@ -125,6 +125,7 @@ class PositionDetail extends React.Component {
 					value: parseInt((data['min'] + data['max']) / 2, 10)
 				}
 			}
+			return false
 		})
 	}
 	secondDatas = () => {
@@ -140,6 +141,7 @@ class PositionDetail extends React.Component {
 					value: parseInt((data['min'] + data['max']) / 2, 10)
 				}
 			}
+			return false
 		})
 	}
 	cogNativePercent = () => {
@@ -246,7 +248,7 @@ class PositionDetail extends React.Component {
 					<Grid container spacing={0}>
 						<Grid item sm={6} xs={6}>
 							<div><h4>Position Name: </h4><span> {positionDetail.name}</span></div>
-							<div><h4>Category: </h4><span> {positionDetail.category}</span></div>
+							<div style={{ marginTop: 10, marginBottom: 10 }}><h4>Category: </h4><span> {positionDetail.category}</span></div>
 							<div><h4>Info: </h4><span> {positionDetail.descriptions}</span></div>
 						</Grid>
 						<Grid style={{ display: 'flex', justifyContent: 'flex-end' }} item sm={6} xs={6}>

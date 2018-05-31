@@ -117,6 +117,7 @@ class CandidatesTable extends Component {
 				if (id !== data.candidateId) {
 					return id
 				}
+				return false
 			})
 			this.props.updateAllCheckedByOne(false)
 			await this.props.updateUncheckCandidateId(updateData)

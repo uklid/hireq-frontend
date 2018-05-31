@@ -82,6 +82,7 @@ class PositionList extends React.Component {
       if (category || descriptions || tags || name) {
         return obj
       }
+      return false
     })
     console.log("search result:" , searchResult)
     this.setState({

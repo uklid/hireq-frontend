@@ -89,6 +89,7 @@ class WorkPreference extends React.Component {
 					value: parseInt((data['max'] + data['min']) / 2, 10)
 				}
 			}
+			return false
 		})
 	}
 
@@ -104,6 +105,7 @@ class WorkPreference extends React.Component {
 						if (index <= 15) {
 							return (
 								<DataSlider
+									key={index}
 									toolTip={"ToolTip"}
 									disabled={this.props.disabled}
 									title={`${dataName}`}
@@ -112,6 +114,7 @@ class WorkPreference extends React.Component {
 								/>
 							)
 						}
+						return false
 					})
 				}
 			</ChartWrapper>

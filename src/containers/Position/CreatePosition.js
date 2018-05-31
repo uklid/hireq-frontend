@@ -3,16 +3,12 @@ import { connect } from 'react-redux'
 import TextField from 'material-ui/TextField'
 import Grid from 'material-ui/Grid'
 import { LayoutContentWrapper } from '../../components/utility/layoutWrapper.style'
-// import Card from '../../components/uielements/card'
 import Card from '../../containers/HireQComponent/Card'
-import { Table } from 'antd'
 import Ionicon from 'react-ionicons'
 import styled from 'styled-components'
-import { FormGroup, FormControlLabel } from 'material-ui/Form'
-import Checkbox from 'material-ui/Checkbox'
+import { FormGroup } from 'material-ui/Form'
 import Button from '../HireQComponent/Button'
 import Tables from './components/Table'
-import moment from 'moment'
 import firebase from 'firebase'
 import Axios from 'axios'
 import { Loading, LoadingSuccess } from '../../redux/loading/actions'
@@ -69,25 +65,20 @@ const ButtonWrapper = styled.div`
 		}
 `
 
-const NewButton = styled.button`
-	color: #fff;
-	background-color: #954590;
-	border-color: #954590;
-`
 
-const FilterField = ({ checked, onChange, value, label }) => (
-	<FormControlLabel
-		control={
-			<Checkbox
-				checked={checked}
-				onChange={onChange}
-				value={value}
-				style={{ color: '#954590' }}
-			/>
-		}
-		label={label}
-	/>
-)
+// const FilterField = ({ checked, onChange, value, label }) => (
+// 	<FormControlLabel
+// 		control={
+// 			<Checkbox
+// 				checked={checked}
+// 				onChange={onChange}
+// 				value={value}
+// 				style={{ color: '#954590' }}
+// 			/>
+// 		}
+// 		label={label}
+// 	/>
+// )
 
 class CreatePosition extends React.Component {
 

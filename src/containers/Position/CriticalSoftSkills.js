@@ -17,7 +17,7 @@ const DataSlider = ({ onChange, value, title, disabled, toolTip }) => (
 			<h4>{title}</h4>
 			<Tooltip title="prompt text">
 				<span style={{ marginLeft: 10, marginRight: 10 }}>
-					<Ionicon icon="ios-alert" fontSize={20} />
+					<Ionicon icon="ios-alert" fontSize="20" />
 				</span>
 			</Tooltip>
 			<Badge style={{ backgroundColor: 'rgba(149, 69, 144)' }} count={parseInt((value[0] + value[1]) / 2, 10)} />
@@ -93,6 +93,7 @@ class CriticalSoftSkills extends React.Component {
 					value: parseInt((data['min'] + data['max']) / 2, 10)
 				}
 			}
+			return false
 		})
 	}
 

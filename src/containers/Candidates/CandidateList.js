@@ -5,14 +5,11 @@ import Grid from 'material-ui/Grid'
 import { LayoutContentWrapper } from '../../components/utility/layoutWrapper.style'
 import Card from '../../containers/HireQComponent/Card'
 import Checkbox from '../../containers/HireQComponent/Checkbox'
-import { Table } from 'antd'
 import Ionicon from 'react-ionicons'
 import styled from 'styled-components'
 import { FormGroup, FormControlLabel } from 'material-ui/Form'
-import Button from '../HireQComponent/Button'
 import CandidatesTable from '../Candidates/components/Table'
-import moment from 'moment'
-import firebase, { database } from 'firebase'
+import firebase from 'firebase'
 import Axios from 'axios'
 import { Loading, LoadingSuccess } from '../../redux/loading/actions'
 import {
@@ -35,28 +32,6 @@ const InputWrapper = styled.div`
         width: 100%;
     }
 `
-
-const ButtonWrapper = styled.div`
-		position: absolute;
-		right: 37px;
-		top: 30px;
-
-		button {
-			margin: 0px 10px 0px 10px;
-			background-color: #954590;
-			border-color: #954590;
-		}
-		@media only screen and (max-width: 768px) {
-			display: none;
-		}
-`
-
-const NewButton = styled.button`
-	color: #fff;
-	background-color: #954590;
-	border-color: #954590;
-`
-
 
 const FilterField = ({ checked, onChange, value, label }) => (
   <FormControlLabel
@@ -91,8 +66,8 @@ class PositionList extends React.Component {
       if (email || name) {
         return obj
       }
+      return false
     })
-    console.log("search result:", searchResult)
     this.setState({
       candidateData: searchResult
     })
@@ -112,6 +87,7 @@ class PositionList extends React.Component {
         if (emailSent) {
           return obj
         }
+        return false
       })
       console.log("search result:", searchResult)
       this.setState({
@@ -126,7 +102,7 @@ class PositionList extends React.Component {
   componentDidMount = async () => {
     try {
       this.props.Loading()
-      const test = await firebase.auth().onAuthStateChanged(async (data) => {
+      await firebase.auth().onAuthStateChanged(async (data) => {
         if (data) {
           const getIdToken = await firebase.auth().currentUser.getIdToken()
           const uid = localStorage.getItem('loginToken')

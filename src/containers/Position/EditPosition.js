@@ -85,7 +85,7 @@ class EditPosition extends React.Component {
 	componentWillMount = async () => {
 		try {
 			this.props.Loading()
-			const test = await firebase.auth().onAuthStateChanged(async (data) => {
+			await firebase.auth().onAuthStateChanged(async (data) => {
 				if (data) {
 					// console.log("มี data =",data)
 					const getIdToken = await firebase.auth().currentUser.getIdToken()
@@ -184,7 +184,6 @@ class EditPosition extends React.Component {
 	}
 	newObjectCandidate = () => {
 		// ฟังชั่นนี้ รีกรุ๊บของ array ใหม่ ให้มี candidateId เข้าไปด้วย
-		const { defaultAllCandidatesData } = this.state
 		return Object.values(this.props.allCandidatesData).map((data, index) => {
 			return {
 				...data,
@@ -205,18 +204,14 @@ class EditPosition extends React.Component {
 		// console.log("defaultALl" , defaultAllCandidatesData)
 		// const result = Object.values(this.props.allCandidatesData).filter((word) => {
 		const result = Object.values(defaultAllCandidatesData).filter((word) => {
-			console.log("word = ", word)
 			const name = word.name.toString().toUpperCase().includes(filter)
 			const email = word.email.toString().toUpperCase().includes(filter)
 			if (name || email) {
 				return word
 			}
+			return false
 		})
-		console.log('result = ', result)
 		this.props.updateAllCandidates(result)
-		// this.setState({
-		// 	defaultAllCandidatesData: result
-		// })
 	}
 	updateStateAfterRender = () => {
 		this.setState({
@@ -231,12 +226,7 @@ class EditPosition extends React.Component {
 			this.props.history.replace('/dashboard')
 		}
 		const { prepareCreate, allCandidatesData } = this.props
-		const { defaultAllCandidatesData, allCandidate } = this.state
 		const defaultCogData = prepareCreate.info && [prepareCreate.info['COG']['min'], prepareCreate.info['COG']['max']]
-		// if (Object.keys(allCandidate).length !== Object.keys(allCandidatesData).length) {
-		// 	// Update State If ADd new Candidate
-		// this.updateStateAfterRender()
-		// }
 		const candidatesColumn = [
 			{
 				title: <Checkbox id="checkAllId" checked={this.props.allChecked} onChange={this.onCheckAllChange}>Check all</Checkbox>,
