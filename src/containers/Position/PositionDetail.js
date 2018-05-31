@@ -24,10 +24,12 @@ import CreateCandidates from '../Candidates/CreateCandidates'
 import Button from '../HireQComponent/Button'
 
 const screenWidth = (window.innerWidth / 2) - 100 <= 250 ? 350 : 600
+
 const WhiteWrapper = styled.div`
 		background-color: #fff;
 		padding: 20px;
 		width: 100%;
+		border-radius: 5px;
 
 		h4 {
 			display: inline;

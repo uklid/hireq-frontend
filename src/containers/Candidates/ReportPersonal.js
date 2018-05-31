@@ -48,7 +48,7 @@ class ReportPersonal extends React.Component {
     const { name } = this.props.allCandidatesData
     return (
       <React.Fragment>
-        <Grid id="reportBody1" style={{ backgroundColor: '#eee' }} container spacing={8}>
+        <Grid id="reportBody1" style={{ backgroundColor: '#eee', margin: 0, borderRadius: 5 }} container spacing={8}>
           <Grid item xs={12}>
             <H4>Sumary of Q-Score Result</H4>
           </Grid>
@@ -391,7 +391,7 @@ class ReportPersonal extends React.Component {
           </Grid>
         </Grid>
         {/* แบ่ง Container 2 ตรงนี้ไป */}
-        <Grid container spacing={8} id="reportBody2" style={{ margin: 0, backgroundColor: '#eee' }} >
+        <Grid container spacing={8} id="reportBody2" style={{ margin: 0, backgroundColor: '#eee', borderRadius: 5 }} >
           <Grid container spacing={8} style={{ margin: 0 }}>
             <Grid item xs={12}>
               <H4>Itemized Score Report</H4>
@@ -646,7 +646,7 @@ class ReportPersonal extends React.Component {
             />
           </Grid>
         </Grid>
-        <Grid id="reportBody3" container style={{ backgroundColor: '#eee', margin: 0 }} spacing={8}>
+        <Grid id="reportBody3" container style={{ backgroundColor: '#eee', margin: 0, borderRadius: 5 }} spacing={8}>
           <Grid item xs={6}>
             <CardWithPowerBar
               title="CREATIVE, INNOVATIVE AND IMAGINATIVE"

@@ -27,6 +27,7 @@ const WhiteCard = styled.div`
 	background-color: #fff;
 	margin-bottom: 30px;
 	width: 100%;
+	border-radius: 5px;
 `
 
 const CardWithStyled = styled(Card) `
@@ -164,14 +165,23 @@ class CandidateDetail extends React.Component {
 									<h4>NAME: </h4>
 									{
 										this.state.isEdit ?
-											<Input name="name" onChange={this.handleChange} defaultValue={allCandidatesData.name} /> : <p style={{ marginLeft: 10 }}>{allCandidatesData.name}</p>
+											<Input
+												name="name"
+												onChange={this.handleChange} defaultValue={allCandidatesData.name}
+												style={{ marginLeft: 16 }}
+											/> : <p style={{ marginLeft: 10 }}>{allCandidatesData.name}</p>
 									}
 								</FormWrapper>
 								<FormWrapper>
 									<h4>EMAIL: </h4>
 									{
 										this.state.isEdit ?
-											<Input name="email" onChange={this.handleChange} defaultValue={allCandidatesData.email} /> : <p style={{ marginLeft: 10 }}>{allCandidatesData.email}</p>}
+											<Input
+												name="email"
+												onChange={this.handleChange}
+												defaultValue={allCandidatesData.email}
+												style={{ marginLeft: 16 }}
+											/> : <p style={{ marginLeft: 10 }}>{allCandidatesData.email}</p>}
 								</FormWrapper>
 								<FormWrapper>
 									<h4>POSITION: </h4>
@@ -211,7 +221,7 @@ class CandidateDetail extends React.Component {
 							</Grid>
 						</WhiteCard>
 					</Grid>
-					<Grid style={{ backgroundColor: '#fff' }} container spacing={8}>
+					<Grid style={{ backgroundColor: '#fff', borderRadius: 5, margin: 0 }} container spacing={8}>
 						{/* <Grid item xs={12}>
 							<h2 style={{ padding: 10 }}>Summary of Q-score Results</h2>
 						</Grid>

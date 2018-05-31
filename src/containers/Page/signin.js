@@ -60,11 +60,12 @@ class SignIn extends Component {
           <SignInBlock>
             <h1 style={{ textAlign: 'center', marginBottom: 30 }}>LOGIN</h1>
             <p style={{ color: 'red' }}> {errorMessage && errorMessage} </p>
-            <Input style={{ marginBottom: 15 }} size="large" placeholder="Username" />
-            <Input style={{ marginBottom: 23 }} size="large" placeholder="Password" />
+            <Input style={{ marginBottom: 15, borderRadius: 20 }} size="large" placeholder="Username" />
+            <Input style={{ marginBottom: 23, borderRadius: 20 }} size="large" placeholder="Password" />
             <Button
               style={{
-                width: '100%', backgroundColor: '#954590', color: '#fff'
+                width: '100%', backgroundColor: '#954590', color: '#fff',
+                borderRadius: 20
               }}
               onClick={this.handleLogin}
             >

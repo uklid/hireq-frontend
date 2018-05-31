@@ -132,6 +132,11 @@ class CreatePosition extends React.Component {
 			[name]: !this.state[name],
 		})
 	}
+	searchPoisition = (event) => {
+		if (event.key === 'Enter') {
+			this.searchPositionData()
+		}
+	}
 
 	render() {
 		const { positionData } = this.props
@@ -153,7 +158,8 @@ class CreatePosition extends React.Component {
 							<ButtonWrapper>
 								<Button
 									style={{ marginRight: 45 }}
-									onClick={this.searchPositionData}>Search</Button>
+									onClick={this.searchPositionData}
+								>Search</Button>
 							</ButtonWrapper>
 							<FormGroup row>
 								{/* <FilterField
