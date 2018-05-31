@@ -4,19 +4,17 @@ import { Layout } from "antd"
 import { Debounce } from "react-throttle"
 import WindowResizeListener from "react-window-size-listener"
 import { ThemeProvider } from "styled-components"
-import authAction from "../../redux/auth/actions"
 import appActions from "../../redux/app/actions"
 import Sidebar from "../Sidebar/Sidebar"
 import Topbar from "../Topbar/Topbar"
 import AppRouter from "./AppRouter"
-import { siteConfig } from "../../settings"
 import themes from "../../settings/themes"
 import { themeConfig } from "../../settings"
 import AppHolder from "./commonStyle"
 import "./global.css"
 import ConfirmDelete from "../Candidates/components/ConfirmDelete"
 
-const { Content, Footer } = Layout
+const { Content } = Layout
 const { toggleAll } = appActions
 
 export class App extends Component {

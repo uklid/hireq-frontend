@@ -1,7 +1,6 @@
 import React, { Component } from "react"
 import { Route } from "react-router-dom"
 import asyncComponent from "../../helpers/AsyncFunc"
-import EditPosition from '../Position/EditPosition'
 
 const routes = [
   {

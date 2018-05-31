@@ -66,7 +66,7 @@ export const updateQuizPercent = () => (dispatch, getState) => {
   const allDone = getState().Quiz.allQuizDone + allQuizDoneLength
   const calculatePercent = () => {
     const result = (allDone / allQuizLength) * 100
-    return parseInt(result)
+    return parseInt(result, 10)
   }
   dispatch({
     type: 'UPDATE_QUIZ_PERCENT',

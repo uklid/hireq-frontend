@@ -68,7 +68,7 @@ class Tables extends Component {
 	onEditPositionClick = async (id) => {
 		try {
 			this.props.Loading()
-			const test = await firebase.auth().onAuthStateChanged(async (data) => {
+			await firebase.auth().onAuthStateChanged(async (data) => {
 				if (data) {
 					const getIdToken = await firebase.auth().currentUser.getIdToken()
 					const uid = localStorage.getItem('loginToken')
@@ -95,12 +95,12 @@ class Tables extends Component {
 	onDeleteClick = async (id) => {
 		try {
 			this.props.Loading()
-			const test = await firebase.auth().onAuthStateChanged(async (data) => {
+			await firebase.auth().onAuthStateChanged(async (data) => {
 				if (data) {
 					const getIdToken = await firebase.auth().currentUser.getIdToken()
 					const uid = localStorage.getItem('loginToken')
 					const url = `${baseUrl}/users/${uid}/positions/${id.positionId}`
-					const result = await Axios.delete(url, {
+					await Axios.delete(url, {
 						headers: { Authorization: "Bearer " + getIdToken }
 					})
 					this.props.LoadingSuccess()
@@ -114,7 +114,7 @@ class Tables extends Component {
 		}
 	}
 	render() {
-		const { columns, dataSource, dataShow, rowPerPage, ellipsis, tableId } = this.props
+		const { columns, dataSource, rowPerPage, ellipsis, tableId } = this.props
 		const numOfPage = Math.ceil(dataSource.length / rowPerPage)
 		const pages = [...Array(numOfPage).keys()];
 		const startData = (this.state.currentPage - 1) * rowPerPage
@@ -158,7 +158,7 @@ class Tables extends Component {
 					>
 						&lt;
           </PaginationItem>
-					{pages.length < ellipsis && pages.map((page,index) => (
+					{pages.length < ellipsis && pages.map((page, index) => (
 						<PaginationItem
 							key={index}
 							currentPage={this.state.currentPage}
@@ -170,7 +170,7 @@ class Tables extends Component {
 					))}
 					{this.state.currentPage < 4 && pages.length >= ellipsis && (
 						<React.Fragment>
-							{pages.slice(0, 4).map((page,index) => (
+							{pages.slice(0, 4).map((page, index) => (
 								<PaginationItem
 									key={index}
 									currentPage={this.state.currentPage}
@@ -202,7 +202,7 @@ class Tables extends Component {
 								{1}
 							</PaginationItem>
 							<Ellipsis>...</Ellipsis>
-							{pages.slice(numOfPage - 4, numOfPage).map((page,index) => (
+							{pages.slice(numOfPage - 4, numOfPage).map((page, index) => (
 								<PaginationItem
 									key={index}
 									currentPage={this.state.currentPage}
@@ -226,7 +226,7 @@ class Tables extends Component {
 								{1}
 							</PaginationItem>
 							<Ellipsis>...</Ellipsis>
-							{pages.slice(this.state.currentPage - 2, this.state.currentPage + 1).map((page,index) => (
+							{pages.slice(this.state.currentPage - 2, this.state.currentPage + 1).map((page, index) => (
 								<PaginationItem
 									key={index}
 									currentPage={this.state.currentPage}
