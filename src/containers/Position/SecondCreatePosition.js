@@ -1,16 +1,12 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { withRouter } from 'react-router-dom'
 import { LayoutContentWrapper } from '../../components/utility/layoutWrapper.style'
 import Grid from 'material-ui/Grid'
-// import Card from '../../components/uielements/card'
 import Card from '../../containers/HireQComponent/Card'
 import styled from 'styled-components'
-import { Table, DatePicker, Slider, Input, Switch, Tooltip } from 'antd'
+import { Slider, Input, Switch } from 'antd'
 import Button from '../HireQComponent/Button'
-import Tables from './components/Table'
 import CriticalSoftSkills from './CriticalSoftSkills'
-import moment from 'moment'
 import WorkPreference from './WorkPreference'
 import Dialog, {
   DialogActions,
@@ -37,15 +33,6 @@ const SliderStyled = styled(Slider) `
 const Span = styled.span`
 	font-weight: 800;
 	margin-right: 5px;
-`
-
-const WhiteWrapper = styled.div`
-		background-color: #fff;
-		padding: 20px;
-
-		h4 {
-			display: inline;
-		}
 `
 const ButtonStyled = styled.button`
   color: white;

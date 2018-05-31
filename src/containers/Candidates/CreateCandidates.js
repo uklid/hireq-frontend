@@ -43,13 +43,13 @@ class CreateCandidates extends React.Component {
     const { email, name } = this.state
     try {
       this.props.Loading()
-      const test = await firebase.auth().onAuthStateChanged(async (data) => {
+      await firebase.auth().onAuthStateChanged(async (data) => {
         if (data) {
           const getIdToken = await firebase.auth().currentUser.getIdToken()
           const uid = localStorage.getItem('loginToken')
           const positionId = this.props.addPositionId
           const addCandidateURL = `${baseUrl}/users/${uid}/positions/${positionId}/candidates/`
-          const resultAfterCreate = await Axios.post(addCandidateURL, { name, email }, {
+          await Axios.post(addCandidateURL, { name, email }, {
             headers: { Authorization: "Bearer " + getIdToken }
           })
           const candidateURL = `${baseUrl}/users/${uid}/positions/${positionId}/candidates`
@@ -64,7 +64,7 @@ class CreateCandidates extends React.Component {
           this.props.LoadingSuccess()
           message.success('Create candidate !', 10)
         } else {
-          message.error
+          message.error('OOps somethings wrong')
           this.props.LoadingSuccess()
           console.log("ไม่มี")
         }
@@ -123,7 +123,6 @@ class CreateCandidates extends React.Component {
             </Select>
           </div>
           <Button
-            style={{ marginTop: 20 }}
             onClick={this.addCandidate}
             style={{ color: '#fff', backgroundColor: '#954590', marginTop: 30, borderColor: '#954590' }}
           >

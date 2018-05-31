@@ -1,13 +1,10 @@
 import React from 'react'
 import styled from 'styled-components'
-import { LayoutContentWrapper } from '../../components/utility/layoutWrapper.style'
 import Grid from 'material-ui/Grid'
 import {
 	Progress,
 	Timeline,
-	Card,
 	Layout,
-	Button,
 	Tooltip
 } from 'antd'
 import Ionicon from 'react-ionicons'
@@ -166,13 +163,12 @@ class QuizLayout extends React.Component {
 		this.props.Loading()
 		const { apiURL, candidateId } = this.props
 		//////////////////////////
-		const { imageFileName } = event.target.dataset
 		const { answer } = event.target.dataset
 		const url = `${apiURL}/candidates/${candidateId}/answer`
 		const sendResult = await Axios.post(url, {
 			testName: 'cog',
 			testNumber: this.state.quizArrayPosition + 1,
-			answer: parseInt(answer),
+			answer: parseInt(answer, 10),
 		})
 		// set State
 		// Update currentTest or Quiz after send answer
@@ -206,7 +202,6 @@ class QuizLayout extends React.Component {
 			quizDataWP,
 			quizPath,
 			quizPercent,
-			decreaseTime
 		} = this.props
 		//if timeout and currentQuiz = cog change to personal quiz
 		if (timeNow < 0 && currentQuiz === 'cog') {

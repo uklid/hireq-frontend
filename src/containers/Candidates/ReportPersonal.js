@@ -1,6 +1,5 @@
 import React from 'react'
 import Grid from 'material-ui/Grid'
-import { Card } from 'antd'
 import styled from 'styled-components'
 import IsoWidgetsWrapper from '../../containers/Widgets/widgets-wrapper'
 import StickerWidget from '../../containers/Widgets/sticker/sticker-widget'

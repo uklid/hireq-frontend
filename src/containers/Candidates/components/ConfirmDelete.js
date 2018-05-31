@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { Button, message } from 'antd'
+import { message } from 'antd'
 import Dialog, {
   DialogActions,
   DialogContent,
@@ -31,14 +31,14 @@ class ConfirmDelete extends React.Component {
 
   deleteCandidate = async () => {
     this.props.Loading()
-    const test = await firebase.auth().onAuthStateChanged(async (data) => {
+    await firebase.auth().onAuthStateChanged(async (data) => {
       if (data) {
         try {
           const getIdToken = await firebase.auth().currentUser.getIdToken()
-          const { positionId, deleteId, allCandidatesData } = this.props
+          const { deleteId, allCandidatesData } = this.props
           const uid = localStorage.getItem('loginToken')
           const url = `${baseUrl}/users/${uid}/candidates/${deleteId}`
-          const result = await Axios.delete(url, {
+          await Axios.delete(url, {
             headers: { Authorization: "Bearer " + getIdToken }
           })
           const updateDataAfterDelete = Object.values(allCandidatesData).filter((candidate) => {

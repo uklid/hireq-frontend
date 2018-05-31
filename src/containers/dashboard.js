@@ -1,13 +1,10 @@
 import React, { Component } from 'react'
 import firebase from 'firebase'
 import LayoutContentWrapper from '../components/utility/layoutWrapper'
-import LayoutContent from '../components/utility/layoutContent'
 import Grid from 'material-ui/Grid'
-// import Card from '../components/uielements/card'
 import Card from '../containers/HireQComponent/Card'
 import Checkbox from '../containers/HireQComponent/Checkbox'
 import {
-  Table,
   Progress,
 } from 'antd'
 import Tables from './Position/components/Table'
@@ -173,7 +170,7 @@ class Dashboard extends Component {
   componentDidMount = async () => {
     try {
       this.props.Loading()
-      const test = await firebase.auth().onAuthStateChanged(async (data) => {
+      await firebase.auth().onAuthStateChanged(async (data) => {
         if (data) {
           const getIdToken = await firebase.auth().currentUser.getIdToken()
           const uid = localStorage.getItem('loginToken')
@@ -250,7 +247,7 @@ class Dashboard extends Component {
     }
   }
   render() {
-    const { allPositionCreated, allCandidatesData, allChecked } = this.props
+    const { allPositionCreated, allCandidatesData } = this.props
     const candidatesColumn = [
       {
         title: <Checkbox id="checkAllId" checked={this.props.allChecked} onChange={this.onCheckAllChange}>Check all</Checkbox>,

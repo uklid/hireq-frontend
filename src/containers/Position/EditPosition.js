@@ -1,19 +1,16 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { withRouter } from 'react-router-dom'
 import { LayoutContentWrapper } from '../../components/utility/layoutWrapper.style'
 import Grid from 'material-ui/Grid'
-import { FormGroup, FormControlLabel } from 'material-ui/Form'
+import { FormGroup } from 'material-ui/Form'
 import TextField from 'material-ui/TextField'
 // import Card from '../../components/uielements/card'
 import Card from '../../containers/HireQComponent/Card'
 import styled from 'styled-components'
-import { Table, DatePicker, Slider, Input, Checkbox } from 'antd'
+import { Slider, Input, Checkbox } from 'antd'
 import Button from '../HireQComponent/Button'
-import Tables from './components/Table'
 import CandidatesTable from '../Candidates/components/Table'
 import CriticalSoftSkills from './CriticalSoftSkills'
-import moment from 'moment'
 import WorkPreference from './WorkPreference'
 import Ionicon from 'react-ionicons'
 import Dialog, {
@@ -45,14 +42,6 @@ const Span = styled.span`
 	font-weight: 800;
 	margin-right: 5px;
 `
-const WhiteWrapper = styled.div`
-		background-color: #fff;
-		padding: 20px;
-
-		h4 {
-			display: inline;
-		}
-`
 const ButtonStyled = styled.button`
   color: white;
   border: 0px;
@@ -65,21 +54,6 @@ const ButtonContainer = styled.div`
   padding: 20px;
   width: 100%;
   justify-content: space-between;
-`
-
-const ButtonWrapper = styled.div`
-		position: absolute;
-		right: 37px;
-		top: 30px;
-
-		button {
-			margin: 0px 10px 0px 10px;
-			background-color: #954590;
-			border-color: #954590;
-		}
-		@media only screen and (max-width: 768px) {
-			display: none;
-		}
 `
 
 const InputWrapper = styled.div`

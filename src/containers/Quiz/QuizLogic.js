@@ -1,12 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
 
-const QuizWrapper = styled.div`
-  position: relative;
-  text-align: center;
-  height: 75px;
-`
-
 const QuizChoice = styled.div`
   width: 100%;
   display: flex;
@@ -21,10 +15,6 @@ const QuizChoice = styled.div`
     cursor: pointer;
     border: 1px solid red;
   }
-`
-
-const QuizImageControl = styled.div`
-  border:1px solid #eee;
 `
 
 const Wrapper = styled.div`
@@ -56,10 +46,10 @@ const Wrapper = styled.div`
 
 class QuizLogic extends React.Component {
   render() {
-    const { imageData, quizImage, onClick, imageDetail } = this.props
+    const { imageData, quizImage, onClick } = this.props
     return (
       <Wrapper>
-        <img className="quiz-image" src={quizImage} />
+        <img className="quiz-image" src={quizImage} alt="quiz"/>
         <h3>เลือกรูปภาพที่คิดว่าถูกต้องที่สุด</h3>
         <QuizChoice id="logicQuizChoice">
           {
@@ -70,6 +60,7 @@ class QuizLogic extends React.Component {
                 key={index}
                 data-answer={data.c}
                 src={require(`../../image/QuizImage/Answer/${data.img}`)}
+                alt={`answer${index}`}
               />
             })
           }

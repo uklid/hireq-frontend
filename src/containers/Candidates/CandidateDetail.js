@@ -1,9 +1,5 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import IsoWidgetsWrapper from '../../containers/Widgets/widgets-wrapper'
-import StickerWidget from '../../containers/Widgets/sticker/sticker-widget'
-import ReportsWidget from '../../containers/Widgets/report/report-widget'
-import SingleProgressWidget from '../../containers/Widgets/progress/progress-single'
 import { LayoutContentWrapper } from '../../components/utility/layoutWrapper.style'
 import styled from 'styled-components'
 import Grid from 'material-ui/Grid'
@@ -30,15 +26,6 @@ const WhiteCard = styled.div`
 	border-radius: 5px;
 `
 
-const CardWithStyled = styled(Card) `
-	.ant-card-head {
-		background-color: lightblue;
-	}
-	.ant-card-body {
-		background-color: #eee;
-	}
-`
-
 const FormWrapper = styled.div`
 	width: 350px;
 	padding: 10px;
@@ -60,7 +47,7 @@ class CandidateDetail extends React.Component {
 	componentDidMount = async () => {
 		const { candidateId } = this.props.location.state
 		this.props.Loading()
-		const test = await firebase.auth().onAuthStateChanged(async (data) => {
+		await firebase.auth().onAuthStateChanged(async (data) => {
 			if (data) {
 				try {
 					const getIdToken = await firebase.auth().currentUser.getIdToken()
@@ -93,13 +80,13 @@ class CandidateDetail extends React.Component {
 		const { candidateId } = this.props.location.state
 		const positionId = this.props.allCandidatesData.position
 		const { allCandidatesData } = this.props
-		const test = await firebase.auth().onAuthStateChanged(async (data) => {
+		await firebase.auth().onAuthStateChanged(async (data) => {
 			if (data) {
 				try {
 					const getIdToken = await firebase.auth().currentUser.getIdToken()
 					const uid = localStorage.getItem('loginToken')
 					const url = `${baseUrl}/users/${uid}/positions/${positionId}/candidates/${candidateId}`
-					const result = await Axios.put(url, allCandidatesData, {
+					await Axios.put(url, allCandidatesData, {
 						headers: { Authorization: "Bearer " + getIdToken }
 					})
 					this.props.updateAllCandidates(allCandidatesData)
@@ -125,7 +112,6 @@ class CandidateDetail extends React.Component {
 		}).then(function (canvas) {
 			let data1 = canvas.toDataURL("image/jpeg", 1.0)
 			canvas.width = 200
-			let width = doc.internal.pageSize.width - 10
 			let height = doc.internal.pageSize.height - 10
 			doc.addImage(data1, 'JPEG', 5, 5, canvas.width, height)
 			doc.addPage()
@@ -136,7 +122,6 @@ class CandidateDetail extends React.Component {
 		}).then(function (canvas) {
 			let data1 = canvas.toDataURL("image/jpeg", 1.0)
 			canvas.width = 200
-			let width = doc.internal.pageSize.width - 10
 			let height = doc.internal.pageSize.height - 10
 			doc.addImage(data1, 'JPEG', 5, 5, canvas.width, height)
 			doc.addPage()
@@ -147,7 +132,6 @@ class CandidateDetail extends React.Component {
 		}).then(function (canvas) {
 			let data1 = canvas.toDataURL("image/jpeg", 1.0)
 			let width = doc.internal.pageSize.width - 10
-			let height = doc.internal.pageSize.height - 20
 			doc.addImage(data1, 'JPEG', 5, 5, width, 93)
 			doc.save(`${allCandidatesData.name}-${moment(new Date()).format("DD-MM-YY_HH-mm-ss")}.pdf`)
 		})
