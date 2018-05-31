@@ -7,7 +7,7 @@ import { Progress, message, Tooltip } from 'antd'
 import Checkbox from '../HireQComponent/Checkbox'
 import SpecifiedDomainRadarChart from '../../containers/Charts/recharts/charts/specifiedDomainRadarChart'
 import { connect } from 'react-redux'
-import { updatePositionDetail, preCreatePosition , prepareCreatePosition } from '../../redux/position/actions'
+import { updatePositionDetail, preCreatePosition } from '../../redux/position/actions'
 import { updateAllCandidates, updateAllCheckedByOne } from '../../redux/candidates/actions'
 import { Loading, LoadingSuccess } from '../../redux/loading/actions'
 import Axios from 'axios'
@@ -16,7 +16,6 @@ import { baseUrl } from '../../libs/url/baseUrl'
 import CandidatesTable from '../Candidates/components/Table'
 import Ionicon from 'react-ionicons'
 import Dialog, {
-	DialogActions,
 	DialogContent,
 	DialogContentText,
 	DialogTitle,
@@ -123,7 +122,7 @@ class PositionDetail extends React.Component {
 			if (index <= 14) {
 				return {
 					subject: dataName,
-					value: parseInt((data['min'] + data['max']) / 2)
+					value: parseInt((data['min'] + data['max']) / 2, 10)
 				}
 			}
 		})
@@ -137,8 +136,8 @@ class PositionDetail extends React.Component {
 			// Hack ถ้าตำแหน่งที่ 13 ของ index จะไม่แสดงเพราะ ไม่ใช่ max min
 			if (index <= 15) {
 				return {
-					subject: dataName,
-					value: parseInt((data['min'] + data['max']) / 2)
+					subject: `${dataName}`,
+					value: parseInt((data['min'] + data['max']) / 2, 10)
 				}
 			}
 		})
@@ -146,12 +145,12 @@ class PositionDetail extends React.Component {
 	cogNativePercent = () => {
 		const positionDetail = this.props.positionDetail.info
 		const cogNumber = Object.values(positionDetail).slice(0, 1)
-		return parseInt((cogNumber[0].max + cogNumber[0].min) / 2)
+		return parseInt((cogNumber[0].max + cogNumber[0].min) / 2, 10)
 	}
 	onEditPositionClick = async (id) => {
 		try {
 			this.props.Loading()
-			const test = await firebase.auth().onAuthStateChanged(async (data) => {
+			await firebase.auth().onAuthStateChanged(async (data) => {
 				if (data) {
 					const getIdToken = await firebase.auth().currentUser.getIdToken()
 					const uid = localStorage.getItem('loginToken')
@@ -246,9 +245,9 @@ class PositionDetail extends React.Component {
 				<WhiteWrapper>
 					<Grid container spacing={0}>
 						<Grid item sm={6} xs={6}>
-							<p><h4>Position Name: </h4><span> {positionDetail.name}</span></p>
-							<p><h4>Category: </h4><span> {positionDetail.category}</span></p>
-							<p><h4>Info: </h4><span> {positionDetail.descriptions}</span></p>
+							<div><h4>Position Name: </h4><span> {positionDetail.name}</span></div>
+							<div><h4>Category: </h4><span> {positionDetail.category}</span></div>
+							<div><h4>Info: </h4><span> {positionDetail.descriptions}</span></div>
 						</Grid>
 						<Grid style={{ display: 'flex', justifyContent: 'flex-end' }} item sm={6} xs={6}>
 							<Ionicon
@@ -268,7 +267,7 @@ class PositionDetail extends React.Component {
 								<h3>Critical SoftSkill</h3>
 								<Tooltip title="prompt text">
 									<span style={{ marginLeft: 10 }}>
-										<Ionicon icon="ios-alert" fontSize={20} />
+										<Ionicon icon="ios-alert" fontSize="20" />
 									</span>
 								</Tooltip>
 							</div>
@@ -284,7 +283,7 @@ class PositionDetail extends React.Component {
 									<h3>Critical Softskill</h3>
 									<Tooltip title="prompt text">
 										<span style={{ marginLeft: 10 }}>
-											<Ionicon icon="ios-alert" fontSize={20} />
+											<Ionicon icon="ios-alert" fontSize="20" />
 										</span>
 									</Tooltip>
 								</div>
@@ -299,7 +298,7 @@ class PositionDetail extends React.Component {
 									<h3>Work Preference</h3>
 									<Tooltip title="prompt text">
 										<span style={{ marginLeft: 10 }}>
-											<Ionicon icon="ios-alert" fontSize={20} />
+											<Ionicon icon="ios-alert" fontSize="20" />
 										</span>
 									</Tooltip>
 								</div>

@@ -9,10 +9,10 @@ const TRBodyStyled = styled.tr`
 		background-color: ${props => props.isActive ? '#eee' : 'white'};
 		border-bottom: solid 1px #e9e9e9;
 `
-const TRInfoStyled = styled.tr`
-    height: 50px;
-    background: ${props => props.isExpand ? '#954590' : 'white'};
-`
+// const TRInfoStyled = styled.tr`
+//     height: 50px;
+//     background: ${props => props.isExpand ? '#954590' : 'white'};
+// `
 const TDStyled = styled.td`
     font-size: 14px;
     padding: 18px 30px;
@@ -136,15 +136,6 @@ export default class RowData extends Component {
 									</td>
 								</tr>
 							</thead>
-							{/* <td>
-									asdasdsadasdasdasdasdasdasdsadsadsadsadas
-								</td>
-							</tr>
-							<tr>
-								<td>
-									asdasdsadasdasdasdasdasdasdsadsadsadsadas
-								</td>
-							</tr> */}
 						</table>
 					</MoreInfoBoxStyled>
 				</tr>

@@ -8,7 +8,6 @@ import { connect } from 'react-redux'
 import { LoadingSuccess, Loading } from '../../../redux/loading/actions'
 import { preCreatePosition, updatePreEditData } from '../../../redux/position/actions'
 import { message } from 'antd'
-import { ConfirmDelete } from './ConfirmDelete'
 import {
 	updateDeleteId,
 	toggleDialog,
@@ -90,13 +89,13 @@ class CandidatesTable extends Component {
 	}
 	onSendEmailClick = async (id) => {
 		this.props.Loading()
-		const test = await firebase.auth().onAuthStateChanged(async (data) => {
+		await firebase.auth().onAuthStateChanged(async (data) => {
 			if (data) {
 				try {
 					const getIdToken = await firebase.auth().currentUser.getIdToken()
 					const uid = localStorage.getItem('loginToken')
 					const url = `${baseUrl}/users/${uid}/candidates/email`
-					const result = await Axios.post(url, { candidateId: id.candidateId }, {
+					await Axios.post(url, { candidateId: id.candidateId }, {
 						headers: { Authorization: "Bearer " + getIdToken }
 					})
 					this.props.LoadingSuccess()
@@ -124,16 +123,16 @@ class CandidatesTable extends Component {
 		}
 	}
 	sendAllEmail = async () => {
-		const { candidateCheckId, allChecked, allCandidatesData } = this.props
+		const { candidateCheckId } = this.props
 		this.props.Loading()
-		const test = await firebase.auth().onAuthStateChanged(async (data) => {
+		await firebase.auth().onAuthStateChanged(async (data) => {
 			if (data) {
 				try {
 					candidateCheckId.map(async id => {
 						const getIdToken = await firebase.auth().currentUser.getIdToken()
 						const uid = localStorage.getItem('loginToken')
 						const url = `${baseUrl}/users/${uid}/candidates/email`
-						const result = await Axios.post(url, { candidateId: id }, {
+						await Axios.post(url, { candidateId: id }, {
 							headers: { Authorization: "Bearer " + getIdToken }
 						})
 						message.success(`complete send email to candidate.`, 5)
@@ -150,7 +149,7 @@ class CandidatesTable extends Component {
 		})
 	}
 	render() {
-		const { columns, dataSource, dataShow, rowPerPage, ellipsis, tableId } = this.props
+		const { columns, dataSource, rowPerPage, ellipsis, tableId } = this.props
 		const numOfPage = Math.ceil(dataSource.length / rowPerPage)
 		const pages = [...Array(numOfPage).keys()];
 		const startData = (this.state.currentPage - 1) * rowPerPage
@@ -200,9 +199,9 @@ class CandidatesTable extends Component {
 						>
 							&lt;
           </PaginationItem>
-						{pages.length < ellipsis && pages.map((page,index) => (
+						{pages.length < ellipsis && pages.map((page, index) => (
 							<PaginationItem
-								key={index}							
+								key={index}
 								currentPage={this.state.currentPage}
 								page={page + 1}
 								onClick={() => this.setState({ currentPage: page + 1 })}
@@ -212,9 +211,9 @@ class CandidatesTable extends Component {
 						))}
 						{this.state.currentPage < 4 && pages.length >= ellipsis && (
 							<React.Fragment>
-								{pages.slice(0, 4).map((page,index) => (
+								{pages.slice(0, 4).map((page, index) => (
 									<PaginationItem
-										key={index}									
+										key={index}
 										currentPage={this.state.currentPage}
 										page={page + 1}
 										onClick={() => this.setState({ currentPage: page + 1 })}
@@ -267,9 +266,9 @@ class CandidatesTable extends Component {
 									{1}
 								</PaginationItem>
 								<Ellipsis>...</Ellipsis>
-								{pages.slice(this.state.currentPage - 2, this.state.currentPage + 1).map((page,index) => (
+								{pages.slice(this.state.currentPage - 2, this.state.currentPage + 1).map((page, index) => (
 									<PaginationItem
-										key={index}									
+										key={index}
 										currentPage={this.state.currentPage}
 										page={page + 1}
 										onClick={() => this.setState({ currentPage: page + 1 })}

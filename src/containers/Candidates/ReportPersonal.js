@@ -10,15 +10,6 @@ import { data } from './data'
 import CardWithPowerBar from './components/CardWithPowerBar'
 import { connect } from 'react-redux'
 
-const CardWithStyled = styled(Card) `
-	.ant-card-head {
-		background-color: lightblue;
-	}
-	.ant-card-body {
-		background-color: #eee;
-	}
-`
-
 const GreyWrapper = styled.div`
   padding: 15px;
   border-radius: 5px;
@@ -33,13 +24,6 @@ const H4 = styled.div`
   font-weight: 600;
   color: #fff;
 `
-
-const moreStyle = {
-  width: 200,
-  height: 50,
-  fontSize: 12,
-  fontWeight: 300
-}
 
 class ReportPersonal extends React.Component {
 
