@@ -279,7 +279,7 @@ class Dashboard extends Component {
       >
         {/* <LayoutContent>
         </LayoutContent> */}
-        <Grid container spacing={16}>
+        <Grid container spacing={8}>
           <Grid item md={4} xs={12}
           >
             <Grid container spacing={16} direction={'column'}>
@@ -312,7 +312,7 @@ class Dashboard extends Component {
           <Grid item md={8} xs={12}>
             <Card
               title="Opened Positions"
-              style={{ height: '100%' }}
+              style={{ height: '100%', borderRadius: 5 }}
             >
               <Tables
                 dataSource={Object.keys(allPositionCreated).length !== 0 ? Object.values(this.newObject()) : []}
