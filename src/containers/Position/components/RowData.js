@@ -115,11 +115,13 @@ export default class RowData extends Component {
 				<tr>
 					<MoreInfoBoxStyled isExpand={this.state.isExpand}>
 						<table style={{ width: '100%' }}>
+							<thead>
 							<tr>
 								<td>
 									{dataWithInfo ? dataWithInfo.descriptions : ''}
 								</td>
 							</tr>
+							</thead>
 							{/* <td>
 									asdasdsadasdasdasdasdasdasdsadsadsadsadas
 								</td>

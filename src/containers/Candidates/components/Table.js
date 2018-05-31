@@ -136,7 +136,7 @@ class CandidatesTable extends Component {
 						const result = await Axios.post(url, { candidateId: id }, {
 							headers: { Authorization: "Bearer " + getIdToken }
 						})
-						message.success(`complete send email to candidate.`,5)
+						message.success(`complete send email to candidate.`, 5)
 					})
 					this.props.LoadingSuccess()
 				} catch (err) {
@@ -168,8 +168,9 @@ class CandidatesTable extends Component {
 						</TRheadStyled>
 					</thead>
 					<tbody>
-						{dataSource.length !== 0  && dataSource.slice(startData, endData).map((data, index) => (
+						{dataSource.length !== 0 && dataSource.slice(startData, endData).map((data, index) => (
 							<RowData
+								key={index}
 								dataValue={data.candidateId}
 								onCheckboxChange={this.onCheckboxChange(data)}
 								seeDetailClick={() => {
@@ -199,8 +200,9 @@ class CandidatesTable extends Component {
 						>
 							&lt;
           </PaginationItem>
-						{pages.length < ellipsis && pages.map(page => (
+						{pages.length < ellipsis && pages.map((page,index) => (
 							<PaginationItem
+								key={index}							
 								currentPage={this.state.currentPage}
 								page={page + 1}
 								onClick={() => this.setState({ currentPage: page + 1 })}
@@ -210,8 +212,9 @@ class CandidatesTable extends Component {
 						))}
 						{this.state.currentPage < 4 && pages.length >= ellipsis && (
 							<React.Fragment>
-								{pages.slice(0, 4).map(page => (
+								{pages.slice(0, 4).map((page,index) => (
 									<PaginationItem
+										key={index}									
 										currentPage={this.state.currentPage}
 										page={page + 1}
 										onClick={() => this.setState({ currentPage: page + 1 })}
@@ -264,8 +267,9 @@ class CandidatesTable extends Component {
 									{1}
 								</PaginationItem>
 								<Ellipsis>...</Ellipsis>
-								{pages.slice(this.state.currentPage - 2, this.state.currentPage + 1).map(page => (
+								{pages.slice(this.state.currentPage - 2, this.state.currentPage + 1).map((page,index) => (
 									<PaginationItem
+										key={index}									
 										currentPage={this.state.currentPage}
 										page={page + 1}
 										onClick={() => this.setState({ currentPage: page + 1 })}
