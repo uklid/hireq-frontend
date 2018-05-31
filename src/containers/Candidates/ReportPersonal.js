@@ -62,7 +62,9 @@ class ReportPersonal extends React.Component {
             display: 'flex',
             justifyContent: 'space-between'
           }}>
-            <IsoWidgetsWrapper>
+            <IsoWidgetsWrapper
+              width='21%'
+            >
               <StickerWidget
                 number="90%"
                 text="Cognative Ability"
@@ -72,7 +74,9 @@ class ReportPersonal extends React.Component {
                 iconSize={28}
               />
             </IsoWidgetsWrapper>
-            <IsoWidgetsWrapper>
+            <IsoWidgetsWrapper
+              width='21%'
+            >
               <StickerWidget
                 number="70%"
                 text="Critical SoftSkills"
@@ -82,7 +86,9 @@ class ReportPersonal extends React.Component {
                 iconSize={28}
               />
             </IsoWidgetsWrapper>
-            <IsoWidgetsWrapper>
+            <IsoWidgetsWrapper
+              width='21%'
+            >
               <StickerWidget
                 number="60%"
                 text="Work Preference"
@@ -92,7 +98,9 @@ class ReportPersonal extends React.Component {
                 iconSize={28}
               />
             </IsoWidgetsWrapper>
-            <IsoWidgetsWrapper>
+            <IsoWidgetsWrapper
+              width='34%'
+            >
               <StickerWidget
                 number="40%"
                 text="Total Q-Score"
