@@ -119,13 +119,13 @@ class PositionDetail extends React.Component {
 		return Object.values(positionDetail).slice(start, last).map((data, index) => {
 			const dataName = Object.keys(positionDetail)[start + index]
 			// Hack ถ้าตำแหน่งที่ 13 ของ index จะไม่แสดงเพราะ ไม่ใช่ max min
-			if (index <= 14) {
-				return {
-					subject: dataName,
-					value: parseInt((data['min'] + data['max']) / 2, 10)
-				}
+			// if (index <= 14) {
+			return {
+				subject: dataName,
+				value: parseInt((data['min'] + data['max']) / 2, 10)
 			}
-			return false
+			// }
+			// return null
 		})
 	}
 	secondDatas = () => {
@@ -135,13 +135,13 @@ class PositionDetail extends React.Component {
 		return Object.values(positionDetail).slice(start, last).map((data, index) => {
 			const dataName = Object.keys(positionDetail)[start + index]
 			// Hack ถ้าตำแหน่งที่ 13 ของ index จะไม่แสดงเพราะ ไม่ใช่ max min
-			if (index <= 15) {
-				return {
-					subject: `${dataName}`,
-					value: parseInt((data['min'] + data['max']) / 2, 10)
-				}
+			// if (index <= 15) {
+			return {
+				subject: `${dataName}`,
+				value: parseInt((data['min'] + data['max']) / 2, 10)
 			}
-			return false
+			// }
+			// return null
 		})
 	}
 	cogNativePercent = () => {
@@ -239,6 +239,8 @@ class PositionDetail extends React.Component {
 				key: 'buttonAction'
 			}
 		]
+		if (Object.keys(positionDetail).length !== 0) {
+		}
 		return (
 			<LayoutContentWrapper>
 				<WhiteWrapper>
@@ -286,7 +288,7 @@ class PositionDetail extends React.Component {
 										</span>
 									</Tooltip>
 								</div>
-								<SpecifiedDomainRadarChart {...this.state.config} datas={Object.keys(positionDetail).length !== 0 && this.firstDatas()} />
+								<SpecifiedDomainRadarChart {...this.state.config} datas={Object.keys(positionDetail).length !== 0 ? this.firstDatas() : []} />
 							</ChartWrapper>
 						</WhiteWrapper>
 					</Grid>
@@ -301,7 +303,7 @@ class PositionDetail extends React.Component {
 										</span>
 									</Tooltip>
 								</div>
-								<SpecifiedDomainRadarChart {...this.state.config} datas={Object.keys(positionDetail).length !== 0 && this.secondDatas()} />
+								<SpecifiedDomainRadarChart {...this.state.config} datas={Object.keys(positionDetail).length !== 0 ? this.secondDatas() : []} />
 							</ChartWrapper>
 						</WhiteWrapper>
 					</Grid>

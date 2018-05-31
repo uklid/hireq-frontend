@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import { LayoutContentWrapper } from '../../components/utility/layoutWrapper.style'
 import styled from 'styled-components'
 import Grid from 'material-ui/Grid'
-import { message, Input, Button } from 'antd'
+import { message, Input } from 'antd'
 import ReportPersonal from './ReportPersonal'
 import html2canvas from 'html2canvas'
 import jspdf from 'jspdf'
@@ -15,6 +15,7 @@ import Ionicon from 'react-ionicons'
 import Axios from 'axios'
 import moment from 'moment'
 import { baseUrl } from '../../libs/url/baseUrl'
+import Button from '../HireQComponent/Button'
 
 const WhiteCard = styled.div`
 	display: flex;
@@ -122,7 +123,7 @@ class CandidateDetail extends React.Component {
 		}).then(function (canvas) {
 			let data1 = canvas.toDataURL("image/jpeg", 1.0)
 			canvas.width = 200
-			let height = doc.internal.pageSize.height - 10
+			let height = doc.internal.pageSize.height - 70
 			doc.addImage(data1, 'JPEG', 5, 5, canvas.width, height)
 			doc.addPage()
 		})
@@ -132,7 +133,7 @@ class CandidateDetail extends React.Component {
 		}).then(function (canvas) {
 			let data1 = canvas.toDataURL("image/jpeg", 1.0)
 			let width = doc.internal.pageSize.width - 10
-			doc.addImage(data1, 'JPEG', 5, 5, width, 93)
+			doc.addImage(data1, 'JPEG', 5, 5, width, 200)
 			doc.save(`${allCandidatesData.name}-${moment(new Date()).format("DD-MM-YY_HH-mm-ss")}.pdf`)
 		})
 	}
@@ -265,16 +266,7 @@ class CandidateDetail extends React.Component {
 										<ReportPersonal />
 										{/* <img id="testImage" src="" /> */}
 									</div>
-									<button style={{
-										backgroundColor: '#D0021B',
-										color: 'white',
-										width: 200,
-										height: 40,
-										alignItems: 'center',
-										alignSelf: 'center',
-										marginTop: 30
-									}}
-										onClick={this.renderPDFViaHtml}>Print Report.</button>
+									<Button marginTop="30px" onClick={this.renderPDFViaHtml}>Print Report.</Button>
 								</Grid>
 							</Grid>
 						</Grid>

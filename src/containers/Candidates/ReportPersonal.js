@@ -561,7 +561,12 @@ class ReportPersonal extends React.Component {
               The SMC score that ${name} receives is within the ideal range for the job Chief Executive Officer (98 match). This illustrates that ${name} will be able to control emotions, tolerate stress, and deal with demands aft the job in this respect. ${name} is also sutficiently motivated to succeed in the job.`}
             />
           </Grid>
-          {/* End card with power bar */}
+        </Grid>
+        {/* End card with power bar */}
+        <Grid id="reportBody3" container style={{ backgroundColor: '#eee', margin: 0, borderRadius: 5 }} spacing={8}>
+          <Grid item xs={12}>
+            <H4>Itemized Score Report</H4>
+          </Grid>
           <Grid item xs={6}>
             <Radar
               data={data}
@@ -628,8 +633,7 @@ class ReportPersonal extends React.Component {
                Analytical and Methodological. The job Chief Executive Officer involves tasks that are a lot less Intellectual,  Analytical and Methodological than what ${name}, Thus, his preference dose not match the preference profile of the job at all (xxx match )`}
             />
           </Grid>
-        </Grid>
-        <Grid id="reportBody3" container style={{ backgroundColor: '#eee', margin: 0, borderRadius: 5 }} spacing={8}>
+          {/* </Grid> */}
           <Grid item xs={6}>
             <CardWithPowerBar
               title="CREATIVE, INNOVATIVE AND IMAGINATIVE"

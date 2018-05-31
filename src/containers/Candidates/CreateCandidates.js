@@ -124,7 +124,13 @@ class CreateCandidates extends React.Component {
           </div>
           <Button
             onClick={this.addCandidate}
-            style={{ color: '#fff', backgroundColor: '#954590', marginTop: 30, borderColor: '#954590' }}
+            style={{
+              color: '#fff',
+              backgroundColor: '#954590',
+              marginTop: 30,
+              borderColor: '#954590',
+              borderRadius: 16
+            }}
           >
             ADD Candidate
           </Button>
