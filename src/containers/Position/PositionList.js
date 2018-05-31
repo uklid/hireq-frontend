@@ -204,7 +204,7 @@ class PositionList extends React.Component {
                 dataSource={Object.values(this.state.positionData)}
                 columns={columns}
                 rowPerPage={7}
-                ellipsis={4}
+                ellipsis={10}
               />
             </Card>
           </Grid>
