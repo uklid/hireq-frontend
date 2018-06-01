@@ -68,7 +68,6 @@ class CandidateDetail extends React.Component {
 				console.log("ไม่มี")
 			}
 		})
-
 	}
 	handleChange = (event) => {
 		const { allCandidatesData } = this.props
@@ -105,14 +104,19 @@ class CandidateDetail extends React.Component {
 		})
 	}
 	renderPDFViaHtml = () => {
+		this.props.Loading()
 		const { allCandidatesData } = this.props
 		let doc = new jspdf()
 		html2canvas(document.getElementById("reportBody1"), {
 			// allowTaint: false,
 			// useCORS: false
-		}).then(function (canvas) {
+		}).then((canvas) => {
+			canvas.style.width = "200px"
+			// canvas.setAttribute('style','width: 200')
 			let data1 = canvas.toDataURL("image/jpeg", 1.0)
-			canvas.width = 200
+			canvas.width = 200			
+			// console.log("Canvas: ", canvas)
+			// console.log("data1: " , data1)
 			let height = doc.internal.pageSize.height - 10
 			doc.addImage(data1, 'JPEG', 5, 5, canvas.width, height)
 			doc.addPage()
@@ -120,9 +124,10 @@ class CandidateDetail extends React.Component {
 		html2canvas(document.getElementById("reportBody2"), {
 			// allowTaint: false,
 			// useCORS: false
-		}).then(function (canvas) {
+		}).then((canvas) => {
+			canvas.style.width = "200px"
 			let data1 = canvas.toDataURL("image/jpeg", 1.0)
-			canvas.width = 200
+			canvas.width = 200			
 			let height = doc.internal.pageSize.height - 70
 			doc.addImage(data1, 'JPEG', 5, 5, canvas.width, height)
 			doc.addPage()
@@ -130,11 +135,12 @@ class CandidateDetail extends React.Component {
 		html2canvas(document.getElementById("reportBody3"), {
 			// allowTaint: false,
 			// useCORS: false
-		}).then(function (canvas) {
+		}).then((canvas) => {
 			let data1 = canvas.toDataURL("image/jpeg", 1.0)
 			let width = doc.internal.pageSize.width - 10
 			doc.addImage(data1, 'JPEG', 5, 5, width, 200)
 			doc.save(`${allCandidatesData.name}-${moment(new Date()).format("DD-MM-YY_HH-mm-ss")}.pdf`)
+			this.props.LoadingSuccess()
 		})
 	}
 	render() {
