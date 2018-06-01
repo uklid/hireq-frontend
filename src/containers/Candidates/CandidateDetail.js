@@ -111,7 +111,9 @@ class CandidateDetail extends React.Component {
 			// allowTaint: false,
 			// useCORS: false
 		}).then((canvas) => {
+
 			canvas.style.width = "200px"
+			canvas.style.height = "1712px" //Hack ไม่ว่าจอจะสูงหรือบานขนาดไหน ให้มันปรับเหลือแค่ 1712
 			// canvas.setAttribute('style','width: 200')
 			let data1 = canvas.toDataURL("image/jpeg", 1.0)
 			canvas.width = 200			
@@ -126,6 +128,7 @@ class CandidateDetail extends React.Component {
 			// useCORS: false
 		}).then((canvas) => {
 			canvas.style.width = "200px"
+			canvas.style.height = "1712px" //Hack ไม่ว่าจอจะสูงหรือบานขนาดไหน ให้มันปรับเหลือแค่ 1712			
 			let data1 = canvas.toDataURL("image/jpeg", 1.0)
 			canvas.width = 200			
 			let height = doc.internal.pageSize.height - 70
