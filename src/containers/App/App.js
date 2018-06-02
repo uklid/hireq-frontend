@@ -41,9 +41,9 @@ export class App extends Component {
             </Debounce>
             <Topbar url={url} />
             <Layout style={{ flexDirection: "row", overflowX: "hidden" }}>
-             {
-               window.innerWidth <= 787 && <Sidebar url={url} />
-             }
+              {
+                window.innerWidth <= 787 && <Sidebar url={url} />
+              }
               <Layout
                 className="isoContentMainLayout"
                 style={{

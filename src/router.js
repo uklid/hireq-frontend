@@ -43,11 +43,6 @@ const PublicRoutes = (props) => {
         <Switch>
           <Route
             exact
-            path={'/'}
-            component={App}
-          />
-          <Route
-            exact
             path={'/candidate'}
             component={BeforeQuiz}
           />
@@ -74,6 +69,12 @@ const PublicRoutes = (props) => {
             exact
             path={'/privacy'}
             component={Privacy}
+          />
+          <RestrictedRoute
+            exact
+            path={'/'}
+            component={App}
+            isLoggedIn={props.isLoggedIn}            
           />
           <RestrictedRoute
             path="/dashboard"
