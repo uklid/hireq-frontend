@@ -112,6 +112,7 @@ class CandidateDetail extends React.Component {
 		document.getElementById("reportBody2").width = newWidthScreen
 		document.getElementById("reportBody3").width = newWidthScreen
 		// window.screen.width = 1280
+		console.log("report 1 : " , document.getElementById("reportBody1").width)
 		const { allCandidatesData } = this.props
 		let doc = new jspdf()
 		html2canvas(document.getElementById("reportBody1"), {
@@ -124,39 +125,39 @@ class CandidateDetail extends React.Component {
 			// canvas.setAttribute('style','width: 200')
 			let data1 = canvas.toDataURL("image/jpeg", 1.0)
 			canvas.width = 200
-			// console.log("Canvas: ", canvas)
+			console.log("Canvas: ", canvas)
 			// console.log("data1: " , data1)
-			let height = doc.internal.pageSize.height - 10
-			doc.addImage(data1, 'JPEG', 5, 5, canvas.width, height)
-			doc.addPage()
+			// let height = doc.internal.pageSize.height - 10
+			// doc.addImage(data1, 'JPEG', 5, 5, canvas.width, height)
+			// doc.addPage()
 		})
-		html2canvas(document.getElementById("reportBody2"), {
-			// allowTaint: false,
-			// useCORS: false
-		}).then((canvas) => {
-			canvas.style.width = "200px"
-			canvas.style.height = "1712px" //Hack ไม่ว่าจอจะสูงหรือบานขนาดไหน ให้มันปรับเหลือแค่ 1712			
-			let data1 = canvas.toDataURL("image/jpeg", 1.0)
-			canvas.width = 200
-			let height = doc.internal.pageSize.height - 70
-			doc.addImage(data1, 'JPEG', 5, 5, canvas.width, height)
-			doc.addPage()
-		})
-		html2canvas(document.getElementById("reportBody3"), {
-			// allowTaint: false,
-			// useCORS: false
-		}).then((canvas) => {
-			let data1 = canvas.toDataURL("image/jpeg", 1.0)
-			let width = doc.internal.pageSize.width - 10
-			doc.addImage(data1, 'JPEG', 5, 5, width, 200)
-			doc.save(`${allCandidatesData.name}-${moment(new Date()).format("DD-MM-YY_HH-mm-ss")}.pdf`)
-			// set window screen width to old resolution
-			document.getElementById("reportBody1").width = oldWidthScreen
-			document.getElementById("reportBody2").width = oldWidthScreen
-			document.getElementById("reportBody3").width = oldWidthScreen
-			// window.screen.width = oldWidthScreen
-			this.props.LoadingSuccess()
-		})
+		// html2canvas(document.getElementById("reportBody2"), {
+		// 	// allowTaint: false,
+		// 	// useCORS: false
+		// }).then((canvas) => {
+		// 	canvas.style.width = "200px"
+		// 	canvas.style.height = "1712px" //Hack ไม่ว่าจอจะสูงหรือบานขนาดไหน ให้มันปรับเหลือแค่ 1712			
+		// 	let data1 = canvas.toDataURL("image/jpeg", 1.0)
+		// 	canvas.width = 200
+		// 	let height = doc.internal.pageSize.height - 70
+		// 	doc.addImage(data1, 'JPEG', 5, 5, canvas.width, height)
+		// 	doc.addPage()
+		// })
+		// html2canvas(document.getElementById("reportBody3"), {
+		// 	// allowTaint: false,
+		// 	// useCORS: false
+		// }).then((canvas) => {
+		// 	let data1 = canvas.toDataURL("image/jpeg", 1.0)
+		// 	let width = doc.internal.pageSize.width - 10
+		// 	doc.addImage(data1, 'JPEG', 5, 5, width, 200)
+		// 	doc.save(`${allCandidatesData.name}-${moment(new Date()).format("DD-MM-YY_HH-mm-ss")}.pdf`)
+		// 	// set window screen width to old resolution
+		// 	document.getElementById("reportBody1").width = oldWidthScreen
+		// 	document.getElementById("reportBody2").width = oldWidthScreen
+		// 	document.getElementById("reportBody3").width = oldWidthScreen
+		// 	// window.screen.width = oldWidthScreen
+		// 	this.props.LoadingSuccess()
+		// })
 	}
 	render() {
 		const { allCandidatesData } = this.props
