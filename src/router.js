@@ -43,6 +43,11 @@ const PublicRoutes = (props) => {
         <Switch>
           <Route
             exact
+            path={'/'}
+            component={App}
+          />
+          <Route
+            exact
             path={'/candidate'}
             component={BeforeQuiz}
           />
