@@ -6,8 +6,9 @@ import { connect } from 'react-redux'
 import Axios from 'axios'
 import { Loading, LoadingSuccess } from '../../redux/loading/actions'
 import { baseUrl } from '../../libs/url/baseUrl'
-import queryString from 'query-string'
 import { updateCandidateId } from '../../redux/candidatesAuth/actions'
+import queryString from 'qs'
+// import queryString from 'query-string'
 
 const BeforeQuizWrapper = styled.div`
   min-height: 100vh;
@@ -55,13 +56,13 @@ class BeforeQuiz extends React.Component {
     position: ''
   }
   componentWillMount = () => {
-    
+
   }
   componentDidMount = async () => {
     //  Start Loading
-    const candidateId = queryString.parse(this.props.location.search).id
+    this.props.Loading()    
+    const candidateId = queryString.parse(this.props.location.search, { ignoreQueryPrefix: true }).id
     this.props.updateCandidateId(candidateId)
-    this.props.Loading()
     const url = `${apiURL}/candidates/${candidateId}/test`
     const requestResult = await Axios.get(url)
     const startedTime = requestResult.data.startedTime ? requestResult.data.startedTime : null
