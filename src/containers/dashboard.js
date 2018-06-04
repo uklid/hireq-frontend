@@ -172,23 +172,29 @@ class Dashboard extends Component {
       this.props.Loading()
       await firebase.auth().onAuthStateChanged(async (data) => {
         if (data) {
-          const getIdToken = await firebase.auth().currentUser.getIdToken()
-          const uid = localStorage.getItem('loginToken')
-          //get all position and keep it to redux store
-          const url = `${baseUrl}/users/${uid}/positions`
-          const result = await Axios.get(url, {
-            headers: { Authorization: "Bearer " + getIdToken }
-          })
-          this.props.updateCreatedAllPosition(result.data)
-          //  end position data get here
-          // start get all candidates here
-          const candidatesURL = `${baseUrl}/users/${uid}/candidates`
-          const candidatesResult = await Axios.get(candidatesURL, {
-            headers: { Authorization: "Bearer " + getIdToken }
-          })
-          this.props.updateAllCandidates(candidatesResult.data)
-          // end all candidate here
-          this.props.LoadingSuccess()
+          try {
+            const getIdToken = await firebase.auth().currentUser.getIdToken()
+            const uid = localStorage.getItem('loginToken')
+            console.log("getIdToken : ", getIdToken)
+            //get all position and keep it to redux store
+            const url = `${baseUrl}/users/${uid}/positions`
+            const result = await Axios.get(url, {
+              headers: { Authorization: "Bearer " + getIdToken }
+            })
+            this.props.updateCreatedAllPosition(result.data)
+            //  end position data get here
+            // start get all candidates here
+            const candidatesURL = `${baseUrl}/users/${uid}/candidates`
+            const candidatesResult = await Axios.get(candidatesURL, {
+              headers: { Authorization: "Bearer " + getIdToken }
+            })
+            this.props.updateAllCandidates(candidatesResult.data)
+            // end all candidate here
+            this.props.LoadingSuccess()
+          } catch (error) {
+            this.props.LoadingSuccess()
+            console.log(error)
+          }
         } else {
           this.props.LoadingSuccess()
         }

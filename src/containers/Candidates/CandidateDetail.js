@@ -1,5 +1,5 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
+import { Link, Redirect } from 'react-router-dom'
 import { LayoutContentWrapper } from '../../components/utility/layoutWrapper.style'
 import styled from 'styled-components'
 import Grid from 'material-ui/Grid'
@@ -46,6 +46,10 @@ class CandidateDetail extends React.Component {
 		isEdit: false,
 	}
 	componentDidMount = async () => {
+		if (!this.props.location.state) {
+			this.props.history.push('/dashboard/candidate-list')
+			return
+		}
 		const { candidateId } = this.props.location.state
 		this.props.Loading()
 		await firebase.auth().onAuthStateChanged(async (data) => {
@@ -54,6 +58,7 @@ class CandidateDetail extends React.Component {
 					const getIdToken = await firebase.auth().currentUser.getIdToken()
 					const uid = localStorage.getItem('loginToken')
 					const url = `${baseUrl}/users/${uid}/candidates/${candidateId}`
+					console.log("Candidate Id : ", candidateId)
 					const result = await Axios.get(url, {
 						headers: { Authorization: "Bearer " + getIdToken }
 					})
@@ -119,7 +124,6 @@ class CandidateDetail extends React.Component {
 		document.getElementsByClassName("chartjs-render-monitor")[1].style = newRadarStyle
 		// //////
 		// window.screen.width = 1280
-		console.log("report 1 : " , document.getElementById("reportBody1").width)
 		const { allCandidatesData } = this.props
 		let doc = new jspdf()
 		html2canvas(document.getElementById("reportBody1"), {
@@ -162,6 +166,10 @@ class CandidateDetail extends React.Component {
 	}
 	render() {
 		const { allCandidatesData } = this.props
+		// const { candidateId } = this.props.location.state
+		if (!this.props.location.state) {
+			return <Redirect to="/dashboard/candidate-list" />
+		}
 		return (
 			<div id="testBody1" >
 				<LayoutContentWrapper >

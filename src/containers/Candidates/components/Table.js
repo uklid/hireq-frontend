@@ -50,7 +50,6 @@ const PaginationItem = styled.span`
     border: solid 1px #d9d9d9;
     font-size: 12px;
     margin: 4px;
-    background-color: ${props => props.currentPage === props.page && props.page ? '#954590' : 'white'};
     color: ${props => props.currentPage === props.page && props.page ? 'white' : 'black'};
 `
 

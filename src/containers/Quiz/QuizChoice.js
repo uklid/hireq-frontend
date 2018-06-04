@@ -97,6 +97,7 @@ class QuizChoice extends React.Component {
 				testNumber: testNumber,
 				answer: answer
 			})
+			console.log("After send answer : ", personalResult.data)
 			await this.props.updateCurrentTest(personalResult.data.nextTestName)
 			if (this.props.currentTest !== personalResult.data.nextTestName) {
 				if (personalResult.data.nextTestName === 'finish') {
