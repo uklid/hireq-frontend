@@ -8,7 +8,8 @@ import { connect } from 'react-redux'
 import { LoadingSuccess, Loading } from '../../../redux/loading/actions'
 import { preCreatePosition, updatePreEditData } from '../../../redux/position/actions'
 import { baseUrl } from '../../../libs/url/baseUrl'
-
+import Button from '../../HireQComponent/Button'
+import {Link} from 'react-router-dom'
 const TableStyled = styled.table`
     width: 100%;
 		border-collapse: collapse;
@@ -153,11 +154,19 @@ class Tables extends Component {
 					</tbody>
 				</TableStyled>
 				<Pagination style={{ marginTop: 10 }}>
+				{(this.props.withAddPosition && this.props.withAddPosition === true) &&
+					<Link to='/dashboard/create-position'>
+						<Button>Add a Position</Button>
+					</Link>
+				}
+				
+				<div>
 					<PaginationItem
 						onClick={() => this.backward(numOfPage)}
 					>
 						&lt;
           </PaginationItem>
+		  
 					{pages.length < ellipsis && pages.map((page, index) => (
 						<PaginationItem
 							key={index}
@@ -252,6 +261,7 @@ class Tables extends Component {
 					>
 						&gt;
                     </PaginationItem>
+					</div>
 				</Pagination>
 			</div>
 		)

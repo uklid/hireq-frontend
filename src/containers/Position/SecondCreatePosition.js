@@ -73,6 +73,7 @@ class SecondCreatePosition extends React.Component {
     const uid = localStorage.getItem('loginToken')
     const url = `${baseUrl}/users/${uid}/positions`
     const getIdToken = await firebase.auth().currentUser.getIdToken()
+    prepareCreate.status = "Open";
     const result = await Axios.post(url, { ...prepareCreate }, {
       headers: { Authorization: "Bearer " + getIdToken }
     })
@@ -101,6 +102,14 @@ class SecondCreatePosition extends React.Component {
     this.props.preCreatePosition(updateData)
   }
 
+  onInputChange = (name,e) => {
+    const { prepareCreate } = this.props;
+    const value = e.target.value;
+    prepareCreate[name] = value
+    const updateData = { ...prepareCreate }
+    this.props.preCreatePosition(updateData)
+
+  }
   render() {
     if (Object.keys(this.props.prepareCreate).length === 0) {
       // this.props.history.push('/dashboard/create-position')
@@ -112,10 +121,26 @@ class SecondCreatePosition extends React.Component {
       <LayoutContentWrapper>
         <Grid container spacing={24}>
           <Grid item sm={12} xs={12}>
+          
             <Card>
-              <p> <Span>Position Name: </Span> {prepareCreate.name} </p>
-              <p> <Span>Category: </Span> {prepareCreate.category} </p>
-              <p> <Span>Info: </Span>
+            <h3 style={{ marginBottom: 20, cursor: 'pointer' }}>Exact Position Detail</h3>
+              <p> 
+                <Span>Position Title <Input defaultValue={prepareCreate.name} name="name" onChange={this.onInputChange.bind(this,"name")}/> </Span> 
+                
+              </p>
+              <p> 
+                <Span>Department <Input name="department" onChange={this.onInputChange.bind(this,"department")} placeholder="(optional)"/> </Span> 
+                
+              </p>
+              <p> 
+                <Span>Supervisor <Input  name="supervisor" onChange={this.onInputChange.bind(this,"supervisor")} placeholder="(optional)"/> </Span> 
+                
+              </p>
+              <p> 
+                <Span>Supervisor's Email <Input  name="supervisorEmail" onChange={this.onInputChange.bind(this,"supervisorEmail")} placeholder="(optional)"/> </Span> 
+                
+              </p>
+              <p> <Span>Job Description</Span>
                 <Input.TextArea
                   onChange={this.onTextAreaChange}
                   defaultValue={prepareCreate.descriptions}
@@ -134,8 +159,8 @@ class SecondCreatePosition extends React.Component {
           <Grid item sm={12} xs={12}>
             <Card>
               <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                <h3 style={{ marginBottom: 20, cursor: 'pointer' }}>Setting Position Detail.</h3>
-                <div>Enable change: <Switch size="default" onChange={this.handleDisabledChange} /></div>
+                <h3 style={{ marginBottom: 20, cursor: 'pointer' }}>Target Scores</h3>
+                <div>Enable Change <Switch size="default" onChange={this.handleDisabledChange} /></div>
               </div>
               <Grid container spacing={0}>
                 <Grid item sm={12} xs={12}>
@@ -146,7 +171,7 @@ class SecondCreatePosition extends React.Component {
 											</span>
 										</p> */}
                   <Grid container style={{ marginTop: 30 }}>
-                    <Grid item sm={2} xs={12}> Cognative Skill: </Grid>
+                    <Grid item sm={2} xs={12}>General Intelligence and Learning Ability</Grid>
                     <Grid item sm={4} xs={12}>
                       <SliderStyled disabled={this.state.disabled} range onChange={this.changeCogData} defaultValue={defaultCogData} />
                     </Grid>
@@ -174,7 +199,7 @@ class SecondCreatePosition extends React.Component {
                     onClick={this.handleToggle}
                     style={{ backgroundColor: '#954590', marginTop: 30, borderColor: '#954590' }}
                   >
-                    Create Position.
+                    Add This Position
 									</Button>
                 </Grid>
               </Grid>
@@ -188,7 +213,7 @@ class SecondCreatePosition extends React.Component {
           aria-labelledby="alert-dialog-title"
           aria-describedby="alert-dialog-description"
         >
-          <DialogTitle id="alert-dialog-title">Please confirm your create</DialogTitle>
+          <DialogTitle id="alert-dialog-title">Are you sure you want to add this position?</DialogTitle>
           <DialogContent>
             <DialogContentText id="alert-dialog-description">
 
@@ -197,10 +222,10 @@ class SecondCreatePosition extends React.Component {
           <DialogActions>
             <ButtonContainer>
               <ButtonStyled style={{ backgroundColor: 'grey' }} onClick={this.handleToggle}>
-                Disagree
+                Go Back
 							</ButtonStyled>
               <ButtonStyled style={{ backgroundColor: '#954590' }} onClick={this.createPosition}>
-                Agree
+                Yes, I am.
 							</ButtonStyled>
             </ButtonContainer>
             {/* <Button style={{ float: 'left', backgroundColor: '#fff' }} onClick={this.handleToggle}>

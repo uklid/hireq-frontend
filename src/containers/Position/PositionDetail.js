@@ -15,6 +15,7 @@ import firebase from 'firebase'
 import { baseUrl } from '../../libs/url/baseUrl'
 import CandidatesTable from '../Candidates/components/Table'
 import Ionicon from 'react-ionicons'
+import Card from '../../containers/HireQComponent/Card'
 import Dialog, {
 	DialogContent,
 	DialogContentText,
@@ -233,6 +234,18 @@ class PositionDetail extends React.Component {
 				dataIndex: 'email',
 				key: 'email',
 			},
+
+			{
+				title: 'Telephone',
+				dataIndex: 'telephone',
+				key: 'telephone',
+			},
+
+			{
+				title: 'Sent On',
+				dataIndex: 'sentDate',
+				key: 'sentDate',
+			},
 			{
 				title: 'ACTIONS',
 				dataIndex: 'buttonAction',
@@ -246,9 +259,11 @@ class PositionDetail extends React.Component {
 				<WhiteWrapper>
 					<Grid container spacing={0}>
 						<Grid item sm={6} xs={6}>
-							<div><h4>Position Name: </h4><span> {positionDetail.name}</span></div>
-							<div style={{ marginTop: 10, marginBottom: 10 }}><h4>Category: </h4><span> {positionDetail.category}</span></div>
-							<div><h4>Info: </h4><span> {positionDetail.descriptions}</span></div>
+							<div><h4>Position Title: </h4><span> {positionDetail.name}</span></div>
+							<div style={{ marginTop: 10, marginBottom: 10 }}><h4>Department: </h4><span> {positionDetail.department}</span></div>
+							<div style={{ marginTop: 10, marginBottom: 10 }}><h4>Supervisor: </h4><span> {positionDetail.supervisor}</span></div>
+							<div style={{ marginTop: 10, marginBottom: 10 }}><h4>Supervisor's Email: </h4><span> {positionDetail.supervisorEmail}</span></div>
+							<div><h4>Job Description: </h4><span> {positionDetail.descriptions}</span></div>
 						</Grid>
 						<Grid style={{ display: 'flex', justifyContent: 'flex-end' }} item sm={6} xs={6}>
 							<Ionicon
@@ -259,67 +274,9 @@ class PositionDetail extends React.Component {
 								color="rgb(149, 69, 144)"
 							/>
 						</Grid>
+						<div style={{marginTop: '20px'}}><h4><b>Target scores for this position are saved.</b></h4></div>
 					</Grid>
 				</WhiteWrapper>
-				<Grid style={{ marginTop: 30 }} container spacing={0}>
-					<Grid item sm={12} xs={12}>
-						<WhiteWrapper>
-							<div style={{ display: 'flex', justifyContent: 'flex-start' }}>
-								<h3>Critical SoftSkill</h3>
-								<Tooltip title="prompt text">
-									<span style={{ marginLeft: 10 }}>
-										<Ionicon icon="ios-alert" fontSize="20" />
-									</span>
-								</Tooltip>
-							</div>
-							<ProgressStyled percent={Object.keys(positionDetail).length && this.cogNativePercent()} />
-						</WhiteWrapper>
-					</Grid>
-				</Grid>
-				<Grid style={{ marginTop: 30 }} container spacing={24}>
-					<Grid item sm={6} xs={12}>
-						<WhiteWrapper>
-							<ChartWrapper>
-								<div style={{ display: 'flex', justifyContent: 'flex-start' }}>
-									<h3>Critical Softskill</h3>
-									<Tooltip title="prompt text">
-										<span style={{ marginLeft: 10 }}>
-											<Ionicon icon="ios-alert" fontSize="20" />
-										</span>
-									</Tooltip>
-								</div>
-								<SpecifiedDomainRadarChart {...this.state.config} datas={Object.keys(positionDetail).length !== 0 ? this.firstDatas() : []} />
-							</ChartWrapper>
-						</WhiteWrapper>
-					</Grid>
-					<Grid item sm={6} xs={12}>
-						<WhiteWrapper>
-							<ChartWrapper>
-								<div style={{ display: 'flex', justifyContent: 'flex-start' }}>
-									<h3>Work Preference</h3>
-									<Tooltip title="prompt text">
-										<span style={{ marginLeft: 10 }}>
-											<Ionicon icon="ios-alert" fontSize="20" />
-										</span>
-									</Tooltip>
-								</div>
-								<SpecifiedDomainRadarChart {...this.state.config} datas={Object.keys(positionDetail).length !== 0 ? this.secondDatas() : []} />
-							</ChartWrapper>
-						</WhiteWrapper>
-					</Grid>
-				</Grid>
-				<Grid style={{ marginTop: 20 }} container spacing={0}>
-					<Grid item xs={12}>
-						<WhiteWrapper>
-							<CandidatesTable
-								dataSource={Object.keys(allCandidatesData).length !== 0 ? Object.values(this.newObjectCandidate()) : []}
-								columns={candidatesColumn}
-								rowPerPage={10}
-								ellipsis={10}
-							/>
-						</WhiteWrapper>
-					</Grid>
-				</Grid>
 				<Grid container spacing={0}>
 					<Grid item>
 						<Button
@@ -328,10 +285,28 @@ class PositionDetail extends React.Component {
 							width="160px"
 							marginTop="30px"
 						>
-							Add new Candidate.
+							Add New Candidate
 						</Button>
 					</Grid>
 				</Grid>
+				<Grid style={{ marginTop: 20 }} container spacing={0}>
+					<Grid item xs={12}>
+						<WhiteWrapper>
+						<Card
+							title="Candidates"
+							style={{ overflowX: 'auto' }}
+						>
+							<CandidatesTable
+								dataSource={Object.keys(allCandidatesData).length !== 0 ? Object.values(this.newObjectCandidate()) : []}
+								columns={candidatesColumn}
+								rowPerPage={10}
+								ellipsis={10}
+							/>
+						</Card>
+						</WhiteWrapper>
+					</Grid>
+				</Grid>
+				
 				{/* Modal dialog */}
 				<Dialog
 					open={this.state.open}
@@ -340,7 +315,7 @@ class PositionDetail extends React.Component {
 					aria-describedby="alert-dialog-description"
 					fullWidth
 				>
-					<DialogTitle id="alert-dialog-title">Add your candidate profile.</DialogTitle>
+					<DialogTitle id="alert-dialog-title">Add New Candidate's Profile</DialogTitle>
 					<DialogContent>
 						<DialogContentText id="alert-dialog-description">
 							<CreateCandidates

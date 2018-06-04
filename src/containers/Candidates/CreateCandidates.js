@@ -34,13 +34,14 @@ class CreateCandidates extends React.Component {
         [inputName]: 'error'
       })
     } else {
+
       this.setState({
         [inputName]: ''
       })
     }
   }
   addCandidate = async () => {
-    const { email, name } = this.state
+    const { email, name, telephone } = this.state
     try {
       this.props.Loading()
       await firebase.auth().onAuthStateChanged(async (data) => {
@@ -49,7 +50,7 @@ class CreateCandidates extends React.Component {
           const uid = localStorage.getItem('loginToken')
           const positionId = this.props.addPositionId
           const addCandidateURL = `${baseUrl}/users/${uid}/positions/${positionId}/candidates/`
-          await Axios.post(addCandidateURL, { name, email }, {
+          await Axios.post(addCandidateURL, { name, email, telephone}, {
             headers: { Authorization: "Bearer " + getIdToken }
           })
           const candidateURL = `${baseUrl}/users/${uid}/positions/${positionId}/candidates`
@@ -60,11 +61,12 @@ class CreateCandidates extends React.Component {
           this.setState({
             email: '',
             name: '',
+            telephone: '',
           })
           this.props.LoadingSuccess()
-          message.success('Create candidate !', 10)
+          message.success('Successfully created the candidate', 10)
         } else {
-          message.error('OOps somethings wrong')
+          message.error('Ops somethings went wrong.')
           this.props.LoadingSuccess()
           console.log("ไม่มี")
         }
@@ -81,45 +83,58 @@ class CreateCandidates extends React.Component {
         {/* <h3>CREATE CANDIDATES</h3> */}
         <Form>
           <div className="create-group">
-            <div>NAME</div>
+            <div>Name</div>
             <Form.Item
               validateStatus={this.state.validName}
-              help={this.state.validName === 'error' && 'Please enter your name.'}
+              //help={this.state.validName === 'error' && 'Please enter your name.'}
             >
               <Input
                 type="text"
                 onChange={this.onTextChange('name')}
-                placeholder="Enter candidate name"
+                placeholder="Enter candidate's full name"
                 defaultValue={this.state.name}
                 value={this.state.name}
               />
             </Form.Item>
           </div>
           <div className="create-group">
-            <div>EMAIL</div>
+            <div>Email</div>
             <Form.Item
               validateStatus={this.state.validEmail}
-              help={this.state.validEmail === 'error' && 'Please enter your email.'}
+              //help={this.state.validEmail === 'error' && 'Please enter your email.'}
             >
               <Input
                 type="email"
                 onChange={this.onTextChange('email')}
-                placeholder="Enter candidate Email"
+                placeholder="Enter candidate's email"
                 defaultValue={this.state.email}
                 value={this.state.email}
               />
             </Form.Item>
           </div>
           <div className="create-group">
+            <div>Phone</div>
+            <Form.Item
+              //validateStatus={this.state.validEmail}
+              //help={this.state.validEmail === 'error' && 'Please enter your email.'}
+            >
+              <Input
+                type="text"
+                onChange={this.onTextChange('telephone')}
+                placeholder="Enter candidate's phone number"
+                defaultValue={this.state.telephone}
+                value={this.state.telephone}
+              />
+            </Form.Item>
+          </div>
+
+          <div className="create-group">
             <Select
-              showSearch
               style={{ width: 200 }}
-              placeholder="Select a Job"
+              placeholder="Q-score Assessment"
               optionFilterProp="children"
             >
-              <Select.Option value="jack">Dev</Select.Option>
-              <Select.Option value="lucy">Programmer</Select.Option>
-              <Select.Option value="tom">Coder</Select.Option>
+              <Select.Option value="q-score">Q-score Assessment</Select.Option>
             </Select>
           </div>
           <Button
@@ -132,7 +147,7 @@ class CreateCandidates extends React.Component {
               borderRadius: 16
             }}
           >
-            ADD Candidate
+            Add This Candidate
           </Button>
         </Form>
       </WhiteWrapper>

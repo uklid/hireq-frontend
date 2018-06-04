@@ -47,6 +47,11 @@ const DropDownMenu = (props) => (
 				className="list-item"
 				onClick={props.onEditPositionClick} target="_blank">Edit</a>
 		</Menu.Item>
+		<Menu.Item>
+			<a
+				className="list-item"
+				onClick={props.onMarkAsCompletedClick} target="_blank">Mark as Completed</a>
+		</Menu.Item>
 		{/* <Menu.Item >
 			<a onClick={props.onDeleteClick} style={{ color: 'red' }}>DELETE</a>
 		</Menu.Item> */}
@@ -80,7 +85,7 @@ export default class RowData extends Component {
 			moreInfo: <MoreInfoLink onClick={() => this.setState({ isExpand: !this.state.isExpand })}>More Info</MoreInfoLink>,
 			button: <Button
 				onClick={this.props.onClick}
-			>Create position</Button>
+			>Select</Button>
 		}
 		const totalCol = Object.keys(dataWithInfo)
 		const MoreInfoBox = ({ className, children }) => (

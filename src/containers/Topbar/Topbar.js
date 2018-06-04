@@ -50,10 +50,10 @@ class Topbar extends Component {
               <TextStyled>Dashboard</TextStyled>
             </Link>
             <Link style={{ marginLeft: 10, marginRight: 10 }} to="/dashboard/create-position">
-              <TextStyled>Create-position</TextStyled>
+              <TextStyled>Add a Position</TextStyled>
             </Link>
             <Link style={{ marginLeft: 10, marginRight: 10 }} to="/dashboard/position-list">
-              <TextStyled>Position</TextStyled>
+              <TextStyled>Positions</TextStyled>
             </Link>
             <Link style={{ marginLeft: 10, marginRight: 10 }} to="/dashboard/candidate-list">
               <TextStyled>Candidates</TextStyled>

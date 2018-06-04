@@ -21,14 +21,26 @@ import {
 import { baseUrl } from '../../libs/url/baseUrl'
 
 const columns = [{
-  title: 'Name',
+  title: 'Position Title',
   dataIndex: 'name',
   key: 'name',
 }, {
-  title: 'category',
-  dataIndex: 'category',
-  key: 'category',
+  title: 'Department',
+  dataIndex: 'department',
+  key: 'department',
+},  {
+  title: 'Supervisor',
+  dataIndex: 'supervisor',
+  key: 'supervisor',
 }, {
+  title: "Supervisor's Email",
+  dataIndex: 'supervisorEmail',
+  key: 'supervisorEmail',
+},{
+  title: 'Status',
+  dataIndex: 'status',
+  key: 'status',
+},{
   title: 'ACTIONS',
   dataIndex: 'buttonAction',
   key: 'buttonAction'
@@ -134,7 +146,7 @@ class PositionList extends React.Component {
               <InputWrapper>
                 <Ionicon className="floating-icon" icon="ios-search-outline" fontSize="35px" />
                 <TextField
-                  placeholder="Search Position or detail here"
+                  placeholder="Search position or detail here"
                   margin="normal"
                   className="floating-textfield"
                   onChange={this.searchPoisition}
@@ -161,8 +173,8 @@ class PositionList extends React.Component {
                 <FilterField
                   checked={this.state.showFinished}
                   onChange={this.filterOnChange('showFinished')}
-                  value="Finished"
-                  label="Finished"
+                  value="Completed"
+                  label="Completed"
                 />
               </FormGroup>
             </Card>
