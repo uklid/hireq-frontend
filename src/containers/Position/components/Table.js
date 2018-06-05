@@ -117,8 +117,13 @@ class Tables extends Component {
 	onMarkAsCompletedClick = async (data) => {
 		const markItem = await this.props.dataSource.map(item => {
 			if (item.name === data.name) {
-				const data = { ...item, status: 'DONE' }
-				return data
+				if (item.status) {
+					const data = { ...item, status: '' }
+					return data
+				} else {
+					const data = { ...item, status: 'DONE' }
+					return data
+				}
 			}
 			return { ...item }
 		})
