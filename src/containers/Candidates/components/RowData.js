@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { Button, Dropdown, Menu, Icon } from 'antd'
 import Checkbox from '../../HireQComponent/Checkbox'
 import styled from 'styled-components'
+import moment from 'moment'
 
 const TRBodyStyled = styled.tr`
 		height: 50px;
@@ -75,6 +76,7 @@ export default class RowData extends Component {
 			>
 			</Checkbox>,
 			...data,
+			sentDate: data.sentDate ? moment(data.sentDate).format("DD/MM/YY HH:mm:ss") : '',
 			button: <Button
 				onClick={this.props.onClick}
 				style={{

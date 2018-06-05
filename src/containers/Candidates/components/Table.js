@@ -14,7 +14,8 @@ import {
 	updateCandidateCheckId,
 	updateAllChecked,
 	updateUncheckCandidateId,
-	updateAllCheckedByOne
+	updateAllCheckedByOne,
+	updateAllCandidates
 } from '../../../redux/candidates/actions'
 import { baseUrl } from '../../../libs/url/baseUrl'
 import Button from '../../HireQComponent/Button'
@@ -49,7 +50,8 @@ const PaginationItem = styled.span`
     border-radius: 4px;
     border: solid 1px #d9d9d9;
     font-size: 12px;
-    margin: 4px;
+		margin: 4px;
+		background-color: ${props => props.currentPage === props.page && props.page ? '#954590' : 'white'};
     color: ${props => props.currentPage === props.page && props.page ? 'white' : 'black'};
 `
 
@@ -94,10 +96,21 @@ class CandidatesTable extends Component {
 					const getIdToken = await firebase.auth().currentUser.getIdToken()
 					const uid = localStorage.getItem('loginToken')
 					const url = `${baseUrl}/users/${uid}/candidates/email`
-					await Axios.post(url, { candidateId: id.candidateId }, {
+					const result = await Axios.post(url, { candidateId: id.candidateId }, {
 						headers: { Authorization: "Bearer " + getIdToken }
 					})
-					message.success(`complete send email to candidate.`, 5)
+					// filter update date in redux store
+					const { allCandidatesData } = this.props
+					const updateData = Object.values(allCandidatesData).map(item => {
+						if (item.candidateId === id.candidateId) {
+							const newItem = { ...item, sentDate: new Date().getTime() }
+							return newItem
+						}
+						return { ...item }
+					})
+					this.props.updateAllCandidates(updateData)
+					// ////////////////////
+					message.success(`${result.data}`, 5)
 					this.props.LoadingSuccess()
 				} catch (err) {
 					this.props.LoadingSuccess()
@@ -105,6 +118,42 @@ class CandidatesTable extends Component {
 				}
 			} else {
 				this.props.LoadingSuccess()
+			}
+		})
+	}
+	sendAllEmail = async () => {
+		const { candidateCheckId, allCandidatesData } = this.props
+		this.props.Loading()
+		await firebase.auth().onAuthStateChanged(async (data) => {
+			if (data) {
+				try {
+					candidateCheckId.map(async id => {
+						const getIdToken = await firebase.auth().currentUser.getIdToken()
+						const uid = localStorage.getItem('loginToken')
+						const url = `${baseUrl}/users/${uid}/candidates/email`
+						const result = await Axios.post(url, { candidateId: id }, {
+							headers: { Authorization: "Bearer " + getIdToken }
+						})
+						const updateData = await Object.values(allCandidatesData).map(item => {
+							if (item.candidateId === id) {
+								const newItem = { ...item, sentDate: new Date().getTime() }
+								return newItem
+							}
+							return { ...item }
+						})
+						console.log("updateData: " , updateData)
+						await this.props.updateAllCandidates(updateData)
+						// update candidate Data in redux
+						message.success(`${result.data}`, 5)
+					})
+					this.props.LoadingSuccess()
+				} catch (err) {
+					this.props.LoadingSuccess()
+					console.log(err)
+				}
+			} else {
+				this.props.LoadingSuccess()
+				console.log("ไม่มี")
 			}
 		})
 	}
@@ -122,32 +171,6 @@ class CandidatesTable extends Component {
 			this.props.updateAllCheckedByOne(false)
 			await this.props.updateUncheckCandidateId(updateData)
 		}
-	}
-	sendAllEmail = async () => {
-		const { candidateCheckId } = this.props
-		this.props.Loading()
-		await firebase.auth().onAuthStateChanged(async (data) => {
-			if (data) {
-				try {
-					candidateCheckId.map(async id => {
-						const getIdToken = await firebase.auth().currentUser.getIdToken()
-						const uid = localStorage.getItem('loginToken')
-						const url = `${baseUrl}/users/${uid}/candidates/email`
-						await Axios.post(url, { candidateId: id }, {
-							headers: { Authorization: "Bearer " + getIdToken }
-						})
-						message.success(`complete send email to candidate.`, 5)
-					})
-					this.props.LoadingSuccess()
-				} catch (err) {
-					this.props.LoadingSuccess()
-					console.log(err)
-				}
-			} else {
-				this.props.LoadingSuccess()
-				console.log("ไม่มี")
-			}
-		})
 	}
 	render() {
 		const { columns, dataSource, rowPerPage, ellipsis, tableId } = this.props
@@ -317,5 +340,6 @@ export default connect(mapStateToProps,
 		updateCandidateCheckId,
 		updateAllChecked,
 		updateUncheckCandidateId,
-		updateAllCheckedByOne
+		updateAllCheckedByOne,
+		updateAllCandidates
 	})(withRouter(CandidatesTable))

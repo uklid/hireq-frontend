@@ -111,6 +111,7 @@ class PositionList extends React.Component {
             headers: { Authorization: "Bearer " + getIdToken }
           })
           this.setState({ candidateData: candidatesResult.data })
+          console.log("Candidate List: " , candidatesResult.data)
           this.props.updateAllCandidates(candidatesResult.data)
           // end all candidate here
           this.props.LoadingSuccess()
@@ -173,8 +174,6 @@ class PositionList extends React.Component {
         dataIndex: 'position',
         key: 'position',
       },
-
-
       {
         title: 'Sent On',
         dataIndex: 'sentDate',
@@ -240,7 +239,8 @@ class PositionList extends React.Component {
               style={{ overflowX: 'auto' }}
             >
               <CandidatesTable
-                dataSource={Object.values(this.state.candidateData)}
+                // dataSource={Object.values(this.state.candidateData)}
+                dataSource={Object.values(this.props.allCandidatesData)}
                 columns={candidatesColumn}
                 rowPerPage={7}
                 ellipsis={10}
