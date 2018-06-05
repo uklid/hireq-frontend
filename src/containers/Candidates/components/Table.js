@@ -97,6 +97,7 @@ class CandidatesTable extends Component {
 					await Axios.post(url, { candidateId: id.candidateId }, {
 						headers: { Authorization: "Bearer " + getIdToken }
 					})
+					message.success(`complete send email to candidate.`, 5)
 					this.props.LoadingSuccess()
 				} catch (err) {
 					this.props.LoadingSuccess()
