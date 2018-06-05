@@ -16,7 +16,7 @@ const Button = styled.button`
   }
 `
 
-export default ({ name, onClick, height, width, children,marginTop }) => (
+export default ({ name, onClick, height, width, children, marginTop }) => (
   <Button
     onClick={onClick}
     height={height}

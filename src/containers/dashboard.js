@@ -19,14 +19,20 @@ import Axios from 'axios'
 import { baseUrl } from '../libs/url/baseUrl'
 
 const positionColumns = [{
-  title: 'Name',
+  title: 'Position Title',
   dataIndex: 'name',
   key: 'name',
 }, {
-  title: 'category',
+  title: 'Department',
   dataIndex: 'category',
   key: 'category',
 }, {
+  title: 'Created On',
+  dataIndex: 'createdDate',
+  key: 'createdDate',
+},
+
+{
   title: 'ACTIONS',
   dataIndex: 'buttonAction',
   key: 'buttonAction'
@@ -52,15 +58,15 @@ const ConfigartionBarChart = {
   width: '100%',
   height: '350px',
   data: [
-    ['Year', 'Trafic', {
+    ['Year', 'Amount', {
       role: 'style',
     }],
-    ['2010', 10000, 'fill-color: #48A6F2; fill-opacity: 0.4'],
-    ['2012', 21500, 'fill-color: #f64744; fill-opacity: 0.4'],
-    ['2014', 56598, 'fill-color: #ffbf00; fill-opacity: 0.4'],
-    ['2016', 85256, 'fill-color: #511E78; fill-opacity: 0.4'],
+    ['2016', 10000, 'fill-color: #48A6F2; fill-opacity: 0.4'],
+    ['2017', 21500, 'fill-color: #f64744; fill-opacity: 0.4'],
+    ['2018', 56598, 'fill-color: #ffbf00; fill-opacity: 0.4'],
+    
   ], options: {
-    title: 'Visitor statistics from 2010 to 2016',
+    title: 'Annual Savings, 2016-2018',
     titleTextStyle: {
       color: '#788195',
     },
@@ -101,7 +107,7 @@ const Histogram = {
   width: '100%',
   height: '350px',
   data: [
-    ['Dinosaur', 'Length'],
+    ['Candidate', 'Score'],
     ['Acrocanthosaurus (top-spined lizard)', 12.2],
     ['Albertosaurus (Alberta lizard)', 9.1],
     ['Allosaurus (other lizard)', 12.2],
@@ -132,7 +138,7 @@ const Histogram = {
     ['Velociraptor (swift robber)', 1.8],
   ],
   options: {
-    title: 'Lengths of dinosaurs, in meters',
+    title: 'Q-score Results Break-down',
     titleTextStyle: {
       color: '#788195',
     },
@@ -175,7 +181,6 @@ class Dashboard extends Component {
           try {
             const getIdToken = await firebase.auth().currentUser.getIdToken()
             const uid = localStorage.getItem('loginToken')
-            console.log("getIdToken : ", getIdToken)
             //get all position and keep it to redux store
             const url = `${baseUrl}/users/${uid}/positions`
             const result = await Axios.get(url, {
@@ -254,7 +259,7 @@ class Dashboard extends Component {
     const { allPositionCreated, allCandidatesData } = this.props
     const candidatesColumn = [
       {
-        title: <Checkbox id="checkAllId" checked={this.props.allChecked} onChange={this.onCheckAllChange}>Check all</Checkbox>,
+        title: <Checkbox id="checkAllId" checked={this.props.allChecked} onChange={this.onCheckAllChange}>Check All</Checkbox>,
         dataIndex: 'checkbox',
         key: 'checkbox'
       },
@@ -267,6 +272,11 @@ class Dashboard extends Component {
         title: 'Email',
         dataIndex: 'email',
         key: 'email',
+      },
+      {
+        title: 'Sent On',
+        dataIndex: 'sentDate',
+        key: 'sentDate',
       },
       {
         title: 'ACTIONS',
@@ -288,7 +298,7 @@ class Dashboard extends Component {
                 <Card
                   style={{ width: '100%', textAlign: 'center' }}
                 >
-                  <h3>Total Positions</h3>
+                  <h3>Total Open Positions</h3>
                   <h1 style={{ fontSize: 50, color: '#954590' }}>{Object.keys(allPositionCreated).length}</h1>
                 </Card>
               </Grid>
@@ -296,7 +306,7 @@ class Dashboard extends Component {
                 <Card
                   style={{ width: '100%', textAlign: 'center' }}
                 >
-                  <h3>Total Candidates</h3>
+                  <h3>Total Open Candidates</h3>
                   <h1 style={{ fontSize: 50, color: '#954590' }}>{Object.keys(allCandidatesData).length}</h1>
                 </Card>
               </Grid>
@@ -304,7 +314,7 @@ class Dashboard extends Component {
                 <Card
                   style={{ width: '100%', textAlign: 'center' }}
                 >
-                  <h3>Remaining Positions</h3>
+                  <h3>Remaining Credits</h3>
                   <h1 style={{ fontSize: 50, color: '#954590' }}>50</h1>
                 </Card>
               </Grid>
@@ -312,10 +322,11 @@ class Dashboard extends Component {
           </Grid>
           <Grid item md={8} xs={12}>
             <Card
-              title="Opened Positions"
+              title="Positions"
               style={{ height: '100%', borderRadius: 5 }}
             >
               <Tables
+                withAddPosition={true}
                 dataSource={Object.keys(allPositionCreated).length !== 0 ? Object.values(this.newObject()) : []}
                 columns={positionColumns}
                 rowPerPage={6}
@@ -327,7 +338,7 @@ class Dashboard extends Component {
         <Grid container style={{ marginTop: 12 }} spacing={8}>
           <Grid item md={4} xs={12}>
             <Card
-              title="Income"
+              title="Progress"
               style={{ height: '100%' }}
             >
               <ProgressBarWithTitle title="Progress 1" percent={50} status="active" />
@@ -337,7 +348,7 @@ class Dashboard extends Component {
           </Grid>
           <Grid item md={8} xs={12}>
             <Card
-              title="Candidates List"
+              title="Open Candidates"
               style={{ width: '100%' }}
             >
               <CandidatesTable
@@ -352,7 +363,7 @@ class Dashboard extends Component {
         <Grid style={{ marginTop: 20 }} container spacing={8} justify="space-between">
           <Grid item sm={6} xs={12}>
             <Card
-              title="Candidate's Q-Score"
+              title="Savings from Bad Hires"
               style={{ width: '100%' }}
             >
               <GoogleChart {...ConfigartionBarChart} />
@@ -360,7 +371,7 @@ class Dashboard extends Component {
           </Grid>
           <Grid item sm={6} xs={12}>
             <Card
-              title="Q-Score comparison"
+              title="Q-score Results Break-down"
               style={{ width: '100%' }}
             >
               <GoogleChart {...Histogram} />

@@ -7,6 +7,23 @@ import { connect } from 'react-redux'
 import { preCreatePosition } from '../../redux/position/actions'
 import Ionicon from 'react-ionicons'
 
+const descriptions = {
+	CPN: "Communication, Persuasion and Negotiation (CPN)",
+	LOM: "Leadership and Organizational Management (LOM)",
+	PCS: "Political and Cultural Skills (PCS)",
+	PEW: "Productivity and Effectiveness at Work (PEW)",
+	PIS: "People and Interpersonal Skills (PIS)",
+	PPM: "Performance and Project Management (PPM)",
+	SMC: "Self-management, Motivation and Control (SMC)",
+
+	WCEO: "Conscientious, Efficient and Orderly (WCEO)",
+	WCII: "Creative, Innovative and Imaginative (WCII)",
+	WIAM: "Intellectual, Analytical and Methodological (WIAM)",
+	WICH: "Interpersonal, Cooperative and Humanistic (WICH)",
+	WPAM: "Persuasive, Adventurous and Motivational (WPAM)",
+	WPPM: "Physical, Practical and Mechanical (WPPM)",
+}
+
 const DataSlider = ({ onChange, value, title, disabled, toolTip }) => (
 	<div>
 		<div style={{
@@ -107,12 +124,13 @@ class CriticalSoftSkills extends React.Component {
 				{
 					slideData !== undefined && Object.values(slideData).slice(this.first, this.last).map((data, index) => {
 						const dataName = Object.keys(slideData)[this.first + index]
+						
 						return (
 							<DataSlider
 								key={index}
 								toolTip={"ToolTip"}
 								disabled={this.props.disabled}
-								title={`${dataName}`}
+								title={`${descriptions[dataName]}`}
 								onChange={this.onChange(dataName)}
 								value={[parseInt(data['min'], 10), parseInt(data['max'], 10)]}
 							/>

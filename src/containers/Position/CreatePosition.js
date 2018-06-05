@@ -19,7 +19,7 @@ import {
 import { baseUrl } from '../../libs/url/baseUrl'
 
 const columns = [{
-	title: 'Position name',
+	title: 'Position Title',
 	dataIndex: 'name',
 	key: 'name',
 }, {
@@ -27,7 +27,7 @@ const columns = [{
 	dataIndex: 'category',
 	key: 'category',
 }, {
-	title: 'More info',
+	title: 'More Info',
 	dataIndex: 'moreInfo',
 	key: 'moreInfo',
 }, {
@@ -140,7 +140,7 @@ class CreatePosition extends React.Component {
 								<Ionicon className="floating-icon" icon="ios-search-outline" fontSize="35px" />
 								<TextField
 									id="position-search"
-									placeholder="Search here"
+									placeholder="What's the one word that best describes the position you are looking to fill?"
 									margin="normal"
 									className="floating-textfield"
 									onKeyPress={this.searchPoisition}

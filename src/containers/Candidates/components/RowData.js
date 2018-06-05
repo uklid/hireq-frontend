@@ -5,7 +5,7 @@ import styled from 'styled-components'
 
 const TRBodyStyled = styled.tr`
 		height: 50px;
-		// background: ${props => props.isExpand ? '#954590' : 'white'};
+		background: ${props => props.isExpand ? '#954590' : 'white'};
 		// background-color: ${props => props.isActive ? '#eee' : 'white'};
 		border-bottom: solid 1px #e9e9e9;
 `

@@ -21,13 +21,25 @@ import {
 import { baseUrl } from '../../libs/url/baseUrl'
 
 const columns = [{
-  title: 'Name',
+  title: 'Position Title',
   dataIndex: 'name',
   key: 'name',
 }, {
-  title: 'category',
-  dataIndex: 'category',
-  key: 'category',
+  title: 'Department',
+  dataIndex: 'department',
+  key: 'department',
+}, {
+  title: 'Supervisor',
+  dataIndex: 'supervisor',
+  key: 'supervisor',
+}, {
+  title: "Supervisor's Email",
+  dataIndex: 'supervisorEmail',
+  key: 'supervisorEmail',
+}, {
+  title: 'Status',
+  dataIndex: 'status',
+  key: 'status',
 }, {
   title: 'ACTIONS',
   dataIndex: 'buttonAction',
@@ -114,6 +126,7 @@ class PositionList extends React.Component {
           })
           this.setState({ positionData: result.data })
           this.props.updatePositionData(result.data)
+          console.log("result data:", result.data)
           //  end position data get here
           this.props.LoadingSuccess()
         } else {
@@ -125,6 +138,15 @@ class PositionList extends React.Component {
       console.log(err)
     }
   }
+  newObject = () => {
+    // ฟังชั่นนี้ รีกรุ๊บของ array ใหม่ ให้มี positionId เข้าไปด้วย
+    return Object.values(this.props.positionData).map((data, index) => {
+      return {
+        ...data,
+        positionId: Object.keys(this.props.positionData)[index]
+      }
+    })
+  }
   render() {
     return (
       <LayoutContentWrapper>
@@ -134,7 +156,7 @@ class PositionList extends React.Component {
               <InputWrapper>
                 <Ionicon className="floating-icon" icon="ios-search-outline" fontSize="35px" />
                 <TextField
-                  placeholder="Search Position or detail here"
+                  placeholder="Search position or detail here"
                   margin="normal"
                   className="floating-textfield"
                   onChange={this.searchPoisition}
@@ -145,7 +167,7 @@ class PositionList extends React.Component {
                   style={{ marginRight: 45 }}
                   onClick={this.searchPositionData}>Search</Button>
               </ButtonWrapper> */}
-              <FormGroup style={{  marginLeft: 40, marginTop: 10 }} row>
+              <FormGroup style={{ marginLeft: 40, marginTop: 10 }} row>
                 <FilterField
                   checked={this.state.showAll}
                   onChange={this.filterOnChange('showAll')}
@@ -161,8 +183,8 @@ class PositionList extends React.Component {
                 <FilterField
                   checked={this.state.showFinished}
                   onChange={this.filterOnChange('showFinished')}
-                  value="Finished"
-                  label="Finished"
+                  value="Completed"
+                  label="Completed"
                 />
               </FormGroup>
             </Card>
@@ -177,7 +199,9 @@ class PositionList extends React.Component {
               <Tables
                 key={`myTables`}
                 tableId="myTable"
-                dataSource={Object.values(this.state.positionData)}
+                // dataSource={Object.values(this.state.positionData)}
+                dataSource={this.newObject()}
+                positionData={this.state.positionData}
                 columns={columns}
                 rowPerPage={7}
                 ellipsis={10}
@@ -197,17 +221,17 @@ class PositionList extends React.Component {
           </Grid>
         </Grid>
         <Grid container spacing={0}>
-					<Grid item>
-						<Button
-							type="primary"
-							onClick={() => { this.props.history.push('/dashboard/create-position') }}
-							width="160px"
-							marginTop="15px"
-						>
-							Add new Candidate.
+          <Grid item>
+            <Button
+              type="primary"
+              onClick={() => { this.props.history.push('/dashboard/create-position') }}
+              width="160px"
+              marginTop="15px"
+            >
+              Add new Position.
 						</Button>
-					</Grid>
-				</Grid>
+          </Grid>
+        </Grid>
       </LayoutContentWrapper>
     )
   }

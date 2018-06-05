@@ -167,6 +167,24 @@ class PositionList extends React.Component {
         dataIndex: 'email',
         key: 'email',
       },
+
+      {
+        title: 'Position',
+        dataIndex: 'position',
+        key: 'position',
+      },
+
+
+      {
+        title: 'Sent On',
+        dataIndex: 'sentDate',
+        key: 'sentDate',
+      },
+      {
+        title: 'Test Taken',
+        dataIndex: 'tests.finished',
+        key: 'tests.finished',
+      },
       {
         title: 'ACTIONS',
         dataIndex: 'buttonAction',
@@ -181,7 +199,7 @@ class PositionList extends React.Component {
               <InputWrapper>
                 <Ionicon className="floating-icon" icon="ios-search-outline" fontSize="35px" />
                 <TextField
-                  placeholder="Search Candidates or detail here"
+                  placeholder="Search candidates"
                   margin="normal"
                   className="floating-textfield"
                   onChange={this.searchPoisition}
@@ -202,14 +220,14 @@ class PositionList extends React.Component {
                 <FilterField
                   checked={this.state.showOpen}
                   onChange={this.filterOnChange('showOpen')}
-                  value="Open"
+                  value="ppen"
                   label="Open"
                 />
                 <FilterField
                   checked={this.state.showFinished}
                   onChange={this.filterOnChange('showFinished')}
-                  value="Finished"
-                  label="Finished"
+                  value="finished"
+                  label="Test Taken"
                 />
               </FormGroup>
             </Card>

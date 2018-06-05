@@ -56,7 +56,8 @@
     "redux-thunk": "^2.2.0",
     "smooth-scrollbar": "^8.2.5",
     "styled-components": "^2.2.1",
-    "styled-theme": "^0.3.3"
+    "styled-theme": "^0.3.3",
+    "validator": "^10.3.0"
   },
   "devDependencies": {
     "react-app-rewired": "^1.4.0"

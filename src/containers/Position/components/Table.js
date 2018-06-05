@@ -8,7 +8,8 @@ import { connect } from 'react-redux'
 import { LoadingSuccess, Loading } from '../../../redux/loading/actions'
 import { preCreatePosition, updatePreEditData } from '../../../redux/position/actions'
 import { baseUrl } from '../../../libs/url/baseUrl'
-
+import Button from '../../HireQComponent/Button'
+import { Link } from 'react-router-dom'
 const TableStyled = styled.table`
     width: 100%;
 		border-collapse: collapse;
@@ -113,6 +114,25 @@ class Tables extends Component {
 			console.log(err)
 		}
 	}
+	onMarkAsCompletedClick = async (data) => {
+		// const url = `${baseUrl}/users/${uid}/positions/${id.positionId}`
+		// const postToApi = await Axios.post(url , { state: 'ID or something to define'})
+		// let newData
+		// for (let key in this.props.positionData) {
+		// 	if (key === data) {
+		// 		newData = this.props.positionData[key]
+		// 		console.log("newData:", newData)
+		// 	}
+		// }
+		const markItem = this.props.dataSource.filter(item => {
+			if (item.name === data.name) {
+				console.log("ติดในif")
+				return { ...item, status: true }
+			}
+			// return { ...item }
+		})
+		console.log("mark item: " , markItem)
+	}
 	render() {
 		const { columns, dataSource, rowPerPage, ellipsis, tableId } = this.props
 		const numOfPage = Math.ceil(dataSource.length / rowPerPage)
@@ -140,6 +160,7 @@ class Tables extends Component {
 										state: { positionDetail: data.positionId }
 									})
 								}}
+								onMarkAsCompletedClick={() => this.onMarkAsCompletedClick(data)}
 								onEditPositionClick={() => this.onEditPositionClick(data)}
 								onDeleteClick={() => this.onDeleteClick(data)}
 								onClick={() => {
@@ -153,105 +174,114 @@ class Tables extends Component {
 					</tbody>
 				</TableStyled>
 				<Pagination style={{ marginTop: 10 }}>
-					<PaginationItem
-						onClick={() => this.backward(numOfPage)}
-					>
-						&lt;
-          </PaginationItem>
-					{pages.length < ellipsis && pages.map((page, index) => (
+					{(this.props.withAddPosition && this.props.withAddPosition === true) &&
+						<Link to='/dashboard/create-position'>
+							<Button>Add a Position</Button>
+						</Link>
+					}
+
+					<div>
 						<PaginationItem
-							key={index}
-							currentPage={this.state.currentPage}
-							page={page + 1}
-							onClick={() => this.setState({ currentPage: page + 1 })}
+							onClick={() => this.backward(numOfPage)}
 						>
-							{page + 1}
-						</PaginationItem>
-					))}
-					{this.state.currentPage < 4 && pages.length >= ellipsis && (
-						<React.Fragment>
-							{pages.slice(0, 4).map((page, index) => (
+							&lt;
+          </PaginationItem>
+
+						{pages.length < ellipsis && pages.map((page, index) => (
+							<PaginationItem
+								key={index}
+								currentPage={this.state.currentPage}
+								page={page + 1}
+								onClick={() => this.setState({ currentPage: page + 1 })}
+							>
+								{page + 1}
+							</PaginationItem>
+						))}
+						{this.state.currentPage < 4 && pages.length >= ellipsis && (
+							<React.Fragment>
+								{pages.slice(0, 4).map((page, index) => (
+									<PaginationItem
+										key={index}
+										currentPage={this.state.currentPage}
+										page={page + 1}
+										onClick={() => this.setState({ currentPage: page + 1 })}
+									>
+										{page + 1}
+									</PaginationItem>
+								))}
+								<Ellipsis>...</Ellipsis>
 								<PaginationItem
-									key={index}
 									currentPage={this.state.currentPage}
-									page={page + 1}
-									onClick={() => this.setState({ currentPage: page + 1 })}
+									page={numOfPage}
+									onClick={() => this.setState({ currentPage: numOfPage })}
 								>
-									{page + 1}
+									{numOfPage}
 								</PaginationItem>
-							))}
-							<Ellipsis>...</Ellipsis>
-							<PaginationItem
-								currentPage={this.state.currentPage}
-								page={numOfPage}
-								onClick={() => this.setState({ currentPage: numOfPage })}
-							>
-								{numOfPage}
-							</PaginationItem>
-						</React.Fragment>
-					)}
+							</React.Fragment>
+						)}
 
-					{this.state.currentPage + 3 > numOfPage && pages.length >= ellipsis && (
-						<React.Fragment>
+						{this.state.currentPage + 3 > numOfPage && pages.length >= ellipsis && (
+							<React.Fragment>
 
-							<PaginationItem
-								currentPage={this.state.currentPage}
-								page={1}
-								onClick={() => this.setState({ currentPage: 1 })}
-							>
-								{1}
-							</PaginationItem>
-							<Ellipsis>...</Ellipsis>
-							{pages.slice(numOfPage - 4, numOfPage).map((page, index) => (
 								<PaginationItem
-									key={index}
 									currentPage={this.state.currentPage}
-									page={page + 1}
-									onClick={() => this.setState({ currentPage: page + 1 })}
+									page={1}
+									onClick={() => this.setState({ currentPage: 1 })}
 								>
-									{page + 1}
+									{1}
 								</PaginationItem>
-							))}
-						</React.Fragment>
-					)}
+								<Ellipsis>...</Ellipsis>
+								{pages.slice(numOfPage - 4, numOfPage).map((page, index) => (
+									<PaginationItem
+										key={index}
+										currentPage={this.state.currentPage}
+										page={page + 1}
+										onClick={() => this.setState({ currentPage: page + 1 })}
+									>
+										{page + 1}
+									</PaginationItem>
+								))}
+							</React.Fragment>
+						)}
 
-					{this.state.currentPage + 2 < numOfPage && this.state.currentPage > 3 && pages.length >= ellipsis && (
-						<React.Fragment>
+						{this.state.currentPage + 2 < numOfPage && this.state.currentPage > 3 && pages.length >= ellipsis && (
+							<React.Fragment>
 
-							<PaginationItem
-								currentPage={this.state.currentPage}
-								page={1}
-								onClick={() => this.setState({ currentPage: 1 })}
-							>
-								{1}
-							</PaginationItem>
-							<Ellipsis>...</Ellipsis>
-							{pages.slice(this.state.currentPage - 2, this.state.currentPage + 1).map((page, index) => (
 								<PaginationItem
-									key={index}
 									currentPage={this.state.currentPage}
-									page={page + 1}
-									onClick={() => this.setState({ currentPage: page + 1 })}
+									page={1}
+									onClick={() => this.setState({ currentPage: 1 })}
 								>
-									{page + 1}
+									{1}
 								</PaginationItem>
-							))}
-							<Ellipsis>...</Ellipsis>
-							<PaginationItem
-								currentPage={this.state.currentPage}
-								page={numOfPage}
-								onClick={() => this.setState({ currentPage: numOfPage })}
-							>
-								{numOfPage}
-							</PaginationItem>
-						</React.Fragment>
-					)}
+								<Ellipsis>...</Ellipsis>
+								{pages.slice(this.state.currentPage - 2, this.state.currentPage + 1).map((page, index) => (
+									<PaginationItem
+										key={index}
+										currentPage={this.state.currentPage}
+										page={page + 1}
+										onClick={() => this.setState({ currentPage: page + 1 })}
+									>
+										{page + 1}
+									</PaginationItem>
+								))}
+								<Ellipsis>...</Ellipsis>
+								<PaginationItem
+									currentPage={this.state.currentPage}
+									page={numOfPage}
+									onClick={() => this.setState({ currentPage: numOfPage })}
+								>
+									{numOfPage}
+								</PaginationItem>
+							</React.Fragment>
+						)}
 
-					<PaginationItem
-						onClick={() => this.forward(numOfPage)}
-					>
-						&gt;
+						<PaginationItem
+							onClick={() => this.forward(numOfPage)}
+						>
+							&gt;
                     </PaginationItem>
+					</div>
 				</Pagination>
 			</div>
 		)
