@@ -6,7 +6,7 @@ import RowData from './RowData'
 import Axios from 'axios'
 import { connect } from 'react-redux'
 import { LoadingSuccess, Loading } from '../../../redux/loading/actions'
-import { preCreatePosition, updatePreEditData } from '../../../redux/position/actions'
+import { preCreatePosition, updatePreEditData, updatePositionData } from '../../../redux/position/actions'
 import { baseUrl } from '../../../libs/url/baseUrl'
 import Button from '../../HireQComponent/Button'
 import { Link } from 'react-router-dom'
@@ -115,23 +115,15 @@ class Tables extends Component {
 		}
 	}
 	onMarkAsCompletedClick = async (data) => {
-		// const url = `${baseUrl}/users/${uid}/positions/${id.positionId}`
-		// const postToApi = await Axios.post(url , { state: 'ID or something to define'})
-		// let newData
-		// for (let key in this.props.positionData) {
-		// 	if (key === data) {
-		// 		newData = this.props.positionData[key]
-		// 		console.log("newData:", newData)
-		// 	}
-		// }
-		const markItem = this.props.dataSource.filter(item => {
+		const markItem = await this.props.dataSource.map(item => {
 			if (item.name === data.name) {
-				console.log("ติดในif")
-				return { ...item, status: true }
+				const data = { ...item, status: 'DONE' }
+				return data
 			}
-			// return { ...item }
+			return { ...item }
 		})
-		console.log("mark item: " , markItem)
+		await this.props.updatePositionData(markItem)
+		console.log("this dataSource: ", this.props.dataSource)
 	}
 	render() {
 		const { columns, dataSource, rowPerPage, ellipsis, tableId } = this.props
@@ -293,4 +285,10 @@ const mapStateToProps = state => ({
 })
 
 export default connect(mapStateToProps,
-	{ preCreatePosition, updatePreEditData, Loading, LoadingSuccess })(withRouter(Tables))
+	{
+		preCreatePosition,
+		updatePreEditData,
+		Loading,
+		LoadingSuccess,
+		updatePositionData
+	})(withRouter(Tables))

@@ -22,9 +22,9 @@ class CreateCandidates extends React.Component {
     name: '',
     email: '',
     telephone: '',
-    validEmail: 'x',
-    validName: 'x',
-    validTelephone: 'x',
+    validEmail: 'notValid',
+    validName: 'notValid',
+    validTelephone: 'notValid',
     isDisabled: true,
   }
   onTextChange = (stateName) => (event) => {
