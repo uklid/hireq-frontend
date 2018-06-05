@@ -85,8 +85,8 @@ class PositionList extends React.Component {
 
   searchPoisition = (event) => {
     const filter = event.target.value.toUpperCase()
-    const { positionData } = this.props
-    const searchResult = Object.values(positionData).filter((obj) => {
+    // const { positionData } = this.props
+    const searchResult = Object.values(this.state.positionData).filter((obj) => {
       const category = obj['category'].toUpperCase().includes(filter)
       const descriptions = obj['descriptions'].toUpperCase().includes(filter)
       const name = obj['name'].toUpperCase().includes(filter)
@@ -96,9 +96,10 @@ class PositionList extends React.Component {
       }
       return false
     })
-    this.setState({
-      positionData: searchResult
-    })
+    this.props.updatePositionData(searchResult)
+    // this.setState({
+    //   positionData: searchResult
+    // })
   }
   goToSettingPosition = () => {
     this.props.history.push({

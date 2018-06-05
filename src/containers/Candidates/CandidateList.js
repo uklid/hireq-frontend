@@ -58,8 +58,8 @@ class PositionList extends React.Component {
 
   searchPoisition = (event) => {
     const filter = event.target.value.toUpperCase()
-    const { allCandidatesData } = this.props
-    const searchResult = Object.values(allCandidatesData).filter((obj) => {
+    // const { allCandidatesData } = this.props
+    const searchResult = Object.values(this.state.candidateData).filter((obj) => {
       const name = obj['name'].toUpperCase().includes(filter)
       const email = obj['email'].toUpperCase().includes(filter)
       // ถ้ามี option ในการ search อย่างอื่นก็สามารถทำได้ เพิ่มตัว filter เข้าไป
@@ -68,9 +68,10 @@ class PositionList extends React.Component {
       }
       return false
     })
-    this.setState({
-      candidateData: searchResult
-    })
+    this.props.updateAllCandidates(searchResult)
+    // this.setState({
+    //   candidateData: searchResult
+    // })
   }
 
   filterOnChange = (name) => async (event) => {
@@ -111,7 +112,7 @@ class PositionList extends React.Component {
             headers: { Authorization: "Bearer " + getIdToken }
           })
           this.setState({ candidateData: candidatesResult.data })
-          console.log("Candidate List: " , candidatesResult.data)
+          console.log("Candidate List: ", candidatesResult.data)
           this.props.updateAllCandidates(candidatesResult.data)
           // end all candidate here
           this.props.LoadingSuccess()
