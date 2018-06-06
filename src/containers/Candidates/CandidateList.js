@@ -81,8 +81,9 @@ class PositionList extends React.Component {
 
     if (this.state[name] && name === 'showFinished') {
       // const { allCandidatesData } = this.props
-      const { candidateData } = this.state
-      const searchResult = Object.values(candidateData).filter((obj) => {
+      // const { candidateData } = this.state
+      const { allCandidatesData } = this.props
+      const searchResult = Object.values(allCandidatesData).filter((obj) => {
         const emailSent = obj['emailSent'] === false
         // ถ้ามี option ในการ search อย่างอื่นก็สามารถทำได้ เพิ่มตัว filter เข้าไป
         if (emailSent) {
@@ -90,13 +91,15 @@ class PositionList extends React.Component {
         }
         return false
       })
-      this.setState({
-        candidateData: searchResult
-      })
+      this.props.updateAllCandidates(searchResult)
+      // this.setState({
+      //   candidateData: searchResult
+      // })
     } else if (!this.state[name] && name === 'showFinished') {
-      this.setState({
-        candidateData: this.props.allCandidatesData
-      })
+      // this.setState({
+      //   candidateData: this.props.allCandidatesData
+      // })
+      this.props.updateAllCandidates(this.state.candidateData)
     }
   }
   componentDidMount = async () => {
